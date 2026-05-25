@@ -1,0 +1,175 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "va": "https://api.va.gov/services/",
+    "schema": "https://schema.org/",
+    "fhir": "http://hl7.org/fhir/",
+    "uscore": "http://hl7.org/fhir/us/core/StructureDefinition/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "GovernmentOrganization": "schema:GovernmentOrganization",
+    "GovernmentService": "schema:GovernmentService",
+
+    "VeteransAffairs": {
+      "@id": "va:VeteransAffairs",
+      "@type": "schema:GovernmentOrganization"
+    },
+
+    "Facility": {
+      "@id": "va:Facility",
+      "@context": {
+        "id": { "@id": "va:Facility/id", "@type": "xsd:string" },
+        "name": { "@id": "schema:name", "@type": "xsd:string" },
+        "facilityType": { "@id": "va:Facility/facilityType", "@type": "xsd:string" },
+        "classification": { "@id": "va:Facility/classification", "@type": "xsd:string" },
+        "website": { "@id": "schema:url", "@type": "xsd:anyURI" },
+        "lat": { "@id": "schema:latitude", "@type": "xsd:decimal" },
+        "long": { "@id": "schema:longitude", "@type": "xsd:decimal" },
+        "address": { "@id": "schema:address" },
+        "phone": { "@id": "schema:telephone" },
+        "hours": { "@id": "schema:openingHours" },
+        "services": { "@id": "va:Facility/services", "@container": "@list" },
+        "mobile": { "@id": "va:Facility/mobile", "@type": "xsd:boolean" },
+        "operatingStatus": { "@id": "va:Facility/operatingStatus" }
+      }
+    },
+
+    "Form": {
+      "@id": "va:Form",
+      "@context": {
+        "formName": { "@id": "va:Form/formName", "@type": "xsd:string" },
+        "title": { "@id": "schema:name", "@type": "xsd:string" },
+        "url": { "@id": "schema:url", "@type": "xsd:anyURI" },
+        "firstIssuedOn": { "@id": "va:Form/firstIssuedOn", "@type": "xsd:date" },
+        "lastRevisionOn": { "@id": "va:Form/lastRevisionOn", "@type": "xsd:date" },
+        "benefitCategories": { "@id": "va:Form/benefitCategories", "@container": "@list" },
+        "validPdf": { "@id": "va:Form/validPdf", "@type": "xsd:boolean" }
+      }
+    },
+
+    "BenefitsClaim": {
+      "@id": "va:BenefitsClaim",
+      "@context": {
+        "id": { "@id": "va:BenefitsClaim/id", "@type": "xsd:string" },
+        "claimType": { "@id": "va:BenefitsClaim/claimType", "@type": "xsd:string" },
+        "claimDate": { "@id": "va:BenefitsClaim/claimDate", "@type": "xsd:date" },
+        "status": { "@id": "va:BenefitsClaim/status", "@type": "xsd:string" },
+        "endProductCode": { "@id": "va:BenefitsClaim/endProductCode", "@type": "xsd:string" },
+        "decisionLetterSent": { "@id": "va:BenefitsClaim/decisionLetterSent", "@type": "xsd:boolean" },
+        "contentions": { "@id": "va:BenefitsClaim/contentions", "@container": "@list" }
+      }
+    },
+
+    "Appeal": {
+      "@id": "va:Appeal",
+      "@context": {
+        "id": { "@id": "va:Appeal/id", "@type": "xsd:string" },
+        "appealType": { "@id": "va:Appeal/appealType", "@type": "xsd:string" },
+        "active": { "@id": "va:Appeal/active", "@type": "xsd:boolean" },
+        "docket": { "@id": "va:Appeal/docket" },
+        "events": { "@id": "va:Appeal/events", "@container": "@list" },
+        "alerts": { "@id": "va:Appeal/alerts", "@container": "@list" },
+        "status": { "@id": "va:Appeal/status" }
+      }
+    },
+
+    "DecisionReview": {
+      "@id": "va:DecisionReview",
+      "@context": {
+        "reviewType": { "@id": "va:DecisionReview/reviewType", "@type": "xsd:string" },
+        "issues": { "@id": "va:DecisionReview/issues", "@container": "@list" },
+        "filedAt": { "@id": "va:DecisionReview/filedAt", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Veteran": {
+      "@id": "va:Veteran",
+      "@context": {
+        "firstName": { "@id": "schema:givenName", "@type": "xsd:string" },
+        "lastName": { "@id": "schema:familyName", "@type": "xsd:string" },
+        "ssn": { "@id": "va:Veteran/ssn", "@type": "xsd:string" },
+        "dateOfBirth": { "@id": "schema:birthDate", "@type": "xsd:date" },
+        "gender": { "@id": "schema:gender" },
+        "disabilityRating": { "@id": "va:Veteran/disabilityRating", "@type": "xsd:integer" },
+        "serviceHistory": { "@id": "va:Veteran/serviceHistory", "@container": "@list" }
+      }
+    },
+
+    "VeteranConfirmation": {
+      "@id": "va:VeteranConfirmation",
+      "@context": {
+        "veteranStatus": { "@id": "va:VeteranConfirmation/veteranStatus", "@type": "xsd:string" }
+      }
+    },
+
+    "ServicePeriod": {
+      "@id": "va:ServicePeriod",
+      "@context": {
+        "serviceBranch": { "@id": "va:ServicePeriod/serviceBranch", "@type": "xsd:string" },
+        "activeDutyBeginDate": { "@id": "va:ServicePeriod/activeDutyBeginDate", "@type": "xsd:date" },
+        "activeDutyEndDate": { "@id": "va:ServicePeriod/activeDutyEndDate", "@type": "xsd:date" },
+        "characterOfDischarge": { "@id": "va:ServicePeriod/characterOfDischarge", "@type": "xsd:string" }
+      }
+    },
+
+    "Address": {
+      "@id": "schema:PostalAddress",
+      "@context": {
+        "addressLine1": { "@id": "schema:streetAddress" },
+        "city": { "@id": "schema:addressLocality" },
+        "stateProvince": { "@id": "schema:addressRegion" },
+        "zipCode5": { "@id": "schema:postalCode" },
+        "country": { "@id": "schema:addressCountry" },
+        "geocode": { "@id": "schema:geo" }
+      }
+    },
+
+    "DirectDeposit": {
+      "@id": "va:DirectDeposit",
+      "@context": {
+        "routingNumber": { "@id": "va:DirectDeposit/routingNumber", "@type": "xsd:string" },
+        "accountNumber": { "@id": "va:DirectDeposit/accountNumber", "@type": "xsd:string" },
+        "accountType": { "@id": "va:DirectDeposit/accountType", "@type": "xsd:string" }
+      }
+    },
+
+    "VALetter": {
+      "@id": "va:VALetter",
+      "@context": {
+        "letterType": { "@id": "va:VALetter/letterType", "@type": "xsd:string" },
+        "generatedAt": { "@id": "schema:dateCreated", "@type": "xsd:dateTime" },
+        "pdfUrl": { "@id": "schema:contentUrl", "@type": "xsd:anyURI" }
+      }
+    },
+
+    "CommunityCareEligibility": {
+      "@id": "va:CommunityCareEligibility",
+      "@context": {
+        "eligible": { "@id": "va:CommunityCareEligibility/eligible", "@type": "xsd:boolean" },
+        "eligibilityCode": { "@id": "va:CommunityCareEligibility/eligibilityCode", "@type": "xsd:string" },
+        "criteria": { "@id": "va:CommunityCareEligibility/criteria", "@container": "@list" }
+      }
+    },
+
+    "Loan": {
+      "@id": "va:Loan",
+      "@context": {
+        "loanNumber": { "@id": "va:Loan/loanNumber", "@type": "xsd:string" },
+        "fundingFee": { "@id": "va:Loan/fundingFee", "@type": "xsd:decimal" },
+        "loanAmount": { "@id": "va:Loan/loanAmount", "@type": "xsd:decimal" },
+        "guarantyPercentage": { "@id": "va:Loan/guarantyPercentage", "@type": "xsd:decimal" }
+      }
+    },
+
+    "FHIRResource": {
+      "@id": "fhir:Resource",
+      "@context": {
+        "resourceType": { "@id": "fhir:Resource/resourceType", "@type": "xsd:string" },
+        "id": { "@id": "fhir:Resource/id", "@type": "xsd:string" },
+        "meta": { "@id": "fhir:Resource/meta" }
+      }
+    }
+  }
+}

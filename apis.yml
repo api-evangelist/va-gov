@@ -1,0 +1,655 @@
+aid: va-gov
+url: https://raw.githubusercontent.com/api-evangelist/va-gov/refs/heads/main/apis.yml
+apis:
+- aid: va-gov:va-facilities-api
+  name: VA Facilities API
+  tags:
+  - Government
+  - Healthcare
+  - Facilities
+  - Veterans Affairs
+  - Geospatial
+  humanURL: https://developer.va.gov/explore/api/va-facilities/docs
+  baseURL: https://api.va.gov/services/va_facilities/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/va-facilities/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/facilities/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-facilities-v1-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-facilities-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/va-facilities/release-notes
+    type: ChangeLog
+  description: Look up information on more than 2,000 VA facilities — VA health facilities, benefits offices, cemeteries,
+    Vet Centers — including addresses, geographic coordinates, hours, services offered, mobile/non-mobile status, satisfaction
+    scores, and wait times. Open data API; no authentication required for v1.
+- aid: va-gov:va-forms-api
+  name: VA Forms API
+  tags:
+  - Government
+  - Forms
+  - Veterans Affairs
+  - Documents
+  humanURL: https://developer.va.gov/explore/api/va-forms/docs
+  baseURL: https://api.va.gov/services/va_forms/v0
+  properties:
+  - url: https://developer.va.gov/explore/api/va-forms/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/forms/v0/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-forms-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/va-forms/release-notes
+    type: ChangeLog
+  description: Search and retrieve the latest VA form information, including PDF URLs, revision dates, related forms,
+    and benefit categories for every VA form. Backed by VA Forms data so consumers can keep their integrations aligned
+    with the current canonical PDFs.
+- aid: va-gov:benefits-claims-api
+  name: Benefits Claims API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Benefits
+  - Claims
+  humanURL: https://developer.va.gov/explore/api/benefits-claims/docs
+  baseURL: https://api.va.gov/services/claims/v2
+  properties:
+  - url: https://developer.va.gov/explore/api/benefits-claims/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/benefits-claims/v2/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-benefits-claims-v2-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-benefits-claims-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/benefits-claims/authorization-code
+    type: Authentication
+  - url: https://developer.va.gov/explore/api/benefits-claims/release-notes
+    type: ChangeLog
+  description: Lets Veterans, accredited representatives, and approved third-party consumers find existing benefits
+    claims, submit Intent to File and 526EZ forms, upload supporting documentation, and check claim status for
+    compensation, pension, education, and other VA benefits programs. Supports both authorization code and client
+    credentials OAuth flows.
+- aid: va-gov:benefits-intake-api
+  name: Benefits Intake API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Benefits
+  - Documents
+  - Uploads
+  humanURL: https://developer.va.gov/explore/api/benefits-intake/docs
+  baseURL: https://api.va.gov/services/vba_documents/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/benefits-intake/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/benefits-intake/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-benefits-intake-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/benefits-intake/release-notes
+    type: ChangeLog
+  description: Provides a third-party submission path for veteran-facing PDF benefits forms with supporting documentation
+    directly into VA's Centralized Mail Portal (CMP). Supports the same 4142, 686C, 526EZ, and dozens of other VA
+    benefit forms — replacing the former eBenefits paper-equivalent upload flow.
+- aid: va-gov:benefits-documents-api
+  name: Benefits Documents API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Benefits
+  - Documents
+  humanURL: https://developer.va.gov/explore/api/benefits-documents/docs
+  baseURL: https://api.va.gov/services/benefits-documents/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/benefits-documents/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/benefits-documents/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-benefits-documents-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/benefits-documents/client-credentials
+    type: Authentication
+  - url: https://developer.va.gov/explore/api/benefits-documents/release-notes
+    type: ChangeLog
+  description: Upload supporting documents (PDF, JPG, PNG, TXT, BMP, TIFF) for a given Veteran's benefits claim
+    directly into VBMS for adjudicators. Client credentials OAuth flow only.
+- aid: va-gov:benefits-reference-data-api
+  name: Benefits Reference Data API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Benefits
+  - Reference Data
+  humanURL: https://developer.va.gov/explore/api/benefits-reference-data/docs
+  baseURL: https://api.va.gov/services/benefits-reference-data/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/benefits-reference-data/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/benefits-reference-data/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-benefits-reference-data-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/benefits-reference-data/release-notes
+    type: ChangeLog
+  description: Authoritative reference values consumed across the VBA stack — contention classifications, disabilities,
+    intake sites, special issues, treatment centers, and country/state codes. Used by claim-establishment and
+    form-submission integrations to validate enumerated values.
+- aid: va-gov:appeals-status-api
+  name: Appeals Status API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Appeals
+  - Status
+  humanURL: https://developer.va.gov/explore/api/appeals-status/docs
+  baseURL: https://api.va.gov/services/appeals/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/appeals-status/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/appeals-status/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-appeals-status-v1-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-appeals-status-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/appeals-status/release-notes
+    type: ChangeLog
+  description: Returns the status of any benefits appeal — Higher-Level Reviews, Supplemental Claims, and Board Appeals
+    under the Appeals Modernization Act (AMA) — including the docket position, alerts, and event history for a Veteran.
+- aid: va-gov:appealable-issues-api
+  name: Appealable Issues API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Appeals
+  - Decision Reviews
+  humanURL: https://developer.va.gov/explore/api/appealable-issues/docs
+  baseURL: https://api.va.gov/services/appeals/appealable-issues/v0
+  properties:
+  - url: https://developer.va.gov/explore/api/appealable-issues/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/appealable-issues/v0/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-appealable-issues-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/appealable-issues/release-notes
+    type: ChangeLog
+  description: Lists the issues a Veteran could appeal for a given benefit type (compensation, pension, etc.).
+    Drives the issue-picker on VA.gov decision review forms — Notice of Disagreement (NOD), Higher-Level Review
+    (HLR), and Supplemental Claim (SC).
+- aid: va-gov:legacy-appeals-api
+  name: Legacy Appeals API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Appeals
+  - Legacy
+  humanURL: https://developer.va.gov/explore/api/legacy-appeals/docs
+  baseURL: https://api.va.gov/services/appeals/legacy-appeals/v0
+  properties:
+  - url: https://developer.va.gov/explore/api/legacy-appeals/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/legacy-appeals/v0/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-legacy-appeals-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/legacy-appeals/release-notes
+    type: ChangeLog
+  description: Returns pre-AMA legacy appeals (filed before Feb 19, 2019) on a Veteran's record. Used in tandem with
+    Appealable Issues to determine whether the Veteran must opt-in to AMA before requesting a decision review.
+- aid: va-gov:decision-reviews-api
+  name: Decision Reviews API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Appeals
+  - Decision Reviews
+  humanURL: https://developer.va.gov/explore/api/decision-reviews/docs
+  baseURL: https://api.va.gov/services/appeals/v2
+  properties:
+  - url: https://developer.va.gov/explore/api/decision-reviews/docs
+    type: Documentation
+  - url: https://developer.va.gov/explore/api/decision-reviews/release-notes
+    type: ChangeLog
+  description: Composite of the three AMA decision-review filing endpoints — Higher-Level Review (HLR), Supplemental
+    Claim (SC), and Notice of Disagreement (Board Appeal / NOD) — for submitting and tracking decision reviews under
+    the Veterans Appeals Improvement and Modernization Act.
+- aid: va-gov:patient-health-api
+  name: Patient Health API (FHIR)
+  tags:
+  - Government
+  - Veterans Affairs
+  - Healthcare
+  - FHIR
+  - SMART on FHIR
+  - HL7
+  humanURL: https://developer.va.gov/explore/api/patient-health/docs
+  baseURL: https://api.va.gov/services/fhir/v0/r4
+  properties:
+  - url: https://developer.va.gov/explore/api/patient-health/docs
+    type: Documentation
+  - url: https://api.va.gov/services/fhir/v0/r4/metadata
+    type: OpenAPI
+    name: FHIR R4 CapabilityStatement
+  - url: https://developer.va.gov/explore/api/patient-health/authorization-code
+    type: Authentication
+  description: Patient-context Veteran health record access conformant to HL7 FHIR R4 and SMART-on-FHIR — AllergyIntolerance,
+    Appointment, Condition, DiagnosticReport, Encounter, Immunization, Medication, MedicationRequest, Observation,
+    Patient, Procedure, and more, plus US Core profiles. Authorization code (Veteran consent) and client credentials
+    flows.
+- aid: va-gov:clinical-health-api
+  name: Clinical Health API (FHIR)
+  tags:
+  - Government
+  - Veterans Affairs
+  - Healthcare
+  - FHIR
+  - Clinical
+  - HL7
+  humanURL: https://developer.va.gov/explore/api/clinical-health/docs
+  baseURL: https://api.va.gov/services/fhir/v0/r4
+  properties:
+  - url: https://developer.va.gov/explore/api/clinical-health/docs
+    type: Documentation
+  - url: https://api.va.gov/services/fhir/v0/r4/metadata
+    type: OpenAPI
+    name: FHIR R4 CapabilityStatement
+  - url: https://developer.va.gov/explore/api/clinical-health/authorization-code
+    type: Authentication
+  description: Provider-facing FHIR R4 read access to Veteran clinical records (Patient, Practitioner, Organization,
+    Location, and related resources). Same SMART-on-FHIR authorization model as Patient Health but scoped for clinical
+    decision support and care-coordination apps.
+- aid: va-gov:community-care-eligibility-api
+  name: Community Care Eligibility API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Healthcare
+  - Eligibility
+  - Community Care
+  humanURL: https://developer.va.gov/explore/api/community-care-eligibility/docs
+  baseURL: https://api.va.gov/services/community-care/v0
+  properties:
+  - url: https://developer.va.gov/explore/api/community-care-eligibility/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/community-care-eligibility/v0/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-community-care-eligibility-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/community-care-eligibility/release-notes
+    type: ChangeLog
+  description: Determines whether a Veteran is eligible to receive care from a community (non-VA) provider under the
+    VA MISSION Act of 2018. Returns eligibility decisions for the six community care criteria — distance, wait time,
+    grandfathered status, hardship, no-full-service VA, and best medical interest.
+- aid: va-gov:veteran-verification-api
+  name: Veteran Verification API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Identity
+  - Verification
+  humanURL: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs
+  baseURL: https://api.va.gov/services/veteran_verification/v2
+  properties:
+  - url: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/veteran-verification/v2/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-veteran-verification-v2-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-veteran-verification-v1-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-veteran-verification-v0-openapi.json
+    type: OpenAPI
+  description: Confirms a Veteran's service history, disability rating, and military service eligibility for benefits.
+    Provides the data behind employer/lender/retailer Veteran-discount verification flows and downstream eligibility
+    integrations.
+- aid: va-gov:veteran-confirmation-api
+  name: Veteran Confirmation API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Identity
+  - Verification
+  humanURL: https://developer.va.gov/explore/api/veteran-confirmation/docs
+  baseURL: https://api.va.gov/services/veteran_confirmation/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/veteran-confirmation/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/veteran-confirmation/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-veteran-confirmation-v1-openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-veteran-confirmation-v0-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/veteran-confirmation/release-notes
+    type: ChangeLog
+  description: Confirms Veteran status without revealing PII. Send a Veteran's name, date of birth, SSN, and gender;
+    receive a simple confirmed/not_confirmed response. Powers Veteran-discount and Veteran-status checks for retail
+    and SaaS integrators.
+- aid: va-gov:address-validation-api
+  name: Address Validation API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Address
+  - Validation
+  - Geocoding
+  humanURL: https://developer.va.gov/explore/api/address-validation/docs
+  baseURL: https://api.va.gov/services/address_validation/v3
+  properties:
+  - url: https://developer.va.gov/explore/api/address-validation/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/address-validation/v3/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-address-validation-v3-openapi.json
+    type: OpenAPI
+  description: Validates and standardizes addresses against the USPS and VA address-canonicalization stack, returning
+    geocoded coordinates and confidence scores. Used across VBA, VHA, and VA.gov to keep Veteran addresses correct
+    before mailing benefit decisions or scheduling care.
+- aid: va-gov:direct-deposit-management-api
+  name: Direct Deposit Management API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Banking
+  - Direct Deposit
+  - Payments
+  humanURL: https://developer.va.gov/explore/api/direct-deposit-management/docs
+  baseURL: https://api.va.gov/services/direct-deposit-management/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/direct-deposit-management/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/direct-deposit-management/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-direct-deposit-management-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/direct-deposit-management/client-credentials
+    type: Authentication
+  description: Retrieve and update a Veteran's compensation, pension, and education benefit direct deposit information
+    — routing number, account number, account type, and payment status. Client credentials only.
+- aid: va-gov:va-letter-generator-api
+  name: VA Letter Generator API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Letters
+  - Documents
+  - Benefits
+  humanURL: https://developer.va.gov/explore/api/va-letter-generator/docs
+  baseURL: https://api.va.gov/services/va-letter-generator/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/va-letter-generator/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/va-letter-generator/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-va-letter-generator-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/va-letter-generator/client-credentials
+    type: Authentication
+  description: Generate official VA benefit letters (Benefit Summary, Service Verification, Civil Service Preference,
+    Commissary, Proof of Service, etc.) on demand as PDFs — used by lenders, employers, and Veteran-service organizations
+    that need authoritative VA documentation.
+- aid: va-gov:education-benefits-api
+  name: Education Benefits API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Education
+  - GI Bill
+  - Benefits
+  humanURL: https://developer.va.gov/explore/api/education-benefits/docs
+  baseURL: https://api.va.gov/services/education/v0
+  properties:
+  - url: https://developer.va.gov/explore/api/education-benefits/docs
+    type: Documentation
+  - url: https://developer.va.gov/explore/api/education-benefits/client-credentials
+    type: Authentication
+  - url: https://developer.va.gov/explore/api/education-benefits/release-notes
+    type: ChangeLog
+  description: School Certifying Officials (SCOs) and education benefit administrators read and submit GI Bill / Post-9/11
+    education benefit enrollment data — VA Form 22-1999 enrollment certifications — on behalf of enrolled student
+    Veterans.
+- aid: va-gov:loan-guaranty-api
+  name: Loan Guaranty API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Home Loans
+  - Mortgages
+  - Loan Guaranty
+  humanURL: https://developer.va.gov/explore/api/loan-guaranty/docs
+  baseURL: https://api.va.gov/services/loan-guaranty/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/loan-guaranty/docs
+    type: Documentation
+  - url: https://developer.va.gov/explore/api/loan-guaranty/release-notes
+    type: ChangeLog
+  description: Provides lenders and servicers the digital surface for the VA Home Loan Guaranty program — eligibility,
+    appraisals, loan setup, and certificate-of-eligibility (COE) operations. Companion APIs handle Loan Review, Guaranty
+    Remittance, and Health-Care-Costs Coverage.
+- aid: va-gov:loan-review-api
+  name: Loan Review API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Home Loans
+  - Loan Guaranty
+  humanURL: https://developer.va.gov/explore/api/loan-review/docs
+  baseURL: https://api.va.gov/services/loan-review/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/loan-review/docs
+    type: Documentation
+  - url: https://api.va.gov/internal/docs/loan-review/v1/openapi.json
+    type: OpenAPI
+  - url: openapi/va-gov-loan-review-v1-openapi.json
+    type: OpenAPI
+  - url: https://developer.va.gov/explore/api/loan-review/client-credentials
+    type: Authentication
+  description: Submits Loan Review file packages — Substantially Complete Real Estate (SCRE) appraisal and Substitution
+    of Entitlement (SOE) — to VA's Loan Guaranty Service. Used by VA-approved automatic-authority lenders for prior-approval
+    review.
+- aid: va-gov:guaranty-remittance-api
+  name: Guaranty Remittance API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Home Loans
+  - Loan Guaranty
+  - Payments
+  humanURL: https://developer.va.gov/explore/api/guaranty-remittance/docs
+  baseURL: https://api.va.gov/services/guaranty-remittance/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/guaranty-remittance/docs
+    type: Documentation
+  - url: https://developer.va.gov/explore/api/guaranty-remittance/client-credentials
+    type: Authentication
+  description: Lets VA Loan Guaranty servicers remit funding-fee, late, and other Loan Guaranty payments to VA electronically
+    instead of through legacy paper-based remittance. Client credentials only; sandbox available.
+- aid: va-gov:health-care-costs-coverage-api
+  name: Health Care Costs Coverage API
+  tags:
+  - Government
+  - Veterans Affairs
+  - Healthcare
+  - Insurance
+  - Coverage
+  humanURL: https://developer.va.gov/explore/api/health-care-costs-coverage/docs
+  baseURL: https://api.va.gov/services/health-care-costs-coverage/v1
+  properties:
+  - url: https://developer.va.gov/explore/api/health-care-costs-coverage/docs
+    type: Documentation
+  - url: https://developer.va.gov/explore/api/health-care-costs-coverage/client-credentials
+    type: Authentication
+  description: Insurance-coordination API for VA's Consolidated Patient Account Center (CPAC) — submit and update
+    third-party health insurance coverage on a Veteran's record so VA can correctly bill private insurers for non-service-connected
+    care. Client credentials only; sandbox available.
+name: VA Lighthouse
+tags:
+- Government
+- Veterans Affairs
+- Veterans
+- Healthcare
+- Benefits
+- FHIR
+- Open Data
+- Federal
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- type: Portal
+  url: https://developer.va.gov
+  name: VA API Platform (Lighthouse)
+- type: Portal
+  url: https://api.va.gov
+  name: api.va.gov
+- type: Documentation
+  url: https://developer.va.gov/explore
+  name: Explore VA APIs
+- type: GettingStarted
+  url: https://developer.va.gov/onboarding
+- type: SignUp
+  url: https://developer.va.gov/onboarding/request-sandbox-access
+  name: Request Sandbox Access
+- type: Authentication
+  url: https://developer.va.gov/explore/api/authorization-code
+  name: Authorization Code Grant (OAuth)
+- type: Authentication
+  url: https://developer.va.gov/explore/api/client-credentials
+  name: Client Credentials Grant (OAuth)
+- type: Documentation
+  url: https://developer.va.gov/onboarding/request-production-access
+  name: Path to Production
+- type: Documentation
+  url: https://developer.va.gov/api-publishing
+  name: API Publishing (for VA teams)
+- type: Support
+  url: https://developer.va.gov/support
+  name: Developer Support
+- type: ContactEmail
+  url: mailto:api@va.gov
+  name: API Support — api@va.gov
+- type: StatusPage
+  url: https://valighthouse.statuspage.io/
+  name: VA Lighthouse Status
+- type: TermsOfService
+  url: https://developer.va.gov/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.va.gov/privacy-policy/
+- type: Documentation
+  url: https://www.va.gov/accessibility/
+  name: VA Accessibility Statement
+- type: Blog
+  url: https://news.va.gov/
+  name: VA News
+- type: GitHubOrganization
+  url: https://github.com/department-of-veterans-affairs
+  name: Department of Veterans Affairs on GitHub
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/vets-api
+  name: vets-api (Ruby) — VA.gov backend powering many Lighthouse endpoints
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/vets-website
+  name: vets-website — VA.gov frontend
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/vets-api-clients
+  name: vets-api-clients — Reference implementations and sample apps
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/lighthouse-fhir-apis-consumer-docs
+  name: Lighthouse FHIR APIs Consumer Docs
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/health-apis-bulk-fhir
+  name: health-apis-bulk-fhir
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/health-apis-clinical-fhir
+  name: health-apis-clinical-fhir
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/lighthouse-oas-tests
+  name: lighthouse-oas-tests — OAS conformance and contract testing
+- type: SourceCode
+  url: https://github.com/department-of-veterans-affairs/VHA-Facilities
+  name: VHA Facilities reference data
+- type: Documentation
+  url: https://developer.va.gov/api-publishing/getting-started
+  name: API Publishing — Getting Started (internal API teams)
+- type: Documentation
+  url: https://developer.va.gov/onboarding/working-with-lighthouse-apis
+  name: Working with Lighthouse APIs
+- type: Sandbox
+  url: https://sandbox-api.va.gov
+  name: Lighthouse Sandbox (sandbox-api.va.gov)
+- type: Authentication
+  url: https://api.va.gov/oauth2/authorization
+  name: OAuth2 Authorize endpoint
+- type: Authentication
+  url: https://api.va.gov/oauth2/token
+  name: OAuth2 Token endpoint
+- type: Authentication
+  url: https://api.va.gov/oauth2/revoke
+  name: OAuth2 Revoke endpoint
+- type: Documentation
+  url: http://docs.smarthealthit.org/
+  name: SMART-on-FHIR (used by Patient Health and Clinical Health APIs)
+- type: Documentation
+  url: https://hl7.org/fhir/us/core/
+  name: HL7 FHIR US Core profiles
+- type: LinkedIn
+  url: https://www.linkedin.com/company/us-veteransaffairs/
+  name: VA on LinkedIn
+- type: TermsOfService
+  url: https://www.va.gov/policy-and-compliance/notice-of-privacy-practices/
+  name: Notice of Privacy Practices
+- type: Features
+  data:
+  - 22+ Lighthouse APIs spanning Benefits, Health, Facilities, Verification, Forms, Appeals, and Loan Guaranty
+  - HL7 FHIR R4 + US Core conformant Patient Health and Clinical Health APIs with SMART-on-FHIR launch
+  - OAuth 2.0 with both Authorization Code (Veteran consent) and Client Credentials (system) flows
+  - Full sandbox at sandbox-api.va.gov with documented synthetic Veteran test accounts (vets-api-clients/test_accounts)
+  - Open-data facilities, forms, and reference-data APIs (no auth required for read endpoints)
+  - VA address canonicalization and geocoding via Address Validation API v3
+  - Direct integration with VBMS (Benefits Documents) and Centralized Mail Portal (Benefits Intake) for claims documentation
+  - AMA-era decision review filing — HLR, SC, Notice of Disagreement — plus legacy appeal status
+  - Programmatic VA letter generation (Benefit Summary, Service Verification, COE, etc.) as on-demand PDFs
+  - VA Home Loan Guaranty digital surface — Loan Guaranty, Loan Review, Guaranty Remittance, Health-Care-Costs Coverage
+  - Veteran Confirmation and Veteran Verification APIs for retail/lender Veteran-status checks
+  - GI Bill / Post-9/11 education benefit submission for School Certifying Officials
+  - Path-to-Production process documented in developer-portal-backend / Path-to-Production.md
+  - Lighthouse OAS contract testing via the public lighthouse-oas-tests repository
+  - Public reference implementations and sample apps in vets-api-clients (Ruby, Node, samples)
+  - vets-api (Ruby/Rails) — primary open-source backend powering VA.gov and many Lighthouse endpoints
+  - vets-website — public open-source frontend for VA.gov
+  - FHIR Bulk Data (Flat FHIR) endpoints via health-apis-bulk-fhir
+  - StatusPage at valighthouse.statuspage.io
+  - VA Lighthouse OAuth flow supports PKCE and SMART-on-FHIR scopes (patient/*, user/*, system/*)
+  - Free at point of use for accredited consumers — no per-call pricing for approved third parties
+  sources:
+  - https://developer.va.gov
+  - https://developer.va.gov/explore
+  - https://github.com/department-of-veterans-affairs
+  - https://api.va.gov/services/fhir/v0/r4/metadata
+  - https://developer.va.gov/onboarding
+  - https://developer.va.gov/sitemap.xml
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Providing
+description: VA Lighthouse is the US Department of Veterans Affairs' developer API platform. Published at
+  developer.va.gov with production endpoints at api.va.gov, Lighthouse exposes 22+ APIs covering Benefits (claims,
+  documents, reference data, intake), Health (HL7 FHIR R4 Patient Health and Clinical Health, Community Care
+  Eligibility), Facilities, Forms, Veteran Verification and Confirmation, Appeals and Decision Reviews under the
+  Appeals Modernization Act (AMA), Address Validation, Direct Deposit Management, VA Letter Generation, Education
+  Benefits, and the full VA Home Loan Guaranty stack (Loan Guaranty, Loan Review, Guaranty Remittance, Health-Care-Costs
+  Coverage). All authenticated APIs use OAuth 2.0 with both Authorization Code (Veteran consent) and Client Credentials
+  (system) flows; the health APIs additionally support SMART-on-FHIR. The platform is operated by the VA Office of
+  the CTO with open-source backend code in github.com/department-of-veterans-affairs/vets-api and reference clients
+  in vets-api-clients.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'
