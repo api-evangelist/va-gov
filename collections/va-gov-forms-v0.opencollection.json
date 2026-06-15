@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VA Forms",
+    "version": "0.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all VA Forms and their last revision date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_forms/{version}/forms",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns form data based on entered form name."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns an index of all available VA forms. Optionally, pass a query parameter to filter forms by form number or title."
+        },
+        {
+          "info": {
+            "name": "Find form by form name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_forms/{version}/forms/:form_name",
+            "params": [
+              {
+                "name": "form_name",
+                "value": "10-10EZ",
+                "type": "path",
+                "description": "The VA form_name of the form being requested. The exact form name must be passed, including proper placement of prefixes and/or hyphens."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single form and the full revision history"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

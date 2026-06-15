@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VA Letter Generator API",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Letters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of letters that a Veteran or a dependent is eligible for.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va-letter-generator/{version}/eligible-letters",
+            "params": [
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "MPI ICN"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-letters/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  The endpoint also returns the specific data that will be populated\n  within each eligible letter. This includes, if relevant:\n\n\n  * Veteran's or dependent's address\n  * Veteran service details\n  * Benefits information the Veteran or dependent is eligible for\n  * Survivor benefits awarded\n\n  If the API is able to determine eligibility for some but not all letters because\n  a partner is down, the list of letters for which a Veteran or dependent is\n  determined to be eligible will be returned, al"
+        },
+        {
+          "info": {
+            "name": "Generates JSON-formatted letter content by letter type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va-letter-generator/{version}/letter-contents/:letterType",
+            "params": [
+              {
+                "name": "letterType",
+                "value": "",
+                "type": "path",
+                "description": "Letter Type"
+              },
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "MPI ICN"
+              },
+              {
+                "name": "militaryService",
+                "value": "",
+                "type": "query",
+                "description": "Include military service"
+              },
+              {
+                "name": "serviceConnectedDisabilities",
+                "value": "",
+                "type": "query",
+                "description": "Include service connected disabilities"
+              },
+              {
+                "name": "serviceConnectedEvaluation",
+                "value": "",
+                "type": "query",
+                "description": "Include service connected evaluation"
+              },
+              {
+                "name": "nonServiceConnectedPension",
+                "value": "",
+                "type": "query",
+                "description": "Include non-service connected pension"
+              },
+              {
+                "name": "monthlyAward",
+                "value": "",
+                "type": "query",
+                "description": "Include monthly award"
+              },
+              {
+                "name": "unemployable",
+                "value": "",
+                "type": "query",
+                "description": "Include unemployable data"
+              },
+              {
+                "name": "specialMonthlyCompensation",
+                "value": "",
+                "type": "query",
+                "description": "Include special monthly compensation"
+              },
+              {
+                "name": "adaptedHousing",
+                "value": "",
+                "type": "query",
+                "description": "Include adapted housing"
+              },
+              {
+                "name": "chapter35Eligibility",
+                "value": "",
+                "type": "query",
+                "description": "Include chapter 35 eligibility"
+              },
+              {
+                "name": "deathResultOfDisability",
+                "value": "",
+                "type": "query",
+                "description": "Include death result of disability"
+              },
+              {
+                "name": "survivorsAward",
+                "value": "",
+                "type": "query",
+                "description": "Include survivors pension award"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-letters/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the descriptions and content of letters a Veteran or dependent is eligible for in JSON format.\n| If the GET /eligible-letters endpoint returns | Generate the letter contents with these query parameters |\n| --- | --- |\n| hasServiceConnectedDisabilities | serviceConnectedDisabilities |\n| serviceConnectedPercentage | serviceConnectedEvaluation |\n| hasNonServiceConnectedPension | nonServiceConnectedPension |\n| monthlyAwardAmount<br />And<br />awardEffectiveDate | monthlyAward |\n| hasIndividu"
+        },
+        {
+          "info": {
+            "name": "Generates PDF letters by letter type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va-letter-generator/{version}/letters/:letterType/letter",
+            "params": [
+              {
+                "name": "letterType",
+                "value": "",
+                "type": "path",
+                "description": "Letter Type"
+              },
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "MPI ICN"
+              },
+              {
+                "name": "militaryService",
+                "value": "",
+                "type": "query",
+                "description": "Include military service"
+              },
+              {
+                "name": "serviceConnectedDisabilities",
+                "value": "",
+                "type": "query",
+                "description": "Include service connected disabilities"
+              },
+              {
+                "name": "serviceConnectedEvaluation",
+                "value": "",
+                "type": "query",
+                "description": "Include service connected evaluation"
+              },
+              {
+                "name": "nonServiceConnectedPension",
+                "value": "",
+                "type": "query",
+                "description": "Include non-service connected pension"
+              },
+              {
+                "name": "monthlyAward",
+                "value": "",
+                "type": "query",
+                "description": "Include monthly award"
+              },
+              {
+                "name": "unemployable",
+                "value": "",
+                "type": "query",
+                "description": "Include unemployable data"
+              },
+              {
+                "name": "specialMonthlyCompensation",
+                "value": "",
+                "type": "query",
+                "description": "Include special monthly compensation"
+              },
+              {
+                "name": "adaptedHousing",
+                "value": "",
+                "type": "query",
+                "description": "Include adapted housing"
+              },
+              {
+                "name": "chapter35Eligibility",
+                "value": "",
+                "type": "query",
+                "description": "Include chapter 35 eligibility"
+              },
+              {
+                "name": "deathResultOfDisability",
+                "value": "",
+                "type": "query",
+                "description": "Include death result of disability"
+              },
+              {
+                "name": "survivorsAward",
+                "value": "",
+                "type": "query",
+                "description": "Include survivors pension award"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-letters/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the letters a Veteran or dependent is eligible for, with watermarks and logo, in PDF format.\n| If the GET /eligible-letters endpoint returns | Generate the letter with these query parameters |\n| --- | --- |\n| hasServiceConnectedDisabilities | serviceConnectedDisabilities |\n| serviceConnectedPercentage | serviceConnectedEvaluation |\n| hasNonServiceConnectedPension | nonServiceConnectedPension |\n| monthlyAwardAmount<br />And<br />awardEffectiveDate | monthlyAward |\n| hasIndividualUnemploya"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

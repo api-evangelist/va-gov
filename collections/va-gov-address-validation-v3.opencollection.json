@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AddressValidation-v3",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validates and standardizes an address.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This service will accept an address, standardize it based on country, validate that the address is deliverable, and return the address with any inferred or corrected data. If an address is not found, or if the confidence score is low, it may be useful to try the POST /candidate endpoint that can return multiple possible matches. <table><thead><tr><th>Message Key</th><th>Message Code</th><th>Description</th></tr></thead><tbody><tr><td>zipCode4.Size</td><td></td><td>size must be between 0 and 4</t"
+        },
+        {
+          "info": {
+            "name": "Discovers possible addresses when a request could match multiple records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/candidate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint will return all possible matches for the given address request input. You may use this endpoint if an address was not found using POST /validate, or if the confidence score was low.<table><thead><tr><th>Message Key</th><th>Message Code</th><th>Description</th></tr></thead><tbody><tr><td>zipCode4.Size</td><td></td><td>size must be between 0 and 4</td></tr><tr><td>addressLine2.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>addressLine3.Size</td><td></td><td>siz"
+        },
+        {
+          "info": {
+            "name": "Returns the city and state or province associated with a zip code or international postal code.  For International addresses, locality lookup is only available for Canadian postal codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/locality",
+            "params": [
+              {
+                "name": "zipCode5",
+                "value": "22911",
+                "type": "query",
+                "description": "Five-digit postal code assigned by United States Post Office to postal address."
+              },
+              {
+                "name": "intPostalCode",
+                "value": "M5J 2L2",
+                "type": "query",
+                "description": "Alphanumeric code used by country other than United States for postal addresses."
+              }
+            ]
+          },
+          "docs": "Returns the city and state or province associated with a zip code or international postal code.  For International addresses, locality lookup is only available for Canadian postal codes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

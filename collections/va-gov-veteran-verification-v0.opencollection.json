@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veteran Verification",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Veteran Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get confirmation about an individual's Veteran status according to the VA",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/status",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get confirmation about an individual's Veteran status according to the VA"
+        },
+        {
+          "info": {
+            "name": "Retrieve disability rating of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/disability_rating",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve disability rating of authorized Veteran"
+        },
+        {
+          "info": {
+            "name": "Retrieve service history of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/service_history",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve service history of authorized Veteran"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "JWS Validation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve public keys to check Veteran Verification API token signatures",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/keys"
+          },
+          "docs": "Retrieve public keys to check Veteran Verification API token signatures"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

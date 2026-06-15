@@ -1,0 +1,519 @@
+{
+  "item": [
+    {
+      "id": "46d61c25-f507-41d4-ab7b-1ffff82a7720",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd0fc753-9675-4ce0-be7b-f365fc3f3a34",
+          "name": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service.",
+          "request": {
+            "name": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service.",
+            "description": {},
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patient",
+                  "value": "<string>",
+                  "description": "(Required) The patient's ICN"
+                },
+                {
+                  "disabled": false,
+                  "key": "serviceType",
+                  "value": "<string>",
+                  "description": "(Required) The patient's desired medical service type for community care"
+                },
+                {
+                  "disabled": false,
+                  "key": "extendedDriveMin",
+                  "value": "<integer>",
+                  "description": "Optional extended drive-radius to include more VA medical facilities in response. This does not change overall eligibility and must exceed standard drive time for the service-type.)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11e55dbf-4c31-41bb-a563-78288565c515",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"patientRequest\": {\n    \"patientIcn\": \"011235813V213455\",\n    \"serviceType\": \"PrimaryCare\",\n    \"timestamp\": \"2019-05-09T13:17:58.250Z\"\n  },\n  \"eligibilityCodes\": [\n    {\n      \"description\": \"Basic\",\n      \"code\": \"B\"\n    }\n  ],\n  \"grandfathered\": false,\n  \"noFullServiceVaMedicalFacility\": false,\n  \"patientAddress\": {\n    \"country\": \"USA\",\n    \"street\": \"742 Evergeen Terrace\",\n    \"city\": \"Springfield\",\n    \"state\": \"KY\",\n    \"zip\": \"89144\"\n  },\n  \"patientCoordinates\": {\n    \"latitude\": 40.758541,\n    \"longitude\": -73.982132\n  },\n  \"nearbyFacilities\": [\n    {\n      \"name\": \"Springfield VA Clinic\",\n      \"physicalAddress\": {\n        \"street\": \"2584 South Street\",\n        \"city\": \"Springfield\",\n        \"state\": \"KY\",\n        \"zip\": \"10946\"\n      },\n      \"coordinates\": {\n        \"latitude\": 41.81,\n        \"longitude\": 67.65\n      },\n      \"driveMinutes\": {\n        \"min\": 0,\n        \"max\": 10\n      },\n      \"phoneNumber\": \"177-112-8657 x\",\n      \"website\": \"https://www.va.gov\"\n    },\n    {\n      \"name\": \"Shelbyville VA Clinic\",\n      \"physicalAddress\": {\n        \"street\": \"121393 Main Street\",\n        \"city\": \"Shelbyville\",\n        \"state\": \"KY\",\n        \"zip\": \"75025\"\n      },\n      \"coordinates\": {\n        \"latitude\": 196.418,\n        \"longitude\": 317.811\n      },\n      \"driveMinutes\": {\n        \"min\": 20,\n        \"max\": 30\n      },\n      \"phoneNumber\": \"1-422-983-2040\",\n      \"website\": \"https://www.va.gov\",\n      \"mobile\": false,\n      \"active\": true\n    }\n  ],\n  \"eligible\": false,\n  \"processingStatus\": \"successful\",\n  \"pactStatus\": \"Active\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38225a10-3054-462c-9698-561cb177c8d9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 1557407878250,\n  \"type\": \"UnknownServiceTypeException\",\n  \"message\": \"Unknown service type: dentistry\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "306fa692-e7c0-499e-b823-389b146d165b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 1557407878250,\n  \"type\": \"UnknownPatientIcnException\",\n  \"message\": \"Unknown patient ICN: 011235813V213455\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59f22a5d-1f4e-44e4-85fe-9f8a6bd118cf",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e903eda-03f2-41cf-b824-8a5df1c004d5",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89543992-23fc-46dc-a67d-a96e4e35530f",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "011235813V213455"
+                    },
+                    {
+                      "key": "serviceType",
+                      "value": "Gastroenterology"
+                    },
+                    {
+                      "key": "extendedDriveMin",
+                      "value": "70"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v0",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/community-care/{{version}}/eligibility",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "patient/CommunityCareEligibility.read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sandbox-api.va.gov/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sandbox-api.va.gov/oauth2/authorization"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "93ae9720-96b8-4675-8d8a-a56f2e5938ab",
+    "name": "Community Care Eligibility",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Community Care Eligibility API determines if a VA patient is **likely** or **unlikely** to be eligible for care from non-VA community providers.\n\nThis API's eligibility projections **are not final**. Messaging about the results of this API should stress that a patient is **likely** or **unlikely** to be eligible for community care, but that decision is not final until they have consulted VA staff and scheduled an appointment.\n\n## Background\n\nUnder the VA MISSION Act of 2018, Veterans and their dependents have expanded access to treatment outside VA facilities through a new set of eligibility criteria. VA gives care to patients through community providers when VA facilities cannot provide the care needed. Community care is based on specific eligibility requirements, availability of VA care, and the needs and circumstances of individual patients. Before a VA patient can receive care from a community provider, it must first be authorized by VA.[Learn more about VA Community Care](https://www.va.gov/COMMUNITYCARE/programs/veterans/General_Care.asp).\n\n## Technical overview\n\n### Authentication and authorization\n\nThe authentication model for the Community Care Eligibility API uses OAuth 2.0 / OpenID Connect. The following authorization models are supported:\n- [Authorization Code Grant (ACG)](/explore/api/community-care-eligibility/authorization-code)\n- [Client Credentials Grant (CCG)](/explore/api/community-care-eligibility/client-credentials) (restricted access)\n\n\n**Important:** To get production access using client credentials grant, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).\n\n### Eligibility estimates\n\nThe API will return an `eligible` value of `true` if a patient is likely to be eligible for community care, or `false` if they are not likely to be eligible. If the API cannot determine the likelihood of eligibility, it will not return the `eligible` field.\n\nTo determine a VA patient's likelihood of community care eligibility, this API checks: \n- Eligibility based on a subset of [VA community care eligibility criteria](https://www.va.gov/COMMUNITYCARE/programs/veterans/General_Care.asp#Eligibility).\n- Whether the patient has an active or pending [Patient Aligned Care Team](https://www.patientcare.va.gov/primarycare/PACT.asp) (PACT) status\n\n**Note:** 2 VA community care criteria, **best medical interests** and **quality standards**, are outside the scope of this API.\n\n#### Likely eligible results\nA Veteran is **likely** to be eligible for community care (`eligible` = `true`) in the following cases: \n\n- The patient qualifies for the \"Hardship\" provision.\n  - The API returns `H` in the list of eligibility codes.\n- The patient qualifies for the \"Grandfather\" provision.\n  - The API returns `G` in the list of eligibility codes.\n- The patient lives in a U.S. state or territory without a full service VA medical facility.\n  - The API returns `N` in the list of eligibility codes.\n- The patient's estimated drive time from their home to a VA facility that offers the requested medical service is too long.\n  - The API returns a maximum drive time of over 30 minutes (for primary care) or over 60 minutes (for specialty care) to the nearest VA facility for the requested service.\n\n#### Unlikely eligible results\n\nA patient is **unlikely** to be eligible for community care (`eligible` = `false`) in the following cases:\n\n- VA has coded the patient as ineligible for community care.\n  - The API returns `X` in the list of eligibility codes.\n- The patient lives near a VA facility that offers the requested medical service within the approved drive time range of a patient's location.\n  - The API returns a maximum drive time within 30 minutes (for primary care) or within 60 minutes (for specialty care) to the nearest VA facility for the requested service.\n- The API returns a Patient Aligned Care Team (PACT) status of `active` or `pending` and the requested medical service is for primary care.\n\n#### Undetermined results\n\nThis API may not be able to determine the likelihood of a patient's eligibility if any of the following apply. In both of these cases, the API will not return the `eligible` field:\n\n- The patient's geocoded location (based on latitude and longitude position) is incomplete, out-of-date, or unavailable. No accurate drive time calculation to the nearest VA facility can be performed.\n- The patient's Patient Aligned Care Team (PACT) status could not be determined during a request for primary care. \n\n### Test data\n\nOur sandbox environment is populated with [VA patient test data](/explore/api/community-care-eligibility/test-users) that can be used to test various response scenarios. This sandbox data contains no PII or PHI, but mimics real VA account information.\n\n",
+      "type": "text/plain"
+    }
+  }
+}

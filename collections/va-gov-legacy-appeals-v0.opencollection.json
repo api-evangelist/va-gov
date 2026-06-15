@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Legacy Appeals",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Legacy Appeals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns eligible appeals in the legacy process for a claimant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/appeals/legacy-appeals/{version}/legacy-appeals",
+            "params": [
+              {
+                "name": "icn",
+                "value": "1012832025V743496",
+                "type": "query",
+                "description": "Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/appeals/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns eligible legacy appeals for a claimant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

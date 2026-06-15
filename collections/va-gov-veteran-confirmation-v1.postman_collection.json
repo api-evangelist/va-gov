@@ -1,0 +1,725 @@
+{
+  "item": [
+    {
+      "id": "2ee2a05c-6279-4705-8e91-ddd36e02dd78",
+      "name": "veteran_confirmation_status",
+      "description": {
+        "content": "Veteran Confirmation - Veteran Status",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "337efce1-21d1-411b-90a5-bfa8225af48f",
+          "name": "Confirms an individual's Title 38 Veteran status.",
+          "request": {
+            "name": "Confirms an individual's Title 38 Veteran status.",
+            "description": {
+              "content": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts demographic information for the person to\nbe confirmed and matches it against VA records. If there are\ndifferences between the data entered and the data on file, a\nmatch to a person may not be found. If a successful match is\nidentified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different things, depending on\nthe following not_confirmed_reason values:\n- ```PERSON_NOT_FOUND```: The person was not found in VA source systems\nwith the provided information. Including more demographic data\nfor a Veteran increases the likelihood of finding their records\nin VA source systems.\n- ```NOT_TITLE_38```: VA data sources indicate that the person does not\nhave Title 38 status.\n- ```MORE_RESEARCH_REQUIRED```: VA cannot confirm the person's Title 38\nstatus with existing records.\n- ```ERROR```: One or more VA source systems is not available or returned\nan error response.\n- If ```\"not confirmed\"``` is returned, it can help to try again with\ndifferent addresses or names or optional fields.\nIf needed, Veterans may update their profile with the VA on VA.gov.\n- The updated information will be available to this API immediately.\nAdditional field-level guidance is provided in the schema section\nof this documentation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birthDate\": \"<date>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"state\": \"<string>\",\n  \"streetAddressLine1\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"streetAddressLine2\": \"<string>\",\n  \"streetAddressLine3\": \"<string>\",\n  \"homePhoneNumber\": \"<string>\",\n  \"mothersMaidenName\": \"<string>\",\n  \"birthPlaceCity\": \"<string>\",\n  \"birthPlaceState\": \"<string>\",\n  \"birthPlaceCountry\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2c78c494-48bb-4b43-97b7-1a3a97dc6b6d",
+              "name": "Confirmation status successfully retrieved.\n\nPossible return values if Veteran is \"NOT CONFIRMED\":\n - ERROR\n - MORE_RESEARCH_REQUIRED\n - NOT_TITLE_38\n - PERSON_NOT_FOUND",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"(REDACTED)\",\n  \"veteran_status\": \"confirmed\",\n  \"not_confirmed_reason\": \"null\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1baca51a-aae8-4165-97f8-f257ba289e74",
+              "name": "Bad request - invalid or missing query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Missing parameter\",\n      \"detail\": \"The required parameter 'firstName', is missing\",\n      \"code\": \"108\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cb141bd-c2ac-4be3-8e96-14d3b4c45401",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2711e68d-e036-4330-8a62-e7d1e9a20361",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0fa387f-6a7f-46cb-bc29-d72068fa8e6e",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d2c7b3c-3f07-4751-ae04-3619b023a9bf",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f218d6c-edc8-4701-8e26-475685c4e5f9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Internal server error\",\n      \"detail\": \"Internal server error\",\n      \"code\": \"500\",\n      \"status\": \"500\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db30d6e3-fc07-4ca1-9730-1177160395e9",
+              "name": "Bad Gateway - Call to upstream service failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Gateway\",\n      \"detail\": \"Call to upstream service failed\",\n      \"code\": \"502\",\n      \"status\": \"502\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3792acf-f5ee-4a57-9170-fdb6a9013ed6",
+              "name": "We encountered a temporary error. Check back in the future.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service unavailable\",\n      \"detail\": \"An external service is unavailable.\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94a4f52b-90f0-4281-b69a-af2874292425",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apiKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Alfredo\",\n  \"lastName\": \"Armstrong\",\n  \"birthDate\": \"1993-06-08\",\n  \"middleName\": \"M\",\n  \"gender\": \"M\",\n  \"streetAddressLine1\": \"17020 Tortoise St\",\n  \"city\": \"Round Rock\",\n  \"zipCode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\",\n  \"homePhoneNumber\": \"555-555-5555\",\n  \"mothersMaidenName\": \"Smith\",\n  \"birthPlaceCity\": \"Johnson City\",\n  \"birthPlaceState\": \"MA\",\n  \"birthPlaceCountry\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v1",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/veteran-confirmation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d9f116dd-384b-45c5-b2f9-1ba10385f8af",
+    "name": "Veteran Confirmation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Veteran Confirmation API returns whether a given person is `\"confirmed\"` or\n`\"not confirmed\"` as a [Title 38 Veteran](https://www.ecfr.gov/current/title-38).\nConfirming a Veteran's status can be useful for determining eligibility for\ndiscounts, services, preferential treatment, and certain jobs or education\nprograms.\n\nA Veteran is a person who served in the active military, naval, air, or space\nservice, and who was discharged or released under conditions other than\ndishonorable. Active duty service history in the Reserves and National Guard is\nconsidered active military service. Basic eligibility for VA benefits depends on\nthe type of military service performed, the duration of the service, and the\ncharacter of discharge or separation.\n\nA result of \"not confirmed\" does not necessarily mean that a person is\nnot a Veteran. A person may have served without being entitled to the VA\nbenefits of a Title 38 Veteran, or more research may be required to determine\ntheir status. If so, this API will return a status of \"not confirmed.\" Reasons\nfor this can include dishonorable character of service, insufficient length of\nactive duty service, dates of service, or disability details. For more\ninformation about interpreting a status of \"not confirmed\" and suggested\nfollow-up actions, see the not confirmed reasons section of this page.\n\n**Important:**\nThis API does not provide details about a person's service experience or\ninsight into why a person is `\"not confirmed\"` as a Title 38 Veteran. The\n[Veteran Service History and Eligibility API](https://developer.va.gov/explore/verification/docs/veteran_verification?version=current)\nhas different authentication methods and can provide additional information\nabout Veterans. Veterans can obtain additional information about their service\nhistory on [VA.gov](https://www.va.gov/).\n\n## Technical Overview\n\n### Not confirmed reasons\nIf the API returns a veteran_status of \"not confirmed\", it will also return\n one of the following ```not_confirmed_reason``` values:\n\n- ```PERSON_NOT_FOUND``` : The person was not found in VA source systems with\nthe provided information.\n    - **Suggested action**: Re-check information and try query again. Including\n    more demographic data for a Veteran increases the likelihood of finding\n    their records in VA source systems.\n- ```NOT_TITLE_38```: VA data sources indicate that the person does not have\nTitle 38 status.\n    - **Suggested action**: The person should contact VA if they believe they\n     should have Title 38 status.\n- ```MORE_RESEARCH_REQUIRED```: VA cannot confirm the person's Title 38 status\n with existing records.\n    - **Suggested action**: The Veteran should request a manual review from VA\n     if they believe that they should have Title 38 status.\n- ```ERROR```: One or more VA source systems is not available or returned\n an error response.\n    - **Suggested action**:  Run the request again.\n\n### Authentication and authorization\nThis API requires an API key together with identifiable information for\nthe person being confirmed. API requests are authorized with an API key\nprovided in an HTTP header named apikey.\n\n### Test data\nWe use mock test data in the sandbox environment. APIs accessed via the\nSandbox environment are using the same underlying logic as VA's production\nAPIs; only the underlying data store is different.\n\nUse these [test user attributes](https://developer.va.gov/explore/api/veteran-confirmation/test-users)\nin sandbox to populate the request body as only test users can return a\n`\"confirmed\"` response. In sandbox, only a test user's date of birth and\nzip code are used to identify a Veteran.\n\n\n\nContact Support:\n Name: developer.va.gov",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,3242 @@
+{
+  "item": [
+    {
+      "id": "0543ac1f-4091-4c69-ad43-d88e2e816e1e",
+      "name": "Letters",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58330e09-b09f-44ad-b87d-11fbd34e4034",
+          "name": "Returns a list of letters that a Veteran or a dependent is eligible for.",
+          "request": {
+            "name": "Returns a list of letters that a Veteran or a dependent is eligible for.",
+            "description": {
+              "content": "  The endpoint also returns the specific data that will be populated\n  within each eligible letter. This includes, if relevant:\n\n\n  * Veteran's or dependent's address\n  * Veteran service details\n  * Benefits information the Veteran or dependent is eligible for\n  * Survivor benefits awarded\n\n  If the API is able to determine eligibility for some but not all letters because\n  a partner is down, the list of letters for which a Veteran or dependent is\n  determined to be eligible will be returned, along with a\n  \"letterGeneration.letterEligibilityError\" message.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eligible-letters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "(Required) MPI ICN"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "letters.read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/veteran-letters/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "db2cb1f2-ae2a-4c5c-afe7-93652ffd24e3",
+              "name": "A Response which indicates a successful Request. The Response may contain \"messages\" that could describe warnings or further information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"benefitInformation\": {\n    \"serviceConnectedPercentage\": 2,\n    \"awardEffectiveDateTime\": \"2016-02-04T17:51:56Z\",\n    \"monthlyAwardAmount\": {\n      \"value\": 2673,\n      \"currency\": \"USD\"\n    },\n    \"serviceConnectedDisabilities\": true,\n    \"nonServiceConnectedPension\": false,\n    \"individualUnemployabilityGranted\": false,\n    \"chapter35Eligibility\": true,\n    \"specialMonthlyCompensation\": false,\n    \"adaptedHousing\": false,\n    \"chapter35EligibilityDateTime\": \"2016-02-04T17:51:56Z\",\n    \"hasDeathResultOfDisability\": false,\n    \"hasSurvivorsIndemnityCompensationAward\": false,\n    \"hasSurvivorsPensionAward\": false\n  },\n  \"letterDestination\": {\n    \"addressLine1\": \"2476 MAIN STREET\",\n    \"country\": \"USA\",\n    \"addressLine2\": \"STE # 12\",\n    \"addressLine3\": \"West\",\n    \"city\": \"RESTON\",\n    \"state\": \"VA\",\n    \"zipCode\": \"12345\",\n    \"fullName\": \"John A Smith\"\n  },\n  \"letters\": [\n    {\n      \"letterName\": \"Benefit Summary Dependent\",\n      \"letterType\": \"BENEFIT_SUMMARY_DEPENDENT\"\n    },\n    {\n      \"letterName\": \"Benefit Summary Dependent\",\n      \"letterType\": \"BENEFIT_SUMMARY_DEPENDENT\"\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"letterGeneration.letterEligibilityError\",\n      \"text\": \"string\",\n      \"severity\": \"WARN\"\n    },\n    {\n      \"key\": \"letterGeneration.letterEligibilityError\",\n      \"text\": \"string\",\n      \"severity\": \"WARN\"\n    }\n  ],\n  \"militaryServices\": [\n    {\n      \"branch\": \"Army\",\n      \"characterOfService\": \"HONORABLE\",\n      \"releasedDateTime\": \"2016-02-04T17:51:56Z\",\n      \"enteredDateTime\": \"2016-02-04T17:51:56Z\"\n    },\n    {\n      \"branch\": \"Army\",\n      \"characterOfService\": \"HONORABLE\",\n      \"releasedDateTime\": \"2016-02-04T17:51:56Z\",\n      \"enteredDateTime\": \"2016-02-04T17:51:56Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e453d46-63e0-4a39-a248-d995b3d3665e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/v1/api-schema/errors/constraint-violation\",\n  \"title\": \"Invalid field value\",\n  \"status\": 400,\n  \"detail\": \"Data in request is malformed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca582e70-86be-406d-a811-88e2b89edcb6",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf07ddad-7343-4eba-886a-77e9d75e7231",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f8e1f28-a08e-47ed-8946-36b02327d63e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/generic/not-found\",\n  \"title\": \"Person for ICN not found\",\n  \"status\": 404,\n  \"detail\": \"No data found for ICN\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a945ac-458c-4f27-be34-76247fe15862",
+              "name": "Not Acceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/v1/api-schema/errors/not-acceptable\",\n  \"title\": \"Media type not acceptable\",\n  \"status\": 406,\n  \"detail\": \"Could not find acceptable representation\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efd72270-c922-43a8-83de-8480bcd20989",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "beba3e03-10b2-4915-b030-b8fb2db00606",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/va-profile/address-exception\",\n  \"title\": \"Va Profile address invalid\",\n  \"status\": 422,\n  \"detail\": \"No zipCode5 provided for domestic address\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c92cec2e-e142-490c-9fba-7e8624f469b4",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cd7cf87-e60b-4d90-84ba-b8a5d529a15d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/errors/generic/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal Server Error\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a42dfdd-d6ea-4602-b2e1-3a49797a4889",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eligible-letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70e083cc-0e88-4ffb-9e2f-c5dab8048b48",
+          "name": "Generates JSON-formatted letter content by letter type.",
+          "request": {
+            "name": "Generates JSON-formatted letter content by letter type.",
+            "description": {
+              "content": "Returns the descriptions and content of letters a Veteran or dependent is eligible for in JSON format.\n| If the GET /eligible-letters endpoint returns | Generate the letter contents with these query parameters |\n| --- | --- |\n| hasServiceConnectedDisabilities | serviceConnectedDisabilities |\n| serviceConnectedPercentage | serviceConnectedEvaluation |\n| hasNonServiceConnectedPension | nonServiceConnectedPension |\n| monthlyAwardAmount<br />And<br />awardEffectiveDate | monthlyAward |\n| hasIndividualUnemployabilityGranted | unemployable |\n| hasSpecialMonthlyCompensation | specialMonthlyCompensation |\n| hasAdaptedHousing | adaptedHousing |\n| hasChapter35Eligibility | chapter35Eligibility |\n| hasDeathResultOfDisability | deathResultOfDisability |\n| hasSurvivorsPensionAward | survivorsAward |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letter-contents",
+                ":letterType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "(Required) MPI ICN"
+                },
+                {
+                  "disabled": false,
+                  "key": "militaryService",
+                  "value": "true",
+                  "description": "Include military service"
+                },
+                {
+                  "disabled": false,
+                  "key": "serviceConnectedDisabilities",
+                  "value": "true",
+                  "description": "Include service connected disabilities"
+                },
+                {
+                  "disabled": false,
+                  "key": "serviceConnectedEvaluation",
+                  "value": "true",
+                  "description": "Include service connected evaluation"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonServiceConnectedPension",
+                  "value": "true",
+                  "description": "Include non-service connected pension"
+                },
+                {
+                  "disabled": false,
+                  "key": "monthlyAward",
+                  "value": "true",
+                  "description": "Include monthly award"
+                },
+                {
+                  "disabled": false,
+                  "key": "unemployable",
+                  "value": "true",
+                  "description": "Include unemployable data"
+                },
+                {
+                  "disabled": false,
+                  "key": "specialMonthlyCompensation",
+                  "value": "true",
+                  "description": "Include special monthly compensation"
+                },
+                {
+                  "disabled": false,
+                  "key": "adaptedHousing",
+                  "value": "true",
+                  "description": "Include adapted housing"
+                },
+                {
+                  "disabled": false,
+                  "key": "chapter35Eligibility",
+                  "value": "true",
+                  "description": "Include chapter 35 eligibility"
+                },
+                {
+                  "disabled": false,
+                  "key": "deathResultOfDisability",
+                  "value": "true",
+                  "description": "Include death result of disability"
+                },
+                {
+                  "disabled": false,
+                  "key": "survivorsAward",
+                  "value": "true",
+                  "description": "Include survivors pension award"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "letterType",
+                  "description": "(Required) Letter Type"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "letters.read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/veteran-letters/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1261a66a-9844-4947-8781-f60aa35e3137",
+              "name": "Json representation of a letter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"letterDescription\": \"This letter shows the benefits you're receiving from VA. The letter also shows your benefit gross amount (the amount before anything is taken out) and net amount (the amount after deductions are taken out), your benefit effective date, and your disability rating.\",\n  \"letterContent\": [\n    {\n      \"contentKey\": \"gross-benefit\",\n      \"contentTitle\": \"Gross Benefit Amount\",\n      \"content\": \"$1,288.03\"\n    },\n    {\n      \"contentKey\": \"gross-benefit\",\n      \"contentTitle\": \"Gross Benefit Amount\",\n      \"content\": \"$1,288.03\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb22b145-5b0f-4925-840b-a19e59c62daa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/v1/api-schema/errors/constraint-violation\",\n  \"title\": \"Invalid field value\",\n  \"status\": 400,\n  \"detail\": \"Data in request is malformed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae8b478d-e9ad-48f9-ae5d-06e8cd3f9d37",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a3c2bc0-31d3-478f-980f-172264c3a79a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf1e4e8-216d-4f54-ab85-eac13b07984c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/generic/not-found\",\n  \"title\": \"Person for ICN not found\",\n  \"status\": 404,\n  \"detail\": \"No data found for ICN\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5424750d-1e5a-4c22-90c6-e949493d4cfd",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7543d985-d401-48f9-a3ed-8d23dacebcbc",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/va-profile/address-exception\",\n  \"title\": \"Va Profile address invalid\",\n  \"status\": 422,\n  \"detail\": \"No zipCode5 provided for domestic address\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "377b4186-09ce-4ee4-a9aa-0ee0e816a854",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0261284-2f4e-4dfd-8189-dfda05d0b5f8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/errors/generic/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal Server Error\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3c8c34f-3f7b-489f-aaec-852460cd0b15",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letter-contents",
+                    ":letterType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5ce460e-be12-41d3-884f-317cd6afb438",
+          "name": "Generates PDF letters by letter type.",
+          "request": {
+            "name": "Generates PDF letters by letter type.",
+            "description": {
+              "content": "Returns the letters a Veteran or dependent is eligible for, with watermarks and logo, in PDF format.\n| If the GET /eligible-letters endpoint returns | Generate the letter with these query parameters |\n| --- | --- |\n| hasServiceConnectedDisabilities | serviceConnectedDisabilities |\n| serviceConnectedPercentage | serviceConnectedEvaluation |\n| hasNonServiceConnectedPension | nonServiceConnectedPension |\n| monthlyAwardAmount<br />And<br />awardEffectiveDate | monthlyAward |\n| hasIndividualUnemployabilityGranted | unemployable |\n| hasSpecialMonthlyCompensation | specialMonthlyCompensation |\n| hasAdaptedHousing | adaptedHousing |\n| hasChapter35Eligibility | chapter35Eligibility |\n| hasDeathResultOfDisability | deathResultOfDisability |\n| hasSurvivorsPensionAward | survivorsAward |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letters",
+                ":letterType",
+                "letter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "(Required) MPI ICN"
+                },
+                {
+                  "disabled": false,
+                  "key": "militaryService",
+                  "value": "true",
+                  "description": "Include military service"
+                },
+                {
+                  "disabled": false,
+                  "key": "serviceConnectedDisabilities",
+                  "value": "true",
+                  "description": "Include service connected disabilities"
+                },
+                {
+                  "disabled": false,
+                  "key": "serviceConnectedEvaluation",
+                  "value": "true",
+                  "description": "Include service connected evaluation"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonServiceConnectedPension",
+                  "value": "true",
+                  "description": "Include non-service connected pension"
+                },
+                {
+                  "disabled": false,
+                  "key": "monthlyAward",
+                  "value": "true",
+                  "description": "Include monthly award"
+                },
+                {
+                  "disabled": false,
+                  "key": "unemployable",
+                  "value": "true",
+                  "description": "Include unemployable data"
+                },
+                {
+                  "disabled": false,
+                  "key": "specialMonthlyCompensation",
+                  "value": "true",
+                  "description": "Include special monthly compensation"
+                },
+                {
+                  "disabled": false,
+                  "key": "adaptedHousing",
+                  "value": "true",
+                  "description": "Include adapted housing"
+                },
+                {
+                  "disabled": false,
+                  "key": "chapter35Eligibility",
+                  "value": "true",
+                  "description": "Include chapter 35 eligibility"
+                },
+                {
+                  "disabled": false,
+                  "key": "deathResultOfDisability",
+                  "value": "true",
+                  "description": "Include death result of disability"
+                },
+                {
+                  "disabled": false,
+                  "key": "survivorsAward",
+                  "value": "true",
+                  "description": "Include survivors pension award"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "letterType",
+                  "description": "(Required) Letter Type"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "letters.read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/veteran-letters/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7832308b-5acc-4749-92a1-421cc9f73e5e",
+              "name": "Actual PDF File, application/pdf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/pdf"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/pdf"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "93992ed8-a982-4e8f-9261-242d4d8ccfe7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/v1/api-schema/errors/constraint-violation\",\n  \"title\": \"Invalid field value\",\n  \"status\": 400,\n  \"detail\": \"Data in request is malformed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54f6e0c9-44e3-45de-97e0-545a7e3c4a41",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04abde6a-dd82-40b8-abff-c60cc6f85a79",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cc8d7f7-0d4c-4f71-b14b-211dc7feea78",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/generic/not-found\",\n  \"title\": \"Person for ICN not found\",\n  \"status\": 404,\n  \"detail\": \"No data found for ICN\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f02893a6-5f5d-4437-889a-fee2fc934cee",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99490086-2b6d-4cc2-b3d6-c389a8c01de4",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/va-letter-generator/errors/va-profile/address-exception\",\n  \"title\": \"Va Profile address invalid\",\n  \"status\": 422,\n  \"detail\": \"No zipCode5 provided for domestic address\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d51f563-b4a1-4f52-9994-50b48c371876",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "549986c5-6006-4773-890d-05c2078be6b5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/letters/errors/generic/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal Server Error\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffb11cd7-2538-4fab-972f-d189eebca6e8",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":letterType",
+                    "letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    },
+                    {
+                      "key": "militaryService",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedDisabilities",
+                      "value": "false"
+                    },
+                    {
+                      "key": "serviceConnectedEvaluation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "nonServiceConnectedPension",
+                      "value": "false"
+                    },
+                    {
+                      "key": "monthlyAward",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unemployable",
+                      "value": "false"
+                    },
+                    {
+                      "key": "specialMonthlyCompensation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "adaptedHousing",
+                      "value": "false"
+                    },
+                    {
+                      "key": "chapter35Eligibility",
+                      "value": "false"
+                    },
+                    {
+                      "key": "deathResultOfDisability",
+                      "value": "false"
+                    },
+                    {
+                      "key": "survivorsAward",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "letterType",
+                      "description": "(Required) Letter Type"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v1",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/va-letter-generator/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4cdec08f-7318-4e3c-85c2-9cf27b47dffb",
+    "name": "VA Letter Generator API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The VA Letter Generator API lets Veterans and their eligible dependents\ngenerate and download official VA letters with watermarks and logos.\nVeterans and their dependents may only generate and download letters\nfor which they are eligible. The letters will be populated with the\nVeteran's or eligible dependent's address, Veteran service details,\nand the Veteran's or dependent's benefits information when returned.\n\nThe letters that can be returned to a\nVeteran or dependent based on their eligibility are:\n\n* Service verification\n* Commissary access (including short term access)\n* Benefit verification\n* Proof of service\n* Medicare Part D\n* Minimum essential coverage\n* Civil service\n* VA benefit summary and award\n* VA benefit summary and award for dependents\n* Foreign Medical Program benefits authorization\n\n## Technical overview\nThe VA Letter Generator API uses a Veteran's or dependent's ICN to\ndetermine what letters they are eligible for and then generates\nthose letters.\nWhen using this API, keep in mind that:\n\n*  Letters generated are not retained by VA. If the Veteran or a\ndependent needs a replacement letter or if their eligibility changes,\nthey will need to generate a new letter.\n* Newly generated letters may differ from previously generated ones\nbecause this API returns only the most up-to-date information about\na Veteran and their dependents.\n* If the Veteran or eligible dependent needs to update their address,\nthey may do so through their [VA Profile](https://www.va.gov/sign-in/?oauth=false).\nUpdates are immediately available for this API.\n* Users having trouble downloading letters generated from this API should\ndownload the most recent version of Adobe Acrobat.\n* If a va_eauth_service_transaction_id was sent, the header of all API\nresponses (including error messages) will include it.\n\n### Authentication and Authorization\nThe authentication model for the VA Letter Generator API is based\non OAuth 2.0 / OpenID Connect and supports\n[client credentials grant](https://developer.va.gov/explore/authorization/docs/client-credentials?api=va_letter_generator).\n\n**Important**: To get production access using client credentials grant, you\nmust either work for VA or have specific VA agreements in place. If\nyou have questions, [contact us](https://developer.va.gov/support/contact-us).\n\n### Test data\n\nUse [test data](https://developer.va.gov/explore/api/va-letter-generator/test-users)\nto validate your application's integration with our API in the sandbox\nenvironment. Sandbox test data contains no PII or PHI but mimics\nVeterans' and dependents' addresses and benefits information.\n\n\nContact Support:\n Name: VA.gov",
+      "type": "text/plain"
+    }
+  }
+}

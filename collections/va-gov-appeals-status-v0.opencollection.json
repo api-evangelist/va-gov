@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Appeals",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Appeals Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve appeals status for the Veteran with the supplied SSN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/appeals/{version}/appeals",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": "796130115"
+              },
+              {
+                "name": "X-VA-User",
+                "value": "va.api.user+idme.001@gmail.com"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all known appeal records for the given Veteran. Includes details of each appeal's current status, priority, and history of updates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

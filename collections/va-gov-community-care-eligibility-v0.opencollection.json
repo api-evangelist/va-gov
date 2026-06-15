@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Community Care Eligibility",
+    "version": "v0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://sandbox-api.va.gov/oauth2/authorization",
+      "accessTokenUrl": "https://sandbox-api.va.gov/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/community-care/{version}/eligibility/search",
+            "params": [
+              {
+                "name": "patient",
+                "value": "011235813V213455",
+                "type": "query",
+                "description": "The patient's ICN"
+              },
+              {
+                "name": "serviceType",
+                "value": "Gastroenterology",
+                "type": "query",
+                "description": "The patient's desired medical service type for community care"
+              },
+              {
+                "name": "extendedDriveMin",
+                "value": "",
+                "type": "query",
+                "description": "Optional extended drive-radius to include more VA medical facilities in response. This does not change overall eligibility and must exceed standard drive time for the service-type.)"
+              }
+            ]
+          },
+          "docs": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

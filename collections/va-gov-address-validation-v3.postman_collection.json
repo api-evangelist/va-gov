@@ -1,0 +1,1701 @@
+{
+  "item": [
+    {
+      "id": "e10593f7-f5bb-4484-bd33-44a39798e864",
+      "name": "AddressValidation-v3",
+      "description": {
+        "content": "Address Standardization and Validation endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "035b46fb-c7b1-4517-8ea8-68190e959f15",
+          "name": "Validates and standardizes an address.",
+          "request": {
+            "name": "Validates and standardizes an address.",
+            "description": {
+              "content": "This service will accept an address, standardize it based on country, validate that the address is deliverable, and return the address with any inferred or corrected data. If an address is not found, or if the confidence score is low, it may be useful to try the POST /candidate endpoint that can return multiple possible matches. <table><thead><tr><th>Message Key</th><th>Message Code</th><th>Description</th></tr></thead><tbody><tr><td>zipCode4.Size</td><td></td><td>size must be between 0 and 4</td></tr><tr><td>addressLine2.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>addressLine3.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>zipCode5.Size</td><td></td><td>size must be between 0 and 5</td></tr><tr><td>country.countryCodeISO2.Size</td><td></td><td>size must be between 0 and 2</td></tr><tr><td>country.countryCodeFIPS.Size</td><td></td><td>size must be between 0 and 2</td></tr><tr><td>cityName.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>intPostalCode.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>addressLine1.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>country.countryCodeISO3.Size</td><td></td><td>size must be between 0 and 3</td></tr><tr><td>province.provinceName.Size</td><td></td><td>size must be between 0 and 255</td></tr><tr><td>deliveryPointNotConfirmed</td><td>ADDR305</td><td>VA Profile Validation Failed: Delivery Point is Not Confirmed for Domestic Correspondence Addresses</td></tr><tr><td>lowConfidenceScore</td><td>ADDR306</td><td>VaProfile Validation Failed: Confidence Score less than {0}</td></tr><tr><td>additionalInput</td><td>ADDR307</td><td>VaProfile Validation Failed: Additional Input found please review</td></tr><tr><td>InvalidInputCharacters</td><td>ADDR314</td><td>The address contains an invalid white space or control character.  This error cannot be used in conjunction with an address override indicator. Invalid characters include: backspace, form feed, new line, carriage return, or a control character.</td></tr><tr><td>SpectrumServiceError</td><td>ADDRVAL101</td><td>The Spectrum Service returned an error</td></tr><tr><td>SpectrumServiceAddressError</td><td>ADDRVAL102</td><td>The Spectrum Service returned an address error</td></tr><tr><td>CountryLookupServiceError</td><td>ADDRVAL103</td><td>The Country Lookup Service returned an error</td></tr><tr><td>InvalidRequestError</td><td>ADDRVAL105</td><td>The request was invalid</td></tr><tr><td>country.countryName.Size</td><td>ADDRVAL106</td><td>size must be between 0 and 35</td></tr><tr><td>state.stateName.Size</td><td>ADDRVAL107</td><td>size must be between 0 and 50</td></tr><tr><td>AddressCouldNotBeCorrected</td><td>ADDRVAL109</td><td>The Address could not be corrected</td></tr><tr><td>CountryNotSupported</td><td>ADDRVAL110</td><td>The Address Country is not supported at this time</td></tr><tr><td>DualAddressError</td><td>ADDRVAL111</td><td>This dual address is not in the proper format, please make sure the street address and PO box are valid for the 5 digit zip code entered</td></tr><tr><td>AddressCouldNotBeFound</td><td>ADDRVAL112</td><td>The Address could not be found</td></tr><tr><td>CountryLookupUnavailable</td><td>ADDRVAL114</td><td>The Country lookup service could not be reached</td></tr><tr><td>UniqueZipCode</td><td>ADDRVAL115</td><td>The address that was validated is in a unique zip code. The address is deliverable, but the street address was not verified and the geolocation may not be accurate.</td></tr><tr><td>DomesticProvinceCheck</td><td>ADDRVAL115</td><td>Province Name or Province Code should not be sent with a state code or state name on a domestic address.</td></tr><tr><td>PostalCodeInput</td><td>ADDRVAL116</td><td>Please send only the ZipCode5 or intPostalCode.</td></tr><tr><td>InvalidRequestCountry</td><td>ADDRVAL201</td><td>Only one of either country name or country code is required</td></tr><tr><td>InvalidRequestState</td><td>ADDRVAL202</td><td>Only one of either state name or state code is required</td></tr><tr><td>InvalidRequestStreetAddress</td><td>ADDRVAL203</td><td>One of addressLine1, addressLine2 or addressLine3 must be provided</td></tr><tr><td>InvalidRequestNonStreetAddress</td><td>ADDRVAL204</td><td>The request needs at least one address line and one non-address line field populated in order to process the request</td></tr><tr><td>InvalidRequestPostalCode</td><td>ADDRVAL205</td><td>Only one of either zipCode5 or international postal code is required</td></tr><tr><td>MultipleAddressError</td><td>ADDRVAL206</td><td>Multiple matches found for this address</td></tr><tr><td>MissingReferenceData</td><td>ADDRVAL207</td><td>The Address Validation API does not have the databases necessary to validate this address completely</td></tr><tr><td>InsufficientInputData</td><td>ADDRVAL208</td><td>Insufficient data provided for validation process</td></tr></tbody></table>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"addressLine1\": \"<string>\",\n    \"addressLine2\": \"<string>\",\n    \"addressLine3\": \"<string>\",\n    \"cityName\": \"<string>\",\n    \"zipCode5\": \"<string>\",\n    \"zipCode4\": \"<string>\",\n    \"intPostalCode\": \"<string>\",\n    \"state\": {\n      \"stateName\": \"<string>\",\n      \"stateCode\": \"<string>\"\n    },\n    \"province\": {\n      \"provinceName\": \"<string>\",\n      \"provinceCode\": \"<string>\"\n    },\n    \"country\": {\n      \"countryName\": \"<string>\",\n      \"countryCodeFIPS\": \"<string>\",\n      \"countryCodeISO2\": \"<string>\",\n      \"countryCodeISO3\": \"<string>\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e24af0ee-90ee-46c8-a7b2-9d2d00379ce0",
+              "name": "A Response which indicates a successful Request.  The Response may contain \"messages\" that could describe warnings or further information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"WARN\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"WARN\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ],\n  \"address\": {\n    \"county\": {\n      \"countyName\": \"Albemarle Count\",\n      \"countyCode\": \"51003\"\n    },\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"CORRESPONDENCE\",\n    \"geocode\": {\n      \"calcDate\": \"1979-03-30T16:55:37.079Z\",\n      \"locationPrecision\": 10,\n      \"latitude\": 38.0293,\n      \"longitude\": -78.4767\n    },\n    \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n    \"addressType\": \"Domestic\",\n    \"confidence\": 90\n  },\n  \"overrideValidationKey\": 7876\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "792c07e3-ce67-438c-86e4-4300ce136681",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \\\"messages\\\" element that will provide further information on the error.  This request shouldn't be retried until corrected.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"WARN\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": true\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"INFO\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5542d5cc-b160-4c2e-838d-a43e32073604",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b62c640f-50d7-4e4e-9d83-34437818dec9",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae1d9eac-cac3-4ddf-b096-d3ec60bd12b5",
+              "name": "The record you requested to retrieve or update could not be found.  Response may contain a  \"messages\" element that will provide further information on the error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53ccc853-4e7a-4e21-90a1-ed1659c34b04",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aa47c14-eb65-487d-9f6c-3d9693bc7d96",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc5aaa3f-8009-42af-b301-4d87ac751ba6",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \"messages\" element that will provide further information on the error.  Please retry.  If problem persists, please contact support with a copy of the Response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94c100bd-95ce-4aa5-bc96-e5a6ff7783ba",
+          "name": "Discovers possible addresses when a request could match multiple records.",
+          "request": {
+            "name": "Discovers possible addresses when a request could match multiple records.",
+            "description": {
+              "content": "This endpoint will return all possible matches for the given address request input. You may use this endpoint if an address was not found using POST /validate, or if the confidence score was low.<table><thead><tr><th>Message Key</th><th>Message Code</th><th>Description</th></tr></thead><tbody><tr><td>zipCode4.Size</td><td></td><td>size must be between 0 and 4</td></tr><tr><td>addressLine2.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>addressLine3.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>zipCode5.Size</td><td></td><td>size must be between 0 and 5</td></tr><tr><td>country.countryCodeISO2.Size</td><td></td><td>size must be between 0 and 2</td></tr><tr><td>country.countryCodeFIPS.Size</td><td></td><td>size must be between 0 and 2</td></tr><tr><td>cityName.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>intPostalCode.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>addressLine1.Size</td><td></td><td>size must be between 0 and 100</td></tr><tr><td>country.countryCodeISO3.Size</td><td></td><td>size must be between 0 and 3</td></tr><tr><td>province.provinceName.Size</td><td></td><td>size must be between 0 and 255</td></tr><tr><td>InvalidInputCharacters</td><td>ADDR314</td><td>The address contains an invalid white space or control character.  This error cannot be used in conjunction with an address override indicator. Invalid characters include: backspace, form feed, new line, carriage return, or a control character.</td></tr><tr><td>SpectrumServiceError</td><td>ADDRVAL101</td><td>The Spectrum Service returned an error</td></tr><tr><td>CountryLookupServiceError</td><td>ADDRVAL103</td><td>The Country Lookup Service returned an error</td></tr><tr><td>InvalidRequestError</td><td>ADDRVAL105</td><td>The request was invalid</td></tr><tr><td>country.countryName.Size</td><td>ADDRVAL106</td><td>size must be between 0 and 35</td></tr><tr><td>state.stateName.Size</td><td>ADDRVAL107</td><td>size must be between 0 and 50</td></tr><tr><td>CandidateAddressNotFound</td><td>ADDRVAL108</td><td>No Candidate Address Found</td></tr><tr><td>CountryNotSupported</td><td>ADDRVAL110</td><td>The Address Country is not supported at this time</td></tr><tr><td>CountryLookupUnavailable</td><td>ADDRVAL114</td><td>The Country lookup service could not be reached</td></tr><tr><td>UniqueZipCode</td><td>ADDRVAL115</td><td>The address that was validated is in a unique zip code. The address is deliverable, but the street address was not verified and the geolocation may not be accurate.</td></tr><tr><td>InvalidRequestCountry</td><td>ADDRVAL201</td><td>Only one of either country name or country code is required</td></tr><tr><td>InvalidRequestState</td><td>ADDRVAL202</td><td>Only one of either state name or state code is required</td></tr><tr><td>InvalidRequestStreetAddress</td><td>ADDRVAL203</td><td>One of addressLine1, addressLine2 or addressLine3 must be provided</td></tr><tr><td>InvalidRequestNonStreetAddress</td><td>ADDRVAL204</td><td>The request needs at least one address line and one non-address line field populated in order to process the request</td></tr><tr><td>InvalidRequestPostalCode</td><td>ADDRVAL205</td><td>Only one of either zipCode5 or international postal code is required</td></tr></tbody></table>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "candidate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"addressLine1\": \"<string>\",\n    \"addressLine2\": \"<string>\",\n    \"addressLine3\": \"<string>\",\n    \"cityName\": \"<string>\",\n    \"zipCode5\": \"<string>\",\n    \"zipCode4\": \"<string>\",\n    \"intPostalCode\": \"<string>\",\n    \"state\": {\n      \"stateName\": \"<string>\",\n      \"stateCode\": \"<string>\"\n    },\n    \"province\": {\n      \"provinceName\": \"<string>\",\n      \"provinceCode\": \"<string>\"\n    },\n    \"country\": {\n      \"countryName\": \"<string>\",\n      \"countryCodeFIPS\": \"<string>\",\n      \"countryCodeISO2\": \"<string>\",\n      \"countryCodeISO3\": \"<string>\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99df41ce-f73a-4e3c-af07-d4577c59ba2c",
+              "name": "A Response which indicates a successful Request.  The Response may contain \"messages\" that could describe warnings or further information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": true\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ],\n  \"candidateAddresses\": [\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1955-12-17T20:01:11.254Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_MISSING_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1987-12-23T20:54:27.904Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"UNDELIVERABLE\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1997-01-26T17:41:51.465Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_BAD_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1953-09-19T16:55:15.258Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MISSING_ZIP\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1967-05-03T15:07:53.205Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"UNDELIVERABLE\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1947-01-28T22:12:05.719Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"2010-06-17T10:55:43.498Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1992-05-15T08:51:16.552Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MISSING_ZIP\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"2007-11-12T12:19:19.141Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MISSING_ZIP\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"2009-08-31T16:09:02.752Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_MISSING_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1968-04-09T00:03:08.040Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MISSING_ZIP\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1996-11-04T19:59:54.603Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_BAD_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1986-04-25T18:46:52.168Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_MISSING_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"2008-02-25T10:30:48.138Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"CONFIRMED\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"2019-08-12T02:14:24.904Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1946-11-30T05:18:15.687Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"STREET_NUMBER_VALIDATED_BUT_BAD_UNIT_NUMBER\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1953-09-26T05:53:08.741Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"FALSE_POSITIVE\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1995-12-06T18:46:04.449Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"RESIDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1951-03-14T02:44:58.638Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"MULTIPLE_MATCHES_FOUND\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    },\n    {\n      \"county\": {\n        \"countyName\": \"Albemarle Count\",\n        \"countyCode\": \"51003\"\n      },\n      \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n      \"addressLine2\": \"2nd Floor\",\n      \"addressLine3\": \"Suite 250\",\n      \"cityName\": \"Charlottesville\",\n      \"zipCode5\": \"22911\",\n      \"zipCode4\": \"1111\",\n      \"intPostalCode\": \"N0A0C0\",\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"addressPOU\": \"CORRESPONDENCE\",\n      \"geocode\": {\n        \"calcDate\": \"1982-02-11T19:22:33.420Z\",\n        \"locationPrecision\": 10,\n        \"latitude\": 38.0293,\n        \"longitude\": -78.4767\n      },\n      \"deliveryPointValidation\": \"FALSE_POSITIVE\",\n      \"addressType\": \"Domestic\",\n      \"confidence\": 90\n    }\n  ],\n  \"overrideValidationKey\": 672\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "336c86b3-5993-496e-aedf-56553c2dca7e",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \\\"messages\\\" element that will provide further information on the error.  This request shouldn't be retried until corrected.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e37b6fa2-bf8b-4d27-b027-549f5eec22bf",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4641fea7-b8e1-42b1-b038-80697202ac1d",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bee1d1a5-0793-4528-ae47-d95c0cd30033",
+              "name": "The record you requested to retrieve or update could not be found.  Response may contain a  \"messages\" element that will provide further information on the error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97ce453d-c18b-4771-94a2-7e473bb493ca",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "101c6684-844c-412f-b919-8458ca51398f",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6310717f-5c1b-4db4-9a06-298523c85cee",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \"messages\" element that will provide further information on the error.  Please retry.  If problem persists, please contact support with a copy of the Response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "candidate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"addressLine1\": \"590 Peter Jefferson Pkwy\",\n    \"addressLine2\": \"2nd Floor\",\n    \"addressLine3\": \"Suite 250\",\n    \"cityName\": \"Charlottesville\",\n    \"zipCode5\": \"22911\",\n    \"zipCode4\": \"1111\",\n    \"intPostalCode\": \"N0A0C0\",\n    \"state\": {\n      \"stateName\": \"Virginia\",\n      \"stateCode\": \"VA\"\n    },\n    \"province\": {\n      \"provinceName\": \"Ontario\",\n      \"provinceCode\": \"ON\"\n    },\n    \"country\": {\n      \"countryName\": \"United States\",\n      \"countryCodeFIPS\": \"US\",\n      \"countryCodeISO2\": \"US\",\n      \"countryCodeISO3\": \"USA\"\n    },\n    \"addressPOU\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3825a163-822a-4607-adbe-203afaba1a07",
+          "name": "Returns the city and state or province associated with a zip code or international postal code.  For International addresses, locality lookup is only available for Canadian postal codes",
+          "request": {
+            "name": "Returns the city and state or province associated with a zip code or international postal code.  For International addresses, locality lookup is only available for Canadian postal codes",
+            "description": {},
+            "url": {
+              "path": [
+                "locality"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "zipCode5",
+                  "value": "<string>",
+                  "description": "Five-digit postal code assigned by United States Post Office to postal address."
+                },
+                {
+                  "disabled": false,
+                  "key": "intPostalCode",
+                  "value": "<string>",
+                  "description": "Alphanumeric code used by country other than United States for postal addresses."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21b66171-1f67-4c50-8fbf-a06499dbf8b8",
+              "name": "A Response which indicates a successful Request.  The Response may contain \"messages\" that could describe warnings or further information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"intPostalCode\": \"N0A0C0\",\n  \"zipCode5\": \"22911\",\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"INFO\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": true\n    }\n  ],\n  \"locality\": [\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    },\n    {\n      \"cityName\": \"Charlottesville\",\n      \"cityType\": \"P\",\n      \"country\": {\n        \"countryName\": \"United States\",\n        \"countryCodeFIPS\": \"US\",\n        \"countryCodeISO2\": \"US\",\n        \"countryCodeISO3\": \"USA\"\n      },\n      \"province\": {\n        \"provinceName\": \"Ontario\",\n        \"provinceCode\": \"ON\"\n      },\n      \"state\": {\n        \"stateName\": \"Virginia\",\n        \"stateCode\": \"VA\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1de5c131-2dfb-479a-9452-6c95ab2e76c4",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \\\"messages\\\" element that will provide further information on the error.  This request shouldn't be retried until corrected.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a01e2e6c-1042-4bd2-9662-6037f756e663",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58ff991e-dda1-4de5-a607-b97206deeaba",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a05978bb-0da1-4231-8b8e-daff96c95b3b",
+              "name": "The record you requested to retrieve or update could not be found.  Response may contain a  \"messages\" element that will provide further information on the error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0432b95c-30a5-4766-b082-b1f81023af26",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9f6aaad-e3d0-4ace-ba3e-35e31baad499",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73b1a3ef-f7ab-4c15-957f-a9b3af5dadbf",
+              "name": "There was an error encountered processing the Request.  Response will contain a  \"messages\" element that will provide further information on the error.  Please retry.  If problem persists, please contact support with a copy of the Response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locality"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "zipCode5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "intPostalCode",
+                      "value": "M5J 2L2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"FATAL\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    },\n    {\n      \"code\": \"string\",\n      \"key\": \"string\",\n      \"severity\": \"ERROR\",\n      \"text\": \"string\",\n      \"potentiallySelfCorrectingOnRetry\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "561795af-4fe0-4422-8550-34d1a2d8cf6b",
+    "name": "Address Validation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

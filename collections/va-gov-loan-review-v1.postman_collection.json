@@ -1,0 +1,1657 @@
+{
+  "item": [
+    {
+      "id": "44159040-f034-455c-9561-661c457df7de",
+      "name": "loanReviewPublic",
+      "description": {
+        "content": "Loan Review Public Resource",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8168be2e-559c-4a70-9f39-a5fc83cb6ec0",
+          "name": "Transmit documents for FFLR loan review",
+          "request": {
+            "name": "Transmit documents for FFLR loan review",
+            "description": {
+              "content": "This resource allows lenders to upload the post-close loan review package file along with final UCD/ULAD xmls. Only one loan review package file, one UCD xml, and one ULAD xml may be included.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transmit-documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "system.loan-review.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://staging-api.va.gov/oauth2/loan-guaranty/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanIdentifier\": \"<string>\",\n  \"loanReviewPackageFile\": \"<string>\",\n  \"xmlUCDBase64\": \"<string>\",\n  \"xmlULADBase64\": \"<string>\",\n  \"filename\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5e18bf6-6d25-4fa1-bfab-39229e643a4d",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b0bb508-fb8c-4901-a692-f309544bace6",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "919d3dcf-8a39-470f-bf0b-3078e0ecdc6a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Defines the authentication method that clients must use to gain access to the resource.",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "894251aa-b4aa-4e37-9517-93717fd1818a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "670f5cc8-b39b-4aab-9f11-379d465a2933",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "712221fa-0538-46dc-9878-068e269e05a0",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f9104d4-b1f7-4358-921e-6f42b4a23dbe",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 8568,\n  \"status\": 4751,\n  \"lgyRequestUuid\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea0745e2-c554-474e-88f0-c68fe30bac5e",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bd0d00e-403d-4583-aff2-46066390cb91",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "844346c3-c166-41f7-a60e-4fc7d8ae7567",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 1544224725393,\n  \"status\": 103,\n  \"lgyRequestUuid\": \"a4c1b87031473607\",\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"rejectedValue\": \"101010101010\",\n      \"field\": \"Loan Identifier\"\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"rejectedValue\": \"101010101010\",\n      \"field\": \"Loan Identifier\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d58efac-b457-4cc4-b0e1-a14937486cbb",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 3349,\n  \"status\": 5696,\n  \"lgyRequestUuid\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d0976eb-1152-4bfd-9220-602daacb2a72",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transmit-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"loanReviewPackageFile\": \"dGVzdHN0cmluZw==\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"filename\": \"Evidence.pdf\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5bbe2073-915c-4f8f-8666-adc2af2b06d7",
+          "name": "Transmit additional documents for FFLR loan review",
+          "request": {
+            "name": "Transmit additional documents for FFLR loan review",
+            "description": {
+              "content": "The loan selected for post-close loan review that the lender is providing pdfs of additional documents not provided in the initial remittance of the loan for post-close loan review. Up to 5 PDFs may be included, ideally consolidated into one PDF when possible, where all files in the submission align to a single documentType (either 'LR File' or 'LR Deficiency'). Files of both types should not be included in the same additional-documents submission. Optionally, one UCD xml, and/or one ULAD xml may be included.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "additional-documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "system.loan-review.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://staging-api.va.gov/oauth2/loan-guaranty/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanIdentifier\": \"<string>\",\n  \"xmlUCDBase64\": \"<string>\",\n  \"xmlULADBase64\": \"<string>\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"<string>\",\n      \"documentType\": \"<string>\",\n      \"fileType\": \"<string>\",\n      \"lrFileBase64\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"documentType\": \"<string>\",\n      \"fileType\": \"<string>\",\n      \"lrFileBase64\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cc03358-ce4d-4ec0-b753-8626ed7ccbcc",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aa31cde-6b72-4998-911d-5926e16ea262",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab04e7c5-7fc8-4d5b-9a89-c89935c3ba1a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Defines the authentication method that clients must use to gain access to the resource.",
+                  "key": "WWW-Authenticate",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b51c531-5a83-4508-abaf-43ec91c2da51",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d372344-addb-4573-ab81-48b485e041bc",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "301ba132-722f-48c1-9f36-d0878b14b938",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7624ece6-84c6-4c92-8157-03ad92c546a5",
+              "name": "Unsupported Media Type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 3349,\n  \"status\": 5696,\n  \"lgyRequestUuid\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4142a9d1-a7bd-4897-a639-98e3381cd4da",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1757c114-67a4-4d6d-8259-383235d23b80",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799b5e07-2ac8-4fdf-b2e0-510de94341bd",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 1544224725393,\n  \"status\": 2819,\n  \"lgyRequestUuid\": \"a4c1b87031473607\",\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"rejectedValue\": \"101010101010\",\n      \"field\": \"Loan Identifier\"\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"rejectedValue\": \"101010101010\",\n      \"field\": \"Loan Identifier\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f09362f-c650-4b6d-b570-aa0d88ad346a",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"timestamp\": 3349,\n  \"status\": 5696,\n  \"lgyRequestUuid\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"rejectedValue\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab5cdacd-e563-4307-ba68-10700fcec55e",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "additional-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"loanIdentifier\": \"101010101010\",\n  \"xmlUCDBase64\": \"dGVzdHN0cmluZw==\",\n  \"xmlULADBase64\": \"dGVzdHN0cmluZw==\",\n  \"additionalDocuments\": [\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    },\n    {\n      \"description\": \"Description of the additional document being provided to the VA to conduct their full file loan review\",\n      \"documentType\": \"LR File or LR Deficiency\",\n      \"fileType\": \"PDF\",\n      \"lrFileBase64\": \"dGVzdHN0cmluZw==\",\n      \"name\": \"abcd.pdf\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v1",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/loan-review/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f6772ff5-27d6-4a9c-98d3-8c81b3a09520",
+    "name": "VA Loan Guaranty - Loan Review REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<p>The Loan Review API lets lenders transmit post-close loan review related documents. This API lets lenders:</p><ul><li>Transmit Loan Review file</li><li>Transmit Uniform Closing Dataset (UCD) file</li><li>Transmit Uniform Loan Application Dataset (ULAD) file</li></ul></p><h2>Background</h2><p>Department of Veterans Affairs (VA) helps service members, Veterans, and eligible surviving spouses become homeowners. As part of our mission to serve Veterans, we provide a home loan guaranty benefit and other housing-related programs to help Veterans buy, build, repair, retain, or adapt a home for personal occupancy.</p><p>VA home loans are provided by private lenders, such as banks and mortgage companies. VA guarantees a portion of the loan, enabling the lender to provide Veterans with more favorable terms.</p><p>Today, lenders must login to WebLGY to manually upload documentation in support of a Full File Loan Review (FFLR) request.</p><p>The Loan Review API streamlines the submission of documentation in support of a Full File Loan Review (FFLR) request. The Loan Review API:</p><ol><li>Allows lenders to remain in their Loan Origination System (LOS) for these interactions with VA, and</li><li>Reduces manual data entry, saving time and improving data accuracy.</li></ol></p><h2>Technical Overview</h2><p>You can learn about how the VA Home Loan Guaranty process works by visiting the <a href=\"https://www.benefits.va.gov/HOMELOANS/technology-knowledge-center.asp\">Home Loans Technology Knowledge Center</a> website. Specific, detailed technical information related to this API can be found in our <a href=\"https://www.benefits.va.gov/HOMELOANS/documents/tech/Loan_Review_API_Companion_Document.pdf\">companion document</a>.</p><p>Some endpoints limit the number of files a payload can contain, and you can find those limitations within the endpoint details. Size limits do apply:</p><ul><li>No single file in a payload can exceed 100 MB</li><li>The entire payload cannot exceed 100 MB</li></ul></p><p>There is also a validation to ensure the file type included in a file name matches the file type of the file being uploaded. (e.g., If the file type is PDF, the API will validate that the file is in PDF format.)</p><h2>Authentication and Authorization</h2><p>The authentication model for the Loan Review API is based on OAuth 2.0 / OpenID Connect and supports the <a href=\"https://developer.va.gov/explore/api/loan-review/client-credentials\">client credentials grant</a>.</p><h2>Test Data</h2><p>The database powering our sandbox environment is populated with Veteran and loan test data. Sandbox test data mimics real Veteran data but but contains no protected health information or personally identifiable information. The LIN in your API request must match the LIN captured in the UCD and ULAD XMLs. Detailed testing information can be found on the Technology Knowledge Center <a href=\"https://www.benefits.va.gov/HOMELOANS/Loan_Review.asp\">Loan Review API page</a>.</p>",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,494 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veteran Service History and Eligibility API",
+    "version": "2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ACA Coverage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA). (restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/restricted/aca_coverage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  This endpoint checks a Veteran's enrollment status for minimum essential\n  coverage (MEC), as defined by the Affordable Care Act (ACA), for a specified\n  date range.\n\n  The response includes a code for Veteran's health benefits status for\n  the request's date range. If the status returned is \"APPLICANT_ENROLLED,\"\n  the response also includes the start and end dates of the coverage. If multiple\n  enrollments are found for the requested date range, multiple start and end dates are\n  returned (li"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Disability Rating",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/disability_rating",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommen"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/restricted/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's combined and individual disability ratings and\nrelated decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.\n\nIf using Social Security number, the following information is required:\n* Social Security number\n* First name\n* Last name\n* Birth date\n\nIf using demographic data, the following information is required:\n* First Name\n* Last Name\n* Birth date\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nThe"
+        },
+        {
+          "info": {
+            "name": "Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/summary/disability_rating",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/summary/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommen"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/restricted/summary/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.   It allows searching for a Veteran using Social   Security number and demographic information.\n\n  If using Social Security number, the following information is required:\n  * Social Security number\n  * First name\n  * Last name\n  * Birth date\n\n  If using demographic data, the following information is required:\n  * First Name\n  * Last Name\n  * Birth date\n  * Street Address\n  * City\n  * State\n  * Country\n  * Zipc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Enrolled Benefits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get enrolled benefits information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/enrolled_benefits",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns select enrolled benefits for a Veteran.\nIf the Veteran is enrolled, the codes and names for benefits they are\nreceiving will be returned for the following benefit types:\n\n* Compensation (Code C)\n* 306 Pension (Code 306P)\n* Old Law Pension (Code OLP)\n* Improved Pension (Code IP)\n"
+        },
+        {
+          "info": {
+            "name": "Get enrolled benefits information using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/enrolled_benefits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns select enrolled benefits for a Veteran.\nIf the Veteran is enrolled, the codes and names for benefits they are\nreceiving will be returned for the following benefit types:\n\n* Compensation (Code C)\n* 306 Pension (Code 306P)\n* Old Law Pension (Code OLP)\n* Improved Pension (Code IP)\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n\nTips for finding a match:\n\n* First a"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Flashes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve certain benefit flashes associated with a Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/flashes",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "A flash is an attribute on a Veteran's profile that describes special\ncircumstances which can apply to a Veteran. Flashes can aid in\nproperly routing claims or determining eligibility for some VA\nbenefits.\n\nThis endpoint currently shares the following flashes\nif they have been assigned to the Veteran.\n\n* Agent Orange (AO) Exposure Verified\n* Gulf War Veteran PACT Eligibility Verified\n\nIf neither of these flashes exist for the Veteran, then a 200 response\nwith an empty dataset will be returned.\n\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve certain benefit flashes associated with a Veteran using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/flashes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "A flash is an attribute on a Veteran's profile that describes special\ncircumstances which can apply to a Veteran. Flashes can aid in\nproperly routing claims or determining eligibility for some VA\nbenefits.\n\nThis endpoint currently shares the following flashes\nif they have been assigned to the Veteran.\n\n* Agent Orange (AO) Exposure Verified\n* Gulf War Veteran PACT Eligibility Verified\n\nIf you have a use case for additional flashes, please\ncontact us with the details.\n\nRequired information:\n* Firs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Permanent And Total Disability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about a Veteran's P&T disability and IU disability statuses and effective dates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/permanent_and_total_disability",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates, based on the ID in the bearer token."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's P&T disability and IU disability statuses and effective dates, based on demographic data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/permanent_and_total_disability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": " This endpoint returns a Veteran's information about permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates.\n\n  Required information:\n\n  * First name\n  * Last name\n  * Date of birth\n  * Street address\n  * City\n  * State\n  * Country\n  * ZIP code\n\n  Optional information:\n\n  * Middle name\n  * Gender\n  * Mother's maiden name\n  * Home phone number\n  * Birthplace city\n  * Birthplace state\n  * Birthplace country\n\n  Tips for findin"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's P&T disability and IU disability statuses and effective dates (restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/restricted/permanent_and_total_disability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns a Veteran's information about permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates. It allows searching for a Veteran using a Social Security number and demographic information.\n\n If using a Social Security number,  the following information is required:\n\n * Social Security number\n * First name\n * Last name\n * Date of birth\n\n If using demographic data,  the following information is required:\n\n * Firs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Service History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the service history of a Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/service_history",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's detailed service history, including all military service episodes with the first and last name of the Veteran, the branch of service, start and end dates, paygrade, discharge status, and separation reason. It also provides start and end dates and locations for each deployment within each episode of service."
+        },
+        {
+          "info": {
+            "name": "Retrieve the service history of a Veteran using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/service_history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint provides a Veteran's detailed service history including all military\nservice episodes with the first and last name of the Veteran, the branch of service,\nstart and end dates, paygrade, discharge status, and separation reason. It also\nprovides start and end dates and locations for each deployment within each episode\nof service.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Ge"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Confirm whether an individual is a Title 38 Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/status",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": " Indicates whether an individual is \"Confirmed\" or \"Not Confirmed\" as a\n [Title 38 Veteran](https://www.ecfr.gov/current/title-38) according to VA.\n  ```\"not confirmed\"``` can mean several different things, depending on\n the following not_confirmed_reason values:\n- ```PERSON_NOT_FOUND```: The person was not found in VA source systems\n with the provided information. Including more demographic data\n for a Veteran increases the likelihood of finding their records\n in VA source systems.\n - ```NOT_TI"
+        },
+        {
+          "info": {
+            "name": "Confirm whether an individual is a Title 38 Veteran using demographics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts demographic information for the person to\nbe confirmed and matches it against VA records. If there are\ndifferences between the data entered and the data on file, a\nmatch to a person may not be found. If a successful match is\nidentified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different things, depending on\nthe followin"
+        },
+        {
+          "info": {
+            "name": "Confirm whether an individual is a Title 38 veteran using Social Security number and demographics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/restricted/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/veteran-verification/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts a Social Security number and/or demographic\ninformation for the person to be confirmed and matches it against\nVA records. If there are differences between the data entered and\nthe data on file, a match to a person may not be found. If a\nsuccessful match is identified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

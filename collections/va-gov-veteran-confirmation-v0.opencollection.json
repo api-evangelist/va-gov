@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veteran Confirmation",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "veteran_confirmation_status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get confirmation about an individual's Veteran status according to the VA",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran_confirmation/{version}/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get confirmation about an individual's Veteran status according to the VA"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

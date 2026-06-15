@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benefits Documents Service API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documents Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the upload status of multiple disability claim documents.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/uploads/status",
+            "params": [
+              {
+                "name": "includeInternalOnlyStepStatuses",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Returns the current processing status of multiple disability\n   claims document uploads related to the given list of request IDs.\n"
+        },
+        {
+          "info": {
+            "name": " Returns all VBMS document names associated with a participantId.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/participant/documents/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": " Returns a list of all VBMS document names related to participantId.\n"
+        },
+        {
+          "info": {
+            "name": "Download the document for a participant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/participant/documents/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Use this endpoint to download the full content of a document (such\n  as a PDF). The document must be identified by its unique ID, and associated with\n  either a Participant ID or File Number.\n"
+        },
+        {
+          "info": {
+            "name": "Uploads a file to a Veteran's VBMS eFolder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/documents",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "parameters",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Receives and uploads a file based on the required parameters of systemName, docType,\nfileNumber, participantId, claimId, and fileName. Parameters are described in\nthe schema section for UploadRequestV1.UploadData.\n\n## Example Payload (using File Number)\n\nThe following demonstrates a (redacted) multipart payload, identified by fileNumber,\nsuitable for submitting to this endpoint. Most programming languages should have\nprovisions for assembling a multipart payload like this without having to do so"
+        },
+        {
+          "info": {
+            "name": "Validates that the claimant can upload a file to a Veteran's VBMS eFolder.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/documents/validate/claimant",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Determines whether a claimant, identified by either a fileNumber or participantId,\ncan upload documents of the given docType for the claim identified by the\nprovided claimId. If the claimant is successfully validated, a validation token\nand token expiration time are provided. The token can be used to avoid duplicate\nvalidation for an upload using identical parameters. Note that while a successful\nresponse indicates the pairing of claimant, document, and claim information is\nvalid, it does not gu"
+        },
+        {
+          "info": {
+            "name": "  Returns all claims evidence document names associated with a participantId\n  or fileNumber.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/documents/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Returns a list of all claims evidence document names related to the\n   claim identified by the claimId, fileNumber, or participantId.\n"
+        },
+        {
+          "info": {
+            "name": "  Returns a list of downloadable Claims Evidence claim letter documents, along with\n  their associated metadata, linked to a Participant ID or File Number.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/claim-letters/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Returns a list of downloadable Claims Evidence claim letter documents associated\n  with the provided Participant ID or File Number. Each document entry includes\n  metadata such as the document UUID, type, subject, original file name, tracked\n  item ID, and upload date.\n"
+        },
+        {
+          "info": {
+            "name": "Download the full claim letter document for a claimant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/claim-letters/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Use this endpoint to download the full content of a claim letter document (such\n  as a PDF). The document must be identified by its unique ID, and associated with\n  either a Participant ID or File Number. Note: Only some document types are\n  available for download.\n"
+        },
+        {
+          "info": {
+            "name": "Returns the processing status of a single disability claim document upload.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-documents/{version}/uploads/:requestId/status",
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "includeInternalOnlyStepStatuses",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/exemplar/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Returns the current processing status of a disability claims document upload\n  related to the given requestId.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

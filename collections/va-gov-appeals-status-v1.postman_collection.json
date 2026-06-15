@@ -1,0 +1,693 @@
+{
+  "item": [
+    {
+      "id": "931e32c2-e76c-4ad0-995c-5f6f9392ae22",
+      "name": "Appeals Status",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a714530c-0f06-4e74-aaa5-a63928a9006a",
+          "name": "Get appeal statuses for the claimant associated with the provided ICN.",
+          "request": {
+            "name": "Get appeal statuses for the claimant associated with the provided ICN.",
+            "description": {
+              "content": "Returns a list of all appeals for the claimant, including each appeal's current status, priority, and update history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "appeals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "veteran/AppealsStatus.read representative/AppealsStatus.read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/appeals/v1/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.va.gov/oauth2/appeals/v1/authorization"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bd668702-774c-4fc9-8262-2ca21fcac445",
+              "name": "Claimant's appeals statuses successfully retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"HLR101\",\n      \"type\": \"appealStatus\",\n      \"attributes\": {\n        \"appealType\": \"HIGHER_LEVEL_REVIEW\",\n        \"appealIds\": [\n          \"HLR101\"\n        ],\n        \"isActive\": true,\n        \"hasIncompleteHistory\": false,\n        \"agencyOfOriginalJurisdiction\": \"VBA\",\n        \"programArea\": \"COMPENSATION\",\n        \"description\": \"Severance of service connection, hypothyroidism, and 1 other\",\n        \"subtype\": null,\n        \"isAdvancedOnDocket\": false,\n        \"location\": \"AGENCY_OF_ORIGINAL_JURISDICTION\",\n        \"updateDate\": \"2019-08-29T23:38:48Z\",\n        \"status\": {\n          \"type\": \"HLR_DECISION\",\n          \"details\": {\n            \"issues\": [\n              {\n                \"description\": \"Service connection, sciatic nerve paralysis\",\n                \"disposition\": \"denied\"\n              },\n              {\n                \"description\": \"Severance of service connection, hypothyroidism\",\n                \"disposition\": \"allowed\"\n              }\n            ]\n          }\n        },\n        \"docket\": null,\n        \"issues\": [\n          {\n            \"isActive\": false,\n            \"description\": \"Service connection, sciatic nerve paralysis\",\n            \"diagnosticCode\": \"8520\",\n            \"lastAction\": \"DENIED\",\n            \"decisionDate\": \"2019-08-05\"\n          },\n          {\n            \"isActive\": false,\n            \"description\": \"Severance of service connection, hypothyroidism\",\n            \"diagnosticCode\": \"7903\",\n            \"lastAction\": \"ALLOWED\",\n            \"decisionDate\": \"2019-08-05\"\n          }\n        ],\n        \"alerts\": [\n          {\n            \"type\": \"AMA_POST_DECISION\",\n            \"details\": {\n              \"decisionDate\": \"2019-08-05\",\n              \"availableOptions\": [\n                \"supplemental_claim\",\n                \"higher_level_review\",\n                \"board_appeal\"\n              ],\n              \"dueDate\": \"2020-08-04\",\n              \"cavcDueDate\": \"2019-12-02\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"type\": \"HLR_REQUEST\",\n            \"date\": \"2019-02-19\"\n          },\n          {\n            \"type\": \"HLR_DTA_ERROR\",\n            \"date\": \"2019-06-01\"\n          },\n          {\n            \"type\": \"HLR_DECISION\",\n            \"date\": \"2019-08-05\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"SC105\",\n      \"type\": \"appealStatus\",\n      \"attributes\": {\n        \"appealType\": \"SUPPLEMENTAL_CLAIM\",\n        \"appealIds\": [\n          \"SC105\"\n        ],\n        \"isActive\": true,\n        \"hasIncompleteHistory\": false,\n        \"agencyOfOriginalJurisdiction\": \"VHA\",\n        \"programArea\": \"MEDICAL\",\n        \"description\": \"Eligibility for dental treatment\",\n        \"subtype\": null,\n        \"isAdvancedOnDocket\": false,\n        \"location\": \"AGENCY_OF_ORIGINAL_JURISDICTION\",\n        \"updateDate\": \"2019-05-29T23:38:48Z\",\n        \"status\": {\n          \"type\": \"SC_RECEIVED\",\n          \"details\": {}\n        },\n        \"docket\": null,\n        \"issues\": [\n          {\n            \"isActive\": true,\n            \"description\": \"Eligibility for dental treatment\",\n            \"diagnosticCode\": null,\n            \"lastAction\": null,\n            \"decisionDate\": null\n          }\n        ],\n        \"alerts\": [],\n        \"events\": [\n          {\n            \"type\": \"SC_REQUEST\",\n            \"date\": \"2019-02-19\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"A107\",\n      \"type\": \"appealStatus\",\n      \"attributes\": {\n        \"appealType\": \"NOTICE_OF_DISAGREEMENT\",\n        \"appealIds\": [\n          \"A107\"\n        ],\n        \"isActive\": true,\n        \"hasIncompleteHistory\": false,\n        \"agencyOfOriginalJurisdiction\": \"NCA\",\n        \"programArea\": \"BURIAL\",\n        \"description\": \"Non-qualifying service\",\n        \"subtype\": null,\n        \"isAdvancedOnDocket\": false,\n        \"location\": \"BVA\",\n        \"updateDate\": \"2020-02-29T23:38:46Z\",\n        \"status\": {\n          \"type\": \"AMA_REMAND\",\n          \"details\": {\n            \"issues\": [\n              {\n                \"description\": \"Non-qualifying service\",\n                \"disposition\": \"remand\"\n              }\n            ]\n          }\n        },\n        \"docket\": {\n          \"type\": \"DIRECT_REVIEW\",\n          \"month\": \"2019-04-01\",\n          \"docketMonth\": null,\n          \"atFront\": false,\n          \"total\": null,\n          \"ahead\": null,\n          \"ready\": null,\n          \"isEligibleToSwitch\": true,\n          \"switchDueDate\": \"2020-03-20\"\n        },\n        \"issues\": [\n          {\n            \"isActive\": true,\n            \"description\": \"Non-qualifying service\",\n            \"diagnosticCode\": null,\n            \"lastAction\": \"REMAND\",\n            \"decisionDate\": \"2020-02-20\"\n          }\n        ],\n        \"alerts\": [\n          {\n            \"type\": \"AMA_POST_DECISION\",\n            \"details\": {\n              \"decisionDate\": \"2020-02-20\",\n              \"availableOptions\": [\n                \"supplemental_claim\",\n                \"cavc\"\n              ],\n              \"dueDate\": \"2021-02-19\",\n              \"cavcDueDate\": \"2020-06-19\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"type\": \"AMA_NOD\",\n            \"date\": \"2019-04-10\"\n          },\n          {\n            \"type\": \"BVA_DECISION\",\n            \"date\": \"2020-02-20\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"1196201\",\n      \"type\": \"appealStatus\",\n      \"attributes\": {\n        \"appealType\": \"LEGACY_APPEAL\",\n        \"appealIds\": [\n          \"1196201\"\n        ],\n        \"isActive\": true,\n        \"hasIncompleteHistory\": false,\n        \"agencyOfOriginalJurisdiction\": \"VBA\",\n        \"programArea\": \"COMPENSATION\",\n        \"description\": \"Service connection, sleep apnea\",\n        \"subtype\": \"ORIGINAL\",\n        \"isAdvancedOnDocket\": false,\n        \"location\": \"AGENCY_OF_ORIGINAL_JURISDICTION\",\n        \"updateDate\": \"2018-05-29T23:38:40Z\",\n        \"status\": {\n          \"type\": \"PENDING_FORM9\",\n          \"details\": {\n            \"lastSocDate\": \"2018-05-15\",\n            \"certificationTimeliness\": [\n              2,\n              12\n            ],\n            \"ssocTimeliness\": [\n              7,\n              20\n            ]\n          }\n        },\n        \"docket\": null,\n        \"issues\": [\n          {\n            \"isActive\": true,\n            \"description\": \"Service connection, sleep apnea\",\n            \"diagnosticCode\": \"6847\",\n            \"lastAction\": null,\n            \"decisionDate\": null\n          }\n        ],\n        \"alerts\": [\n          {\n            \"type\": \"FORM9_NEEDED\",\n            \"details\": {\n              \"dueDate\": \"2018-07-31\"\n            }\n          }\n        ],\n        \"events\": [\n          {\n            \"type\": \"CLAIM_DECISION\",\n            \"date\": \"2017-07-31\"\n          },\n          {\n            \"type\": \"NOD\",\n            \"date\": \"2017-08-10\"\n          },\n          {\n            \"type\": \"SOC\",\n            \"date\": \"2018-05-15\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb80ecb9-70d2-4f56-b8df-78bb72d1300d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "315756e7-7e32-4c87-a54d-6c062dfb3266",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Forbidden\",\n      \"detail\": \"Invalid 'icn' parameter: claimants may access only their own records.\",\n      \"code\": \"403\",\n      \"status\": \"403\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b4e6b4e-b080-4055-bcb9-9842fdcadc65",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"A matching claimant was not found in our systems.\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "715f1a4d-b2a7-478a-890a-fc94dc7e3bd2",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da6b1baf-0937-4b9e-9c50-2986cca0329e",
+              "name": "Unprocessable Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Invalid pattern\",\n      \"detail\": \"'1234567890' did not match the defined pattern.\",\n      \"code\": \"143\",\n      \"source\": {\n        \"parameter\": \"icn\"\n      },\n      \"status\": \"422\",\n      \"meta\": {\n        \"regex\": \"^[0-9]{10}V[0-9]{6}$\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfb7e6c7-1473-4c23-8548-c7006926efe2",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8b6d71f-579b-45f8-83a2-09f5279ac8da",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Internal server error\",\n      \"detail\": \"Internal server error\",\n      \"code\": \"500\",\n      \"status\": \"500\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed73ef77-7148-4a02-8e96-46f64fc98941",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service Unavailable\",\n      \"detail\": \"Received an unusable response from upstream service.\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffd5368d-1be2-4d49-915f-927d99991e8d",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v1",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/appeals/appeals-status/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "17854020-4447-4c3a-803c-5bc80de52343",
+    "name": "Appeals Status",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Appeals Status API provides read-only access to the statuses of all decision review types for a claimant, including those under the Appeals Modernization Act (AMA) and legacy benefit appeals.\n\nTo retrieve a list of a claimant's active appealable issues or legacy appeals, use one of these APIs:\n\n* [Appealable Issues API](/explore/api/appealable-issues/docs)\n* [Legacy Appeals API](/explore/api/legacy-appeals/docs)\n\n## Technical overview\n\n### Authentication and Authorization\n\nThe authorization model for the Appeals Status API uses OAuth 2.0/OpenID Connect. The following models are supported:\n\n* [Authorization Code Grant (ACG)](/explore/api/appeals-status/authorization-code)\n* [Client Credentials Grant (CCG)](/explore/api/appeals-status/client-credentials)\n\n**Important:** To get production access using client credentials grant, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](/support/contact-us).\n\n### Test data\n\nOur sandbox environment is populated with [claimant test data](/explore/api/appeals-status/test-users) that can be used to test various response scenarios. This sandbox data contains no PII or PHI, but mimics real claimant account information.\n\n\nContact Support:\n Name: developer.va.gov",
+      "type": "text/plain"
+    }
+  }
+}

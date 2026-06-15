@@ -1,0 +1,303 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benefits Data Lookup API",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of contention types.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/contention-types",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides choices for Veterans Benefits Administration (VBA) request types, such as \"New\", \"Supplemental\", or \"Higher Level Review\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of countries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/countries",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides a current list of countries, standardized by the VA, which can be used for completing a VA benefits profile, such as \"Bolivia\", \"China\", or \"Serbia/Montenegro\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of disabilities.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/disabilities",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "All types of disabilities that for which Veterans Benefits Administration (VBA) claim classification codes exist for such as \"ALS\", \"angina\", or \"emphysema\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of intake sites.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/intake-sites",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The location where a Veteran's military separation process will occur such as \"Andrews AFB\", \"Fort Sam Houston\", or \"Moody AFB\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of military pay types.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/military-pay-types",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "For example, \"Separation\", \"Severance\", or \"Temporary Disability Retired List (TDRL)\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of service branches.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/service-branches",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "A current list of US Military Service Branches, spelled and standardized by the VA such as, \"Army\", \"National Oceanic & Atmospheric Administration\", and \"Space Force\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of special circumstances.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/special-circumstances",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides the codes and descriptions for special circumstances considered for VBA claims such as \"Temporary Total Disability\", \"Spouse Aide and Attendance\", or \"Automobile Allowance\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of states.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/states",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "A current list of states (including US territories and key military mail hubs) standardized by the VA, which can be used for completing a VA benefits profile, such as \"FL\", \"GU\", or \"PW\"."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of treatment centers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/benefits-reference-data/{version}/treatment-centers",
+            "params": [
+              {
+                "name": "stateCode",
+                "value": "",
+                "type": "query",
+                "description": "State to find treatment centers in"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results requested"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "An integer indicating the maximum number of results"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Takes input of a two character state and provides the names, cities and VA identifiers for facilities in that state such as \"Tuscaloosa VA Medical Center\", \"Augusta VA Medical Center\", or \"Perry Point VAMC - VA Maryland Health Care System."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

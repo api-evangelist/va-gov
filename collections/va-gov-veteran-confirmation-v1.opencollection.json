@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veteran Confirmation",
+    "version": "0.0.2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "veteran_confirmation_status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Confirms an individual's Title 38 Veteran status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/veteran-confirmation/{version}/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts demographic information for the person to\nbe confirmed and matches it against VA records. If there are\ndifferences between the data entered and the data on file, a\nmatch to a person may not be found. If a successful match is\nidentified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different things, depending on\nthe followin"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veteran Verification",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Disability Rating",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve disability rating of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/disability_rating"
+          },
+          "docs": "This endpoint provides a veteran's combined and individual disability rating(s) and related decisions and dates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Service History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve service history of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/service_history"
+          },
+          "docs": "This endpoint provides a veteran's detailed service history including all\nmilitary service episodes with the first and last name of the Veteran, the branch of\nservice, start and end dates, paygrade, discharge status, and separation reason.\nIt also provides start and end dates and locations for each deployment within each\nepisode of service.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Confirms whether an individual is a Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/veteran_verification/{version}/status"
+          },
+          "docs": "The Veteran Confirmation API allows you to confirm Veteran status for a given person. This can be useful for offering Veterans discounts or other benefits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

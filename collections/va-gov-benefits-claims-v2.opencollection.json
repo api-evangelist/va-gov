@@ -1,0 +1,683 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benefits Claims",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "5103 Waiver",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Evidence Waiver 5103",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/claims/:id/5103",
+            "params": [
+              {
+                "name": "id",
+                "value": "600400703",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              },
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Submit Evidence Waiver 5103 for a VA claimant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Disability Compensation Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submits disability compensation claim synchronously (restricted access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/526/synchronous",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Automatically establishes a disability compensation claim (21-526EZ) in Veterans Benefits Management System (VBMS). This endpoint synchronously generates a filled and electronically signed 526EZ form and establishes the disability claim in VBMS. The 526EZ form is uploaded asynchronously.\n\nA 202 response indicates the API submission was accepted and the claim was established in VBMS. Check claim status using the GET veterans/{veteranId}/claims/{id} endpoint. The claim status details response will"
+        },
+        {
+          "info": {
+            "name": "Validates a 526 claim form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/526/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Validates a request for a disability compensation claim submission (21-526EZ).\nThis endpoint can be used to test the request parameters for your /526 submission.\n"
+        },
+        {
+          "info": {
+            "name": "Returns filled out 526EZ form as PDF with minimum validations (restricted access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/526/generatePDF/minimum-validations",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a filled out 526EZ form for a disability compensation claim (21-526EZ).\n\nThis endpoint can be used to generate the PDF based on the request data in the case that the submission was not able to be successfully auto-established. The PDF can then be uploaded via the [Benefits Intake API](https://developer.va.gov/explore/api/benefits-intake) to digitally submit directly to the Veterans Benefits Administration's (VBA) claims intake process.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all benefits claims for a VA claimant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/claims",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Find all benefits claims for a VA claimant"
+        },
+        {
+          "info": {
+            "name": "Find claim by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/claims/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "600400703",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              },
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a specific claim for a Veteran"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Intent to File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns claimant's last active Intent to File submission for given benefit type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/intent-to-file/:type",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              },
+              {
+                "name": "type",
+                "value": "compensation",
+                "type": "path",
+                "description": "Type of Intent to File to return. Available values - compensation, pension, survivor."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns claimant's last active Intent to File submission for given benefit type of compensation, pension, or survivor."
+        },
+        {
+          "info": {
+            "name": "Submit form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/intent-to-file",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Establishes an Intent to File for disability compensation, pension, and survivor claims."
+        },
+        {
+          "info": {
+            "name": "Validate form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/intent-to-file/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Validates an Intent to File for disability compensation, pension, and survivor claims."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Power of Attorney",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves current power of attorney",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/power-of-attorney",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a claimant’s currently appointed accredited representative with power of attorney (General POA) for the claimant. Returns empty data if no General POA is assigned."
+        },
+        {
+          "info": {
+            "name": "Creates power of attorney request for an accredited representative",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/power-of-attorney-request",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Request the appointment of an accredited representative, on behalf of a claimant."
+        },
+        {
+          "info": {
+            "name": "Retrieves power of attorney requests for accredited representatives",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/power-of-attorney-requests",
+            "params": [
+              {
+                "name": "page[size]",
+                "value": "20",
+                "type": "query",
+                "description": "Number of results to return per page. Max value allowed is 100."
+              },
+              {
+                "name": "page[number]",
+                "value": "1",
+                "type": "query",
+                "description": "Number of pages of results to return. Max value allowed is 100."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search for power of attorney requests by specified POA codes. Optional filters include searching by status, city, state, and country."
+        },
+        {
+          "info": {
+            "name": "Retrieves a power of attorney request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/power-of-attorney-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000010",
+                "type": "path",
+                "description": "The ID of the Power of Attorney request"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a power of attorney request by id."
+        },
+        {
+          "info": {
+            "name": "Submits representative decision for a power of attorney request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/power-of-attorney-requests/:id/decide",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000012",
+                "type": "path",
+                "description": "The ID of the request for representation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Approve or decline a power of attorney request. If approved, the power of attorney request will be submitted to VA. The claimant will be notified of the decision by email."
+        },
+        {
+          "info": {
+            "name": "Validates request to establish an organization as a claimant’s accredited representative",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/2122/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Validate a request to establish an organization with power of attorney (VA Form 21-22). Use POST\n/veterans/{veteranId}/2122 to automatically establish submit VA Form 21-22.\n"
+        },
+        {
+          "info": {
+            "name": "Automatically establishes an organization as a claimant’s accredited representative (VA Form 21-22)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/2122",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Submit VA Form 21-22 to automatically establish a VA accredited organization with power of attorney\n(General POA).\n"
+        },
+        {
+          "info": {
+            "name": "Validates request to establish an individual as a claimant’s accredited representative (VA Form 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/2122a/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Validate a request to establish an individual with power of attorney (VA Form 21-22a). Use POST\n/veterans/{veteranId}/2122a to automatically establish submit VA Form 21-22a.\n"
+        },
+        {
+          "info": {
+            "name": "Automatically establishes an individual as a claimant’s accredited representative (VA Form 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/2122a",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Submit VA Form 21-22 to automatically establish a VA accredited individual with power of attorney (General POA).\n"
+        },
+        {
+          "info": {
+            "name": "Checks status of power of attorney submission (VA Forms 21-22 or 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/veterans/:veteranId/power-of-attorney/:id",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              },
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000015",
+                "type": "path",
+                "description": "The ID of the 21-22 submission"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Check the submissions status of a request to appoint power of attorney (VA Forms 21-22 or 21-22a)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

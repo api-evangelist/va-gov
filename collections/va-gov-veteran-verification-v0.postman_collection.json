@@ -1,0 +1,1189 @@
+{
+  "item": [
+    {
+      "id": "8ee97388-8017-47c0-a275-127491cbfd44",
+      "name": "Veteran Verification",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bea0cffe-c4e9-4532-85f4-5a0a930c5b66",
+          "name": "Get confirmation about an individual's Veteran status according to the VA",
+          "request": {
+            "name": "Get confirmation about an individual's Veteran status according to the VA",
+            "description": {},
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1faf975a-0542-4d5a-bfd6-2e4c50c3f6b4",
+              "name": "Confirmation status successfully retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"833c6ffc-efef-4775-9355-f836b4f57501\",\n    \"type\": \"veteran_status_confirmations\",\n    \"attributes\": {\n      \"veteran_status\": \"confirmed\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecc0438c-5146-48d8-90d9-27547d7d7267",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d57aad8-69e7-49d2-ae08-265534834557",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dab325f-9e23-4e89-8844-273765c15db9",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cde35993-6e0b-48cf-87be-49d4c9f11ea5",
+              "name": "eMIS failed to respond or responded in a way we cannot handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fdda5ca4-ab99-4d8a-b1af-42a206859b39",
+          "name": "Retrieve disability rating of authorized Veteran",
+          "request": {
+            "name": "Retrieve disability rating of authorized Veteran",
+            "description": {},
+            "url": {
+              "path": [
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e6baec19-85c6-46a9-b6b2-d554e4f15135",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27T21:00:41.000+0000\",\n      \"legal_effective_date\": \"2018-03-27T21:00:41.000+0000\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"effective_date\": \"2018-03-27T21:00:41.000+0000\",\n          \"rating_percentage\": 50\n        },\n        {\n          \"decision\": \"Service Connected\",\n          \"effective_date\": \"2018-03-27T21:00:41.000+0000\",\n          \"rating_percentage\": 50\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bc5a085-cbbb-4ca9-ae8b-e04f2a5a3229",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42fdba44-35fa-4a67-a6fc-4ce3846a323d",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f406237-441f-477c-897d-eda4e3b5c6ee",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23df939a-a302-4438-9faa-5e78174ff803",
+              "name": "BGS service responded with something other than the expected disability rating response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd994574-47b8-475a-9cb7-bcde77fa4d0c",
+          "name": "Retrieve service history of authorized Veteran",
+          "request": {
+            "name": "Retrieve service history of authorized Veteran",
+            "description": {},
+            "url": {
+              "path": [
+                "service_history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "324c2935-8416-4d48-914a-2a7d5c637255",
+              "name": "Service History retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"12312AASDf\",\n      \"attributes\": {\n        \"first_name\": \"Abraham\",\n        \"last_name\": \"Lincoln\",\n        \"start_date\": \"1948-04-08\",\n        \"end_date\": \"1950-05-10\",\n        \"branch_of_service\": \"Air Force\",\n        \"pay_grade\": \"W01\",\n        \"discharge_status\": \"honorable\",\n        \"separation_reason\": \"SUFFICIENT SERVICE FOR RETIREMENT\",\n        \"deployments\": [\n          {\n            \"start_date\": \"1948-10-10\",\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\"\n          },\n          {\n            \"start_date\": \"1948-10-10\",\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\"\n          }\n        ]\n      },\n      \"type\": \"service-history-episodes\"\n    },\n    {\n      \"id\": \"12312AASDf\",\n      \"attributes\": {\n        \"first_name\": \"Abraham\",\n        \"last_name\": \"Lincoln\",\n        \"start_date\": \"1948-04-08\",\n        \"end_date\": \"1950-05-10\",\n        \"branch_of_service\": \"Air Force\",\n        \"pay_grade\": \"W01\",\n        \"discharge_status\": \"honorable\",\n        \"separation_reason\": \"SUFFICIENT SERVICE FOR RETIREMENT\",\n        \"deployments\": [\n          {\n            \"start_date\": \"1948-10-10\",\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\"\n          },\n          {\n            \"start_date\": \"1948-10-10\",\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\"\n          }\n        ]\n      },\n      \"type\": \"service-history-episodes\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cef25b2-e750-41eb-901c-2bfda8b5616c",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea21ac5d-0ae0-40e0-a5af-68eecb32ba63",
+              "name": "No service history found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "52c034d8-4477-4fb7-b446-f13a8b923b2d",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0722779b-30a7-4f54-8487-71f276f24ace",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "c3d7c1f1-af2e-48df-9bcd-07afe203895b",
+      "name": "JWS Validation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88aa110b-cc33-4935-a16b-7aeb97b5b919",
+          "name": "Retrieve public keys to check Veteran Verification API token signatures",
+          "request": {
+            "name": "Retrieve public keys to check Veteran Verification API token signatures",
+            "description": {},
+            "url": {
+              "path": [
+                "keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a75acb85-5fde-4421-995b-5159e2f39719",
+              "name": "Keys retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keys\": [\n    {\n      \"kty\": \"RSA\",\n      \"alg\": \"RSA256\",\n      \"kid\": \"088d24232ff6faa4cd4cfec126ad0431dff1ea028afdb1c86b3718d70171aed6\",\n      \"pem\": \"-----BEGIN PUBLIC KEY-----\\\\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDfC0vJvKBPhS+KA+ad1HkpXrI8\\\\nJoawtqzVwYgCGrlIgYgnRzKDvRFMbskYFTfPB7a8kT0gAkyFGvjlxp4EQ6mpVGhA\\\\nDNVWBVArQlcnMMbNsKRmb2jSLSzjX49C26na6mUi9X+xe6iS97L0yyJWBA91Yq3c\\\\nC0kJ8J8lwPoK9TvXqwIDAQAB\\\\n-----END PUBLIC KEY-----\\\\n\",\n      \"e\": \"AQAB\",\n      \"n\": \"3wtLybygT4UvigPmndR5KV6yPCaGsLas1cGIAhq5SIGIJ0cyg70RTG7JGBU3zwe2vJE9IAJMhRr45caeBEOpqVRoQAzVVgVQK0JXJzDGzbCkZm9o0i0s41-PQtup2uplIvV_sXuokvey9MsiVgQPdWKt3AtJCfCfJcD6CvU716s=\"\n    },\n    {\n      \"kty\": \"RSA\",\n      \"alg\": \"RSA256\",\n      \"kid\": \"088d24232ff6faa4cd4cfec126ad0431dff1ea028afdb1c86b3718d70171aed6\",\n      \"pem\": \"-----BEGIN PUBLIC KEY-----\\\\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDfC0vJvKBPhS+KA+ad1HkpXrI8\\\\nJoawtqzVwYgCGrlIgYgnRzKDvRFMbskYFTfPB7a8kT0gAkyFGvjlxp4EQ6mpVGhA\\\\nDNVWBVArQlcnMMbNsKRmb2jSLSzjX49C26na6mUi9X+xe6iS97L0yyJWBA91Yq3c\\\\nC0kJ8J8lwPoK9TvXqwIDAQAB\\\\n-----END PUBLIC KEY-----\\\\n\",\n      \"e\": \"AQAB\",\n      \"n\": \"3wtLybygT4UvigPmndR5KV6yPCaGsLas1cGIAhq5SIGIJ0cyg70RTG7JGBU3zwe2vJE9IAJMhRr45caeBEOpqVRoQAzVVgVQK0JXJzDGzbCkZm9o0i0s41-PQtup2uplIvV_sXuokvey9MsiVgQPdWKt3AtJCfCfJcD6CvU716s=\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06f2e305-6060-46cc-b20a-6da340da312d",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75f6942d-3b23-4a06-85bc-b786110ae9e9",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d71525a-18d0-4d49-add9-ed3cd38fb5b3",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v0",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/veteran_verification/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16f165d9-4274-4543-a1a6-4fe449c9f8bd",
+    "name": "Veteran Verification",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nThe Veteran Verification API allows you to confirm the Veteran status for a given person, or retrieve a Veteran's service history or disability rating.\n\nWhen confirming Veteran Status, the Status endpoint will return \"Confirmed\" or \"Not Confirmed\".\n\n## Quickstart Guide\n\n### 1. Get Access Credentials\n\nGet started by filling out the form on the [Apply for VA Lighthouse Developer Access](/apply) page.\n\nAfter submitting a request, you will receive your credentials for using the API in the Sandbox environment, which allows you to try it out with mock data before moving to the Production environment.\n\n### 2. Test the  API\n\nIn the endpoint documentation below, we've provided a curl command builder for trying out the API before implementation with your app.\n\n### 3. Build your app\n\nThe base URI for the Veteran Verification API in the Sandbox environment is:\n\nhttps://sandbox-api.va.gov/services/veteran_verification/v0\n\nCheck out some of our [sample apps](https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/). Please visit our VA Lighthouse [Support portal](/support) should you need further assistance.\n\n### 4. Show us a demo and get set up in the Production environment\n\nAfter building your app, we ask that you give us a demo before we set you up with production credentials. Please see the [Path to Production](/go-live) page for more details.\n\n## Reference\n\n### Sandbox vs. Production Data\nAPIs accessed via the Sandbox environment are using the same underlying logic as VA’s production APIs; only the underlying data store is different.\n\n### Rate Limiting\nWe implemented basic rate limiting of 60 requests per minute. If you exceed this quota, your request will return a 429 status code. You may petition for increased rate limits by emailing, and requests will be decided on a case by case basis.\n\n### Raw Open API Spec\nhttps://api.va.gov/services/veteran_verification/docs/v0/veteran_verification\n\n\nContact Support:\n Name: VA.gov",
+      "type": "text/plain"
+    }
+  }
+}

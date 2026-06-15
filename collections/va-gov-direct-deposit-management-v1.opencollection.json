@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Direct Deposit Management API",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DirectDeposit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get direct deposit account and eligibility and control information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/direct-deposit-management/{version}/direct-deposit",
+            "params": [
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/direct-deposit-management/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Get direct deposit account and eligibility and control information.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update direct deposit account information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/direct-deposit-management/{version}/direct-deposit",
+            "params": [
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.va.gov/oauth2/direct-deposit-management/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "  Create or update direct deposit account information.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

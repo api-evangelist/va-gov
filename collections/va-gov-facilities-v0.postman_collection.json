@@ -1,0 +1,3042 @@
+{
+  "item": [
+    {
+      "id": "71627240-5087-4c36-84d9-977e1cd1cc8c",
+      "name": "facilities",
+      "description": {
+        "content": "VA Facilities API",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "930f075b-809c-4b6d-9dbf-87552f67eed0",
+          "name": "Bulk download information for all facilities",
+          "request": {
+            "name": "Bulk download information for all facilities",
+            "description": {
+              "content": "Retrieve all available facilities in a single operation, formatted as either a GeoJSON FeatureCollection or as a CSV. Due to the complexity of the facility resource type, the CSV response contains a subset of available facility data - specifically it omits the available services, patient satisfaction, and patient wait time data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "facilities",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ecfb35ac-12f4-4cda-adf1-061b252ba7b5",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"geometry\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          -77.0367761,\n          38.9004181\n        ]\n      },\n      \"properties\": {\n        \"facility_type\": \"va_health_facility\",\n        \"id\": \"vha_688\",\n        \"operating_status\": {\n          \"code\": \"NORMAL\",\n          \"additional_info\": \"string\",\n          \"supplemental_status\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"name\": \"Washington VA Medical Center\",\n        \"classification\": \"VA Medical Center (VAMC)\",\n        \"website\": \"http://www.washingtondc.va.gov\",\n        \"time_zone\": \"America/New_York\",\n        \"address\": {\n          \"mailing\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"physical\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"phone\": {\n          \"fax\": \"202-555-1212\",\n          \"main\": \"202-555-1212\",\n          \"pharmacy\": \"202-555-1212\",\n          \"after_hours\": \"202-555-1212\",\n          \"patient_advocate\": \"202-555-1212\",\n          \"mental_health_clinic\": \"202-555-1212\",\n          \"enrollment_coordinator\": \"202-555-1212\",\n          \"health_connect\": \"312-122-4516\"\n        },\n        \"hours\": {\n          \"monday\": \"9AM-5PM\",\n          \"tuesday\": \"9AM-5PM\",\n          \"wednesday\": \"9AM-5PM\",\n          \"thursday\": \"9AM-5PM\",\n          \"friday\": \"9AM-5PM\",\n          \"saturday\": \"Closed\",\n          \"sunday\": \"Closed\"\n        },\n        \"operational_hours_special_instructions\": \"[\\\"More hours are available for some services.\\\",\\\"If you need to talk to someone, call the Vet Center at 1-877-927-8387.\\\",\\\"Vet Center hours are dependent upon outreach assignments.\\\"]\",\n        \"services\": {\n          \"other\": [\n            \"OnlineScheduling\",\n            \"OnlineScheduling\"\n          ],\n          \"health\": [\n            \"SpecialtyCare\",\n            \"Audiology\"\n          ],\n          \"benefits\": [\n            \"IntegratedDisabilityEvaluationSystemAssistance\",\n            \"EducationAndCareerCounseling\"\n          ],\n          \"last_updated\": \"2018-01-01\"\n        },\n        \"satisfaction\": {\n          \"health\": {\n            \"primary_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"wait_times\": {\n          \"health\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"mobile\": false,\n        \"active_status\": \"A\",\n        \"visn\": \"20\",\n        \"detailed_services\": [\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1995-01-14T15:23:52.083Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          },\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1995-05-25T14:00:23.975Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          }\n        ]\n      },\n      \"type\": \"Feature\"\n    },\n    {\n      \"geometry\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          -77.0367761,\n          38.9004181\n        ]\n      },\n      \"properties\": {\n        \"facility_type\": \"va_health_facility\",\n        \"id\": \"vha_688\",\n        \"operating_status\": {\n          \"code\": \"NORMAL\",\n          \"additional_info\": \"string\",\n          \"supplemental_status\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"name\": \"Washington VA Medical Center\",\n        \"classification\": \"VA Medical Center (VAMC)\",\n        \"website\": \"http://www.washingtondc.va.gov\",\n        \"time_zone\": \"America/New_York\",\n        \"address\": {\n          \"mailing\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"physical\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"phone\": {\n          \"fax\": \"202-555-1212\",\n          \"main\": \"202-555-1212\",\n          \"pharmacy\": \"202-555-1212\",\n          \"after_hours\": \"202-555-1212\",\n          \"patient_advocate\": \"202-555-1212\",\n          \"mental_health_clinic\": \"202-555-1212\",\n          \"enrollment_coordinator\": \"202-555-1212\",\n          \"health_connect\": \"312-122-4516\"\n        },\n        \"hours\": {\n          \"monday\": \"9AM-5PM\",\n          \"tuesday\": \"9AM-5PM\",\n          \"wednesday\": \"9AM-5PM\",\n          \"thursday\": \"9AM-5PM\",\n          \"friday\": \"9AM-5PM\",\n          \"saturday\": \"Closed\",\n          \"sunday\": \"Closed\"\n        },\n        \"operational_hours_special_instructions\": \"[\\\"More hours are available for some services.\\\",\\\"If you need to talk to someone, call the Vet Center at 1-877-927-8387.\\\",\\\"Vet Center hours are dependent upon outreach assignments.\\\"]\",\n        \"services\": {\n          \"other\": [\n            \"OnlineScheduling\",\n            \"OnlineScheduling\"\n          ],\n          \"health\": [\n            \"EmergencyCare\",\n            \"Optometry\"\n          ],\n          \"benefits\": [\n            \"VAHomeLoanAssistance\",\n            \"HomelessAssistance\"\n          ],\n          \"last_updated\": \"2018-01-01\"\n        },\n        \"satisfaction\": {\n          \"health\": {\n            \"primary_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"wait_times\": {\n          \"health\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"mobile\": false,\n        \"active_status\": \"T\",\n        \"visn\": \"20\",\n        \"detailed_services\": [\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1967-09-06T20:51:09.732Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          },\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1951-07-25T12:04:39.389Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          }\n        ]\n      },\n      \"type\": \"Feature\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3915e050-254c-4cca-9b5c-ec3a627535ff",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fe50cd8-2740-4d5a-a928-3aabde913ebd",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55cd2cab-31ca-465e-822e-1d8ca037141c",
+              "name": "Requested format unacceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f829f1c-79e7-44e2-a821-0bbc05a86dc5",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0010bdb7-da0e-48af-93da-4f70042e7497",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "application/geo+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65d17d67-1d7b-4322-83fa-c47ea65f3014",
+          "name": "Query facilities by location or IDs, with optional filters",
+          "request": {
+            "name": "Query facilities by location or IDs, with optional filters",
+            "description": {
+              "content": "Query facilities by bounding box, latitude and longitude, state, visn, or zip code. Bounding box is specified as four `bbox[]` parameters, long1, lat1, long2, lat2. (Relative order is unimportant.)\n\nA query by latitude and longitude returns all facilities in the system, sorted by distance from that location. Providing an optional radius in miles to this query will narrow the scope of the returned facilities to those falling within the specified radius from that location.\n\nAll location queries support filtering by facility type, available services, and mobile status.\n\nOne can also retrieve facilities by ID using a comma-separated list like `?ids=id1,id2`. When requesting multiple facilities by ID, the API will return as many results as it can find matches for, omitting IDs where there is no match. It will not return an HTTP error code if it is unable to match a requested ID. Clients may supply IDs up to the limit their HTTP client enforces for URI path lengths. (Usually 2048 characters.)\n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\n### Parameter combinations\nYou may optionally specify `page` and `per_page` with any query. You must specify one of the following parameter combinations: \n\n- `bbox[]`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n- `ids`\n\n- `lat` and `long`, with the option of any combination of `radius`, `ids`, `type`, `services[]`, or `mobile`\n\n- `state`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n- `visn`\n\n- `zip`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n Invalid combinations will return `400 Bad Request`. ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "facilities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "List of comma-separated facility IDs to retrieve in a single request. Can be combined with lat and long parameters to retrieve facilities sorted by distance from a location."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "List of comma-separated facility IDs to retrieve in a single request. Can be combined with lat and long parameters to retrieve facilities sorted by distance from a location."
+                },
+                {
+                  "disabled": false,
+                  "key": "zip",
+                  "value": "<##### or #####-####>",
+                  "description": "Zip code to search for facilities. More detailed zip codes can be passed in, but only the first five digits are used to determine facilities to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<XX>",
+                  "description": "State in which to search for facilities. Except in rare cases, this is two characters."
+                },
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<float>",
+                  "description": "Latitude of point to search for facilities, in WGS84 coordinate reference system."
+                },
+                {
+                  "disabled": false,
+                  "key": "long",
+                  "value": "<float>",
+                  "description": "Longitude of point to search for facilities, in WGS84 coordinate reference system."
+                },
+                {
+                  "disabled": false,
+                  "key": "radius",
+                  "value": "<float>",
+                  "description": "Optional radial distance from specified latitude and longitude to filter facilities search in WGS84 coordinate reference system."
+                },
+                {
+                  "disabled": false,
+                  "key": "bbox[]",
+                  "value": "<float>",
+                  "description": "Bounding box (longitude, latitude, longitude, latitude) within which facilities will be returned. (WGS84 coordinate reference system)"
+                },
+                {
+                  "disabled": false,
+                  "key": "bbox[]",
+                  "value": "<float>",
+                  "description": "Bounding box (longitude, latitude, longitude, latitude) within which facilities will be returned. (WGS84 coordinate reference system)"
+                },
+                {
+                  "disabled": false,
+                  "key": "bbox[]",
+                  "value": "<float>",
+                  "description": "Bounding box (longitude, latitude, longitude, latitude) within which facilities will be returned. (WGS84 coordinate reference system)"
+                },
+                {
+                  "disabled": false,
+                  "key": "bbox[]",
+                  "value": "<float>",
+                  "description": "Bounding box (longitude, latitude, longitude, latitude) within which facilities will be returned. (WGS84 coordinate reference system)"
+                },
+                {
+                  "disabled": false,
+                  "key": "visn",
+                  "value": "<number>",
+                  "description": "VISN search of matching facilities."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Optional facility type search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "services[]",
+                  "value": "<string>",
+                  "description": "Optional facility service search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "services[]",
+                  "value": "<string>",
+                  "description": "Optional facility service search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "mobile",
+                  "value": "<boolean>",
+                  "description": "Optional facility mobile search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page of results to return per paginated response."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Number of results to return per paginated response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad458193-c5ce-49dc-ae1e-b7b425f8958d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000\",\n    \"related\": \"https://api.va.gov/services/va_facilities/v0/facilities?id=vha_688\",\n    \"first\": \"https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000\",\n    \"prev\": \"https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000\",\n    \"next\": \"https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=2&per_page=1000\",\n    \"last\": \"https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=4&per_page=1000\"\n  },\n  \"meta\": {\n    \"pagination\": {\n      \"current_page\": 1,\n      \"per_page\": 20,\n      \"total_entries\": 2162,\n      \"total_pages\": 250\n    },\n    \"distances\": [\n      {\n        \"distance\": 54.13,\n        \"id\": \"vc_0101V\"\n      },\n      {\n        \"distance\": 54.13,\n        \"id\": \"vc_0101V\"\n      }\n    ]\n  },\n  \"data\": [\n    {\n      \"attributes\": {\n        \"facility_type\": \"va_health_facility\",\n        \"lat\": 38.9311137,\n        \"long\": -77.0109110499999,\n        \"name\": \"Washington VA Medical Center\",\n        \"operating_status\": {\n          \"code\": \"NORMAL\",\n          \"additional_info\": \"string\",\n          \"supplemental_status\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"classification\": \"VA Medical Center (VAMC)\",\n        \"website\": \"http://www.washingtondc.va.gov\",\n        \"time_zone\": \"America/New_York\",\n        \"address\": {\n          \"mailing\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"physical\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"phone\": {\n          \"fax\": \"202-555-1212\",\n          \"main\": \"202-555-1212\",\n          \"pharmacy\": \"202-555-1212\",\n          \"after_hours\": \"202-555-1212\",\n          \"patient_advocate\": \"202-555-1212\",\n          \"mental_health_clinic\": \"202-555-1212\",\n          \"enrollment_coordinator\": \"202-555-1212\",\n          \"health_connect\": \"312-122-4516\"\n        },\n        \"hours\": {\n          \"monday\": \"9AM-5PM\",\n          \"tuesday\": \"9AM-5PM\",\n          \"wednesday\": \"9AM-5PM\",\n          \"thursday\": \"9AM-5PM\",\n          \"friday\": \"9AM-5PM\",\n          \"saturday\": \"Closed\",\n          \"sunday\": \"Closed\"\n        },\n        \"operational_hours_special_instructions\": \"Normal business hours are Monday through Friday, 8:00 a.m. to 4:30 p.m.\",\n        \"services\": {\n          \"other\": [\n            \"OnlineScheduling\",\n            \"OnlineScheduling\"\n          ],\n          \"health\": [\n            \"Gastroenterology\",\n            \"PrimaryCare\"\n          ],\n          \"benefits\": [\n            \"UpdatingDirectDepositInformation\",\n            \"VocationalRehabilitationAndEmploymentAssistance\"\n          ],\n          \"last_updated\": \"2018-01-01\"\n        },\n        \"satisfaction\": {\n          \"health\": {\n            \"primary_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"wait_times\": {\n          \"health\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"mobile\": false,\n        \"active_status\": \"T\",\n        \"detailed_services\": [\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1965-05-14T22:18:00.269Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          },\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"1954-08-04T06:10:04.865Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          }\n        ],\n        \"visn\": \"20\"\n      },\n      \"id\": \"vha_688\",\n      \"type\": \"va_facilities\"\n    },\n    {\n      \"attributes\": {\n        \"facility_type\": \"va_health_facility\",\n        \"lat\": 38.9311137,\n        \"long\": -77.0109110499999,\n        \"name\": \"Washington VA Medical Center\",\n        \"operating_status\": {\n          \"code\": \"NORMAL\",\n          \"additional_info\": \"string\",\n          \"supplemental_status\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"classification\": \"VA Medical Center (VAMC)\",\n        \"website\": \"http://www.washingtondc.va.gov\",\n        \"time_zone\": \"America/New_York\",\n        \"address\": {\n          \"mailing\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"physical\": {\n            \"zip\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"city\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"address_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"phone\": {\n          \"fax\": \"202-555-1212\",\n          \"main\": \"202-555-1212\",\n          \"pharmacy\": \"202-555-1212\",\n          \"after_hours\": \"202-555-1212\",\n          \"patient_advocate\": \"202-555-1212\",\n          \"mental_health_clinic\": \"202-555-1212\",\n          \"enrollment_coordinator\": \"202-555-1212\",\n          \"health_connect\": \"312-122-4516\"\n        },\n        \"hours\": {\n          \"monday\": \"9AM-5PM\",\n          \"tuesday\": \"9AM-5PM\",\n          \"wednesday\": \"9AM-5PM\",\n          \"thursday\": \"9AM-5PM\",\n          \"friday\": \"9AM-5PM\",\n          \"saturday\": \"Closed\",\n          \"sunday\": \"Closed\"\n        },\n        \"operational_hours_special_instructions\": \"Normal business hours are Monday through Friday, 8:00 a.m. to 4:30 p.m.\",\n        \"services\": {\n          \"other\": [\n            \"OnlineScheduling\",\n            \"OnlineScheduling\"\n          ],\n          \"health\": [\n            \"Audiology\",\n            \"Dermatology\"\n          ],\n          \"benefits\": [\n            \"FamilyMemberClaimAssistance\",\n            \"ApplyingForBenefits\"\n          ],\n          \"last_updated\": \"2018-01-01\"\n        },\n        \"satisfaction\": {\n          \"health\": {\n            \"primary_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_urgent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"specialty_care_routine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"wait_times\": {\n          \"health\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"effective_date\": \"2018-01-01\"\n        },\n        \"mobile\": false,\n        \"active_status\": \"A\",\n        \"detailed_services\": [\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"2000-01-16T06:35:42.687Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          },\n          {\n            \"service_id\": \"covid19Vaccine\",\n            \"name\": \"COVID-19 vaccines\",\n            \"description_facility\": \"null\",\n            \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n            \"appointment_phones\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"online_scheduling_available\": \"True\",\n            \"referral_required\": \"False\",\n            \"walk_ins_accepted\": \"True\",\n            \"service_locations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"last_updated\": \"2014-06-01T16:29:20.510Z\",\n            \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n          }\n        ],\n        \"visn\": \"20\"\n      },\n      \"id\": \"vha_688\",\n      \"type\": \"va_facilities\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e2fd2a4-2a4a-48bc-a70b-6cb36b463cca",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80017097-92fe-4719-882f-32cec5729fee",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c756b826-def3-40b1-8bf1-45b3ef18683b",
+              "name": "Requested format unacceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "568c328e-36b2-4437-81db-ffe6e0ad8676",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "726d86fd-a7c5-4e88-b3a6-158337d67907",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "vha_688"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "vha_644"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "80301-1000"
+                    },
+                    {
+                      "key": "state",
+                      "value": "CO"
+                    },
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "long",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "75"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-105.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "39.4"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "-104.5"
+                    },
+                    {
+                      "key": "bbox[]",
+                      "value": "40.1"
+                    },
+                    {
+                      "key": "visn",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d11d1daf-e3e1-484c-83b0-d1ec766df3ab",
+          "name": "Retrieve a specific facility by ID",
+          "request": {
+            "name": "Retrieve a specific facility by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "facilities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "87d930f8-7e8c-48d1-b8bb-c105e484ef50",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"attributes\": {\n      \"facility_type\": \"va_health_facility\",\n      \"lat\": 38.9311137,\n      \"long\": -77.0109110499999,\n      \"name\": \"Washington VA Medical Center\",\n      \"operating_status\": {\n        \"code\": \"NORMAL\",\n        \"additional_info\": \"string\",\n        \"supplemental_status\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"classification\": \"VA Medical Center (VAMC)\",\n      \"website\": \"http://www.washingtondc.va.gov\",\n      \"time_zone\": \"America/New_York\",\n      \"address\": {\n        \"mailing\": {\n          \"zip\": \"20422-0001\",\n          \"city\": \"Washington\",\n          \"state\": \"DC\",\n          \"address_1\": \"50 Irving Street, Northwest\",\n          \"address_2\": \"Bldg 2\",\n          \"address_3\": \"Suite 7\"\n        },\n        \"physical\": {\n          \"zip\": \"20422-0001\",\n          \"city\": \"Washington\",\n          \"state\": \"DC\",\n          \"address_1\": \"50 Irving Street, Northwest\",\n          \"address_2\": \"Bldg 2\",\n          \"address_3\": \"Suite 7\"\n        }\n      },\n      \"phone\": {\n        \"fax\": \"202-555-1212\",\n        \"main\": \"202-555-1212\",\n        \"pharmacy\": \"202-555-1212\",\n        \"after_hours\": \"202-555-1212\",\n        \"patient_advocate\": \"202-555-1212\",\n        \"mental_health_clinic\": \"202-555-1212\",\n        \"enrollment_coordinator\": \"202-555-1212\",\n        \"health_connect\": \"312-122-4516\"\n      },\n      \"hours\": {\n        \"monday\": \"9AM-5PM\",\n        \"tuesday\": \"9AM-5PM\",\n        \"wednesday\": \"9AM-5PM\",\n        \"thursday\": \"9AM-5PM\",\n        \"friday\": \"9AM-5PM\",\n        \"saturday\": \"Closed\",\n        \"sunday\": \"Closed\"\n      },\n      \"operational_hours_special_instructions\": \"Normal business hours are Monday through Friday, 8:00 a.m. to 4:30 p.m.\",\n      \"services\": {\n        \"other\": [\n          \"OnlineScheduling\",\n          \"OnlineScheduling\"\n        ],\n        \"health\": [\n          \"Podiatry\",\n          \"Gastroenterology\"\n        ],\n        \"benefits\": [\n          \"BurialClaimAssistance\",\n          \"eBenefitsRegistrationAssistance\"\n        ],\n        \"last_updated\": \"2018-01-01\"\n      },\n      \"satisfaction\": {\n        \"health\": {\n          \"primary_care_urgent\": 0.85,\n          \"primary_care_routine\": 0.85,\n          \"specialty_care_urgent\": 0.85,\n          \"specialty_care_routine\": 0.85\n        },\n        \"effective_date\": \"2018-01-01\"\n      },\n      \"wait_times\": {\n        \"health\": [\n          {\n            \"service\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"new\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"established\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"service\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"new\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"established\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"effective_date\": \"2018-01-01\"\n      },\n      \"mobile\": false,\n      \"active_status\": \"A\",\n      \"detailed_services\": [\n        {\n          \"service_id\": \"covid19Vaccine\",\n          \"name\": \"COVID-19 vaccines\",\n          \"description_facility\": \"null\",\n          \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n          \"appointment_phones\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"online_scheduling_available\": \"True\",\n          \"referral_required\": \"False\",\n          \"walk_ins_accepted\": \"True\",\n          \"service_locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"last_updated\": \"1986-04-07T10:42:54.934Z\",\n          \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n        },\n        {\n          \"service_id\": \"covid19Vaccine\",\n          \"name\": \"COVID-19 vaccines\",\n          \"description_facility\": \"null\",\n          \"appointment_leadin\": \"Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.\",\n          \"appointment_phones\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"online_scheduling_available\": \"True\",\n          \"referral_required\": \"False\",\n          \"walk_ins_accepted\": \"True\",\n          \"service_locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"last_updated\": \"1969-10-28T07:57:05.561Z\",\n          \"path\": \"https://www.boston.va.gov/services/covid-19-vaccines.asp\"\n        }\n      ],\n      \"visn\": \"20\"\n    },\n    \"id\": \"vha_688\",\n    \"type\": \"va_facilities\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "112ee20a-573f-42fd-afd1-9bf5e32f0913",
+              "name": "Bad request - invalid or missing query parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c859127-48b0-46b0-937a-953db99da0e9",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ae5bfe-7b71-49e0-8a02-d752fe053109",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5a546cb-0492-4c46-b9d8-31682a952cc0",
+              "name": "Facility not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50268638-fcba-4dfd-9844-822382acc521",
+              "name": "Requested format unacceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c667a51-9de3-43ee-ace9-0ed4e329ef45",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "665dfb0a-ffe7-4437-b6f4-9e0e38b2a1c1",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "facilities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a77bc97-a642-4eb0-8c22-f3a279222a75",
+          "name": "Bulk download of all facility IDs",
+          "request": {
+            "name": "Bulk download of all facility IDs",
+            "description": {
+              "content": "Retrieves all available facility IDs only",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Optional facility type search filter"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "077292db-62ca-4bb4-bcfb-9216b6afb4ba",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b1427d6-2a5e-4820-9787-36219d08a897",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dcf779d-6101-4a74-ae73-5ccdd1363fb5",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adfdfb77-2e33-48a2-9e3b-af7a9a61196c",
+              "name": "Requested format unacceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2386ff77-7651-422f-b954-481867d61950",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aecd7197-b3c3-4288-b0f3-ddf08380b044",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7254abd4-92a7-4aae-8a5b-35c466357b4f",
+          "name": "Retrieve all VA health facilities reachable by driving within the specified time period",
+          "request": {
+            "name": "Retrieve all VA health facilities reachable by driving within the specified time period",
+            "description": {
+              "content": "Retrieve all VA health facilities that are located within a specified drive time from a specified location based on coordinates (lat and lng). Optional filter parameters include drive_time and services[]. Address (street_address, city, state, and zip) no longer returns results.\n\nThe \"attributes\" element has information about the drive-time band that contains the requested location for each facility in the response. The values of `min_time` and `max_time` are in minutes. For example, a facility returned with a matched `min_time` of 10 and `max_time` of 20 is a 10 to 20 minute drive from the requested location.\n\nTo retrieve full details for nearby facilities, see the documentation for `/facilities?ids`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "nearby"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lat",
+                  "value": "<float>",
+                  "description": "Latitude of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "lng",
+                  "value": "<float>",
+                  "description": "Longitude of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "street_address",
+                  "value": "<string>",
+                  "description": "Street address of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>",
+                  "description": "City of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Two character state code of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "zip",
+                  "value": "<string>",
+                  "description": "Zip code of the location from which drive time will be calculated."
+                },
+                {
+                  "disabled": false,
+                  "key": "drive_time",
+                  "value": "90",
+                  "description": "Filter to only include facilities that are within the specified number of drive time minutes from the requested location."
+                },
+                {
+                  "disabled": false,
+                  "key": "services[]",
+                  "value": "<string>",
+                  "description": "Optional facility service search filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "services[]",
+                  "value": "<string>",
+                  "description": "Optional facility service search filter"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8c50320e-a087-49ca-947b-fa5f11a0f7c4",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"attributes\": {\n        \"max_time\": 20,\n        \"min_time\": 10\n      },\n      \"id\": \"vha_688\",\n      \"type\": \"nearby_facility\"\n    },\n    {\n      \"attributes\": {\n        \"max_time\": 20,\n        \"min_time\": 10\n      },\n      \"id\": \"vha_688\",\n      \"type\": \"nearby_facility\"\n    }\n  ],\n  \"meta\": {\n    \"band_version\": \"APR2021\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5cacb1e-6dc6-4fd5-a6a0-cfe321e0aa9f",
+              "name": "Missing Required Or Ambiguous Parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Detailed Error Message\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30a44c02-0b2f-46c6-9bed-65946d7aa239",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cfc5f15-1bcf-46fa-a919-f74d5df1df5d",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "305a1ef2-9086-4652-8eb4-086a94cc3e81",
+              "name": "Requested format unacceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"103\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c1d1a66-acdf-46f5-be9e-736828349ee0",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0de8fd48-d017-40d3-a0b2-258250285e65",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearby"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "56.7"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "-123.4"
+                    },
+                    {
+                      "key": "street_address",
+                      "value": "1350 I St. NW"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "20005-3305"
+                    },
+                    {
+                      "key": "drive_time",
+                      "value": "90"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "services[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v0",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/va_facilities/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0bc27b66-4c35-4936-be4c-59dad33f80a0",
+    "name": "VA Facilities",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Background\n\nThe VA Facilities API version 0 (v0) provides information about VA facilities, including locations, addresses, phone numbers, hours of operation, and available services.\n\nThis API gives information about several types of VA facilities:\n- Health facilities (vha)\n- Benefits facilities (vba)\n- Cemeteries (nca)\n- Vet Centers (vc)\n\n## Technical overview\n\nFor in-depth details on data sources for the Facilities API, [read our Facilities GitHub documentation](https://github.com/department-of-veterans-affairs/lighthouse-facilities#readme).\n\nHealth service and service availability data for v0 of this API are based on historical data.\n\n- Historical data is returned for the previous 30 days.\n- Data is based on both pending and completed appointments for a service at a given facility.\n\n\n### Authentication and Authorization\n\nAPI requests are authorized througha symmetric API token provided in an HTTP header named apikey.\n\n### Test data\n\nTest data for the sandbox environment is only for testing the API and is not guaranteed to be up-to-date. After testing this API in sandbox, you can start the process of moving to production.\n\n### Facility ID formats\n\nA facility ID has the format prefix_stationNumber. The prefix is nca, vc, vba, or vha. Cemeteries may be VA national cemeteries or non-national; non-national cemeteries have the station number prefixed with an s. There are no other constraints on the format. Some facility ID examples are:\n- Health: `vha_402GA`\n- Benefits: `vba_539GB`\n- National cemetery: `nca_063`\n- Non-national cemetery: `nca_s1082`\n- Vet Center: `vc_0872MVC`\n\n\n### Mobile facilities\n\nThe mobile health facilities move regularly within a region. If a facility comes back from this API with \"mobile\": \"true\", the latitude/longitude and address could be inaccurate. To get the exact current location, please call the mobile facility number listed.\n\nContact Support:\n Name: developer.va.gov",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VA Loan Guaranty - Loan Review REST API",
+    "version": "26.2.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "loanReviewPublic",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transmit documents for FFLR loan review",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/loan-review/{version}/transmit-documents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://staging-api.va.gov/oauth2/loan-guaranty/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This resource allows lenders to upload the post-close loan review package file along with final UCD/ULAD xmls. Only one loan review package file, one UCD xml, and one ULAD xml may be included."
+        },
+        {
+          "info": {
+            "name": "Transmit additional documents for FFLR loan review",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/loan-review/{version}/additional-documents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://staging-api.va.gov/oauth2/loan-guaranty/system/v1/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "The loan selected for post-close loan review that the lender is providing pdfs of additional documents not provided in the initial remittance of the loan for post-close loan review. Up to 5 PDFs may be included, ideally consolidated into one PDF when possible, where all files in the submission align to a single documentType (either 'LR File' or 'LR Deficiency'). Files of both types should not be included in the same additional-documents submission. Optionally, one UCD xml, and/or one ULAD xml ma"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

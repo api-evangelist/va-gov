@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VA Facilities",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "facilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query facilities based on optional parameters such as location or ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/facilities",
+            "params": [
+              {
+                "name": "facilityIds",
+                "value": "",
+                "type": "query",
+                "description": "List of comma separated ids. When searching by multiple IDs, the API will return as many matches as it can find given any other parameters. If there isn't a match, the API will omit the ID. As per the JSON:API specification, unrecognized IDs will not result in a returned error but rather simply not return a result for that ID. Clients may supply IDs up to the limit their HTTP client enforces for URI path lengths. (Usually 2048 characters.)"
+              },
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "Zip code to search for facilities. More detailed zip codes can be passed in, but only the first five digits are used to determine facilities to return."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "State in which to search for facilities. Except in rare cases, this is two characters."
+              },
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude of point to search for facilities, in WGS84 coordinate reference system. Lat + long returns all facilities matching other given parameters, sorted by distance from that location. Must be accompanied by a valid longitude."
+              },
+              {
+                "name": "long",
+                "value": "",
+                "type": "query",
+                "description": "Longitude of point to search for facilities, in WGS84 coordinate reference system. Lat + long returns all facilities matching other given parameters, sorted by distance from that location. Must be accompanied by a valid latitude."
+              },
+              {
+                "name": "radius",
+                "value": "",
+                "type": "query",
+                "description": "Optional radial distance from specified latitude and longitude to filter facilities search in WGS84 coordinate reference system. Must be accompanied by a valid latitude and longitude."
+              },
+              {
+                "name": "bbox[]",
+                "value": "",
+                "type": "query",
+                "description": "Four `bbox[]` parameters, long1, lat1, long2, lat2. (WGS84 coordinate reference system)  A query by bounding box returns all facilities within a geographic area bounded by the given positions. The ordering of the coordinate pairs may be in any order. "
+              },
+              {
+                "name": "visn",
+                "value": "",
+                "type": "query",
+                "description": "VISN search of matching facilities."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of facility location"
+              },
+              {
+                "name": "services[]",
+                "value": "",
+                "type": "query",
+                "description": "List of services a facility offers"
+              },
+              {
+                "name": "mobile",
+                "value": "",
+                "type": "query",
+                "description": "Boolean flag to include or exclude mobile facilities"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results to return per paginated response."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per paginated response. "
+              }
+            ]
+          },
+          "docs": "Query facilities with a combination of optional search parameters.\n\n- A query with no search parameters will return all facilities in the response. \n\n- A query by bounding box returns all facilities within a geographic area bounded by the given positions. The ordering of the coordinate pairs may be in any order. \n\n- A query by latitude and longitude returns all facilities matching other given parameters, sorted by distance from that location. If either `lat` or `long` are supplied, both must be "
+        },
+        {
+          "info": {
+            "name": "Retrieve a specific facility by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/facilities/:facilityId",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "vha_688",
+                "type": "path",
+                "description": "Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific facility by ID"
+        },
+        {
+          "info": {
+            "name": "Bulk download of all facility IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/ids",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Optional facility type search filter"
+              }
+            ]
+          },
+          "docs": "Retrieves all available facility IDs only"
+        },
+        {
+          "info": {
+            "name": "Retrieve all VA health facilities reachable by driving within the specified time period",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/nearby",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "query",
+                "description": "Latitude of the location from which drive time will be calculated."
+              },
+              {
+                "name": "long",
+                "value": "",
+                "type": "query",
+                "description": "Longitude of the location from which drive time will be calculated."
+              },
+              {
+                "name": "drive_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only include facilities that are within the specified number of drive time minutes from the requested location."
+              },
+              {
+                "name": "services[]",
+                "value": "",
+                "type": "query",
+                "description": "Optional facility service search filter"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page of results to return per paginated response."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per paginated response."
+              }
+            ]
+          },
+          "docs": "Retrieve all VA health facilities that are located within a specified drive time from a specified location based on coordinates (`lat` and `long`). Optional filter parameters include `drive_time` and `services[]`. \n\nResults of this operation are paginated. Pagination can be modified by specifying `page` and/or `per_page` parameters. Responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\nThe \"attributes\" element has information about the drive-time band t"
+        },
+        {
+          "info": {
+            "name": "Query a specific facility service using a service ID and a facility ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/facilities/:facilityId/services/:serviceId",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "vha_688",
+                "type": "path",
+                "description": "Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+              },
+              {
+                "name": "serviceId",
+                "value": "covid19Vaccine",
+                "type": "path",
+                "description": "Service ID, unique identifier for service"
+              }
+            ]
+          },
+          "docs": "Query facility services using service parameter. Simply provide the service like `services/cardiology`. \n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\nYou may optionally specify `page` and `per_page` with any query. "
+        },
+        {
+          "info": {
+            "name": "Retrieve all services for a given facility",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/va_facilities/{version}/facilities/:facilityId/services",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "vha_688",
+                "type": "path",
+                "description": "Facility ID, in the form `<prefix>_<station>`, where prefix is one of \"vha\", \"vba\", \"nca\", or \"vc\", for health facility, benefits, cemetery, or vet center, respectively."
+              },
+              {
+                "name": "serviceIds",
+                "value": "covid19Vaccine",
+                "type": "query",
+                "description": "Comma separated list of `serviceIds` can be used alongside or independently of `serviceType`"
+              },
+              {
+                "name": "serviceType",
+                "value": "health",
+                "type": "query",
+                "description": "Type of service can be used alongside or independently of `serviceIds`"
+              }
+            ]
+          },
+          "docs": "Queries for services associated with a facility. Supports optional search parameters to narrow the results. By default, all services for the given facility will be returned. A search may specify a comma separated list of service ids to include by using the `serviceIds` parameter. The type of services (e.g. \"health\", \"benefits\", etc) may be specified in the `type` parameter.\n\n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

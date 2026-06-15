@@ -1,0 +1,728 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benefits Claims",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Intent to File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get 0966 JSON Schema for form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/0966"
+          },
+          "docs": "Returns a single 0966 JSON schema to auto generate a form."
+        },
+        {
+          "info": {
+            "name": "Submit form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/0966",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Establishes an intent to file for disability compensation, burial, or pension claims.\n"
+        },
+        {
+          "info": {
+            "name": "Returns last active 0966 Intent to File form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/0966/active",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "compensation",
+                "type": "query",
+                "description": "The type of 0966 you wish to get the active submission for."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the last active 0966 form for a Veteran."
+        },
+        {
+          "info": {
+            "name": "Test the 0966 Intent to File form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/0966/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Test to ensure the form submission works with your parameters.\nSubmission is validated against the GET /forms/0966 schema.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Power of Attorney",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gets schema for POA form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122"
+          },
+          "docs": "Returns schema to automatically generate a POA form."
+        },
+        {
+          "info": {
+            "name": "Submit a POA form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Signature images\n\n\n\nIf the request includes signature images for both the Veteran and the representative, the API will:\n\n   - Generate VA Form 21-22 PDF for organizations or VA Form 21-22a PDF for individual representatives.\n\n   - Automatically establish POA for the representative.\n\n\n\nThe signature can be provided in either of these formats:\n\n   - Base64-encoded image or signature block. This allows the API to auto-populate and attach the VA Form\n   21-22 without requiring a manual PDF upload.\n\n"
+        },
+        {
+          "info": {
+            "name": "Check POA status by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the 21-22 submission"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Based on ID, returns a 21-22 submission and current status."
+        },
+        {
+          "info": {
+            "name": "Upload a signed 21-22 document.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Power of Attorney was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Accepts a document binary as part of a multipart payload.\nUse this PUT endpoint after the POST endpoint for uploading the signed 21-22 PDF form.\n\n"
+        },
+        {
+          "info": {
+            "name": "Check active POA status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122/active",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the last active POA for a claimant.\nTo check the status of new POA submissions, use the GET /forms/2122/{id} endpoint.\n\n"
+        },
+        {
+          "info": {
+            "name": "21-22 POA form submission test run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/2122/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Test to make sure the form submission works with your parameters.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Disability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a 526 schema for a claim.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/526"
+          },
+          "docs": "Returns a single 526 schema to automatically generate a form. Using this GET endpoint allows users to download our current validations.\n"
+        },
+        {
+          "info": {
+            "name": "Submits form 526",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/526",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Establishes a [Disability Compensation Claim](https://www.vba.va.gov/pubs/forms/VBA-21-526EZ-ARE.pdf) in VBMS. Submits any PDF attachments as a multi-part payload and returns an ID. For claims that are not original claims, this endpoint generates a filled 526 PDF along with the submission.\n<br/><br/>\nA 200 response indicates the submission was successful, but the claim has not reached VBMS until it has a “claim established” status. Check claim status using the GET /claims/{id} endpoint.\n<br/><br"
+        },
+        {
+          "info": {
+            "name": "Upload a 526 document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/526/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Disability Claim was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Used to upload a completed, signed 526 PDF to establish an original claim. Use this endpoint only after following the instructions in the POST /forms/526 endpoint to begin the claim submission.\n<br/><br/>\nThis endpoint works by accepting a document binary PDF as part of a multi-part payload (for example, attachment1, attachment2, attachment3). Each attachment should be encoded separately rather than encoding the whole payload together as with the Benefits Intake API.\n<br/><br/>\nFor other attachm"
+        },
+        {
+          "info": {
+            "name": "Validates a 526 claim form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/526/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Test to make sure the form submission works with your parameters.\nSubmission validates against the schema returned by the GET /forms/526 endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Upload documents supporting a 526 claim",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/forms/526/:id/attachments",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Disability Claim was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment1",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment2",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Used to attach supporting documents for a 526 claim. For wet-signature PDFs, use the PUT /forms/526/{id} endpoint.\n\n<br/><br/>\nThis endpoint accepts a document binary PDF as part of a multi-part payload (for example, attachment1, attachment2, attachment3).\n\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all benefits claims for a VA claimant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/claims",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Uses the Veteran’s metadata in headers to retrieve all claims for that Veteran. An authenticated Veteran making a request with this endpoint will return their own claims, if any."
+        },
+        {
+          "info": {
+            "name": "Find Claim by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/claims/{version}/claims/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://api.va.gov/oauth2/authorization",
+              "accessTokenUrl": "https://api.va.gov/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns data such as processing status for a single claim by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1686 @@
+{
+  "item": [
+    {
+      "id": "43910689-d929-4a72-a090-741cebea3ea3",
+      "name": "DirectDeposit",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8d48d962-3a7f-4b57-9176-a85f1e8d071a",
+          "name": "Get direct deposit account and eligibility and control information.",
+          "request": {
+            "name": "Get direct deposit account and eligibility and control information.",
+            "description": {
+              "content": "  Get direct deposit account and eligibility and control information.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "direct-deposit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "(Required) The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "direct-deposit-management.read direct-deposit-management.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/direct-deposit-management/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5e1e03b6-b715-41b7-977e-4fac26b9e406",
+              "name": "A Response which indicates a successful Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"controlInformation\": {\n    \"canUpdateDirectDeposit\": true,\n    \"isCorpAvailable\": true,\n    \"isEduClaimAvailable\": true,\n    \"hasCpClaim\": true,\n    \"hasCpAward\": true,\n    \"isCorpRecFound\": true,\n    \"hasNoBdnPayments\": true,\n    \"hasIndentity\": true,\n    \"hasIndex\": true,\n    \"isCompetent\": true,\n    \"hasMailingAddress\": true,\n    \"hasNoFiduciaryAssigned\": true,\n    \"isNotDeceased\": true,\n    \"hasPaymentAddress\": true\n  },\n  \"paymentAccount\": {\n    \"accountType\": \"SAVINGS\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\",\n    \"financialInstitutionName\": \"First National Bank USA\"\n  },\n  \"veteranStatus\": \"VETERAN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4393f0f7-a478-4881-b887-a112f012f50a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/constraint-violation\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"getDirectDeposit.icn must be between 17 and 17\",\n  \"instance\": \"e48e3aeb-f312-11ec-88e8-f55e56a472a2\",\n  \"errorCodes\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14985499-1114-40b6-8952-77ac527f8490",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e8efae3-f551-4cf1-8e79-11c2887e2443",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "389afec7-8760-4b4f-a30f-4b270a1cc8a2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/not-found\",\n  \"title\": \"Person for ICN not found\",\n  \"status\": 404,\n  \"detail\": \"No data found for ICN\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd8a0bd6-b9e9-4c2d-9353-a38f541448a6",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f38a6018-1ee7-419c-8187-a306b8d9bac7",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/unable-to-update\",\n  \"title\": \"Unable To Update\",\n  \"status\": 422,\n  \"detail\": \"Unable to update: account fraud indicator = true.\",\n  \"instance\": \"e48e3aeb-f312-11ec-88e8-f55e56a472a2\",\n  \"errorCodes\": [\n    {\n      \"errorCode\": \"payment.restriction.indicators.present\",\n      \"detail\": \"hasNoBdnPayments is false.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb6ccd63-e098-4936-b0ad-cbe77de767df",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4aa1f0d2-9cd4-43eb-9148-d0f5797cab80",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal Server Error\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7b7df2e-4ccc-4112-8fe3-6b9d941fec92",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/bad-gateway\",\n  \"title\": \"Bad Gatewayr\",\n  \"status\": 502,\n  \"detail\": \"Bad Gateway\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\",\n  \"debuggingPayload\": \"asdfghjklasdfghjkl\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99ee500a-bf15-40c5-8f06-8cf4fbecca99",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a5c2467-26ca-4a81-ad5d-cc6463f9d2f7",
+          "name": "Create or update direct deposit account information.",
+          "request": {
+            "name": "Create or update direct deposit account information.",
+            "description": {
+              "content": "  Create or update direct deposit account information.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "direct-deposit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "(Required) The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "direct-deposit-management.read direct-deposit-management.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.va.gov/oauth2/direct-deposit-management/system/v1/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"financialInstitutionRoutingNumber\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b04152bb-1c19-44cf-a24d-3912178d2188",
+              "name": "A Response which indicates successfully modified direct deposit information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"controlInformation\": {\n    \"canUpdateDirectDeposit\": true,\n    \"isCorpAvailable\": true,\n    \"isEduClaimAvailable\": true,\n    \"hasCpClaim\": true,\n    \"hasCpAward\": true,\n    \"isCorpRecFound\": true,\n    \"hasNoBdnPayments\": true,\n    \"hasIndentity\": true,\n    \"hasIndex\": true,\n    \"isCompetent\": true,\n    \"hasMailingAddress\": true,\n    \"hasNoFiduciaryAssigned\": true,\n    \"isNotDeceased\": true,\n    \"hasPaymentAddress\": true\n  },\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\",\n    \"financialInstitutionName\": \"First National Bank USA\"\n  },\n  \"veteranStatus\": \"VETERAN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0e1b474-c09b-45de-8f61-0c554e86f5e9",
+              "name": "A Response which indicates successfully created direct deposit entry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"controlInformation\": {\n    \"canUpdateDirectDeposit\": true,\n    \"isCorpAvailable\": true,\n    \"isEduClaimAvailable\": true,\n    \"hasCpClaim\": true,\n    \"hasCpAward\": true,\n    \"isCorpRecFound\": true,\n    \"hasNoBdnPayments\": true,\n    \"hasIndentity\": true,\n    \"hasIndex\": true,\n    \"isCompetent\": true,\n    \"hasMailingAddress\": true,\n    \"hasNoFiduciaryAssigned\": true,\n    \"isNotDeceased\": true,\n    \"hasPaymentAddress\": true\n  },\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\",\n    \"financialInstitutionName\": \"First National Bank USA\"\n  },\n  \"veteranStatus\": \"VETERAN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9f99663-3162-47c9-8cb0-b41235048b10",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.net/validation-error\",\n  \"title\": \"Invalid field value\",\n  \"status\": 400,\n  \"detail\": \"This error occurred because of...\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\",\n  \"errorCodes\": [\n    {\n      \"errorCode\": \"payment.restriction.indicators.present\",\n      \"detail\": \"hasNoBdnPayments was false\"\n    },\n    {\n      \"errorCode\": \"payment.restriction.indicators.present\",\n      \"detail\": \"hasNoBdnPayments was false\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7cac98f-65af-4aa3-80c1-7aae1197d588",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "698b3d46-1a79-40ae-b7c9-670a502bca05",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8e4a009-e6ad-40e3-9613-02db8e127529",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/not-found\",\n  \"title\": \"Person for ICN not found\",\n  \"status\": 404,\n  \"detail\": \"No data found for ICN\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b287341-c056-41fc-84fd-30c9de24c302",
+              "name": "Not Acceptable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/direct-deposit-management/errors/not-acceptable\",\n  \"title\": \"Media type not acceptable\",\n  \"status\": 406,\n  \"detail\": \"Could not find acceptable representation\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae57f53b-d653-4f16-a686-e670f861207c",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83a2d092-af22-4ee9-84dc-2c03611c0c3c",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.net/validation-error\",\n  \"title\": \"Invalid field value\",\n  \"status\": 400,\n  \"detail\": \"This error occurred because of...\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\",\n  \"errorCodes\": [\n    {\n      \"errorCode\": \"payment.restriction.indicators.present\",\n      \"detail\": \"hasNoBdnPayments was false\"\n    },\n    {\n      \"errorCode\": \"payment.restriction.indicators.present\",\n      \"detail\": \"hasNoBdnPayments was false\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d923164-eeef-43f2-a810-cee1baea6d58",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2de56e24-19fa-4b27-af8c-0859a51d0f97",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal Server Error\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbf7fc37-c127-4137-a4b0-3d58df1a907e",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://api.va.gov/services/direct-deposit-management/errors/generic/bad-gateway\",\n  \"title\": \"Bad Gatewayr\",\n  \"status\": 502,\n  \"detail\": \"Bad Gateway\",\n  \"instance\": \"e6d1119e-dc91-4b4d-b583-0f309de0807b\",\n  \"debuggingPayload\": \"asdfghjklasdfghjkl\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f28b0944-4366-42b3-a55f-92cf1d91c012",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "direct-deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "icn",
+                      "value": "1000000000V100000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAccount\": {\n    \"accountType\": \"<string>\",\n    \"accountNumber\": \"ABC1234567\",\n    \"financialInstitutionRoutingNumber\": \"123456789\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v1",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/direct-deposit-management/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "57f3a57d-0c08-43f6-838b-451a847eb79e",
+    "name": "Direct Deposit Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Internal, front-end VA applications can use\nthis API to let eligible Veterans or their\nbeneficiaries manage direct deposit information\nfor VA disability, pension, and education benefit payments.\n\nThis API offers functionality to:\n* Return, create, or update direct deposit\nbanking information for disability, pension,\nand education benefit compensation and payments.\n* Support payments to Veterans, spouses,\nand other beneficiaries.\n* Determine eligibility for direct deposit\nby detecting if disability, pension, or\neducation benefits are awarded to an individual.\n* Validate routing information.\n* Auto-populate payment info into the\nonline 526 claim process.\n\nThis API does not perform some direct deposit tasks. Use VA.gov to\n[set up direct deposit for VA travel pay reimbursement](https://www.va.gov/resources/how-to-set-up-direct-deposit-for-va-travel-pay-reimbursement/)\n\nNote: If a Veteran needs to change the address returned with\ndirect deposit information, they should [update the address on VA Profile](https://www.va.gov/change-address/).\n\n## Technical overview\nFor fraud prevention purposes, the front-end consumer\nmust obtain successful 2FA authentication of the user\nbefore allowing direct deposit inquiry or maintenance\nthrough this API. \n\n\n\nThe Direct Deposit Management API receives an Integration\nControl Number (ICN) in the API request and checks the\nfollowing:\n\n1. if the requester is a Veteran or a Dependent, and\n2. if they are eligible to receive payments via direct deposit\nfor disability payment, pension, or education benefits.\n\nIf the requester is confirmed as eligible to receive a\ndirect deposit payment, the API grants access to deposit account\ninformation. \n\n\n\nThe API submits all changes made to account information to the VA source\nsystem for validation and posting. This validation detects if the account\nis flagged for prior potential fraud activity and rejects the request\nfor updates, The Lighthouse API returns an HTTP 422 error message that\nthe update was not made due to a fraud indicator.\n\n### Errors\nFor some responses, more than one error may be applicable.\nFor this reason, the error payload returns as an array.\n\n### Authentication and Authorization\nThe authentication model for the Direct Deposit Management\nAPI is based on OAuth 2.0 / OpenID Connect and supports the [client credentials grant](https://dev-developer.va.gov/explore/authorization/docs/client-credentials?api=direct-deposit-management).\n\n**Important:** To get production access using client credentials\ngrant, you must either work for VA or have specific VA agreements\nin place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).\n\n### Test data\nValidate your application's integration with our API in\nthe sandbox environment using mock [test data](https://developer.va.gov/explore/api/direct-deposit-management/test-users).\nSandbox test data contains no PII or PHI but mimics real\nVeteran or beneficiary demographics and benefits information.\n\n### Getting production access\n* When you're ready, request production access. Getting production\naccess requires multiple steps and can take over a month.\n[Learn about requesting production access](https://developer.va.gov/onboarding).\n\n\nContact Support:\n Name: VA.gov",
+      "type": "text/plain"
+    }
+  }
+}
