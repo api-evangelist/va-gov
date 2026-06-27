@@ -5,7 +5,7 @@
       "source": "https://news.va.gov/feed/",
       "feed_url": "https://news.va.gov/feed/",
       "title": "",
-      "saved": 20,
+      "saved": 13,
       "method": "feed"
     },
     {
@@ -13,6 +13,6 @@
       "error": "HTTPError"
     }
   ],
-  "post_count": 37,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 66,
+  "fetched": "2026-06-27T12:03:07Z"
 }

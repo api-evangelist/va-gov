@@ -512,7 +512,7 @@ common:
   name: Explore VA APIs
 - type: GettingStarted
   url: https://developer.va.gov/onboarding
-- type: SignUp
+- type: Signup
   url: https://developer.va.gov/onboarding/request-sandbox-access
   name: Request Sandbox Access
 - type: Authentication
