@@ -1,0 +1,87 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/va-gov-address-validation-v3-openapi.json, openapi/va-gov-appealable-issues-v0-openapi.json,
+  openapi/va-gov-appeals-status-v0-openapi.json, openapi/va-gov-appeals-status-v1-openapi.json,
+  openapi/va-gov-benefits-claims-v1-openapi.json, openapi/va-gov-benefits-claims-v2-openapi.json,
+  openapi/va-gov-benefits-documents-v1-openapi.json, openapi/va-gov-benefits-intake-v1-openapi.json,
+  openapi/va-gov-benefits-reference-data-v1-openapi.json, openapi/va-gov-community-care-eligibility-v0-openapi.json,
+  openapi/va-gov-direct-deposit-management-v1-openapi.json, openapi/va-gov-facilities-v0-openapi.json
+  ...
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: apikey
+  type: apiKey
+  in: header
+  parameter: apikey
+  sources:
+  - openapi/va-gov-address-validation-v3-openapi.json
+  - openapi/va-gov-appeals-status-v0-openapi.json
+  - openapi/va-gov-benefits-intake-v1-openapi.json
+  - openapi/va-gov-benefits-reference-data-v1-openapi.json
+  - openapi/va-gov-facilities-v0-openapi.json
+  - openapi/va-gov-facilities-v1-openapi.json
+  - openapi/va-gov-forms-v0-openapi.json
+  - openapi/va-gov-veteran-confirmation-v0-openapi.json
+- name: productionOauth
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.va.gov/oauth2/appeals/v1/authorization
+    tokenUrl: https://api.va.gov/oauth2/appeals/v1/token
+    scopes: 2
+  - flow: clientCredentials
+    tokenUrl: https://api.va.gov/oauth2/appeals/system/v1/token
+    scopes: 1
+  description: 'The authorization model for the Appealable Issues API uses OAuth 2.0/OpenID
+    Connect. The following models are supported: [Authorization Code Grant (ACG)](/explore/api/appealable-issues/authorization-code)
+    and [Client Credentials Grant (CCG)](/explore/api/appealable-issues/client-credentials).'
+  sources:
+  - openapi/va-gov-appealable-issues-v0-openapi.json
+  - openapi/va-gov-appeals-status-v1-openapi.json
+  - openapi/va-gov-legacy-appeals-v0-openapi.json
+  - openapi/va-gov-veteran-verification-v2-openapi.json
+- name: bearer_token
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/va-gov-benefits-claims-v1-openapi.json
+  - openapi/va-gov-benefits-claims-v2-openapi.json
+  - openapi/va-gov-veteran-verification-v0-openapi.json
+- name: productionOauth
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.va.gov/oauth2/authorization
+    tokenUrl: https://api.va.gov/oauth2/token
+    scopes: 2
+  description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+  sources:
+  - openapi/va-gov-benefits-claims-v1-openapi.json
+  - openapi/va-gov-benefits-claims-v2-openapi.json
+  - openapi/va-gov-community-care-eligibility-v0-openapi.json
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.va.gov/oauth2/exemplar/system/v1/token
+    scopes: 2
+  sources:
+  - openapi/va-gov-benefits-documents-v1-openapi.json
+  - openapi/va-gov-direct-deposit-management-v1-openapi.json
+  - openapi/va-gov-loan-review-v1-openapi.json
+  - openapi/va-gov-va-letter-generator-v1-openapi.json
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: apiKey
+  sources:
+  - openapi/va-gov-veteran-confirmation-v1-openapi.json
