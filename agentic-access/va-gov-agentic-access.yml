@@ -1,0 +1,1669 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/va-gov-address-validation-v3-openapi.json, openapi/va-gov-appealable-issues-v0-openapi.json,
+  openapi/va-gov-appeals-status-v0-openapi.json, openapi/va-gov-appeals-status-v1-openapi.json,
+  openapi/va-gov-benefits-claims-v1-openapi.json, openapi/va-gov-benefits-claims-v2-openapi.json,
+  openapi/va-gov-benefits-documents-v1-openapi.json, openapi/va-gov-benefits-intake-v1-openapi.json,
+  openapi/va-gov-benefits-reference-data-v1-openapi.json, openapi/va-gov-community-care-eligibility-v0-openapi.json,
+  openapi/va-gov-direct-deposit-management-v1-openapi.json, openapi/va-gov-facilities-v0-openapi.json,
+  openapi/va-gov-facilities-v1-openapi.json, openapi/va-gov-forms-v0-openapi.json, openapi/va-gov-legacy-appeals-v0-openapi.json,
+  openapi/va-gov-loan-review-v1-openapi.json, openapi/va-gov-va-letter-generator-v1-openapi.json,
+  openapi/va-gov-veteran-confirmation-v0-openapi.json, openapi/va-gov-veteran-confirmation-v1-openapi.json,
+  openapi/va-gov-veteran-verification-v0-openapi.json, openapi/va-gov-veteran-verification-v1-openapi.json,
+  openapi/va-gov-veteran-verification-v2-openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 116
+  by_action_class:
+    acting: 53
+    connected: 63
+  by_consequence:
+    write: 52
+    read: 63
+    physical: 1
+  human_in_the_loop_required: 0
+operations:
+- path: /validate
+  method: post
+  operationId: POST:/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /candidate
+  method: post
+  operationId: POST:/candidate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /locality
+  method: get
+  operationId: GET:/locality
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /appealable-issues/{decisionReviewType}
+  method: get
+  operationId: GET:/appealable-issues/{decisionReviewType}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - representative/AppealableIssues.read
+    - system/AppealableIssues.read
+    - veteran/AppealableIssues.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /appeals
+  method: get
+  operationId: GET:/appeals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /appeals
+  method: get
+  operationId: GET:/appeals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - representative/AppealsStatus.read
+    - system/AppealsStatus.read
+    - veteran/AppealsStatus.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/0966
+  method: get
+  operationId: GET:/forms/0966
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/0966
+  method: post
+  operationId: POST:/forms/0966
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/0966/active
+  method: get
+  operationId: GET:/forms/0966/active
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/0966/validate
+  method: post
+  operationId: POST:/forms/0966/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/2122
+  method: get
+  operationId: GET:/forms/2122
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/2122
+  method: post
+  operationId: POST:/forms/2122
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/2122/{id}
+  method: put
+  operationId: PUT:/forms/2122/{id}
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/2122/{id}
+  method: get
+  operationId: GET:/forms/2122/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/2122/active
+  method: get
+  operationId: GET:/forms/2122/active
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/2122/validate
+  method: post
+  operationId: POST:/forms/2122/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/526
+  method: get
+  operationId: GET:/forms/526
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/526
+  method: post
+  operationId: POST:/forms/526
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/526/{id}
+  method: put
+  operationId: PUT:/forms/526/{id}
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/526/validate
+  method: post
+  operationId: POST:/forms/526/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /forms/526/{id}/attachments
+  method: post
+  operationId: POST:/forms/526/{id}/attachments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - claim.read
+    - claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /claims
+  method: get
+  operationId: GET:/claims
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /claims/{id}
+  method: get
+  operationId: GET:/claims/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/{veteranId}/claims/{id}/5103
+  method: post
+  operationId: POST:/veterans/{veteranId}/claims/{id}/5103
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/526/synchronous
+  method: post
+  operationId: POST:/veterans/{veteranId}/526/synchronous
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/526.override
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/526/validate
+  method: post
+  operationId: POST:/veterans/{veteranId}/526/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/526/generatePDF/minimum-validations
+  method: post
+  operationId: POST:/veterans/{veteranId}/526/generatePDF/minimum-validations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/526-pdf.override
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/claims
+  method: get
+  operationId: GET:/veterans/{veteranId}/claims
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/{veteranId}/claims/{id}
+  method: get
+  operationId: GET:/veterans/{veteranId}/claims/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/{veteranId}/intent-to-file/{type}
+  method: get
+  operationId: GET:/veterans/{veteranId}/intent-to-file/{type}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/{veteranId}/intent-to-file
+  method: post
+  operationId: POST:/veterans/{veteranId}/intent-to-file
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/intent-to-file/validate
+  method: post
+  operationId: POST:/veterans/{veteranId}/intent-to-file/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/power-of-attorney
+  method: get
+  operationId: GET:/veterans/{veteranId}/power-of-attorney
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    - system/claim.write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/{veteranId}/power-of-attorney-request
+  method: post
+  operationId: POST:/veterans/{veteranId}/power-of-attorney-request
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/power-of-attorney-requests
+  method: post
+  operationId: POST:/veterans/power-of-attorney-requests
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/power-of-attorney-requests/{id}
+  method: get
+  operationId: GET:/veterans/power-of-attorney-requests/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    - system/claim.write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /veterans/power-of-attorney-requests/{id}/decide
+  method: post
+  operationId: POST:/veterans/power-of-attorney-requests/{id}/decide
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/2122/validate
+  method: post
+  operationId: POST:/veterans/{veteranId}/2122/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/2122
+  method: post
+  operationId: POST:/veterans/{veteranId}/2122
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/2122a/validate
+  method: post
+  operationId: POST:/veterans/{veteranId}/2122a/validate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/2122a
+  method: post
+  operationId: POST:/veterans/{veteranId}/2122a
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system/claim.read
+    - system/claim.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /veterans/{veteranId}/power-of-attorney/{id}
+  method: get
+  operationId: GET:/veterans/{veteranId}/power-of-attorney/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - system/claim.read
+    - system/claim.write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /uploads/status
+  method: post
+  operationId: POST:/uploads/status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /participant/documents/search
+  method: post
+  operationId: POST:/participant/documents/search
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /participant/documents/download
+  method: post
+  operationId: POST:/participant/documents/download
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /documents
+  method: post
+  operationId: POST:/documents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /documents/validate/claimant
+  method: post
+  operationId: POST:/documents/validate/claimant
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /documents/search
+  method: post
+  operationId: POST:/documents/search
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /claim-letters/search
+  method: post
+  operationId: POST:/claim-letters/search
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /claim-letters/download
+  method: post
+  operationId: POST:/claim-letters/download
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - documents.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /uploads/{requestId}/status
+  method: get
+  operationId: GET:/uploads/{requestId}/status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - documents.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /uploads
+  method: post
+  operationId: POST:/uploads
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /path
+  method: put
+  operationId: PUT:/path
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /uploads/{id}
+  method: get
+  operationId: GET:/uploads/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /uploads/{id}/download
+  method: get
+  operationId: GET:/uploads/{id}/download
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /uploads/report
+  method: post
+  operationId: POST:/uploads/report
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /uploads/validate_document
+  method: post
+  operationId: POST:/uploads/validate_document
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /contention-types
+  method: get
+  operationId: GET:/contention-types
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /countries
+  method: get
+  operationId: GET:/countries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /disabilities
+  method: get
+  operationId: GET:/disabilities
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /intake-sites
+  method: get
+  operationId: GET:/intake-sites
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /military-pay-types
+  method: get
+  operationId: GET:/military-pay-types
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-branches
+  method: get
+  operationId: GET:/service-branches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /special-circumstances
+  method: get
+  operationId: GET:/special-circumstances
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /states
+  method: get
+  operationId: GET:/states
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /treatment-centers
+  method: get
+  operationId: GET:/treatment-centers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search
+  method: get
+  operationId: GET:/search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - patient/CommunityCareEligibility.read
+- path: /direct-deposit
+  method: get
+  operationId: GET:/direct-deposit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /direct-deposit
+  method: put
+  operationId: PUT:/direct-deposit
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /facilities/all
+  method: get
+  operationId: GET:/facilities/all
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities
+  method: get
+  operationId: GET:/facilities
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities/{id}
+  method: get
+  operationId: GET:/facilities/{id}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ids
+  method: get
+  operationId: GET:/ids
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /nearby
+  method: get
+  operationId: GET:/nearby
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities
+  method: get
+  operationId: GET:/facilities
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities/{facilityId}
+  method: get
+  operationId: GET:/facilities/{facilityId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ids
+  method: get
+  operationId: GET:/ids
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /nearby
+  method: get
+  operationId: GET:/nearby
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities/{facilityId}/services/{serviceId}
+  method: get
+  operationId: GET:/facilities/{facilityId}/services/{serviceId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /facilities/{facilityId}/services
+  method: get
+  operationId: GET:/facilities/{facilityId}/services
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms
+  method: get
+  operationId: GET:/forms
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /forms/{form_name}
+  method: get
+  operationId: GET:/forms/{form_name}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /legacy-appeals
+  method: get
+  operationId: GET:/legacy-appeals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - representative/LegacyAppeals.read
+    - system/LegacyAppeals.read
+    - veteran/LegacyAppeals.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transmit-documents
+  method: post
+  operationId: POST:/transmit-documents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system.loan-review.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /additional-documents
+  method: post
+  operationId: POST:/additional-documents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - system.loan-review.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /eligible-letters
+  method: get
+  operationId: GET:/eligible-letters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /letter-contents/{letterType}
+  method: get
+  operationId: GET:/letter-contents/{letterType}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /letters/{letterType}/letter
+  method: get
+  operationId: GET:/letters/{letterType}/letter
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status
+  method: post
+  operationId: POST:/status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /status
+  method: post
+  operationId: POST:/status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /status
+  method: get
+  operationId: GET:/status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /disability_rating
+  method: get
+  operationId: GET:/disability_rating
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service_history
+  method: get
+  operationId: GET:/service_history
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /keys
+  method: get
+  operationId: GET:/keys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /disability_rating
+  method: get
+  operationId: GET:/disability_rating
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service_history
+  method: get
+  operationId: GET:/service_history
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status
+  method: get
+  operationId: GET:/status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /restricted/aca_coverage
+  method: post
+  operationId: POST:/restricted/aca_coverage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - aca_coverage_restricted.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /disability_rating
+  method: get
+  operationId: GET:/disability_rating
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - disability_rating.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /disability_rating
+  method: post
+  operationId: POST:/disability_rating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - disability_rating.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /restricted/disability_rating
+  method: post
+  operationId: POST:/restricted/disability_rating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - disability_rating_restricted.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /summary/disability_rating
+  method: get
+  operationId: GET:/summary/disability_rating
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - disability_rating_summary.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /summary/disability_rating
+  method: post
+  operationId: POST:/summary/disability_rating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - disability_rating_summary.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /restricted/summary/disability_rating
+  method: post
+  operationId: POST:/restricted/summary/disability_rating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - disability_rating_summary_restricted.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /enrolled_benefits
+  method: get
+  operationId: GET:/enrolled_benefits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enrolled_benefits.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /enrolled_benefits
+  method: post
+  operationId: POST:/enrolled_benefits
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enrolled_benefits.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /flashes
+  method: get
+  operationId: GET:/flashes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - flashes.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /flashes
+  method: post
+  operationId: POST:/flashes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - flashes.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /permanent_and_total_disability
+  method: get
+  operationId: GET:/permanent_and_total_disability
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - permanent_and_total_disability.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /permanent_and_total_disability
+  method: post
+  operationId: POST:/permanent_and_total_disability
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - permanent_and_total_disability.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /restricted/permanent_and_total_disability
+  method: post
+  operationId: POST:/restricted/permanent_and_total_disability
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - permanent_and_total_disability_restricted.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service_history
+  method: get
+  operationId: GET:/service_history
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - service_history.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service_history
+  method: post
+  operationId: POST:/service_history
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - service_history.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /status
+  method: get
+  operationId: GET:/status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - veteran_status.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status
+  method: post
+  operationId: POST:/status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - veteran_status.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /restricted/status
+  method: post
+  operationId: POST:/restricted/status
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - status_restricted.read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
