@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver JWS Validation API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: JWS Validation
+paths:
+  /keys:
+    get:
+      tags:
+      - JWS Validation
+      summary: Retrieve public keys to check Veteran Verification API token signatures
+      operationId: GET:/keys
+      responses:
+        '200':
+          description: Keys retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWKKeyset'
+        '401':
+          description: Not authorized
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+components:
+  schemas:
+    JWKKeyset:
+      description: A JWK Keyset compliant with RFC 7517
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/JWK'
+    JWK:
+      description: JSON Web Key compliant with RFC 7517
+      type: object
+      properties:
+        kty:
+          type: string
+          description: The "kty" (key type) parameter identifies the cryptographic algorithm family used with the key, such as "RSA" or "EC".
+          example: RSA
+        alg:
+          type: string
+          description: The "alg" (algorithm) parameter identifies the algorithm intended for use with the key.
+          example: RSA256
+        kid:
+          type: string
+          description: The "kid" (key ID) parameter is used to match a specific key.
+          example: 088d24232ff6faa4cd4cfec126ad0431dff1ea028afdb1c86b3718d70171aed6
+        pem:
+          type: string
+          description: A pem version of the public key
+          example: '-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDfC0vJvKBPhS+KA+ad1HkpXrI8\nJoawtqzVwYgCGrlIgYgnRzKDvRFMbskYFTfPB7a8kT0gAkyFGvjlxp4EQ6mpVGhA\nDNVWBVArQlcnMMbNsKRmb2jSLSzjX49C26na6mUi9X+xe6iS97L0yyJWBA91Yq3c\nC0kJ8J8lwPoK9TvXqwIDAQAB\n-----END PUBLIC KEY-----\n'
+        e:
+          type: string
+          description: The "e" (exponent) parameter contains the exponent value for the RSA public key.  It is represented as a Base64urlUInt-encoded value.
+          example: AQAB
+        n:
+          type: string
+          description: ' The "n" (modulus) parameter contains the modulus value for the RSA public key.  It is represented as a Base64urlUInt-encoded value.'
+          example: 3wtLybygT4UvigPmndR5KV6yPCaGsLas1cGIAhq5SIGIJ0cyg70RTG7JGBU3zwe2vJE9IAJMhRr45caeBEOpqVRoQAzVVgVQK0JXJzDGzbCkZm9o0i0s41-PQtup2uplIvV_sXuokvey9MsiVgQPdWKt3AtJCfCfJcD6CvU716s=
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

@@ -1,0 +1,203 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Path API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Path
+paths:
+  /path:
+    put:
+      tags:
+      - Path
+      responses:
+        '200':
+          description: Document upload staged
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorModel'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Accepts document upload.
+      description: "Accepts document metadata, document binary, and attachment binaries. Full URL, including\nquery parameters, provided from POST `/document_uploads`.\n\n## Example Payload\n\nThe following demonstrates a (redacted) multipart payload suitable for submitting to the PUT\nendpoint. Most programming languages should have provisions for assembling a multipart\npayload like this without having to do so manually.\n\n```\n--17de1ed8f01442b2a2d7a93506314b76\nContent-Disposition: form-data; name=\"metadata\"\nContent-Type: application/json\n\n{\"veteranFirstName\": \"Jane\",\n\"veteranLastName\": \"Doe\",\n\"fileNumber\": \"012345678\",\n\"zipCode\": \"97202\",\n\"source\": \"MyVSO\",\n\"docType\": \"21-22\"\n\"businessLine\": \"CMP\"}\n--17de1ed8f01442b2a2d7a93506314b76\nContent-Disposition: form-data; name=\"content\"\nContent-Type: application/pdf\n\n<Binary PDF contents>\n--17de1ed8f01442b2a2d7a93506314b76\nContent-Disposition: form-data; name=\"attachment1\"\nContent-Type: application/pdf\n\n<Binary PDF attachment contents>\n--17de1ed8f01442b2a2d7a93506314b76--\n```\n\nThis PUT request would have an overall HTTP Content-Type header:\n\n```\nContent-Type: multipart/form-data; boundary=17de1ed8f01442b2a2d7a93506314b76\n```\n\nNote that the Content-Disposition parameter \"name\" in each part must be the expected values\n\"metadata\", \"content\", \"attachment1\"...\"attachmentN\". The attachment attributes must be named \nexactly as they are listed here (case sensitive), for example: \"attachment_1\" or \"Attachment2\"\nare invalid.\n\nThis is an example curl command:\n\n```\ncurl -v -L -X PUT '<Location from \\uploads>' -F 'metadata=\"{\\\"veteranFirstName\\\": \\\"Jane\\\",\\\"veteranLastName\\\": \\\"Doe\\\",\\\"fileNumber\\\": \\\"012345678\\\",\\\"zipCode\\\": \\\"97202\\\",\\\"source\\\": \\\"MyVSO\\\",\\\"docType\\\": \\\"21-22\\\",\\\"businessLine\\\": \\\"CMP\\\"}\";type=application/json' -F 'content=@\"content.pdf\"' -F 'attachment1=@\"file1.pdf\"' -F 'attachment2=@\"another_file.pdf\"'\n```\n"
+      operationId: PUT:/path
+      parameters:
+      - name: Content-MD5
+        in: header
+        description: Base64-encoded 128-bit MD5 digest of the message. Use for integrity control
+        required: false
+        schema:
+          type: string
+          format: md5
+components:
+  schemas:
+    ErrorModel:
+      description: Errors with some details for the given request
+      required:
+      - status
+      - detail
+      properties:
+        status:
+          type: integer
+          format: int32
+          example: '422'
+          description: Standard HTTP Status returned with Error
+        detail:
+          type: string
+          example: DOC104 - Upload rejected by upstream system. Processing failed and upload must be resubmitted
+          description: A more detailed message about why an error occurred
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

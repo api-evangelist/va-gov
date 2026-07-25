@@ -1,0 +1,409 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Veteran Verification API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Veteran Verification
+paths:
+  /status:
+    get:
+      tags:
+      - Veteran Verification
+      summary: Get confirmation about an individual's Veteran status according to the VA
+      operationId: GET:/status
+      security:
+      - bearer_token: []
+      responses:
+        '200':
+          description: Confirmation status successfully retrieved
+          content:
+            application/json:
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/VeteranStatusConfirmation'
+        '401':
+          description: Not authorized
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '502':
+          description: eMIS failed to respond or responded in a way we cannot handle.
+  /disability_rating:
+    get:
+      tags:
+      - Veteran Verification
+      summary: Retrieve disability rating of authorized Veteran
+      operationId: GET:/disability_rating
+      security:
+      - bearer_token: []
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DisabilityRating'
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingToken'
+        '401':
+          description: Not authorized
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '502':
+          description: BGS service responded with something other than the expected disability rating response.
+  /service_history:
+    get:
+      tags:
+      - Veteran Verification
+      summary: Retrieve service history of authorized Veteran
+      operationId: GET:/service_history
+      security:
+      - bearer_token: []
+      responses:
+        '200':
+          description: Service History retrieved successfully
+          content:
+            application/json:
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceHistoryEpisode'
+            application/jwt:
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceHistoryToken'
+        '401':
+          description: Not authorized
+        '404':
+          description: No service history found
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+components:
+  schemas:
+    DisabilityRatingAttributes:
+      description: 'Body of the disability rating response
+
+        '
+      required:
+      - combined_disability_rating
+      - combined_effective_date
+      - legal_effective_date
+      - individual_ratings
+      properties:
+        combined_disability_rating:
+          description: Overall severity rating determined by VA calculation of each service related conditions. Used to help determine disability compensation (pay) and related benefits.
+          nullable: true
+          type: integer
+          example: 100
+        combined_effective_date:
+          description: The effective date of the latest combined disability rating for the Veteran
+          nullable: true
+          type: datetime
+          example: 2018-03-27T21:00:41.000+0000
+        legal_effective_date:
+          description: When the Veteran could begin claiming benefits for combined disability rating
+          nullable: true
+          type: datetime
+          example: 2018-03-27T21:00:41.000+0000
+        individual_ratings:
+          description: list of individual service connected disabilty ratings
+          type: array
+          items:
+            $ref: '#/components/schemas/individual_ratings'
+    DisabilityRatingToken:
+      description: 'A token containing signed claims about a Veteran''s disability rating percentage
+
+        '
+      type: string
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
+    ServiceHistoryToken:
+      description: 'A token containing signed claims about a Veteran''s service history
+
+        '
+      type: string
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoiMTIzMTJBQVNEZiIsInR5cGUiOiJzZXJ2aWNlLWhpc3RvcnktZXBpc29kZXMiLCJhdHRyaWJ1dGVzIjp7InN0YXJ0X2RhdGUiOiIxOTQ4LTA0LTA4IiwiZW5kX2RhdGUiOiIxOTUwLTA1LTEwIiwiYnJhbmNoIjoiQWlyIEZvcmNlIiwiZGlzY2hhcmdlX3N0YXR1cyI6Imhvbm9yYWJsZSIsImRlcGxveW1lbnRzIjpbeyJzdGFydF9kYXRlIjoiMTk0OC0xMC0xMCIsImVuZF9kYXRlIjoiMTk0OS0xMC0wOSIsImxvY2F0aW9uIjoiS09SIn1dfX19.S39hmL-5nxvdJnJ_PSHdfiP744dTcGzrUKsqcVQa1FomUU15Dr2A2gQMF7XWO2DCLrdM0bCtIS8mCSwI00nqQFqXGjZVGQTIyzQJDPHxV6jnYwwaXD1vzbxlsycWF2ZQ_5Wx6TIhnXiEkbn_rzW_VleVnHjLCRQwzmpwGGDsL_I
+    individual_ratings:
+      description: list of service connected disability ratings
+      required:
+      - decision
+      - effective_date
+      - rating_percentage
+      properties:
+        decision:
+          description: Whether the disability is service connected or not.
+          nullable: true
+          type: string
+          example: Service Connected
+        effective_date:
+          description: When the Veteran could begin claiming benefits related to this disability
+          nullable: true
+          type: string
+          format: datetime
+          example: 2018-03-27T21:00:41.000+0000
+        rating_percentage:
+          description: Severity rating determined by VA that indicates how disabling an illness or injury is for the Veteran. Used to help determine disability compensation (pay) and related benefits.
+          nullable: true
+          type: number
+          example: 50
+    ServiceHistoryEpisode:
+      description: 'Service History for authorized Veteran
+
+        '
+      required:
+      - id
+      - attributes
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+          description: Service History Episode ID
+          example: 12312AASDf
+        type:
+          type: string
+          example: service-history-episodes
+        attributes:
+          type: object
+          required:
+          - first_name
+          - last_name
+          - start_date
+          - end_date
+          - branch_of_service
+          - pay_grade
+          - discharge_status
+          - separation_reason
+          - deployments
+          properties:
+            first_name:
+              type: string
+              nullable: false
+              description: Veteran first name
+              example: Abraham
+            last_name:
+              type: string
+              nullable: false
+              description: Veteran last name
+              example: Lincoln
+            start_date:
+              type: string
+              nullable: true
+              format: date
+              description: start date of a service history episode (YYYY-mm-dd)
+              example: '1948-04-08'
+            end_date:
+              type: string
+              nullable: true
+              format: date
+              description: end date of a service history episode (YYYY-mm-dd)
+              example: '1950-05-10'
+            branch_of_service:
+              type: string
+              nullable: false
+              description: Branch of military including National Guard or Reserve status
+              example: Air Force
+            pay_grade:
+              type: string
+              nullable: false
+              description: "Defines the level of compensation for a position, normalized across military branches\n\nPossible values include the concatenation of Pay Plan Code and Pay Grade Code.\nPay Plan Code is represented as a two-character code, and can be one of five values:\n - CC (Commissioned Corps)\n - MC (Cadet)\n - ME (Enlisted)\n - MO (Officer)\n - MW (Warrant Officer)\n\nPay Grade Code is a value between 01 and 10.\nPay Plan Code is concatenated with Pay Grade Code to determine the full Pay Grade value, with the leading character (M or C) stripped from Pay Plan Code.\n"
+              example: W01
+            discharge_status:
+              type: string
+              nullable: true
+              description: 'Character of discharge from service episode. Possible values are:
+
+
+                Both "honorable-for-va-purposes" and "dishonorable-for-va-purposes" represent a change in character of discharge based on an administrative decision, for purposes of VA benefits administration. The original character of discharge for other purposes was either "bad-conduct" or "other-than-honorable". "honorable-absence-of-negative-report" represents an unreported character of service that DoD classifies as honorable.
+
+                '
+              enum:
+              - honorable
+              - general
+              - bad-conduct
+              - other-than-honorable
+              - dishonorable
+              - honorable-absence-of-negative-report
+              - honorable-for-va-purposes
+              - dishonorable-for-va-purposes
+              - uncharacterized
+              - unknown
+              example: honorable
+            separation_reason:
+              type: string
+              nullable: false
+              description: Additional text description for separation reason beyond discharge_status value
+              example: SUFFICIENT SERVICE FOR RETIREMENT
+            deployments:
+              type: array
+              items:
+                $ref: '#/components/schemas/Deployment'
+    DisabilityRating:
+      description: 'The disability rating percentage applied to the Veteran.
+
+        '
+      required:
+      - id
+      - type
+      - atttributes
+      properties:
+        id:
+          description: JSON API identifier
+          nullable: false
+          type: string
+          example: 12303
+        type:
+          description: JSON API type specification
+          nullable: false
+          type: string
+          example: disability-rating
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes'
+    VeteranStatusConfirmation:
+      description: 'Veteran status confirmation for an individual
+
+        '
+      type: object
+      properties:
+        id:
+          type: string
+          description: Confirmation UUID
+          example: 833c6ffc-efef-4775-9355-f836b4f57501
+        type:
+          type: string
+          example: veteran_status_confirmations
+        attributes:
+          type: object
+          properties:
+            veteran_status:
+              type: string
+              description: 'Whether the system could confirm the Veteran status of the authorized individual
+
+                '
+              enum:
+              - confirmed
+              - not confirmed
+    Deployment:
+      description: 'Deployment during a service history episode
+
+        '
+      type: object
+      required:
+      - start_date
+      - end_date
+      - location
+      properties:
+        start_date:
+          type: string
+          nullable: true
+          format: date
+          description: beginning of deployment (YYYY-mm-dd)
+          example: '1948-10-10'
+        end_date:
+          type: string
+          nullable: true
+          format: date
+          description: end of deployment (YYYY-mm-dd)
+          example: '1949-10-09'
+        location:
+          type: string
+          nullable: true
+          description: Three letter ISO country code of deployment location
+          example: KOR
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

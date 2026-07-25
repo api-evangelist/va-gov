@@ -1,0 +1,633 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Enrolled Benefits API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Enrolled Benefits
+paths:
+  /enrolled_benefits:
+    get:
+      tags:
+      - Enrolled Benefits
+      summary: Get enrolled benefits information.
+      description: 'This endpoint returns select enrolled benefits for a Veteran.
+
+        If the Veteran is enrolled, the codes and names for benefits they are
+
+        receiving will be returned for the following benefit types:
+
+
+        * Compensation (Code C)
+
+        * 306 Pension (Code 306P)
+
+        * Old Law Pension (Code OLP)
+
+        * Improved Pension (Code IP)
+
+        '
+      operationId: GET:/enrolled_benefits
+      responses:
+        '200':
+          description: Enrolled benefits successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeteranEnrolledBenefitsConfirmation'
+              example:
+                veteran_benefits:
+                - program_code: C
+                  program_name: ''
+                  award_effective_date: '2022-01-11T00:00:00Z'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                path: /veteran_verification/v2/enrolled_benefits
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/enrolled_benefits
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/enrolled_benefits
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - enrolled_benefits.read
+      - productionOauth2:
+        - enrolled_benefits.read
+    post:
+      tags:
+      - Enrolled Benefits
+      summary: Get enrolled benefits information using demographics to search for the Veteran.
+      description: 'This endpoint returns select enrolled benefits for a Veteran.
+
+        If the Veteran is enrolled, the codes and names for benefits they are
+
+        receiving will be returned for the following benefit types:
+
+
+        * Compensation (Code C)
+
+        * 306 Pension (Code 306P)
+
+        * Old Law Pension (Code OLP)
+
+        * Improved Pension (Code IP)
+
+
+        Required information:
+
+        * First Name
+
+        * Last Name
+
+        * Date of Birth
+
+        * Street Address
+
+        * City
+
+        * State
+
+        * Country
+
+        * Zipcode
+
+
+        Optional information:
+
+        * Middle Name
+
+        * Gender
+
+
+        Tips for finding a match:
+
+
+        * First and Last Name, Address and DOB are often essential to uniquely identifying
+
+        a Veteran.
+
+        * Home Address is recommended, but it may be beneficial to retry the search with
+
+        additional addresses if they are available and the first attempt is not confirmed.
+
+        * To find a match, it can help to retry with different demographic information, such
+
+        as alternate last names or addresses.
+
+        * It can also help to remove special characters, hyphens, apostrophes, or spaces in
+
+        a name prior to matching.
+
+
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
+
+        '
+      operationId: POST:/enrolled_benefits
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VeteranAttributes'
+            example:
+              first_name: Alfredo
+              last_name: Armstrong
+              birth_date: '1993-06-08'
+              middle_name: M
+              gender: M
+              street_address_line1: 17020 Tortoise St
+              street_address_line2: ''
+              street_address_line3: ''
+              city: Round Rock
+              zipcode: '78664'
+              state: TX
+              country: USA
+        required: true
+      responses:
+        '200':
+          description: Enrolled benefits successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeteranEnrolledBenefitsConfirmation'
+              example:
+                veteran_benefits:
+                - program_code: C
+                  program_name: ''
+                  award_effective_date: '2022-01-11T00:00:00Z'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/enrolled_benefits
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/enrolled_benefits
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - enrolled_benefits.read
+      - productionOauth2:
+        - enrolled_benefits.read
+components:
+  schemas:
+    VeteranEnrolledBenefit:
+      required:
+      - program_code
+      type: object
+      properties:
+        program_code:
+          type: string
+          description: The program identifier
+        program_name:
+          type: string
+          description: The human readable program name
+        award_effective_date:
+          type: string
+          format: date-time
+      description: Individual Veteran enrolled benefit
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    MissingIcn:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    AuthorizationError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '401'
+        error:
+          type: string
+          example: Invalid token.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    VeteranEnrolledBenefitsConfirmation:
+      type: object
+      properties:
+        veteran_benefits:
+          type: array
+          description: Array of Veteran enrolled benefits for an individual
+          items:
+            $ref: '#/components/schemas/VeteranEnrolledBenefit'
+      description: Veteran enrolled benefits for an individual
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    VeteranAttributes:
+      required:
+      - birth_date
+      - city
+      - country
+      - first_name
+      - last_name
+      - street_address_line1
+      - zipcode
+      type: object
+      properties:
+        gender:
+          type: string
+          description: For gender, only 'm' or 'f' will help the search currently.
+        first_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''De''Anna'' can be matched as ''deanna''.
+
+            * In addition, depending on the handling logic of the front end application updating the VA
+
+            record, an inquiry with first name of ''Ann-Marie'' would be standardized to ''AnnMarie'' but
+
+            could be matched against ''AnnMarie'' or ''Ann Marie'' or ''Ann'' or ''Marie''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry the
+
+            hyphenated name without the hyphen and together, then separated, then each individual part
+
+            of the name as in the example with ''Ann-Marie''.
+
+            * Capitalization does not impede match strength.
+
+            '
+        middle_name:
+          type: string
+        last_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''O''leary'' can be matched as ''oleary''.
+
+            * In addition, depending on the handling logic of the front end application updating the
+
+            VA record, an inquiry with last name of ''Smith-Jones'' would be standardized to
+
+            ''SmithJones'' but could be matched against ''SmithJones'' or ''Smith Jones'' or ''Smith'' or
+
+            ''Jones''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry
+
+            the hyphenated name without the hyphen and together, then separated, then each
+
+            individual part of the name as in the example with ''Smith-Jones''.
+
+            * Capitalization does not impede match strength.'
+        zipcode:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        street_address_line1:
+          type: string
+          description: 'Address line 1 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line2:
+          type: string
+          description: 'Address line 2 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line3:
+          type: string
+          description: 'Address line 3 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        home_phone_number:
+          type: string
+        birth_place_city:
+          type: string
+        birth_place_state:
+          type: string
+        birth_place_country:
+          type: string
+        mothers_maiden_name:
+          type: string
+      description: '* Use the current residence address of the Veteran.
+
+        * Some unhoused Veterans can use a local USPS, support organization, or other location
+
+        such as ''the corner of RTE512 and U.S.1''.
+
+        * Aim to match the input against the Veteran''s demographic information in their VA.gov
+
+        profile.
+
+        * Data in the request and the VA record is standardized using the same algorithm prior
+
+        to matching. If the data is close, and enough fields are provided, it will find the
+
+        Veteran most of the time; however, some records will have data that is not in sync and
+
+        may require trying the request again with different addresses, names, or formats.
+
+        * Alternately, the Veteran may need to update their information with the VA if they
+
+        are not found.
+
+        '
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

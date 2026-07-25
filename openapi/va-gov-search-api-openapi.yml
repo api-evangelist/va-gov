@@ -1,0 +1,320 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Search API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Search
+paths:
+  /search:
+    get:
+      tags:
+      - Search
+      summary: Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service.
+      operationId: GET:/search
+      parameters:
+      - name: patient
+        in: query
+        description: The patient's ICN
+        required: true
+        schema:
+          type: string
+        example: 011235813V213455
+      - name: serviceType
+        in: query
+        description: The patient's desired medical service type for community care
+        required: true
+        schema:
+          type: string
+          enum:
+          - Audiology
+          - Cardiology
+          - Dermatology
+          - Gastroenterology
+          - Gynecology
+          - MentalHealthCare
+          - Nutrition
+          - Ophthalmology
+          - Optometry
+          - Orthopedics
+          - Podiatry
+          - PrimaryCare
+          - Urology
+          - WomensHealth
+        example: Gastroenterology
+      - name: extendedDriveMin
+        in: query
+        description: Optional extended drive-radius to include more VA medical facilities in response. This does not change overall eligibility and must exceed standard drive time for the service-type.)
+        schema:
+          type: integer
+          format: int32
+        examples:
+          extendedDriveMin:
+            description: extendedDriveMin
+            value: 70
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityCareEligibilityResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        country:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+    NotFound:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownPatientIcnException
+        message: 'Unknown patient ICN: 011235813V213455'
+    PatientRequest:
+      type: object
+      properties:
+        patientIcn:
+          type: string
+        serviceType:
+          type: string
+        extendedDriveMin:
+          type: integer
+          format: int32
+        timestamp:
+          type: string
+    DriveMinutes:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+    BadRequest:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownServiceTypeException
+        message: 'Unknown service type: dentistry'
+    EligibilityCode:
+      type: object
+      properties:
+        description:
+          type: string
+        code:
+          type: string
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+    Facility:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        physicalAddress:
+          $ref: '#/components/schemas/Address'
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        driveMinutes:
+          $ref: '#/components/schemas/DriveMinutes'
+        phoneNumber:
+          type: string
+        website:
+          type: string
+        mobile:
+          type: boolean
+        active:
+          type: boolean
+    CommunityCareEligibilityResponse:
+      type: object
+      properties:
+        patientRequest:
+          $ref: '#/components/schemas/PatientRequest'
+        eligibilityCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityCode'
+        grandfathered:
+          type: boolean
+        noFullServiceVaMedicalFacility:
+          type: boolean
+        patientAddress:
+          $ref: '#/components/schemas/Address'
+        patientCoordinates:
+          $ref: '#/components/schemas/Coordinates'
+        nearbyFacilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Facility'
+        eligible:
+          type: boolean
+        processingStatus:
+          type: string
+          enum:
+          - successful
+          - geocoding-not-available
+          - geocoding-out-of-date
+          - geocoding-incomplete
+        pactStatus:
+          type: string
+          description: Patient Aligned Care Team (PACT) status
+          enum:
+          - None
+          - Pending
+          - Active
+        $lock:
+          type: object
+      example:
+        patientRequest:
+          patientIcn: 011235813V213455
+          serviceType: PrimaryCare
+          timestamp: '2019-05-09T13:17:58.250Z'
+        eligibilityCodes:
+        - description: Basic
+          code: B
+        grandfathered: false
+        noFullServiceVaMedicalFacility: false
+        patientAddress:
+          country: USA
+          street: 742 Evergeen Terrace
+          city: Springfield
+          state: KY
+          zip: '89144'
+        patientCoordinates:
+          latitude: 40.758541
+          longitude: -73.982132
+        nearbyFacilities:
+        - id: vha_1597XY
+          name: Springfield VA Clinic
+          physicalAddress:
+            street: 2584 South Street
+            city: Springfield
+            state: KY
+            zip: '10946'
+          coordinates:
+            latitude: 41.81
+            longitude: 67.65
+          driveMinutes:
+            min: 0
+            max: 10
+          phoneNumber: 177-112-8657 x
+          website: https://www.va.gov
+        - id: vha_46368ZZ
+          name: Shelbyville VA Clinic
+          physicalAddress:
+            street: 121393 Main Street
+            city: Shelbyville
+            state: KY
+            zip: '75025'
+          coordinates:
+            latitude: 196.418
+            longitude: 317.811
+          driveMinutes:
+            min: 20
+            max: 30
+          phoneNumber: 1-422-983-2040
+          website: https://www.va.gov
+          mobile: false
+          active: true
+        eligible: false
+        processingStatus: successful
+        pactStatus: Active
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

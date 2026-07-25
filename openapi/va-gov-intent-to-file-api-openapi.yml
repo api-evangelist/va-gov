@@ -1,0 +1,1676 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Intent to File API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Intent to File
+  description: Used for 0966 submissions.
+paths:
+  /forms/0966:
+    get:
+      summary: Get 0966 JSON Schema for form.
+      deprecated: true
+      tags:
+      - Intent to File
+      operationId: GET:/forms/0966
+      description: Returns a single 0966 JSON schema to auto generate a form.
+      responses:
+        '200':
+          description: schema response
+          content:
+            application/json:
+              example:
+                data:
+                - $schema: http://json-schema.org/draft-07/schema#
+                  description: Form 0966 Schema
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - type
+                  properties:
+                    type:
+                      type: string
+                      example: compensation
+                      description: For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type "burial" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.
+                      enum:
+                      - compensation
+                      - pension
+                      - burial
+                    participant_claimant_id:
+                      type: string
+                      example: '123456789'
+                      description: Participant ID of the Claimant.
+                    participant_vet_id:
+                      type: string
+                      example: '987654321'
+                      description: Participant ID of the Veteran.
+                    received_date:
+                      type: string
+                      example: '2015-01-05T17:42:12.058Z'
+                      format: datetime
+                    claimant_ssn:
+                      type: string
+                      example: '123456789'
+                      description: SSN of the Claimant.
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+    post:
+      summary: Submit form 0966 Intent to File.
+      tags:
+      - Intent to File
+      operationId: POST:/forms/0966
+      security:
+      - productionOauth:
+        - claim.read
+        - claim.write
+      - sandboxOauth:
+        - claim.read
+        - claim.write
+      - bearer_token: []
+      description: 'Establishes an intent to file for disability compensation, burial, or pension claims.
+
+        '
+      parameters:
+      - in: header
+        name: X-VA-SSN
+        required: false
+        description: Claimant SSN if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-First-Name
+        required: false
+        description: Claimant first name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Last-Name
+        required: false
+        description: Claimant last name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Birth-Date
+        required: false
+        description: Claimant birthdate if consumer is representative, in iso8601 format
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                data:
+                  id: '294045'
+                  type: intent_to_file
+                  attributes:
+                    creation_date: '2025-02-07T09:17:18-06:00'
+                    expiration_date: '2026-02-07T07:12:40-06:00'
+                    type: compensation
+                    status: duplicate
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    properties:
+                      id:
+                        type: string
+                        description: Intent to File ID from EVSS
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - creation_date
+                        - expiration_date
+                        - type
+                        - status
+                        properties:
+                          creation_date:
+                            type: string
+                            format: date
+                            description: Date the Intent to File was received at the VA
+                          expiration_date:
+                            type: string
+                            format: date
+                            description: Date the ITF expires, this is 1 year from the created_date
+                          type:
+                            type: string
+                            description: The type of ITF filed. Compensation, Pension, or Burial
+                            enum:
+                            - compensation
+                            - burial
+                            - pension
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            enum:
+                            - active
+                            - duplicate
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Forbidden
+                  detail: Veteran cannot file for type 'burial'
+                  code: '403'
+                  status: '403'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              example:
+                errors:
+                - status: 422
+                  detail: 'The property /type did not match the following requirements: {"type"=>"string", "example"=>"compensation", "description"=>"For an Intent to File for Survivor''s Pension of Dependency and Indemnity Compensation(DIC), use type \"burial\" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.", "enum"=>["compensation", "pension", "burial"]}'
+                  source: /type
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - status
+                      - detail
+                      - source
+                      properties:
+                        status:
+                          type: integer
+                          description: HTTP error code
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        source:
+                          type: string
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - attributes
+                  example:
+                    type: form/0966
+                    attributes:
+                      type: compensation
+                  properties:
+                    attributes:
+                      $schema: http://json-schema.org/draft-07/schema#
+                      description: Form 0966 Schema
+                      type: object
+                      additionalProperties: false
+                      required:
+                      - type
+                      properties:
+                        type:
+                          type: string
+                          example: compensation
+                          description: For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type "burial" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.
+                          enum:
+                          - compensation
+                          - pension
+                          - burial
+                        participant_claimant_id:
+                          type: string
+                          example: '123456789'
+                          description: Participant ID of the Claimant.
+                        participant_vet_id:
+                          type: string
+                          example: '987654321'
+                          description: Participant ID of the Veteran.
+                        received_date:
+                          type: string
+                          example: '2015-01-05T17:42:12.058Z'
+                          format: datetime
+                        claimant_ssn:
+                          type: string
+                          example: '123456789'
+                          description: SSN of the Claimant.
+        required: true
+  /forms/0966/active:
+    get:
+      summary: Returns last active 0966 Intent to File form submission.
+      tags:
+      - Intent to File
+      operationId: GET:/forms/0966/active
+      security:
+      - productionOauth:
+        - claim.read
+      - sandboxOauth:
+        - claim.read
+      - bearer_token: []
+      description: Returns the last active 0966 form for a Veteran.
+      parameters:
+      - in: header
+        name: X-VA-SSN
+        required: false
+        description: Claimant SSN if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-First-Name
+        required: false
+        description: Claimant first name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Last-Name
+        required: false
+        description: Claimant last name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Birth-Date
+        required: false
+        description: Claimant birthdate if consumer is representative, in iso8601 format
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: The type of 0966 you wish to get the active submission for.
+        example: compensation
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 0966 response
+          content:
+            application/json:
+              example:
+                data:
+                  id: '183042'
+                  type: intent_to_file
+                  attributes:
+                    creation_date: '2020-06-05T11:24:28-05:00'
+                    expiration_date: '2021-06-05T11:24:28-05:00'
+                    type: compensation
+                    status: active
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    properties:
+                      id:
+                        type: string
+                        description: Intent to File ID from EVSS
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - expiration_date
+                        - type
+                        - status
+                        properties:
+                          creation_date:
+                            type: string
+                            nullable: true
+                            format: date
+                            description: Date the Intent to File was received at the VA
+                          expiration_date:
+                            type: string
+                            format: date
+                            description: Date the ITF expires, this is 1 year from the created_date
+                          type:
+                            type: string
+                            description: The type of ITF filed. Compensation, Pension, or Burial
+                            enum:
+                            - compensation
+                            - burial
+                            - pension
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            enum:
+                            - active
+                            - inactive
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: No Intent to file is on record for WESLEY FORD of type compensation
+                  code: '404'
+                  status: '404'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Unprocessable Entity
+                  detail: Must include either compensation, pension or burial as a 'type' parameter.
+                  code: '422'
+                  status: '422'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+  /forms/0966/validate:
+    post:
+      summary: Test the 0966 Intent to File form submission.
+      deprecated: true
+      tags:
+      - Intent to File
+      operationId: POST:/forms/0966/validate
+      security:
+      - productionOauth:
+        - claim.read
+        - claim.write
+      - sandboxOauth:
+        - claim.read
+        - claim.write
+      - bearer_token: []
+      description: 'Test to ensure the form submission works with your parameters.
+
+        Submission is validated against the GET /forms/0966 schema.
+
+        '
+      parameters:
+      - in: header
+        name: X-VA-SSN
+        required: false
+        description: Claimant SSN if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-First-Name
+        required: false
+        description: Claimant first name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Last-Name
+        required: false
+        description: Claimant last name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Birth-Date
+        required: false
+        description: Claimant birthdate if consumer is representative, in iso8601 format
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                data:
+                  type: intentToFileValidation
+                  attributes:
+                    status: valid
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - type
+                    - attributes
+                    properties:
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - status
+                        properties:
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            enum:
+                            - valid
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable
+          content:
+            application/json:
+              example:
+                errors:
+                - status: 422
+                  detail: The property / did not contain the required key type
+                  source: /
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - status
+                      - detail
+                      - source
+                      properties:
+                        status:
+                          type: integer
+                          description: HTTP error code
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        source:
+                          type: string
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - attributes
+                  example:
+                    type: form/0966
+                    attributes:
+                      type: compensation
+                  properties:
+                    attributes:
+                      $schema: http://json-schema.org/draft-07/schema#
+                      description: Form 0966 Schema
+                      type: object
+                      additionalProperties: false
+                      required:
+                      - type
+                      properties:
+                        type:
+                          type: string
+                          example: compensation
+                          description: For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type "burial" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.
+                          enum:
+                          - compensation
+                          - pension
+                          - burial
+                        participant_claimant_id:
+                          type: string
+                          example: '123456789'
+                          description: Participant ID of the Claimant.
+                        participant_vet_id:
+                          type: string
+                          example: '987654321'
+                          description: Participant ID of the Veteran.
+                        received_date:
+                          type: string
+                          example: '2015-01-05T17:42:12.058Z'
+                          format: datetime
+                        claimant_ssn:
+                          type: string
+                          example: '123456789'
+                          description: SSN of the Claimant.
+        required: true
+  /veterans/{veteranId}/intent-to-file/{type}:
+    get:
+      summary: Returns claimant's last active Intent to File submission for given benefit type.
+      tags:
+      - Intent to File
+      operationId: GET:/veterans/{veteranId}/intent-to-file/{type}
+      security:
+      - productionOauth:
+        - system/claim.read
+      - sandboxOauth:
+        - system/claim.read
+      - bearer_token: []
+      description: Returns claimant's last active Intent to File submission for given benefit type of compensation, pension, or survivor.
+      parameters:
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      - name: type
+        in: path
+        required: true
+        example: compensation
+        description: Type of Intent to File to return. Available values - compensation, pension, survivor.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with active Intent to File
+          content:
+            application/json:
+              example:
+                data:
+                  id: '193685'
+                  type: intent_to_file
+                  attributes:
+                    creationDate: '2021-03-16T19:15:21.000-05:00'
+                    expirationDate: '2022-03-16T19:15:20.000-05:00'
+                    type: compensation
+                    status: active
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    properties:
+                      id:
+                        type: string
+                        description: Intent To File ID
+                        example: '600131328'
+                      type:
+                        type: string
+                        example: intent_to_file
+                      attributes:
+                        required:
+                        - creationDate
+                        - expirationDate
+                        - status
+                        - type
+                        properties:
+                          creationDate:
+                            type: string
+                            format: date
+                            description: Date the Intent to File was received at VA
+                          expirationDate:
+                            type: string
+                            format: date
+                            description: Date the Intent to File expires, this is 1 year from the createdDate
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            example: active
+                          type:
+                            type: string
+                            description: The type of Intent to File filed
+                            example: compensation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: No active 'C' intent to file found.
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+  /veterans/{veteranId}/intent-to-file:
+    post:
+      summary: Submit form 0966 Intent to File.
+      tags:
+      - Intent to File
+      operationId: POST:/veterans/{veteranId}/intent-to-file
+      security:
+      - productionOauth:
+        - system/claim.read
+        - system/claim.write
+      - sandboxOauth:
+        - system/claim.read
+        - system/claim.write
+      - bearer_token: []
+      description: Establishes an Intent to File for disability compensation, pension, and survivor claims.
+      parameters:
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                data:
+                  id: '294045'
+                  type: intent_to_file
+                  attributes:
+                    creationDate: '2025-02-07T09:17:18-06:00'
+                    expirationDate: '2026-02-07T07:12:40-06:00'
+                    type: compensation
+                    status: duplicate
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    properties:
+                      id:
+                        type: string
+                        description: Intent To File ID
+                        example: '600131328'
+                      type:
+                        type: string
+                        example: intent_to_file
+                      attributes:
+                        required:
+                        - creationDate
+                        - expirationDate
+                        - status
+                        - type
+                        properties:
+                          creationDate:
+                            type: string
+                            format: date
+                            description: Date the Intent to File was received at VA
+                          expirationDate:
+                            type: string
+                            format: date
+                            description: Date the Intent to File expires, this is 1 year from the createdDate
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            example: active
+                          type:
+                            type: string
+                            description: The type of Intent to File filed
+                            example: compensation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                errors:
+                - title: invalid value for type
+                  detail: some-invalid-value is not valid for type
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: Veteran ID not found
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Unprocessable Entity
+                  detail: Invalid claimantSsn parameter
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '502':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Bad Gateway
+                  detail: Bad Gateway
+                  code: '502'
+                  status: '502'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - attributes
+                  properties:
+                    attributes:
+                      required:
+                      - type
+                      properties:
+                        type:
+                          type: string
+                          example: compensation
+                          description: For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type "survivor" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.
+                          enum:
+                          - compensation
+                          - pension
+                          - survivor
+                        claimantSsn:
+                          type: string
+                          example: '001122334'
+                          description: SSN of the Claimant.
+                      example:
+                        type: compensation
+              example:
+                data:
+                  type: intent_to_file
+                  attributes:
+                    type: compensation
+        required: true
+  /veterans/{veteranId}/intent-to-file/validate:
+    post:
+      summary: Validate form 0966 Intent to File.
+      tags:
+      - Intent to File
+      operationId: POST:/veterans/{veteranId}/intent-to-file/validate
+      security:
+      - productionOauth:
+        - system/claim.read
+        - system/claim.write
+      - sandboxOauth:
+        - system/claim.read
+        - system/claim.write
+      - bearer_token: []
+      description: Validates an Intent to File for disability compensation, pension, and survivor claims.
+      parameters:
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 0966 Response
+          content:
+            application/json:
+              example:
+                data:
+                  type: intent_to_file_validation
+                  attributes:
+                    status: valid
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - type
+                    - attributes
+                    properties:
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - status
+                        properties:
+                          status:
+                            type: string
+                            description: The status of the Intent to File
+                            enum:
+                            - valid
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                errors:
+                - title: invalid value for type
+                  detail: some-invalid-value is not valid for type
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - attributes
+                  properties:
+                    attributes:
+                      required:
+                      - type
+                      properties:
+                        type:
+                          type: string
+                          example: compensation
+                          description: For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type "survivor" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.
+                          enum:
+                          - compensation
+                          - pension
+                          - survivor
+                        claimantSsn:
+                          type: string
+                          example: '001122334'
+                          description: SSN of the Claimant.
+                      example:
+                        type: compensation
+              example:
+                data:
+                  type: intent_to_file
+                  attributes:
+                    type: compensation
+        required: true
+components:
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

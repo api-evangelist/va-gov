@@ -1,0 +1,1568 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Documents Service API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Documents Service
+paths:
+  /uploads/status:
+    post:
+      tags:
+      - Documents Service
+      summary: Returns the upload status of multiple disability claim documents.
+      description: "  Returns the current processing status of multiple disability\n   claims document uploads related to the given list of request IDs.\n"
+      operationId: POST:/uploads/status
+      parameters:
+      - name: includeInternalOnlyStepStatuses
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkRequestV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /participant/documents/search:
+    post:
+      tags:
+      - Documents Service
+      summary: ' Returns all VBMS document names associated with a participantId.
+
+        '
+      description: ' Returns a list of all VBMS document names related to participantId.
+
+        '
+      operationId: POST:/participant/documents/search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VbmsSearchDocumentsRequestV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VbmsSearchDocumentsResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /participant/documents/download:
+    post:
+      tags:
+      - Documents Service
+      summary: Download the document for a participant.
+      description: "  Use this endpoint to download the full content of a document (such\n  as a PDF). The document must be identified by its unique ID, and associated with\n  either a Participant ID or File Number.\n"
+      operationId: POST:/participant/documents/download
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VbmsDownloadDocumentRequestV1'
+        required: true
+      responses:
+        '200':
+          description: Binary document stream (e.g., PDF).
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /documents:
+    post:
+      tags:
+      - Documents Service
+      summary: Uploads a file to a Veteran's VBMS eFolder.
+      description: "Receives and uploads a file based on the required parameters of systemName, docType,\nfileNumber, participantId, claimId, and fileName. Parameters are described in\nthe schema section for UploadRequestV1.UploadData.\n\n## Example Payload (using File Number)\n\nThe following demonstrates a (redacted) multipart payload, identified by fileNumber,\nsuitable for submitting to this endpoint. Most programming languages should have\nprovisions for assembling a multipart payload like this without having to do so\nmanually.\n\n```\nPOST /benefits-documents/v1/documents HTTP/1.1\nHost: <server>\nUser-Agent: curl/7.75.0\nAccept: */*\nAuthorization: Bearer <token>\nContent-Length: 11871\nContent-Type: multipart/form-data; boundary=------------------------94408bea7cc00a68\n\nContent-Type: application/json\n\n{\n  \"data\": {\n    \"systemName\":\"VA.gov\",\n    \"docType\":\"L533\",\n    \"fileNumber\":\"987654321\",\n    \"claimId\":\"123\",\n    \"fileName\":\"Test-PDF-Valid.pdf\",\n    \"trackedItemIds\": [ 456,789 ]\n  }\n}\n\n```\n\nIn this curl example, we store the parameters inside JSON file called\nupload-request.p2iO.json:\n\n```\n{\n  \"data\": {\n    \"systemName\":\"VA.gov\",\n    \"docType\":\"L533\",\n    \"fileNumber\":\"987654321\",\n    \"claimId\":\"123\",\n    \"fileName\":\"Test-PDF-Valid.pdf\",\n    \"trackedItemIds\": [ 456,789 ]\n  }\n}\n\n```\n\nThis is an example curl command:\n\n```\n\ncurl -v '-HAuthorization: Bearer <token>' -HContent-Type:multipart/form-data --form 'parameters=@upload-request.p2iO.json;type=application/json' --form 'file=@<path/to/pdf/file>;type=application/pdf' https://sandbox-api.va.gov/services/benefits-documents/v1/documents\n\n```\n\n## Example Payload (using Participant ID)\n\nTo upload using participantId, we'll use the same upload example as above, this time\nproviding a participantId instead of a fileNumber:\n\n```\nPOST /benefits-documents/v1/documents HTTP/1.1\nHost: <server>\nUser-Agent: curl/7.75.0\nAccept: */*\nAuthorization: Bearer <token>\nContent-Length: 11871\nContent-Type: multipart/form-data; boundary=------------------------94408bea7cc00a68\n\nContent-Type: application/json\n\n{\n  \"data\": {\n    \"systemName\":\"VA.gov\",\n    \"docType\":\"L533\",\n    \"participantId\":\"123456789\",\n    \"claimId\":\"123\",\n    \"fileName\":\"Test-PDF-Valid.pdf\",\n    \"trackedItemIds\": [ 456,789 ]\n  }\n}\n\n```\n\nWe can store the parameters inside a JSON file as in the previous example - this time\nwe'll call it upload-request-participant-id.p2iO.json.\n\nThen, we can execute the same cURL command in the previous example,\nusing the new parameters file:\n\n```\n\ncurl -v '-HAuthorization: Bearer <token>' -HContent-Type:multipart/form-data --form 'parameters=@upload-request-participant-id.p2iO.json;type=application/json' --form 'file=@<path/to/pdf/file>;type=application/pdf' https://sandbox-api.va.gov/services/benefits-documents/v1/documents\n\n```\n\n"
+      operationId: POST:/documents
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  $ref: '#/components/schemas/UploadRequestV1'
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+              - parameters
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.write
+  /documents/validate/claimant:
+    post:
+      tags:
+      - Documents Service
+      summary: Validates that the claimant can upload a file to a Veteran's VBMS eFolder.
+      description: 'Determines whether a claimant, identified by either a fileNumber or participantId,
+
+        can upload documents of the given docType for the claim identified by the
+
+        provided claimId. If the claimant is successfully validated, a validation token
+
+        and token expiration time are provided. The token can be used to avoid duplicate
+
+        validation for an upload using identical parameters. Note that while a successful
+
+        response indicates the pairing of claimant, document, and claim information is
+
+        valid, it does not guarantee success of the operation itself.
+
+        '
+      operationId: POST:/documents/validate/claimant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateUploadClaimantRequestV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimantValidationResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /documents/search:
+    post:
+      tags:
+      - Documents Service
+      summary: "  Returns all claims evidence document names associated with a participantId\n  or fileNumber.\n"
+      description: "  Returns a list of all claims evidence document names related to the\n   claim identified by the claimId, fileNumber, or participantId.\n"
+      operationId: POST:/documents/search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimDocumentsRequestV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimDocumentsResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /claim-letters/search:
+    post:
+      tags:
+      - Documents Service
+      summary: "  Returns a list of downloadable Claims Evidence claim letter documents, along with\n  their associated metadata, linked to a Participant ID or File Number.\n"
+      description: "  Returns a list of downloadable Claims Evidence claim letter documents associated\n  with the provided Participant ID or File Number. Each document entry includes\n  metadata such as the document UUID, type, subject, original file name, tracked\n  item ID, and upload date.\n"
+      operationId: POST:/claim-letters/search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FindClaimLetterDocumentsRequestV1'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindClaimLetterDocumentsResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /claim-letters/download:
+    post:
+      tags:
+      - Documents Service
+      summary: Download the full claim letter document for a claimant.
+      description: "  Use this endpoint to download the full content of a claim letter document (such\n  as a PDF). The document must be identified by its unique ID, and associated with\n  either a Participant ID or File Number. Note: Only some document types are\n  available for download.\n"
+      operationId: POST:/claim-letters/download
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadClaimLetterDocumentRequestV1'
+        required: true
+      responses:
+        '200':
+          description: Binary document stream (e.g., PDF).
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+  /uploads/{requestId}/status:
+    get:
+      tags:
+      - Documents Service
+      summary: Returns the processing status of a single disability claim document upload.
+      description: "  Returns the current processing status of a disability claims document upload\n  related to the given requestId.\n"
+      operationId: GET:/uploads/{requestId}/status
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: includeInternalOnlyStepStatuses
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicErrorDocumentV1'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - oauth2:
+        - documents.read
+components:
+  schemas:
+    VbmsDownloadDocumentRequestV1.DocumentInfo:
+      type: object
+      properties:
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS, obtained by making a Document Service API
+
+            request to search for documents that are available to download for the Veteran.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+      required:
+      - documentUuid
+    UploadResponseV1.UploadInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the upload request was successful.
+          example: true
+        requestId:
+          type: integer
+          format: int64
+          description: The upload request identifier.
+          example: 12345678
+          maximum: 9223372036854776000
+      required:
+      - requestId
+      - success
+    ValidateUploadClaimantRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ValidateUploadClaimantRequestV1.ValidateUploadData'
+    ClaimantValidationResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationResult'
+      required:
+      - data
+    BasicErrorDocumentV1:
+      type: object
+      description: An error response in JSON:API format (see https://jsonapi.org/format/#document-structure).
+      properties:
+        errors:
+          type: array
+          description: The list of errors returned from the attempted operation.
+          items:
+            $ref: '#/components/schemas/BasicErrorV1'
+      required:
+      - errors
+    VbmsDownloadDocumentRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsDownloadDocumentRequestV1.DocumentInfo'
+      required:
+      - data
+    VbmsSearchDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsDocumentsIdentifier'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ClaimDocumentV1:
+      type: object
+      properties:
+        documentId:
+          type: string
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+        currentVersionUuid:
+          type: string
+          description: This value is obtained from the currentVersionUuid field from BIP Claims Evidence.
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        originalFileName:
+          type: string
+          example: SupportingDocument.pdf
+        documentTypeLabel:
+          type: string
+          example: VA 21-526 Veterans Application for Compensation or Pension
+        trackedItemId:
+          type: integer
+          format: int64
+          example: 600000001
+        uploadedDateTime:
+          type: string
+          format: date-time
+          example: '2016-02-04T17:51:56Z'
+      required:
+      - currentVersionUuid
+      - documentId
+      - documentTypeLabel
+      - documentUuid
+      - originalFileName
+      - uploadedDateTime
+    UploadRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestV1.UploadData'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusV1:
+      type: object
+      description: The asynchronous processing workflow status of a single upload request.
+      properties:
+        requestId:
+          type: integer
+          format: int64
+          description: The requestId of the upload request.
+          example: 600000001
+        time:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowTime'
+        status:
+          type: string
+          description: 'The current execution status of the workflow:
+
+            * `IN_PROGRESS`: the workflow is currently executing.
+
+            * `SUCCESS`: the workflow has completed all steps successfully.
+
+            * `FAILED`: the workflow could not complete because a step encountered
+
+            a non-recoverable error.
+
+            '
+          enum:
+          - IN_PROGRESS
+          - SUCCESS
+          - FAILED
+        steps:
+          type: array
+          description: The list of workflow steps that process the document upload, ordered by their sequence.
+          items:
+            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.Step'
+        error:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowError'
+      required:
+      - requestId
+      - status
+      - steps
+      - time
+    ClaimantValidationResponseV1.ValidationResult:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: Whether the claimant was validated successfully.
+        success:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationSuccess'
+          description: The validation result, populated in the case of successful validation.
+        error:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationError'
+          description: The validation error, populated in the case of failed validation.
+      required:
+      - valid
+    VbmsDocumentV1:
+      type: object
+      properties:
+        docTypeId:
+          type: integer
+          format: int32
+          example: 137
+        subject:
+          type: string
+          example: File contains evidence related to the claim
+        documentUuid:
+          type: string
+          description: 'This value is obtained from the uuid field from BIP Claims Evidence.
+
+            It is the same value as the documentId field
+
+            reported by the /documents/search endpoint.'
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        currentVersionUuid:
+          type: string
+          description: This value is obtained from the currentVersionUuid field from BIP Claims Evidence.
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        originalFileName:
+          type: string
+          example: SupportingDocument.pdf
+        documentTypeLabel:
+          type: string
+          example: VA 21-526 Veterans Application for Compensation or Pension
+        uploadedDateTime:
+          type: string
+          format: date-time
+          example: '2016-02-04T17:51:56Z'
+        receivedAt:
+          type: string
+          example: '2016-02-04'
+    FindClaimLetterDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData'
+      required:
+      - data
+    DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo:
+      type: object
+      properties:
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS, obtained by making a Document Service API
+
+            request to search for documents that are available to download for the Veteran.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+      required:
+      - documentUuid
+    ClaimDocumentsResponseV1.Documents:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of benefits claim documents.
+
+            '
+          items:
+            $ref: '#/components/schemas/ClaimDocumentV1'
+    ClaimLetterDocumentV1:
+      type: object
+      properties:
+        docTypeId:
+          type: integer
+          format: int32
+          description: The numeric type code of the document.
+          example: 184
+        subject:
+          type: string
+          description: The document subject.
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+        currentVersionUuid:
+          type: string
+          description: 'This value is obtained from the currentVersionUuid field from BIP Claims
+
+            Evidence.
+
+            '
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        originalFileName:
+          type: string
+          example: SupportingDocument.pdf
+        documentTypeLabel:
+          type: string
+          example: VA 21-526 Veterans Application for Compensation or Pension
+        trackedItemId:
+          type: integer
+          format: int64
+          example: 600000001
+        uploadedDateTime:
+          type: string
+          format: date-time
+          example: '2016-02-04T17:51:56Z'
+        receivedAt:
+          type: string
+          example: '2016-02-04'
+      required:
+      - currentVersionUuid
+      - docTypeId
+      - documentTypeLabel
+      - documentUuid
+      - originalFileName
+      - subject
+      - uploadedDateTime
+    VbmsSearchDocumentsResponseV1.Documents:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of VBMS documents.
+
+            '
+          items:
+            $ref: '#/components/schemas/VbmsDocumentV1'
+    Pagination:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: 1-based page number to retrieve. Defaults to 1.
+          example: 1
+        pageSize:
+          type: integer
+          format: int32
+          description: Number of results per page (1–100). Defaults to 100.
+          example: 25
+    ClaimDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimDocumentsResponseV1.Documents'
+      required:
+      - data
+    FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData:
+      type: object
+      properties:
+        docTypeIds:
+          type: array
+          description: 'The numeric document types to search for. If not provided, then
+
+            all downloadable claim letter documents matching the other
+
+            request criteria will be returned.
+
+            '
+          example:
+          - 27
+          - 34
+          - 184
+          - 408
+          - 700
+          - 704
+          - 706
+          - 858
+          - 859
+          - 864
+          - 942
+          - 1605
+          items:
+            type: integer
+            format: int32
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+    UploadRequestAsyncProcessingStatusV1.WorkflowTime:
+      type: object
+      description: Workflow timing information.
+      properties:
+        startTime:
+          type: integer
+          format: int64
+          description: The time, in milliseconds since epoch, that the workflow began executing.
+          example: 1502199000
+        endTime:
+          type: integer
+          format: int64
+          description: 'The time, in milliseconds since epoch, that the workflow finished executing.
+
+            In the case of a currently executing workflow, this will be null.
+
+            '
+          example: 1502199000
+    ValidateUploadClaimantRequestV1.ValidateUploadData:
+      type: object
+      properties:
+        docType:
+          type: string
+          description: Indicates the L code of the type of document upload being validated.
+          example: L122
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+        claimId:
+          type: integer
+          format: int64
+          description: 'The VBMS-issued claim identifier with which the document upload being
+
+            validated is associated.
+
+            '
+          example: 1234
+          maximum: 9223372036854776000
+          minimum: 1
+      required:
+      - docType
+    ClaimantValidationResponseV1.ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The validation error message.
+      required:
+      - message
+    BasicErrorV1:
+      type: object
+      description: API invocation or processing error
+      properties:
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Code must match "^[A-Z]{2}$"
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          example: 400
+        type:
+          type: string
+          description: A URI reference that identifies the problem type.
+          example: https://example.net/validation-error
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          example: Invalid field value
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem.
+          example: e6d1119e-dc91-4b4d-b583-0f309de0807b
+        diagnostics:
+          type: string
+          description: Diagnostic information that can be submitted with a support request to aid with diagnosing and solving issues.
+          example: e6d1119edc914b4db5830f309de0807b
+    ClaimantValidationResponseV1.ValidationSuccess:
+      type: object
+      properties:
+        validationToken:
+          type: string
+          description: The validation token.
+        validUntil:
+          type: integer
+          format: int64
+          description: The time, in milliseconds since epoch, that the token expires.
+      required:
+      - validUntil
+      - validationToken
+    ClaimDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimDocumentsRequestV1.ClaimDocuments'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusBulkResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusV1.Step:
+      type: object
+      description: The description of a single workflow step.
+      properties:
+        name:
+          type: string
+          description: 'The workflow step name:
+
+            * `CLAIMS_EVIDENCE`: the workflow step that uploads the document to Claims Evidence.
+
+            * `BENEFITS_GATEWAY_SERVICE`: the workflow step that uploads the document to Benefits
+
+            Gateway Service.
+
+            * `REMOVE_FILE_BINARY`: the workflow step that removes file binary
+
+            Gateway Service.
+
+            '
+          enum:
+          - REMOVE_FILE_BINARY
+          - BENEFITS_GATEWAY_SERVICE
+          - CLAIMS_EVIDENCE
+        nextStepName:
+          type: string
+          description: 'The workflow step name:
+
+            * `CLAIMS_EVIDENCE`: the workflow step that uploads the document to Claims Evidence.
+
+            * `BENEFITS_GATEWAY_SERVICE`: the workflow step that uploads the document to Benefits
+
+            Gateway Service.
+
+            * `REMOVE_FILE_BINARY`: the workflow step that removes file binary
+
+            Gateway Service.
+
+            '
+          enum:
+          - REMOVE_FILE_BINARY
+          - BENEFITS_GATEWAY_SERVICE
+          - CLAIMS_EVIDENCE
+        description:
+          type: string
+          description: A short description of the workflow step
+        status:
+          type: string
+          description: 'The current execution status of the workflow step:
+
+            * `NOT_STARTED`: the workflow step is not yet executing and awaiting completion
+
+            of the previous step.
+
+            * `IN_PROGRESS`: the workflow step is currently executing.
+
+            * `SUCCESS`: the workflow step has completed successfully.
+
+            * `FAILED`: the workflow step encountered a non-recoverable error.
+
+            '
+          enum:
+          - NOT_STARTED
+          - IN_PROGRESS
+          - SUCCESS
+          - FAILED
+    FindClaimLetterDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusV1.WorkflowError:
+      type: object
+      description: Workflow error information.
+      properties:
+        detail:
+          type: string
+          description: A human-readable summary of the error.
+        step:
+          type: string
+          description: 'The workflow step name:
+
+            * `CLAIMS_EVIDENCE`: the workflow step that uploads the document to Claims Evidence.
+
+            * `BENEFITS_GATEWAY_SERVICE`: the workflow step that uploads the document to Benefits
+
+            Gateway Service.
+
+            * `REMOVE_FILE_BINARY`: the workflow step that removes file binary
+
+            Gateway Service.
+
+            '
+          enum:
+          - REMOVE_FILE_BINARY
+          - BENEFITS_GATEWAY_SERVICE
+          - CLAIMS_EVIDENCE
+    UploadResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadResponseV1.UploadInfo'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
+        requestIdsNotFound:
+          type: array
+          description: 'A list populated with requestIds whose status was not found.
+
+            '
+          items:
+            type: integer
+            format: int64
+      required:
+      - requestIdsNotFound
+    UploadRequestV1.UploadData:
+      type: object
+      properties:
+        trackedItemIds:
+          type: array
+          description: 'A list of tracked item IDs that are associated
+
+            with the document being uploaded.
+
+            '
+          example:
+          - 1
+          - 2
+          - 3
+          items:
+            type: integer
+            format: int64
+        systemName:
+          type: string
+          description: Indicates which system is uploading the document.
+          example: va.gov
+        docType:
+          type: string
+          description: Indicates the L code of the type of document being uploaded.
+          example: L122
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+        claimId:
+          type: integer
+          format: int64
+          description: The VBMS-issued claim identifier with which the document is associated.
+          example: 1234
+          maximum: 9223372036854776000
+          minimum: 1
+        fileName:
+          type: string
+          description: The name of the file being uploaded.
+          example: Document.pdf
+          maxLength: 256
+        validationToken:
+          type: string
+          description: 'An optional validation token obtained during request claimant pre-validation,
+
+            that bypasses duplicate validation calls. For more information, review the section
+
+            on request pre-validation.
+
+            '
+          maxLength: 64
+      required:
+      - claimId
+      - docType
+      - fileName
+      - systemName
+    UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds:
+      type: object
+      properties:
+        requestIds:
+          type: array
+          description: The list of requestIds that identify upload requests to retrieve status for.
+          items:
+            type: integer
+            format: int64
+      required:
+      - requestIds
+    VbmsSearchDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsSearchDocumentsResponseV1.Documents'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+    DownloadClaimLetterDocumentRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusBulkRequestV1:
+      type: object
+      description: Requests the asynchronous processing status of more than one document upload request.
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds'
+      required:
+      - data
+    FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of claim letter documents available for download.
+
+            '
+          items:
+            $ref: '#/components/schemas/ClaimLetterDocumentV1'
+    ClaimDocumentsRequestV1.ClaimDocuments:
+      type: object
+      properties:
+        claimId:
+          type: integer
+          format: int64
+          description: The VBMS-issued claim identifier with which the document is associated.
+          example: 1234
+          maximum: 9223372036854776000
+          minimum: 1
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+      required:
+      - claimId
+    VbmsDocumentsIdentifier:
+      type: object
+      properties:
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

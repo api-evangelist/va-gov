@@ -1,0 +1,217 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: 5103 Waiver
+  description: Allows authenticated and authorized users to file a 5103 Notice Response on a claim.
+paths:
+  /veterans/{veteranId}/claims/{id}/5103:
+    post:
+      summary: Submit Evidence Waiver 5103
+      tags:
+      - 5103 Waiver
+      operationId: POST:/veterans/{veteranId}/claims/{id}/5103
+      security:
+      - productionOauth:
+        - system/claim.write
+      - sandboxOauth:
+        - system/claim.write
+      - bearer_token: []
+      description: Submit Evidence Waiver 5103 for a VA claimant.
+      parameters:
+      - name: id
+        in: path
+        example: '600400703'
+        description: The ID of the claim being requested
+        required: true
+        schema:
+          type: string
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                success: true
+              schema:
+                type: object
+                additionalProperties: true
+                properties:
+                  success:
+                    type: boolean
+                    example: 'true'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  status: '401'
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              example:
+                errors:
+                - status: '404'
+                  title: Resource not found
+                  detail: Claim not found
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      $schema: http://json-schema.org/draft-07/schema#
+                      description: Claims API 5103 Schema
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        trackedItemIds:
+                          description: Array of tracked items ids.
+                          type: array
+                          nullable: true
+                          uniqueItems: true
+                          items:
+                            type: integer
+                            additionalProperties: false
+              example:
+                data:
+                  type: form/5103
+                  attributes:
+                    trackedItemIds:
+                    - 1234
+components:
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

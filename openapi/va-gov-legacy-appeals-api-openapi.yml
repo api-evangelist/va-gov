@@ -1,0 +1,325 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Legacy Appeals API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Legacy Appeals
+paths:
+  /legacy-appeals:
+    get:
+      summary: Returns eligible appeals in the legacy process for a claimant.
+      tags:
+      - Legacy Appeals
+      operationId: GET:/legacy-appeals
+      security:
+      - productionOauth:
+        - veteran/LegacyAppeals.read
+        - representative/LegacyAppeals.read
+        - system/LegacyAppeals.read
+      - sandboxOauth:
+        - veteran/LegacyAppeals.read
+        - representative/LegacyAppeals.read
+        - system/LegacyAppeals.read
+      description: Returns eligible legacy appeals for a claimant.
+      parameters:
+      - name: icn
+        description: Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token.
+        example: 1012832025V743496
+        schema:
+          type: string
+          pattern: ^[0-9]{10}V[0-9]{6}$
+        in: query
+        required: false
+      responses:
+        '200':
+          description: Claimant's legacy appeals
+          content:
+            application/json:
+              examples:
+                with a veteran-scoped token (no 'icn' parameter necessary):
+                  value:
+                    data:
+                    - id: '2760964'
+                      type: legacyAppeal
+                      attributes:
+                        issues:
+                        - summary: Service connection, pancreatitis
+                        veteranFullName: Elda Z Quigley
+                        decisionDate: '2021-05-04'
+                        latestSocSsocDate: '2021-06-12'
+                with a representative-scoped token ('icn' parameter is necessary):
+                  value:
+                    data:
+                    - id: '2760964'
+                      type: legacyAppeal
+                      attributes:
+                        issues:
+                        - summary: Service connection, pancreatitis
+                        veteranFullName: Elda Z Quigley
+                        decisionDate: '2021-05-04'
+                        latestSocSsocDate: '2021-06-12'
+                with a system-scoped token ('icn' parameter is necessary):
+                  value:
+                    data:
+                    - id: '2760964'
+                      type: legacyAppeal
+                      attributes:
+                        issues:
+                        - summary: Service connection, pancreatitis
+                        veteranFullName: Elda Z Quigley
+                        decisionDate: '2021-05-04'
+                        latestSocSsocDate: '2021-06-12'
+              schema:
+                $ref: '#/components/schemas/legacyAppeals'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Forbidden
+                  detail: 'Invalid ''icn'' parameter: claimants may access only their own records.'
+                  code: '403'
+                  status: '403'
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: A matching claimant was not found in our systems.
+                  code: '404'
+                  status: '404'
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                Invalid icn parameter:
+                  value:
+                    errors:
+                    - title: Invalid pattern
+                      detail: '''1234567890'' did not match the defined pattern.'
+                      code: '143'
+                      source:
+                        parameter: icn
+                      status: '422'
+                      meta:
+                        regex: ^[0-9]{10}V[0-9]{6}$
+                Missing icn parameter with a representative-scoped token:
+                  value:
+                    errors:
+                    - title: Missing required fields
+                      detail: One or more expected fields were not found.
+                      code: '145'
+                      source:
+                        parameter: ''
+                      status: '422'
+                      meta:
+                        missingFields:
+                        - icn
+                Missing icn parameter with a system-scoped token:
+                  value:
+                    errors:
+                    - title: Missing required fields
+                      detail: One or more expected fields were not found.
+                      code: '145'
+                      source:
+                        parameter: ''
+                      status: '422'
+                      meta:
+                        missingFields:
+                        - icn
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Internal server error
+                  detail: Internal server error
+                  code: '500'
+                  status: '500'
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Service Unavailable
+                  detail: Received an unusable response from upstream service.
+                  code: '503'
+                  status: '503'
+              schema:
+                $ref: '#/components/schemas/errorModel'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+components:
+  schemas:
+    legacyAppeal:
+      properties:
+        id:
+          type: string
+          description: ID from VACOLS (Veteran Appeals Control and Locator Service)
+          example: '3085659'
+        type:
+          type: string
+          description: Appeal type
+          example: legacyAppeal
+        attributes:
+          type: object
+          description: Appeal attributes
+          properties:
+            issues:
+              type: array
+              description: Issues in the appeal
+              items:
+                type: object
+                properties:
+                  summary:
+                    type: string
+                    description: Summary of a single issue
+                    example: Service connection, hearing loss
+            veteranFullName:
+              type: string
+              description: Claimant's full name
+              example: Elda Z Quigley
+            decisionDate:
+              nullable: true
+              type: string
+              format: date
+              description: Date of the appeal's original decision
+              example: '2021-05-04'
+            latestSocSsocDate:
+              nullable: true
+              type: string
+              format: date
+              description: Date of the appeal's most recent SOC/SSOC (Statement of Case/Supplemental Statement of Case)
+              example: '2021-06-12'
+    legacyAppeals:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/legacyAppeal'
+    errorModel:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            additionalProperties: false
+            required:
+            - title
+            properties:
+              title:
+                type: string
+                description: HTTP error title
+              detail:
+                type: string
+                description: HTTP error detail
+              code:
+                type: string
+                description: HTTP error code
+              source:
+                type: object
+                additionalProperties: false
+                description: Source of error
+                properties:
+                  pointer:
+                    type: string
+                    description: Pointer to source of error
+                  parameter:
+                    type: string
+                    description: Invalid request parameter
+                  header:
+                    type: string
+                    description: Invalid header
+              status:
+                type: string
+                description: HTTP error code
+              meta:
+                type: object
+                description: Meta information
+                properties:
+                  missingFields:
+                    type: array
+                    items:
+                      type: string
+                    description: List of missing fields
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

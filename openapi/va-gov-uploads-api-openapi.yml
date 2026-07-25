@@ -1,0 +1,1334 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Uploads API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Uploads
+paths:
+  /uploads:
+    post:
+      tags:
+      - Uploads
+      responses:
+        '202':
+          description: Accepted. Location generated
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentUploadPath'
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorModel'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Get a location for subsequent document upload PUT request
+      operationId: POST:/uploads
+      security:
+      - apikey: []
+  /uploads/{id}:
+    get:
+      tags:
+      - Uploads
+      responses:
+        '200':
+          description: Upload status retrieved successfully
+          content:
+            application/json:
+              schema:
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentUploadStatus'
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Record not found
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: The record identified by {{id}} could not be found
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 404
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 404
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Get status for a previous benefits document upload
+      operationId: GET:/uploads/{id}
+      description: A request to the `/uploads/{id}` endpoint will return a real-time status for that GUID, and update its status in `/uploads/report`.\n\nThe `updated_at` field indicates the last time the status for a given GUID was updated.
+      security:
+      - apikey: []
+      parameters:
+      - name: id
+        in: path
+        description: ID as returned by a previous create upload request
+        required: true
+        example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        schema:
+          type: string
+          format: uuid
+  /uploads/{id}/download:
+    get:
+      tags:
+      - Uploads
+      responses:
+        '200':
+          description: Zip file with the contents of your payload as parsed by our server
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+                example: Binary File
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Record not found
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: The record identified by {{id}} could not be found
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 404
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 404
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Download zip of "what the server sees"
+      description: An endpoint that will allow you to see exactly what the server sees. We split apart all submitted docs and metadata and zip the file to make it available to you to help with debugging purposes. Files are deleted after 10 days. Only available in testing environments, not production.
+      operationId: GET:/uploads/{id}/download
+      security:
+      - apikey: []
+      parameters:
+      - name: id
+        in: path
+        description: ID as returned by a previous create upload request
+        required: true
+        example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        schema:
+          type: string
+          format: uuid
+  /uploads/report:
+    post:
+      tags:
+      - Uploads
+      responses:
+        '200':
+          description: Upload status report retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentUploadStatusReport'
+        '400':
+          description: Bad Request - invalid, missing, or oversized list of guids (max 1000)
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UploadsReportBadRequestErrorModel'
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorModel'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Get a bulk status report for a list of previous uploads
+      operationId: POST:/uploads/report
+      description: Due to current system limitations, data for the `/uploads/report` endpoint is cached for one hour.\n\nA request to the `/uploads/{id}` endpoint will return a real-time status for that GUID, and update its status in `/uploads/report`.\n\nThe `updated_at` field indicates the last time the status for a given GUID was updated.
+      security:
+      - apikey: []
+      requestBody:
+        description: List of GUIDs for which to retrieve current status
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentUploadStatusGuidList'
+  /uploads/validate_document:
+    post:
+      tags:
+      - Uploads
+      responses:
+        '200':
+          description: Document passed system requirements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    properties:
+                      type:
+                        type: string
+                        example: documentValidation
+                        description: schema type
+                      attributes:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: valid
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Document did NOT pass system requirements
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentValidationErrorModel'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  title:
+                    description: Human readable title description.
+                    type: string
+                    example: Internal server error
+                  detail:
+                    description: Human readable error detail. Only present if status = "error"
+                    type: string
+                    example: Internal server error
+                  code:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+                  status:
+                    description: 'Unambiguous status code. Only present if status = "error"
+
+
+                      * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+                      * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+                      * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+                      * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+                      * `DOC105` - Invalid or unknown id
+
+                      * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+                      * `DOC107` - Empty payload.
+
+                      * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+                      * `DOC201` - Upload server error.
+
+                      * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+                      '
+                    type: string
+                    example: 500
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      summary: Validate an individual document against system file requirements
+      description: 'Using this endpoint will decrease the likelihood of errors associated with individual documents during
+
+        the submission process. Validations performed:
+
+        * Document is a valid PDF (Note: `Content-Type` header value must be "application/pdf")
+
+        * Document does not have a user password (an owner password is acceptable)
+
+        * File size does not exceed 100 MB
+
+        * Page size does not exceed 78" x 101"
+
+
+        Each PDF document is sent as a direct file upload. The request body should contain nothing other than the document in
+
+        binary format. Binary multipart/form-data encoding is not supported. This endpoint does NOT validate metadata in JSON
+
+        format.
+
+
+        This endpoint does NOT initiate the claims intake process or submit data to that process. After using this endpoint,
+
+        individual PDF documents can be combined and submitted as a payload using PUT `/path`.
+
+
+        A `200` response confirms that the individual document provided passes the system requirements.
+
+
+        A `422` response indicates one or more problems with the document that should be resolved before submitting it in the
+
+        full document submission payload.
+
+        '
+      operationId: POST:/uploads/validate_document
+components:
+  schemas:
+    DocumentUploadStatus:
+      description: Status record for a previously initiated document submission.
+      required:
+      - id
+      - type
+      - attributes
+      properties:
+        id:
+          description: JSON API identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        type:
+          description: JSON API type specification
+          type: string
+          example: document_upload
+        attributes:
+          $ref: '#/components/schemas/DocumentUploadStatusAttributes'
+    PdfUploadAttributes:
+      required:
+      - total_documents
+      - total_pages
+      - content
+      - dimensions
+      - attachments
+      properties:
+        total_documents:
+          description: The total number of documents contained in this upload
+          type: integer
+          example: '2'
+        total_pages:
+          description: The total number of pages contained in this upload
+          type: integer
+          example: '3'
+        content:
+          properties:
+            page_count:
+              description: The total number of pages solely in this PDF document
+              type: integer
+              example: '1'
+            dimensions:
+              $ref: '#/components/schemas/PdfDimensionAttributes'
+            attachments:
+              type: array
+              items:
+                properties:
+                  page_count:
+                    description: The number of pages in this attachment
+                    type: integer
+                    example: '2'
+                  dimensions:
+                    $ref: '#/components/schemas/PdfDimensionAttributes'
+    DocumentUploadPath:
+      description: Status record for a previously initiated document submission.
+      required:
+      - id
+      - type
+      - attributes
+      properties:
+        id:
+          description: JSON API identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        type:
+          description: JSON API type specification
+          type: string
+          example: document_upload
+        attributes:
+          $ref: '#/components/schemas/DocumentUploadAttributes'
+    DocumentUploadStatusGuidList:
+      type: object
+      required:
+      - ids
+      properties:
+        ids:
+          description: List of IDs for previous document upload submissions (max 1000)
+          type: array
+          items:
+            type: string
+            format: uuid
+            example: 6d8433c1-cd55-4c24-affd-f592287a7572
+          minItems: 1
+          maxItems: 1000
+    ErrorModel:
+      description: Errors with some details for the given request
+      required:
+      - status
+      - detail
+      properties:
+        status:
+          type: integer
+          format: int32
+          example: '422'
+          description: Standard HTTP Status returned with Error
+        detail:
+          type: string
+          example: DOC104 - Upload rejected by upstream system. Processing failed and upload must be resubmitted
+          description: A more detailed message about why an error occurred
+    DocumentUploadAttributes:
+      required:
+      - guid
+      - status
+      properties:
+        guid:
+          description: The document upload identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        status:
+          description: 'Document upload status.
+
+            '
+          type: string
+          enum:
+          - pending
+          - uploaded
+          - received
+          - processing
+          - success
+          - vbms
+          - error
+          example: pending
+        code:
+          description: 'Unambiguous status code. Only present if status = "error"
+
+
+            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+            * `DOC105` - Invalid or unknown id
+
+            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+            * `DOC107` - Empty payload.
+
+            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+            * `DOC201` - Upload server error.
+
+            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+            '
+          type: string
+          example: null
+        detail:
+          description: Human readable error detail. Only present if status = "error"
+          type: string
+          example: ''
+        final_status:
+          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
+          type: boolean
+          example: false
+        location:
+          description: Location to which to PUT document Payload
+          type: string
+          format: uri
+          example: https://sandbox-api.va.gov/services_user_content/vba_documents/{idpath}
+        updated_at:
+          description: The last time the submission was updated
+          type: string
+          format: date-time
+          example: '2018-07-30T17:31:15.958Z'
+        uploaded_pdf:
+          description: Only populated after submission starts processing
+          example: 'null'
+    DocumentUploadStatusAttributes:
+      required:
+      - guid
+      - status
+      properties:
+        guid:
+          description: The document upload identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        status:
+          description: 'Document upload status.
+
+            '
+          type: string
+          enum:
+          - pending
+          - uploaded
+          - received
+          - processing
+          - success
+          - vbms
+          - error
+          example: error
+        code:
+          description: 'Unambiguous status code. Only present if status = "error"
+
+
+            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+            * `DOC105` - Invalid or unknown id
+
+            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+            * `DOC107` - Empty payload.
+
+            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+            * `DOC201` - Upload server error.
+
+            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+            '
+          type: string
+          example: DOC108
+        detail:
+          description: Human readable error detail. Only present if status = "error"
+          type: string
+          example: Maximum page size exceeded. Limit is 78 in x 101 in.
+        final_status:
+          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
+          type: boolean
+          example: true
+        updated_at:
+          description: The last time the submission was updated
+          type: string
+          format: date-time
+          example: '2018-07-30T17:31:15.958Z'
+        uploaded_pdf:
+          $ref: '#/components/schemas/PdfUploadAttributes'
+    UploadsReportBadRequestErrorModel:
+      description: Validation error for uploads/report request payload
+      required:
+      - title
+      - detail
+      - code
+      - status
+      properties:
+        title:
+          type: string
+          example: Too many items submitted
+        detail:
+          type: string
+          example: '"ids" cannot exceed 1000 items (submitted 1001)'
+        code:
+          type: string
+          example: '111'
+        status:
+          type: string
+          example: '400'
+    PdfDimensionAttributes:
+      required:
+      - height
+      - width
+      - oversized_pdf
+      properties:
+        height:
+          description: The document height
+          type: integer
+          example: '11.0'
+        width:
+          description: The document width
+          type: integer
+          example: '8.5'
+        oversized_pdf:
+          description: Indicates if this is an oversized PDF (greater than 78x101)
+          type: boolean
+          example: 'false'
+    DocumentValidationErrorModel:
+      type: object
+      description: Error returned from the document validation endpoint.
+      required:
+      - title
+      - detail
+      - status
+      properties:
+        title:
+          type: string
+          example: Document failed validation
+          description: Error title
+        detail:
+          type: string
+          description: 'Error detail
+
+
+            Possible values:
+
+            * Document was not provided
+
+            * Document is not a PDF
+
+            * Document exceeds the file size limit of 100 MB
+
+            * Document exceeds the page size limit of 78 in. x 101 in.
+
+            * Document is locked with a user password
+
+            * Document is not a valid PDF
+
+            '
+          example: Document is locked with a user password
+        status:
+          type: string
+          example: '422'
+          description: HTTP error code
+    DocumentUploadStatusReport:
+      type: array
+      items:
+        $ref: '#/components/schemas/DocumentUploadStatus'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

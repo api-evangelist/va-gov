@@ -1,0 +1,1679 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Disability Rating API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Disability Rating
+paths:
+  /disability_rating:
+    get:
+      tags:
+      - Disability Rating
+      summary: Retrieve disability rating of authorized Veteran
+      description: This endpoint provides a veteran's combined and individual disability rating(s) and related decisions and dates.
+      operationId: GET:/disability_rating
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingResponseV1'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerSoapFaultApiError'
+        '401':
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                type: string
+                example:
+                  message: Invalid authentication credentials
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: string
+                example:
+                  message: You cannot consume this service
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError'
+      deprecated: true
+      security:
+      - bearer_token: []
+    post:
+      tags:
+      - Disability Rating
+      summary: Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.
+      description: 'This endpoint provides a Veteran''s disability ratings and related decisions and dates.
+
+
+        Required information:
+
+        * First Name
+
+        * Last Name
+
+        * Date of Birth
+
+        * Street Address
+
+        * City
+
+        * State
+
+        * Country
+
+        * Zipcode
+
+
+        Optional information:
+
+        * Middle Name
+
+        * Gender
+
+        * Mother''s Maiden Name
+
+        * Home Phone Number
+
+        * Birth Place City
+
+        * Birth Place State
+
+        * Birth Place Country
+
+
+        Tips for finding a match:
+
+        * First and Last Name, Address and DOB are often essential to uniquely identifying
+
+        a Veteran.
+
+        * Home Address is recommended, but it may be beneficial to retry the search with
+
+        additional addresses if they are available and the first attempt is not confirmed.
+
+        * To find a match, it can help to retry with different demographic information,
+
+        such as alternate last names or addresses.
+
+        * It can also help to remove special characters, hyphens, apostrophes, or spaces
+
+        in a name prior to matching.
+
+
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
+
+        '
+      operationId: POST:/disability_rating
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VeteranAttributes'
+            example:
+              first_name: Alfredo
+              last_name: Armstrong
+              birth_date: '1993-06-08'
+              middle_name: M
+              gender: M
+              street_address_line1: 17020 Tortoise St
+              street_address_line2: ''
+              street_address_line3: ''
+              city: Round Rock
+              zipcode: '78664'
+              state: TX
+              country: USA
+        required: true
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      diagnostic_type_code: '0502'
+                      hyph_diagnostic_type_code: '1234'
+                      diagnostic_type_name: Schizophrenia, disorganized type
+                      diagnostic_text: bilateral hearing loss
+                      static_ind: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/disability_rating
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/disability_rating
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway. Also, could indicate Person Not Found in MPI backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+              example:
+                title: Bad Gateway
+                detail: Upstream Request Error.
+                code: '502'
+                status: '502'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError_2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - disability_rating.read
+      - productionOauth2:
+        - disability_rating.read
+  /restricted/disability_rating:
+    post:
+      tags:
+      - Disability Rating
+      summary: Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).
+      description: 'This endpoint provides a Veteran''s combined and individual disability ratings and
+
+        related decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.
+
+
+        If using Social Security number, the following information is required:
+
+        * Social Security number
+
+        * First name
+
+        * Last name
+
+        * Birth date
+
+
+        If using demographic data, the following information is required:
+
+        * First Name
+
+        * Last Name
+
+        * Birth date
+
+        * Street Address
+
+        * City
+
+        * State
+
+        * Country
+
+        * Zipcode
+
+
+        The following optional information may also be used with Social Security number
+
+        or demographic data:
+
+        * Middle Name
+
+        * Gender
+
+        * Mother''s Maiden Name
+
+        * Home Phone Number
+
+        * Birth Place City
+
+        * Birth Place State
+
+        * Birth Place Country
+
+
+        Tips for finding a match:
+
+        * First and Last Name, Address and Birth date are often essential to uniquely
+
+        identifying a Veteran.
+
+        * Home address is recommended, but it may also help to retry the search with
+
+        additional available addresses when the first attempt is not confirmed.
+
+        * To find a match, it can help to retry with different demographic information,
+
+        such as alternate last names or addresses.
+
+        * It can also help to remove special characters, hyphens, apostrophes, or spaces
+
+        in a name prior to matching.
+
+
+        NOTE: In the Sandbox only birth date and zip code are required to identify the
+
+        test user.
+
+        '
+      operationId: POST:/restricted/disability_rating
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FederalVeteranAttributes'
+            example:
+              ssn: 796-01-2476
+              first_name: Alfredo
+              last_name: Armstrong
+              birth_date: '1993-06-08'
+              middle_name: M
+              gender: M
+              street_address_line1: 17020 Tortoise St
+              street_address_line2: ''
+              street_address_line3: ''
+              city: Round Rock
+              zipcode: '78664'
+              state: TX
+              country: USA
+        required: true
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      diagnostic_type_code: '0502'
+                      hyph_diagnostic_type_code: '1234'
+                      diagnostic_type_name: Schizophrenia, disorganized type
+                      diagnostic_text: bilateral hearing loss
+                      static_ind: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                status: '400'
+                code: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/restricted/disability_rating
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/restricted/disability_rating
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway. Also, could indicate Person Not Found in MPI backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+              example:
+                title: Bad Gateway
+                detail: Upstream Request Error.
+                status: '502'
+                code: '502'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError_2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - disability_rating_restricted.read
+      - productionOauth2:
+        - disability_rating_restricted.read
+  /summary/disability_rating:
+    get:
+      tags:
+      - Disability Rating
+      summary: Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.
+      description: This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token.
+      operationId: GET:/summary/disability_rating
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingSummaryResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      static_ind: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/summary/disability_rating
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/summary/disability_rating
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError_2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - disability_rating_summary.read
+      - productionOauth2:
+        - disability_rating_summary.read
+    post:
+      tags:
+      - Disability Rating
+      summary: Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.
+      description: 'This endpoint provides a Veteran''s disability ratings and related decisions and dates.
+
+
+        Required information:
+
+        * First Name
+
+        * Last Name
+
+        * Date of Birth
+
+        * Street Address
+
+        * City
+
+        * State
+
+        * Country
+
+        * Zipcode
+
+
+        Optional information:
+
+        * Middle Name
+
+        * Gender
+
+        * Mother''s Maiden Name
+
+        * Home Phone Number
+
+        * Birth Place City
+
+        * Birth Place State
+
+        * Birth Place Country
+
+
+        Tips for finding a match:
+
+        * First and Last Name, Address and DOB are often essential to uniquely identifying
+
+        a Veteran.
+
+        * Home Address is recommended, but it may be beneficial to retry the search with
+
+        additional addresses if they are available and the first attempt is not confirmed.
+
+        * To find a match, it can help to retry with different demographic information,
+
+        such as alternate last names or addresses.
+
+        * It can also help to remove special characters, hyphens, apostrophes, or spaces
+
+        in a name prior to matching.
+
+
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
+
+
+        '
+      operationId: POST:/summary/disability_rating
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VeteranAttributes'
+            example:
+              first_name: Alfredo
+              last_name: Armstrong
+              birth_date: '1993-06-08'
+              middle_name: M
+              gender: M
+              street_address_line1: 17020 Tortoise St
+              street_address_line2: ''
+              street_address_line3: ''
+              city: Round Rock
+              zipcode: '78664'
+              state: TX
+              country: USA
+        required: true
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingSummaryResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      static_ind: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/summary/disability_rating
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/summary/disability_rating
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway. Also, could indicate Person Not Found in MPI backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+              example:
+                title: Bad Gateway
+                detail: Upstream Request Error.
+                code: '502'
+                status: '502'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError_2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - disability_rating_summary.read
+      - productionOauth2:
+        - disability_rating_summary.read
+  /restricted/summary/disability_rating:
+    post:
+      tags:
+      - Disability Rating
+      summary: Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)
+      description: "This endpoint provides a Veteran's disability ratings and related decisions and dates.   It allows searching for a Veteran using Social   Security number and demographic information.\n\n  If using Social Security number, the following information is required:\n  * Social Security number\n  * First name\n  * Last name\n  * Birth date\n\n  If using demographic data, the following information is required:\n  * First Name\n  * Last Name\n  * Birth date\n  * Street Address\n  * City\n  * State\n  * Country\n  * Zipcode\n\n  The following optional information may also be used with Social Security number\n  or demographic data:\n  * Middle Name\n  * Gender\n  * Mother's Maiden Name\n  * Home Phone Number\n  * Birth Place City\n  * Birth Place State\n  * Birth Place Country\n\n  Tips for finding a match:\n  * First and Last Name, Address and Birth date are often essential to uniquely\n  identifying a Veteran.\n  * Home address is recommended, but it may also help to retry the search with\n  additional available addresses when the first attempt is not confirmed.\n  * To find a match, it can help to retry with different demographic information,\n  such as alternate last names or addresses.\n  * It can also help to remove special characters, hyphens, apostrophes, or spaces\n  in a name prior to matching.\n\n  NOTE: In the Sandbox only birth date and zip code are required to identify the\n  test user.\n"
+      operationId: POST:/restricted/summary/disability_rating
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FederalVeteranAttributes'
+            example:
+              ssn: 796-01-2476
+              first_name: Alfredo
+              last_name: Armstrong
+              birth_date: '1993-06-08'
+              middle_name: M
+              gender: M
+              street_address_line1: 17020 Tortoise St
+              street_address_line2: ''
+              street_address_line3: ''
+              city: Round Rock
+              zipcode: '78664'
+              state: TX
+              country: USA
+        required: true
+      responses:
+        '200':
+          description: Disability Rating retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisabilityRatingResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      static_ind: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                status: '400'
+                code: '400'
+        '401':
+          description: Not Authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/restricted/summarydisability_rating
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/restricted/summary/disability_rating
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
+        '502':
+          description: Bad Gateway. Also, could indicate Person Not Found in MPI backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InaccessibleServiceDefintionErrorApiError'
+              example:
+                title: Bad Gateway
+                detail: Upstream Request Error.
+                status: '502'
+                code: '502'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendServiceApiError_2'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      security:
+      - sandboxOauth2:
+        - disability_rating_summary_restricted.read
+      - productionOauth2:
+        - disability_rating_summary_restricted.read
+components:
+  schemas:
+    ServerSoapFaultApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    MissingIcn:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails_2'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    VeteranAttributes:
+      required:
+      - birth_date
+      - city
+      - country
+      - first_name
+      - last_name
+      - street_address_line1
+      - zipcode
+      type: object
+      properties:
+        gender:
+          type: string
+          description: For gender, only 'm' or 'f' will help the search currently.
+        first_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''De''Anna'' can be matched as ''deanna''.
+
+            * In addition, depending on the handling logic of the front end application updating the VA
+
+            record, an inquiry with first name of ''Ann-Marie'' would be standardized to ''AnnMarie'' but
+
+            could be matched against ''AnnMarie'' or ''Ann Marie'' or ''Ann'' or ''Marie''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry the
+
+            hyphenated name without the hyphen and together, then separated, then each individual part
+
+            of the name as in the example with ''Ann-Marie''.
+
+            * Capitalization does not impede match strength.
+
+            '
+        middle_name:
+          type: string
+        last_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''O''leary'' can be matched as ''oleary''.
+
+            * In addition, depending on the handling logic of the front end application updating the
+
+            VA record, an inquiry with last name of ''Smith-Jones'' would be standardized to
+
+            ''SmithJones'' but could be matched against ''SmithJones'' or ''Smith Jones'' or ''Smith'' or
+
+            ''Jones''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry
+
+            the hyphenated name without the hyphen and together, then separated, then each
+
+            individual part of the name as in the example with ''Smith-Jones''.
+
+            * Capitalization does not impede match strength.'
+        zipcode:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        street_address_line1:
+          type: string
+          description: 'Address line 1 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line2:
+          type: string
+          description: 'Address line 2 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line3:
+          type: string
+          description: 'Address line 3 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        home_phone_number:
+          type: string
+        birth_place_city:
+          type: string
+        birth_place_state:
+          type: string
+        birth_place_country:
+          type: string
+        mothers_maiden_name:
+          type: string
+      description: '* Use the current residence address of the Veteran.
+
+        * Some unhoused Veterans can use a local USPS, support organization, or other location
+
+        such as ''the corner of RTE512 and U.S.1''.
+
+        * Aim to match the input against the Veteran''s demographic information in their VA.gov
+
+        profile.
+
+        * Data in the request and the VA record is standardized using the same algorithm prior
+
+        to matching. If the data is close, and enough fields are provided, it will find the
+
+        Veteran most of the time; however, some records will have data that is not in sync and
+
+        may require trying the request again with different addresses, names, or formats.
+
+        * Alternately, the Veteran may need to update their information with the VA if they
+
+        are not found.
+
+        '
+    DisabilityRatingData:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes'
+      deprecated: true
+    FederalVeteranAttributes:
+      required:
+      - birth_date
+      - first_name
+      - last_name
+      - ssn
+      type: object
+      properties:
+        gender:
+          type: string
+          description: For gender, only 'm' or 'f' will help the search currently.
+        ssn:
+          type: string
+          description: For use by restricted access endpoints only
+        first_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''De''Anna'' can be matched as ''deanna''.
+
+            * In addition, depending on the handling logic of the front end application updating the VA
+
+            record, an inquiry with first name of ''Ann-Marie'' would be standardized to ''AnnMarie'' but
+
+            could be matched against ''AnnMarie'' or ''Ann Marie'' or ''Ann'' or ''Marie''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry the
+
+            hyphenated name without the hyphen and together, then separated, then each individual part
+
+            of the name as in the example with ''Ann-Marie''.
+
+            * Capitalization does not impede match strength.
+
+            '
+        middle_name:
+          type: string
+        last_name:
+          type: string
+          description: '* Some names may require special handling if a Veteran is not found.
+
+            * Try removing special characters, such as hyphens, apostrophes, and spaces prior to
+
+            matching. For example, a submission of ''O''leary'' can be matched as ''oleary''.
+
+            * In addition, depending on the handling logic of the front end application updating the
+
+            VA record, an inquiry with last name of ''Smith-Jones'' would be standardized to
+
+            ''SmithJones'' but could be matched against ''SmithJones'' or ''Smith Jones'' or ''Smith'' or
+
+            ''Jones''.
+
+            * Therefore, if a Veteran with a hyphenated name is not found, it may be useful to retry
+
+            the hyphenated name without the hyphen and together, then separated, then each
+
+            individual part of the name as in the example with ''Smith-Jones''.
+
+            * Capitalization does not impede match strength.'
+        zipcode:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        street_address_line1:
+          type: string
+          description: 'Address line 1 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line2:
+          type: string
+          description: 'Address line 2 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        street_address_line3:
+          type: string
+          description: 'Address line 3 can accept one or more letters (uppercase or
+
+            lowercase), digits, spaces, commas, hashes(#), apostrophes(''),
+
+            periods(.), back slashes(\\), forward slashes(/), or hyphens(-).
+
+            '
+        home_phone_number:
+          type: string
+        birth_place_city:
+          type: string
+        birth_place_state:
+          type: string
+        birth_place_country:
+          type: string
+        mothers_maiden_name:
+          type: string
+      description: '* This is the schema for the restricted access endpoints (status and disability_rating).
+
+        * Use the current residence address of the Veteran.
+
+        * Some unhoused Veterans can use a local USPS, support organization, or other location
+
+        such as ''the corner of RTE512 and U.S.1''.
+
+        * Aim to match the input against the Veteran''s demographic information in their VA.gov
+
+        profile.
+
+        * Data in the request and the VA record is standardized using the same algorithm prior
+
+        to matching. If the data is close, and enough fields are provided, it will find the
+
+        Veteran most of the time; however, some records will have data that is not in sync and
+
+        may require trying the request again with different addresses, names, or formats.
+
+        * Alternately, the Veteran may need to update their information with the VA if they
+
+        are not found.
+
+        '
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: '503'
+        status:
+          type: string
+          example: '503'
+    IndividualRating:
+      type: object
+      properties:
+        decision:
+          type: string
+        effective_date:
+          type: string
+          format: date
+        rating_percentage:
+          type: integer
+          format: int32
+      deprecated: true
+    DisabilityRatingAttributes:
+      type: object
+      properties:
+        combined_disability_rating:
+          type: integer
+          format: int32
+        combined_effective_date:
+          type: string
+          format: date
+        legal_effective_date:
+          type: string
+          format: date
+        individual_ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualRating'
+      deprecated: true
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    DisabilityRatingResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DisabilityRatingData_2'
+    BackendServiceApiError_2:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails_2'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    DisabilityRatingData_2:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes_2'
+    ApiErrorDetails_2:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    AuthorizationError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '401'
+        error:
+          type: string
+          example: Invalid token.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    DisabilityRatingAttributes_2:
+      type: object
+      properties:
+        combined_disability_rating:
+          type: integer
+          description: The Veteran's combined disability rating (percentage)
+          format: int32
+          example: 40
+        combined_effective_date:
+          type: string
+          description: Date the Veteran can start receiving disability benefits (YYYY-mm-dd)
+          format: date
+          example: '2019-10-09'
+        legal_effective_date:
+          type: string
+          description: Date of a law change that affects a Veteran's disability compensation (YYYY-mm-dd)
+          format: date
+          example: '2019-10-09'
+        individual_ratings:
+          type: array
+          description: Information about each disability rating, which makes up the combined disability rating
+          items:
+            $ref: '#/components/schemas/IndividualRating_2'
+    DisabilityRatingSummaryResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DisabilityRatingData_2'
+    DisabilityRatingResponseV1:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DisabilityRatingData'
+      deprecated: true
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
+    IndividualRating_2:
+      type: object
+      properties:
+        decision:
+          type: string
+          description: 'Returns explanations of VA''s decision on a claimant''s disability or on their claim for a benefit.
+
+
+            1151 Denied - Claim under 1151 provisions denied. The [38 U.S.C. 1151](https://www.law.cornell.edu/uscode/text/38/1151) provides for the payment of compensation for additional disability or death proximately caused by VA hospital care, medical or surgical treatment, examination, participation in vocational rehabilitation training or participation in compensated work therapy. Disabilities and/or causes of death recognized under this provision of law are compensated "as if" service-connected (SC), but are not actually SC. (See [M21-1, Part VIII, Subpart iv, Chapter 6](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000177483/M21-1-Part-VIII-Subpart-iv-Chapter-6-Section-A-Developing-Claims-Filed-Under-38-USC-1151?query=M21-1,%20Part%20VIII,%20Subpart%20iv,%20Chapter%206,%20Section%20A-Developing%20Claims%20Filed%20Under%2038%20U.S.C.%201151#1), Section A-Developing Claims Filed Under 38 U.S.C. 1151)
+
+
+            1151 Granted - Claim under 1151 provisions granted. The [38 U.S.C. 1151](https://www.law.cornell.edu/uscode/text/38/1151) provides for the payment of compensation for additional disability or death proximately caused by VA hospital care, medical or surgical treatment, examination, participation in vocational rehabilitation training or participation in compensated work therapy. Disabilities and/or causes of death recognized under this provision of law are compensated "as if" service-connected (SC), but are not actually SC. (See [M21-1, Part VIII, Subpart iv, Chapter 6](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000177483/M21-1-Part-VIII-Subpart-iv-Chapter-6-Section-A-Developing-Claims-Filed-Under-38-USC-1151?query=M21-1,%20Part%20VIII,%20Subpart%20iv,%20Chapter%206,%20Section%20A-Developing%20Claims%20Filed%20Under%2038%20U.S.C.%201151#1), Section A-Developing Claims Filed Under 38 U.S.C. 1151)
+
+
+            Service Connected - A disability that has been determined to be caused by any theory of entitlement from qualifying service to any degree of compensation. (See [38 CFR 3.303](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR39056aee4e9ff13/section-3.303) Principles Relating to Service Connection)
+
+
+            Pension - The Veteran is receiving pension benefits. A benefit payable monthly by the Department of Veteran Affairs because of non service-connected disability or age. (See [38 CFR 3.3](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFRf5fe31f49d4f511/section-3.3) Pension for Veterans)
+
+
+            Deferred - A claimed disability is deferred for additional development before it is adjudicated/finalized. The electronic functionality within VBMS allows a claims processor to return a claim to an earlier place within the claims cycle to correct avoidable and unavoidable erroneous actions. (See [M21-4 Appendix D. Index of Claim Stage Indicators](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000036576/Appendix-D-Index-of-Claim-Stage-Indicators?query=M21-4%20Appendix%20D))
+
+
+            Not Service Connected - A claimed disability is found to not be connected to service and is considered denied.
+
+
+            Willful Misconduct - A term referencing character of discharge other than honorable from uniformed service. Disability pension is not payable for any condition due to the Veteran''s own willful misconduct. (See [38 CFR 3.301](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR78886a7c7448ec2/section-3.301) Line of Duty and Misconduct)
+
+
+            Voc Rehab Purposes - Veteran Readiness and Employment (VR&E) Service may request a memorandum vocational rehabilitation/employment rating to determine whether the claimant''s service-connected disabilities meet the 10-percent or 20-percent eligibility requirements in any of the following situations: VA Form 28-1900 if filed by a service member awaiting discharge for disability, VA Form 28-1900 is filed by a Veteran, but no claim for compensation was ever filed, or all of the following are true–VA Form 28-1900 and VA Form 21-526EZ were filed and are both currently being processed and service department medical records adequate for memorandum VR&E rating purposes were received. (See [M21-1, Part XIII, Subpart i, 5.A.2](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000173834/M21-1-Part-XIII-Subpart-i-Chapter-5-Section-B-Memorandum-Vocational-RehabilitationEmployment-VRE-Ratings?query=m21-1%20part%20xiii%20subpart%20i%20chapter%205%20section%20b) Memorandum Vocational Rehabilitation/Employment Ratings)
+
+
+            Chapter 17 - This is the part of the 38 CFR that allows a Veteran to be eligible for medical treatment from the VHA, when they are found to have an unfavorable finding for a character of discharge determination. (See [38 CFR 3.360](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR6477ad08d327384/section-3.360) Service-Connected Health-Care Eligibility of Certain Persons Administratively Discharged Under Other Than Honorable Condition).
+
+
+            38 USC 109(c) - Service Connection for allied forces (non U.S.) members during WWII. This determination will be made using the same criteria that applies to determinations of service connection based on service in the Armed Forces of the United States. (See [38 CFR 3.359](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR6477ad08d327384/section-3.359) Determination of Service Connection for Former Members of the Armed Forces of Czechoslovakia or Poland).
+
+
+            PEB Referred Proposed DES Not Service Connected - The disability(ies) from the [Physical Evaluation Board](https://www.health.mil/Military-Health-Topics/Access-Cost-Quality-and-Safety/DES/Physical-Evaluation) (PEB), Disability Evaluation System were found not to be service connected. The PEB determines whether a service member''s injury prevents their continued performance in the military. (See [M21-1, Part X, Subpart i, Chapter 6, Section I](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000177953/M21-1-Part-X-Subpart-i-Chapter-6-Section-E-Integrated-Disability-Evaluation-System-IDES-Referrals-and-Initial-Processing)–Integrated Disability Evaluation System (IDES) Processing Based on Service Department Outcomes).
+
+
+            PEB Referred Proposed DES Service Connected - The disability(ies) from the [Physical Evaluation Board](https://www.health.mil/Military-Health-Topics/Access-Cost-Quality-and-Safety/DES/Physical-Evaluation) (PEB), Disability Evaluation System were found to be service connected. The PEB determines whether a service member''s injury prevents their continued performance in the military. (See [M21-1, Part X, Subpart i, Chapter 6, Section I](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000177953/M21-1-Part-X-Subpart-i-Chapter-6-Section-E-Integrated-Disability-Evaluation-System-IDES-Referrals-and-Initial-Processing)–Integrated Disability Evaluation System (IDES) Processing Based on Service Department Outcomes).
+
+
+            Proposed DES Service Connected - The disability(ies) from the [Disability Evaluation System](https://warriorcare.dodlive.mil/Benefits/Disability-Evaluation/) (DES)–were found to be service connected. Service members can incur a wound, illness, and/or injury at any time, whether serving in combat operations, during training evolutions, or at any other time on the job or after hours. Some service members may suffer a long-lasting or permanent disability affecting their ability to return to full military duties. In this case, their treating physician will refer them to DES to determine whether a service member will return to duty, medically separate, or medically retire due to disability.
+
+
+            Proposed DES Not Service Connected - The disability(ies) from the [Disability Evaluation System](https://warriorcare.dodlive.mil/Benefits/Disability-Evaluation/) (DES)–were found not to be service connected. Service members can incur a wound, illness, and/or injury at any time, whether serving in combat operations, during training evolutions, or at any other time on the job or after hours. Some service members may suffer a long-lasting or permanent disability affecting their ability to return to full military duties. In this case, their treating physician will refer them to DES to determine whether a service member will return to duty, medically separate, or medically retire due to disability.
+
+
+            Active Psychosis/GW Mental - When a Veteran applies for medical treatment under [38.U.S.C.1710](https://www.law.cornell.edu/uscode/text/38/1710), the VHA medical facility determines the Veteran''s eligibility and enrollment category. However, the medical facility may require information from the RO in order to make its determination. (See [M21-1, Part XIII, Subpart i, Chapter 3, Section A](https://www.knowva.ebenefits.va.gov/system/templates/selfservice/va_ssnew/help/customer/locale/en-US/portal/554400000001018/content/554400000173640/M21-1-Part-XIII-Subpart-i-Chapter-3-Section-A-General-Information-on-Eligibility-for-Medical-Services%3FarticleViewContext=article_view_related_article#XIII)–General Information On Eligibility For Medical Service).
+
+
+            Birth-Deny - Denial of [chapter 18](https://www.federalregister.gov/documents/2003/01/08/03-101/health-care-for-certain-children-of-vietnam-veterans-covered-birth-defects-and-spina-bifida) "other covered birth defects" based on herbicide exposure. The VA will pay a monthly monetary allowance to or for a person who VA has determined is an individual suffering from spina bifida whose biological mother or father is or was a Vietnam Veteran or a Veteran with covered service in Korea. (See [38 CFR 3.814](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR2c3eca6251aa67b/section-3.814) Monetary Allowance under 38 U.S.C. chapter 18)
+
+
+            Spina-Deny - Denial of [chapter 18](https://www.federalregister.gov/documents/2003/01/08/03-101/health-care-for-certain-children-of-vietnam-veterans-covered-birth-defects-and-spina-bifida) spina bifida benefits based on herbicide exposure. The VA will pay a monthly monetary allowance to or for a person who VA has determined is an individual suffering from spina bifida whose biological mother or father is or was a Vietnam Veteran or a Veteran with covered service in Korea.(See [38 CFR 3.814](https://www.ecfr.gov/current/title-38/chapter-I/part-3/subpart-A/subject-group-ECFR2c3eca6251aa67b/section-3.814) Monetary Allowance under 38 U.S.C. chapter 18)
+
+
+            '
+          example: Service Connected
+        effective_date:
+          type: string
+          description: The date the service decision goes into effect (YYYY-mm-dd)
+          format: date
+          example: '2019-10-09'
+        rating_end_date:
+          type: string
+          description: The date the service decision expires (YYYY-mm-dd)
+          format: date
+          example: '2019-10-09'
+        rating_percentage:
+          type: integer
+          description: The percentage of the assigned rating, based on the Veteran's disability
+          format: int32
+          example: 40
+        diagnostic_type_code:
+          type: string
+          description: The primary type code of the diagnosis
+          example: '1134'
+        hyph_diagnostic_type_code:
+          type: string
+          description: The optional part of the type code of the diagnosis
+          example: '7502'
+        diagnostic_type_name:
+          type: string
+          description: The name of the diagnosis
+          example: Schizophrenia, disorganized type
+        diagnostic_text:
+          type: string
+          description: Text related to the diagnosis
+          example: bilateral hearing loss
+        disability_rating_id:
+          type: string
+          description: The individual disability rating id
+          example: '12345'
+        static_ind:
+          type: boolean
+          description: The purpose of this field is to allow users to make a "yes" or "no" decision about re-examination for all disabilities that have not been determined to be static.
+          example: true
+      description: Information about each disability rating, which makes up the combined disability rating
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

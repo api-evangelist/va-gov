@@ -1,0 +1,188 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver veteran_confirmation_status API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: veteran_confirmation_status
+  description: Veteran Confirmation - Veteran Status
+paths:
+  /status:
+    post:
+      tags:
+      - veteran_confirmation_status
+      summary: Get confirmation about an individual's Veteran status according to the VA
+      operationId: POST:/status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VeteranStatusRequest'
+        required: true
+      responses:
+        '200':
+          description: "Confirmation status successfully retrieved.\n\nPossible return values if Veteran is \"NOT CONFIRMED\":\n - ERROR\n - MORE_RESEARCH_REQUIRED\n - NOT_TITLE_38\n - PERSON_NOT_FOUND"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VeteranStatusConfirmation'
+        '400':
+          description: Bad request - invalid or missing query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+        '401':
+          description: Authorization information not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: No API key found in request
+        '403':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: You cannot consume this service
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '503':
+          description: We encountered a temporary error. Check back in the future.
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+      deprecated: true
+      security:
+      - apiKey: []
+components:
+  schemas:
+    VeteranStatusRequest:
+      required:
+      - birth_date
+      - first_name
+      - last_name
+      - ssn
+      type: object
+      properties:
+        ssn:
+          type: string
+          deprecated: true
+        gender:
+          type: string
+          deprecated: true
+        first_name:
+          type: string
+          deprecated: true
+        middle_name:
+          type: string
+          deprecated: true
+        last_name:
+          type: string
+          deprecated: true
+        birth_date:
+          type: string
+          format: date
+          deprecated: true
+      deprecated: true
+    APIError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      description: API invocation or processing error
+    VeteranStatusConfirmation:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Non-identifying text string
+          example: (REDACTED)
+          deprecated: true
+        veteran_status:
+          type: string
+          description: 'Whether the system could confirm the Veteran status of an individual based on traits
+
+            '
+          enum:
+          - confirmed
+          - not confirmed
+        not_confirmed_reason:
+          type: string
+          description: "Defines reason for a not confirmed status response.\n  Possible values:\n   - ERROR\n   - MORE_RESEARCH_REQUIRED\n   - NOT_TITLE_38\n - PERSON_NOT_FOUND\n"
+      description: Veteran status confirmation for an individual
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: '103'
+        status:
+          type: string
+          example: '400'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header

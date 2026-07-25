@@ -1,0 +1,1637 @@
+openapi: 3.0.1
+info:
+  title: Address Validation 5103 Waiver Claims API
+  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
+  license:
+    name: Creative Commons
+    url: https://developer.va.gov/terms-of-service
+  version: '3'
+servers:
+- url: https://sandbox-api.va.gov/services/address-validation/{version}
+  description: Sandbox
+  variables:
+    version:
+      default: v3
+- url: https://api.va.gov/services/address-validation/{version}
+  description: Production
+  variables:
+    version:
+      default: v3
+security:
+- apikey: []
+tags:
+- name: Claims
+  description: 'Allows authenticated and authorized users to access claims data for a single claim by ID, or for all claims based on claimant data. No data is returned if the user is not authenticated and authorized.
+
+    '
+paths:
+  /claims:
+    get:
+      summary: Find all benefits claims for a VA claimant
+      tags:
+      - Claims
+      operationId: GET:/claims
+      security:
+      - productionOauth:
+        - claim.read
+      - sandboxOauth:
+        - claim.read
+      - bearer_token: []
+      description: Uses the Veteran’s metadata in headers to retrieve all claims for that Veteran. An authenticated Veteran making a request with this endpoint will return their own claims, if any.
+      parameters:
+      - in: header
+        name: X-VA-SSN
+        required: false
+        description: Claimant SSN if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-First-Name
+        required: false
+        description: Claimant first name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Last-Name
+        required: false
+        description: Claimant last name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Birth-Date
+        required: false
+        description: Claimant birthdate if consumer is representative, in iso8601 format
+        schema:
+          type: string
+      responses:
+        '200':
+          description: claim response
+          content:
+            application/json:
+              example:
+                data:
+                - id: '600354175'
+                  type: evss_claims
+                  attributes:
+                    evss_id: 600354175
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2022-12-01'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: false
+                    documents_needed: false
+                    status: Complete
+                - id: '600354178'
+                  type: evss_claims
+                  attributes:
+                    evss_id: 600354178
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2022-12-01'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: false
+                    documents_needed: false
+                    status: Complete
+                - id: '600311927'
+                  type: evss_claims
+                  attributes:
+                    evss_id: 600311927
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2022-06-23'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: true
+                    documents_needed: false
+                    status: Complete
+                - id: '600309680'
+                  type: evss_claims
+                  attributes:
+                    evss_id: 600309680
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2022-06-09'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: true
+                    documents_needed: false
+                    status: Complete
+                - id: '600308831'
+                  type: evss_claims
+                  attributes:
+                    evss_id: 600308831
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2022-06-06'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: true
+                    documents_needed: false
+                    status: Complete
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      required:
+                      - id
+                      - type
+                      - attributes
+                      additionalProperties: false
+                      description: Claim with some details for the given Veteran info
+                      properties:
+                        id:
+                          type: string
+                          description: Claim ID from EVSS
+                          example: '8347210'
+                        type:
+                          type: string
+                          example: evss_claims
+                        attributes:
+                          type: object
+                          additionalProperties: false
+                          required:
+                          - evss_id
+                          - date_filed
+                          - max_est_date
+                          - open
+                          - waiver_submitted
+                          - documents_needed
+                          - development_letter_sent
+                          - status
+                          - requested_decision
+                          - claim_type
+                          properties:
+                            evss_id:
+                              type: integer
+                              description: Upstream service identifier
+                            date_filed:
+                              type: string
+                              format: date
+                              description: Date in YYYY-MM-DD the claim was first filed
+                              example: '2018-06-04'
+                            min_est_date:
+                              type:
+                              - string
+                              - 'null'
+                              format: date
+                              description: Minimum Estimated Claim Completion Date
+                              example: '2019-06-04'
+                            max_est_date:
+                              type:
+                              - string
+                              - 'null'
+                              format: date
+                              description: Maximum Estimated Claim Completion Date
+                              example: '2019-09-04'
+                            open:
+                              type: boolean
+                              description: Has the claim been resolved
+                              example: 'true'
+                            waiver_submitted:
+                              type: boolean
+                              description: Requested Decision or Waiver 5103 Submitted
+                              example: 'false'
+                            documents_needed:
+                              type: boolean
+                              description: Does the claim require additional documents to be submitted
+                              example: 'false'
+                            development_letter_sent:
+                              type: boolean
+                              description: Indicates if a Development Letter has been sent to the Claimant regarding a benefit claim
+                              example: 'false'
+                            decision_letter_sent:
+                              type: boolean
+                              description: Indicates if a Decision Letter has been sent to the Claimant regarding a benefit claim
+                              example: 'false'
+                            status:
+                              type: string
+                              description: Current status of the claim
+                              enum:
+                              - Claim received
+                              - Initial review
+                              - Evidence gathering, review, and decision
+                              - Preparation for notification
+                              - Complete
+                              example: Claim received
+                            requested_decision:
+                              type: boolean
+                              description: The claim filer has requested a claim decision be made
+                              example: 'false'
+                            claim_type:
+                              type: string
+                              description: The type of claim originally submitted
+                              example: Compensation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: Resource Not Found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: The Resource was not found.
+                  code: '404'
+                  status: '404'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+  /claims/{id}:
+    get:
+      summary: Find Claim by ID
+      tags:
+      - Claims
+      operationId: GET:/claims/{id}
+      security:
+      - productionOauth:
+        - claim.read
+      - sandboxOauth:
+        - claim.read
+      - bearer_token: []
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the claim being requested
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: X-VA-SSN
+        required: false
+        description: Claimant SSN if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-First-Name
+        required: false
+        description: Claimant first name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Last-Name
+        required: false
+        description: Claimant last name if consumer is representative
+        schema:
+          type: string
+      - in: header
+        name: X-VA-Birth-Date
+        required: false
+        description: Claimant birthdate if consumer is representative, in iso8601 format
+        schema:
+          type: string
+      description: Returns data such as processing status for a single claim by ID.
+      responses:
+        '200':
+          description: claims response
+          content:
+            application/json:
+              example:
+                data:
+                  id: 00000000-0000-0000-0000-000000000010
+                  type: claims_api_claim
+                  attributes:
+                    evss_id: 600118851
+                    open: false
+                    waiver_submitted: false
+                    requested_decision: false
+                    claim_type: Compensation
+                    date_filed: '2017-12-08'
+                    min_est_date: null
+                    max_est_date: null
+                    development_letter_sent: false
+                    decision_letter_sent: false
+                    documents_needed: false
+                    contention_list: []
+                    events_timeline:
+                    - type: phase7
+                      date: '2018-06-12'
+                    - type: completed
+                      date: '2018-06-12'
+                    - type: filed
+                      date: '2017-12-08'
+                    va_representative: AMERICAN LEGION
+                    status: Complete
+                    supporting_documents:
+                    - id: 00000000-0000-0000-0000-000000000011
+                      type: claim_supporting_document
+                      md5: 84e997702baca501734d4e23dae0f9af
+                      header_hash: c2714a50560affd76bfc376a90ec4e52d49e1a09d073456b7a1594452fd7ccc7
+                      filename: custom_file_name.pdf
+                      uploaded_at: '2024-01-01T00:00:00.000Z'
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    properties:
+                      id:
+                        type: string
+                        description: Claim ID from EVSS
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - date_filed
+                        - max_est_date
+                        - open
+                        - waiver_submitted
+                        - documents_needed
+                        - development_letter_sent
+                        - status
+                        - requested_decision
+                        - claim_type
+                        - contention_list
+                        - va_representative
+                        - events_timeline
+                        - supporting_documents
+                        properties:
+                          evss_id:
+                            type: integer
+                            nullable: true
+                            description: Upstream service identifier
+                          date_filed:
+                            type: string
+                            format: date
+                            description: Date in YYYY-MM-DD the claim was first filed
+                            example: '2018-06-04'
+                          min_est_date:
+                            type:
+                            - string
+                            - 'null'
+                            format: date
+                            description: Minimum Estimated Claim Completion Date
+                            example: '2019-06-04'
+                          max_est_date:
+                            type:
+                            - string
+                            - 'null'
+                            format: date
+                            description: Maximum Estimated Claim Completion Date
+                            example: '2019-09-04'
+                          open:
+                            type: boolean
+                            description: Has the claim been resolved
+                          waiver_submitted:
+                            type: boolean
+                            description: Requested Decision or Waiver 5103 Submitted
+                          documents_needed:
+                            type: boolean
+                            description: Does the claim require additional documents to be submitted
+                          development_letter_sent:
+                            type: boolean
+                            description: Indicates if a Development Letter has been sent to the Claimant regarding a benefit claim
+                          decision_letter_sent:
+                            type: boolean
+                            description: Indicates if a Decision Letter has been sent to the Claimant regarding a benefit claim
+                          status:
+                            type: string
+                            description: Current status of the claim
+                            enum:
+                            - pending
+                            - Claim received
+                            - Initial review
+                            - Evidence gathering, review, and decision
+                            - Preparation for notification
+                            - Complete
+                          requested_decision:
+                            type: boolean
+                            description: The claim filer has requested a claim decision be made
+                          claim_type:
+                            type: string
+                            description: The type of claim originally submitted
+                          contention_list:
+                            type: array
+                            items:
+                              type: string
+                          va_representative:
+                            type: string
+                            description: Current VA Representative Organization
+                          events_timeline:
+                            type: array
+                            items:
+                              anyOf:
+                              - type: object
+                                additionalProperties: false
+                                required:
+                                - type
+                                - date
+                                properties:
+                                  type:
+                                    type: string
+                                    description: Different types of event statuses
+                                  date:
+                                    type: string
+                                    format: date
+                                    description: Date of Event
+                              - type: object
+                                additionalProperties: false
+                                required:
+                                - tracked_item_id
+                                - file_type
+                                - document_type
+                                - filename
+                                - upload_date
+                                - type
+                                - date
+                                properties:
+                                  tracked_item_id:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    description: Tracked Item ID given by VBMS
+                                  file_type:
+                                    type: string
+                                    description: Type of File being submitted/requested
+                                  document_type:
+                                    type: string
+                                    description: Type of document submitted
+                                  filename:
+                                    type: string
+                                    description: Name of file submitted
+                                  upload_date:
+                                    type: string
+                                    format: date
+                                    description: Date original upload of file occured
+                                  type:
+                                    type: string
+                                    description: Type of Tracked Item submitted
+                                  date:
+                                    type: string
+                                    format: date
+                                    description: Date of Event
+                          supporting_documents:
+                            type: array
+                            items:
+                              properties:
+                                id:
+                                  type: string
+                                  description: Unique identifier of document
+                                type:
+                                  type: string
+                                md5:
+                                  type: string
+                                  description: Hashed representation of document
+                                header_hash:
+                                  type: string
+                                  description: Hashed representation of document header
+                                filename:
+                                  type: string
+                                  description: Name of document
+                                uploaded_at:
+                                  type: string
+                                  format: date
+                                  description: Date and time document was uploaded
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+                  code: '401'
+                  status: '401'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: Record Not Found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: Claim not found
+                  code: '404'
+                  status: '404'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Unprocessable Entity
+                  detail: Unknown EVSS Async Error
+                  code: '422'
+                  status: '422'
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      - code
+                      - status
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        code:
+                          type: string
+                          description: HTTP error code
+                        status:
+                          type: string
+                          description: HTTP error code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+  /veterans/{veteranId}/claims:
+    get:
+      summary: Find all benefits claims for a VA claimant
+      tags:
+      - Claims
+      operationId: GET:/veterans/{veteranId}/claims
+      security:
+      - productionOauth:
+        - system/claim.read
+      - sandboxOauth:
+        - system/claim.read
+      - bearer_token: []
+      parameters:
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      responses:
+        '200':
+          description: claim response
+          content:
+            application/json:
+              example:
+                data:
+                - id: '555555555'
+                  type: claim
+                  attributes:
+                    baseEndProductCode: '400'
+                    claimDate: '2017-05-02'
+                    claimPhaseDates:
+                      phaseChangeDate: '2017-10-18'
+                      phaseType: COMPLETE
+                    claimType: Compensation
+                    claimTypeCode: 400PREDSCHRG
+                    closeDate: '2017-10-18'
+                    decisionLetterSent: false
+                    developmentLetterSent: false
+                    documentsNeeded: false
+                    endProductCode: '404'
+                    evidenceWaiverSubmitted5103: false
+                    lighthouseId: null
+                    status: COMPLETE
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      required:
+                      - id
+                      - type
+                      - attributes
+                      additionalProperties: false
+                      description: Claim details
+                      properties:
+                        id:
+                          type: string
+                          nullable: true
+                          description: Claim ID in VBMS. If a claim was submitted with Lighthouse and not successfully established upstream, it could have a null claimId.
+                          example: '600131328'
+                        type:
+                          type: string
+                          example: claim
+                        attributes:
+                          type: object
+                          required:
+                          - baseEndProductCode
+                          - claimType
+                          - claimDate
+                          - claimPhaseDates
+                          - closeDate
+                          - developmentLetterSent
+                          - decisionLetterSent
+                          - documentsNeeded
+                          - endProductCode
+                          - evidenceWaiverSubmitted5103
+                          - lighthouseId
+                          - status
+                          properties:
+                            baseEndProductCode:
+                              type: string
+                              description: Base end product code for claim
+                              example: '400'
+                            claimType:
+                              type: string
+                              description: Name of claim type
+                              example: Compensation
+                            claimDate:
+                              format: date
+                              type: string
+                              description: Date the claim was first filed. In YYYY-MM-DD format.
+                              example: '2018-06-04'
+                            claimPhaseDates:
+                              type: object
+                              properties:
+                                phaseChangeDate:
+                                  format: date
+                                  type: string
+                                  description: The date that the claim changed to its current phase
+                                  example: '2017-10-18'
+                                phaseType:
+                                  type: string
+                                  enum:
+                                  - CLAIM_RECEIVED
+                                  - UNDER_REVIEW
+                                  - GATHERING_OF_EVIDENCE
+                                  - REVIEW_OF_EVIDENCE
+                                  - PREPARATION_FOR_DECISION
+                                  - PENDING_DECISION_APPROVAL
+                                  - PREPARATION_FOR_NOTIFICATION
+                                  - COMPLETE
+                                  description: The most current phase for the claim
+                                  example: UNDER_REVIEW
+                            closeDate:
+                              format: date
+                              type: string
+                              description: Date claim was closed
+                              example: '2019-09-04'
+                            developmentLetterSent:
+                              type: boolean
+                              description: If true, a development letter has been sent to the claimant regarding a benefit claim
+                              example: 'false'
+                            decisionLetterSent:
+                              type: boolean
+                              description: If true, a decision letter has been sent to the claimant regarding a benefit claim
+                              example: 'false'
+                            documentsNeeded:
+                              type: boolean
+                              description: If true, the claim requires additional documents to be submitted
+                              example: 'false'
+                            endProductCode:
+                              type: string
+                              description: End product code of claim
+                            evidenceWaiverSubmitted5103:
+                              type: boolean
+                              nullable: true
+                              description: If true, indicates a decision has been requested and/or a Waiver 5103 has been submitted
+                              example: 'false'
+                            lighthouseId:
+                              type: string
+                              nullable: true
+                              description: Claim ID in Lighthouse
+                              example: 00000000-0000-0000-0000-000000000006
+                            status:
+                              type: string
+                              description: Status of claim
+                              enum:
+                              - PENDING
+                              - CLAIM_RECEIVED
+                              - INITIAL_REVIEW
+                              - EVIDENCE_GATHERING_REVIEW_DECISION
+                              - PREPARATION_FOR_NOTIFICATION
+                              - COMPLETE
+                              - ERRORED
+                              - CANCELED
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+  /veterans/{veteranId}/claims/{id}:
+    get:
+      summary: Find claim by ID.
+      tags:
+      - Claims
+      operationId: GET:/veterans/{veteranId}/claims/{id}
+      security:
+      - productionOauth:
+        - system/claim.read
+      - sandboxOauth:
+        - system/claim.read
+      - bearer_token: []
+      description: Retrieves a specific claim for a Veteran
+      parameters:
+      - name: id
+        in: path
+        example: '600400703'
+        description: The ID of the claim being requested
+        required: true
+        schema:
+          type: string
+      - name: veteranId
+        in: path
+        required: true
+        example: 1012667145V762142
+        description: ID of claimant
+        schema:
+          type: string
+      responses:
+        '200':
+          description: errored claim response
+          content:
+            application/json:
+              examples:
+                returns a 200 response for established claim:
+                  value:
+                    data:
+                      id: '555555555'
+                      type: claim
+                      attributes:
+                        claimTypeCode: 400PREDSCHRG
+                        claimDate: '2017-05-02'
+                        claimPhaseDates:
+                          phaseChangeDate: '2017-10-18'
+                          currentPhaseBack: false
+                          latestPhaseType: COMPLETE
+                          previousPhases:
+                            phase7CompleteDate: '2017-10-18'
+                        claimType: Compensation
+                        closeDate: '2017-10-18'
+                        contentions:
+                        - name: abnormal heart (New)
+                        - name: abscess kidney (New)
+                        - name: encephalitis lethargica residuals (New)
+                        - name: dracunculiasis (New)
+                        - name: gingivitis (New)
+                        - name: abnormal weight loss (New)
+                        - name: groin condition (New)
+                        - name: metritis (New)
+                        decisionLetterSent: false
+                        developmentLetterSent: false
+                        documentsNeeded: false
+                        endProductCode: '404'
+                        evidenceWaiverSubmitted5103: false
+                        errors: []
+                        jurisdiction: National Work Queue
+                        lighthouseId: null
+                        maxEstClaimDate: null
+                        minEstClaimDate: null
+                        status: CANCELED
+                        submitterApplicationCode: EBN
+                        submitterRoleCode: VET
+                        supportingDocuments: []
+                        tempJurisdiction: null
+                        trackedItems:
+                        - closedDate: '2021-06-04'
+                          description: null
+                          displayName: 21-4142a
+                          overdue: false
+                          receivedDate: null
+                          requestedDate: '2021-05-05'
+                          status: NO_LONGER_REQUIRED
+                          suspenseDate: '2021-06-04'
+                          id: 293440
+                          uploadsAllowed: false
+                        - closedDate: '2021-06-04'
+                          description: null
+                          displayName: Employment info needed
+                          overdue: false
+                          receivedDate: null
+                          requestedDate: '2021-05-05'
+                          status: NO_LONGER_REQUIRED
+                          suspenseDate: '2021-06-04'
+                          id: 293443
+                          uploadsAllowed: false
+                        - closedDate: '2021-06-04'
+                          description: null
+                          displayName: Accidental injury - 21-4176 needed
+                          overdue: false
+                          receivedDate: null
+                          requestedDate: '2021-05-05'
+                          status: NO_LONGER_REQUIRED
+                          suspenseDate: '2021-06-04'
+                          id: 293444
+                          uploadsAllowed: false
+                        - closedDate: '2021-06-04'
+                          description: null
+                          displayName: Buddy mentioned - No complete address
+                          overdue: false
+                          receivedDate: null
+                          requestedDate: '2021-05-05'
+                          status: NO_LONGER_REQUIRED
+                          suspenseDate: '2021-06-04'
+                          id: 293446
+                          uploadsAllowed: false
+                returns a 200 response for errored claim:
+                  value:
+                    data:
+                      id: null
+                      type: claim
+                      attributes:
+                        claimTypeCode: null
+                        claimDate: null
+                        claimPhaseDates: null
+                        claimType: null
+                        closeDate: null
+                        contentions: null
+                        decisionLetterSent: null
+                        developmentLetterSent: null
+                        documentsNeeded: null
+                        endProductCode: null
+                        evidenceWaiverSubmitted5103: null
+                        errors:
+                        - detail: ERROR must match d{7}
+                          source: form526/serviceInformation/reservesNationalGuardService/unitPhone/phoneNumber/Pattern
+                        - detail: ERROR must match d{7}
+                          source: form526/veteran/homelessness/pointOfContact/primaryPhone/phoneNumber/Pattern
+                        jurisdiction: null
+                        lighthouseId: 00000000-0000-0000-0000-000000000007
+                        maxEstClaimDate: null
+                        minEstClaimDate: null
+                        status: ERRORED
+                        submitterApplicationCode: null
+                        submitterRoleCode: null
+                        supportingDocuments: []
+                        tempJurisdiction: null
+                        trackedItems: []
+              schema:
+                $schema: http://json-schema.org/draft-04/schema#
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    required:
+                    - id
+                    - type
+                    - attributes
+                    additionalProperties: false
+                    description: Claim details
+                    properties:
+                      id:
+                        type: string
+                        nullable: true
+                        description: Claim ID in VBMS. If a claim was submitted with Lighthouse and not successfully established upstream, it could have a null claimId.
+                        example: '600131328'
+                      type:
+                        type: string
+                        example: evss_claims
+                      attributes:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - claimTypeCode
+                        - claimDate
+                        - claimPhaseDates
+                        - claimType
+                        - closeDate
+                        - contentions
+                        - decisionLetterSent
+                        - developmentLetterSent
+                        - documentsNeeded
+                        - endProductCode
+                        - evidenceWaiverSubmitted5103
+                        - errors
+                        - jurisdiction
+                        - lighthouseId
+                        - maxEstClaimDate
+                        - minEstClaimDate
+                        - status
+                        - submitterApplicationCode
+                        - submitterRoleCode
+                        - supportingDocuments
+                        - tempJurisdiction
+                        - trackedItems
+                        properties:
+                          claimTypeCode:
+                            type: string
+                            description: Type code of benefit claim
+                            example: 400PREDSCHRG
+                          claimType:
+                            type: string
+                            description: Name of claim type
+                            example: Compensation
+                          contentions:
+                            type: array
+                            description: The contentions being submitted with a claim
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: abscess kidney (New)
+                          claimDate:
+                            format: date
+                            type: string
+                            nullable: true
+                            description: The date a claim was filed
+                            example: '2017-10-18'
+                          claimPhaseDates:
+                            type: object
+                            properties:
+                              currentPhaseBack:
+                                type: boolean
+                                description: Indicates whether the current phase is moving backward.
+                              latestPhaseType:
+                                type: string
+                                enum:
+                                - CLAIM_RECEIVED
+                                - UNDER_REVIEW
+                                - GATHERING_OF_EVIDENCE
+                                - REVIEW_OF_EVIDENCE
+                                - PREPARATION_FOR_DECISION
+                                - PENDING_DECISION_APPROVAL
+                                - PREPARATION_FOR_NOTIFICATION
+                                - COMPLETE
+                                nullable: true
+                                description: The most current phase for the claim
+                              phaseChangeDate:
+                                format: date
+                                type: string
+                                nullable: true
+                                description: The date that the claim changed to its current phase
+                                example: '2017-10-18'
+                              previousPhases:
+                                type: object
+                                properties:
+                                  phase1CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the claim received phase.
+                                    example: '2017-10-18'
+                                  phase2CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the initial review phase.
+                                    example: '2017-10-18'
+                                  phase3CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the gathering of evidence phase.
+                                    example: '2017-10-18'
+                                  phase4CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the reviewing of evidence phase.
+                                    example: '2017-10-18'
+                                  phase5CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the preparation for decision phase.
+                                    example: '2017-10-18'
+                                  phase6CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the pending decision approval phase.
+                                    example: '2017-10-18'
+                                  phase7CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the preparation for notification phase.
+                                    example: '2017-10-18'
+                                  phase8CompleteDate:
+                                    format: date
+                                    type: string
+                                    description: Completed date of the completed phase.
+                                    example: '2017-10-18'
+                          closeDate:
+                            format: date
+                            type: string
+                            nullable: true
+                            description: Date claim was closed
+                            example: '2019-09-04'
+                          decisionLetterSent:
+                            type: boolean
+                            description: If true, a decision letter has been sent to the claimant regarding a benefit claim
+                          developmentLetterSent:
+                            type: boolean
+                            description: If true, a development letter has been sent to the claimant regarding a benefit claim
+                          documentsNeeded:
+                            type: boolean
+                            description: If true, the claim requires additional documents to be submitted
+                          endProductCode:
+                            type: string
+                            description: End product code of claim
+                            example: '930'
+                          evidenceWaiverSubmitted5103:
+                            type: boolean
+                            nullable: true
+                            description: If true, indicates a decision has been requested and/or a Waiver 5103 has been submitted
+                            example: 'false'
+                          errors:
+                            type: array
+                            description: Error details if claim is in an errored state.
+                            items:
+                              properties:
+                                detail:
+                                  type: string
+                                  example: Something happened
+                                source:
+                                  type: string
+                                  example: some/error/path
+                          jurisdiction:
+                            type: string
+                            description: Regional office to which the claim is currently assigned.
+                          lighthouseId:
+                            type: string
+                            nullable: true
+                            description: Claim ID in Lighthouse
+                            example: 00000000-0000-0000-0000-000000000008
+                          minEstClaimDate:
+                            format: date
+                            type: string
+                            nullable: true
+                            description: Minimum estimated claim completion date
+                            example: '2019-06-04'
+                          maxEstClaimDate:
+                            format: date
+                            type: string
+                            nullable: true
+                            description: Maximum estimated claim completion date
+                            example: '2019-09-04'
+                          status:
+                            type: string
+                            description: Status of claim
+                            enum:
+                            - PENDING
+                            - CLAIM_RECEIVED
+                            - INITIAL_REVIEW
+                            - EVIDENCE_GATHERING_REVIEW_DECISION
+                            - PREPARATION_FOR_NOTIFICATION
+                            - COMPLETE
+                            - ERRORED
+                            - CANCELED
+                          submitterApplicationCode:
+                            type: string
+                            description: Application code of benefit claim submitter
+                            example: EBN
+                          submitterRoleCode:
+                            type: string
+                            description: Role code of benefit claim submitter
+                            example: VET
+                          supportingDocuments:
+                            type: array
+                            description: Information regarding any supported documents attached to a claim
+                            items:
+                              properties:
+                                documentId:
+                                  type: string
+                                  description: Unique identifier for the current version of this document
+                                documentUuid:
+                                  type: string
+                                  description: Version-independent UUID for this document
+                                  nullable: true
+                                documentTypeLabel:
+                                  type: string
+                                  nullable: true
+                                originalFileName:
+                                  type: string
+                                  description: Name of document
+                                  nullable: true
+                                trackedItemId:
+                                  type: string
+                                  nullable: true
+                                uploadDate:
+                                  format: date
+                                  type: string
+                                  description: Date document was uploaded
+                                  example: '2023-04-14'
+                                  nullable: true
+                                uploadDateTime:
+                                  format: date
+                                  type: string
+                                  description: Date and time document was uploaded in UTC format
+                                  example: '2023-04-14T13:54:52Z'
+                                  nullable: true
+                          tempJurisdiction:
+                            type: string
+                            description: Temporary jurisdiction of claim
+                          trackedItems:
+                            type: array
+                            description: ''
+                            items:
+                              type: object
+                              additionalProperties: false
+                              properties:
+                                closedDate:
+                                  format: date
+                                  type: string
+                                  nullable: true
+                                  description: Date the tracked item was closed
+                                  example: '2017-10-18'
+                                description:
+                                  type: string
+                                  nullable: true
+                                  description: Description of the tracked item
+                                  example: You may also submit statements from individuals having knowledge of your claimed condition.
+                                requestedDate:
+                                  format: date
+                                  type: string
+                                  nullable: true
+                                  description: Date the tracked item was requested
+                                  example: '2017-10-18'
+                                id:
+                                  type: integer
+                                  description: ID of the tracked item
+                                  example: 293454
+                                displayName:
+                                  type: string
+                                  nullable: true
+                                  description: Description of the tracked item
+                                  example: Submit buddy statement(s)
+                                receivedDate:
+                                  format: date
+                                  type: string
+                                  nullable: true
+                                  description: Date the tracked item was received
+                                  example: '2017-10-18'
+                                overdue:
+                                  type: boolean
+                                  nullable: true
+                                  description: True if the item is overdue
+                                  example: true
+                                status:
+                                  type: string
+                                  nullable: true
+                                  description: Enum with the status of the tracked item
+                                  example: NO_LONGER_REQUIRED
+                                  enum:
+                                  - ACCEPTED
+                                  - INITIAL_REVIEW_COMPLETE
+                                  - NEEDED_FROM_YOU
+                                  - NEEDED_FROM_OTHERS
+                                  - NO_LONGER_REQUIRED
+                                  - SUBMITTED_AWAITING_REVIEW
+                                suspenseDate:
+                                  format: date
+                                  type: string
+                                  nullable: true
+                                  example: '2017-10-18'
+                                uploadsAllowed:
+                                  type: boolean
+                                  example: true
+                benefit_claim_details_dto:
+                  attention_needed: 'No'
+                  base_end_prdct_type_cd: '400'
+                  benefit_claim_id: '555555555'
+                  bnft_claim_lc_status:
+                    phase_chngd_dt: '2017-10-18T08:23:35.000+00:00'
+                    phase_type: COMPLETE
+                    phase_type_change_ind: '78'
+                  bnft_claim_type_cd: 400PREDSCHRG
+                  claim_complete_dt: '2017-10-18T08:23:35.000+00:00'
+                  claim_dt: '2017-05-02'
+                  claim_status: CAN
+                  claim_status_type: Compensation
+                  contentions: abnormal heart (New), abscess kidney (New), encephalitis lethargica residuals (New), dracunculiasis (New), gingivitis (New), abnormal weight loss (New), groin condition (New), metritis (New)
+                  decision_notification_sent: 'No'
+                  development_letter_sent: 'No'
+                  end_prdct_type_cd: '404'
+                  errors: []
+                  poa: RANDOM E PERSON
+                  program_type: CPL
+                  ptcpnt_clmant_id: '111111111'
+                  ptcpnt_vet_id: '111111111'
+                  regional_office_jrsdctn: National Work Queue
+                  submtr_applcn_type_cd: EBN
+                  submtr_role_type_cd: VET
+                  temp_regional_office_jrsdctn: null
+                  wsyswwn:
+                    address_line1: National Work Queue
+                    address_line2: 810 Vermont Avenue NW
+                    address_line3: null
+                    city: Washington
+                    state: DC
+                    zip: '20420'
+                '@xmlns:ns0': http://claimstatus.services.ebenefits.vba.va.gov/
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Not authorized
+                  detail: Not authorized
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              example:
+                errors:
+                - title: Resource not found
+                  detail: Claim not found
+              schema:
+                required:
+                - errors
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      additionalProperties: false
+                      required:
+                      - title
+                      - detail
+                      properties:
+                        title:
+                          type: string
+                          description: HTTP error title
+                        detail:
+                          type: string
+                          description: HTTP error detail
+                        status:
+                          type: string
+                          description: HTTP error status code
+                        code:
+                          type: string
+                          description: HTTP error status code
+                        source:
+                          type: object
+                          additionalProperties: false
+                          description: Source of error
+                          properties:
+                            pointer:
+                              type: string
+                              description: Pointer to source of error
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: Request size limit exceeded
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: API rate limit exceeded
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
+components:
+  securitySchemes:
+    apikey:
+      type: apiKey
+      name: apikey
+      in: header
