@@ -1,0 +1,3944 @@
+{
+  "item": [
+    {
+      "id": "9f0bcf83-056b-4925-940a-3eb964afa7ab",
+      "name": "Intent to File",
+      "description": {
+        "content": "Used for 0966 submissions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5526d16-024b-4444-adf1-f9b6b911ea1f",
+          "name": "Get 0966 JSON Schema for form.",
+          "request": {
+            "name": "Get 0966 JSON Schema for form.",
+            "description": {
+              "content": "Returns a single 0966 JSON schema to auto generate a form.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                "0966"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2647caef-30fa-4ee6-b325-9180cf0999bc",
+              "name": "schema response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n      \"description\": \"Form 0966 Schema\",\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"type\"\n      ],\n      \"properties\": {\n        \"type\": {\n          \"type\": \"string\",\n          \"example\": \"compensation\",\n          \"description\": \"For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type \\\"burial\\\" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.\",\n          \"enum\": [\n            \"compensation\",\n            \"pension\",\n            \"burial\"\n          ]\n        },\n        \"participant_claimant_id\": {\n          \"type\": \"string\",\n          \"example\": \"123456789\",\n          \"description\": \"Participant ID of the Claimant.\"\n        },\n        \"participant_vet_id\": {\n          \"type\": \"string\",\n          \"example\": \"987654321\",\n          \"description\": \"Participant ID of the Veteran.\"\n        },\n        \"received_date\": {\n          \"type\": \"string\",\n          \"example\": \"2015-01-05T17:42:12.058Z\",\n          \"format\": \"datetime\"\n        },\n        \"claimant_ssn\": {\n          \"type\": \"string\",\n          \"example\": \"123456789\",\n          \"description\": \"SSN of the Claimant.\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8edc1893-bd16-4820-ae99-0d1a0a437b84",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eeff378a-9d54-4b62-b710-cc8e442ca46b",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e515be4b-a03f-41ad-9ea4-9a4396105985",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "224cae91-6f6a-4b4f-a9c0-6cfc0e093636",
+          "name": "Submit form 0966 Intent to File.",
+          "request": {
+            "name": "Submit form 0966 Intent to File.",
+            "description": {
+              "content": "Establishes an intent to file for disability compensation, burial, or pension claims.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                "0966"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Claimant SSN if consumer is representative",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant first name if consumer is representative",
+                "key": "X-VA-First-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant last name if consumer is representative",
+                "key": "X-VA-Last-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                "key": "X-VA-Birth-Date",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"type\": \"<string>\",\n      \"participant_claimant_id\": \"<string>\",\n      \"participant_vet_id\": \"<string>\",\n      \"received_date\": \"<datetime>\",\n      \"claimant_ssn\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a3e92ab-e0a7-4687-ab0c-3b45d1d03832",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"294045\",\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"creation_date\": \"2025-02-07T09:17:18-06:00\",\n      \"expiration_date\": \"2026-02-07T07:12:40-06:00\",\n      \"type\": \"compensation\",\n      \"status\": \"duplicate\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc90fa71-08e0-4958-a868-afdeddbcaf39",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bd11499-b401-42bb-a9f0-b2c5f1e23730",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Forbidden\",\n      \"detail\": \"Veteran cannot file for type 'burial'\",\n      \"code\": \"403\",\n      \"status\": \"403\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05d29b39-f779-4e11-ad50-c3724dd02a7e",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73b3ebd9-413e-432f-9c66-19b1a772fbef",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 422,\n      \"detail\": \"The property /type did not match the following requirements: {\\\"type\\\"=>\\\"string\\\", \\\"example\\\"=>\\\"compensation\\\", \\\"description\\\"=>\\\"For an Intent to File for Survivor's Pension of Dependency and Indemnity Compensation(DIC), use type \\\\\\\"burial\\\\\\\" and include claimant_ssn or participant_claimant_id to identify the surviving dependent of the Veteran.\\\", \\\"enum\\\"=>[\\\"compensation\\\", \\\"pension\\\", \\\"burial\\\"]}\",\n      \"source\": \"/type\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f07eba3f-6d4a-453e-b012-2e5507d3dbda",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db778db7-96f1-4b80-ab95-f9f3664a8db3",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1527fe30-4d7d-4730-ae62-f82134c1d93c",
+          "name": "Returns last active 0966 Intent to File form submission.",
+          "request": {
+            "name": "Returns last active 0966 Intent to File form submission.",
+            "description": {
+              "content": "Returns the last active 0966 form for a Veteran.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                "0966",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "The type of 0966 you wish to get the active submission for."
+                }
+              ],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Claimant SSN if consumer is representative",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant first name if consumer is representative",
+                "key": "X-VA-First-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant last name if consumer is representative",
+                "key": "X-VA-Last-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                "key": "X-VA-Birth-Date",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e4c15cdc-c5a8-4061-b452-c9319229b7aa",
+              "name": "0966 response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"183042\",\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"creation_date\": \"2020-06-05T11:24:28-05:00\",\n      \"expiration_date\": \"2021-06-05T11:24:28-05:00\",\n      \"type\": \"compensation\",\n      \"status\": \"active\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cd938bf-2a29-41fe-9d02-6c67b74ae487",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fa90b28-3aa3-42ff-9268-48dcec3d4a22",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"No Intent to file is on record for WESLEY FORD of type compensation\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91fc6e5c-3bcf-44d3-9030-d83d70f6e88a",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41bb45b9-4f5b-451c-88df-fff6323a4c6a",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unprocessable Entity\",\n      \"detail\": \"Must include either compensation, pension or burial as a 'type' parameter.\",\n      \"code\": \"422\",\n      \"status\": \"422\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1313c4c4-9ed4-4346-8263-d8f66a8646d4",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "977a8895-7c93-4c98-bed9-b5c41b550221",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "compensation"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d24f9784-4669-4065-8a75-4e919deb6efd",
+          "name": "Test the 0966 Intent to File form submission.",
+          "request": {
+            "name": "Test the 0966 Intent to File form submission.",
+            "description": {
+              "content": "Test to ensure the form submission works with your parameters.\nSubmission is validated against the GET /forms/0966 schema.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forms",
+                "0966",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Claimant SSN if consumer is representative",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant first name if consumer is representative",
+                "key": "X-VA-First-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant last name if consumer is representative",
+                "key": "X-VA-Last-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                "key": "X-VA-Birth-Date",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"type\": \"<string>\",\n      \"participant_claimant_id\": \"<string>\",\n      \"participant_vet_id\": \"<string>\",\n      \"received_date\": \"<datetime>\",\n      \"claimant_ssn\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "24211efe-e867-4668-943b-8e42891d951d",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"intentToFileValidation\",\n    \"attributes\": {\n      \"status\": \"valid\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eab0a090-6efd-48ac-ba70-00db7ebf4b86",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee885d25-1f76-4d13-be85-eda63794ef58",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adcf0146-d8d7-4077-81a6-e8247ccc617f",
+              "name": "Unprocessable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 422,\n      \"detail\": \"The property / did not contain the required key type\",\n      \"source\": \"/\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a15e996-164f-467e-934b-54b12f1b21e9",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6a5682d-55df-404b-8b23-01a0991eda21",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forms",
+                    "0966",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/0966\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "300ce387-d4aa-4a54-a262-78a6ae4074a4",
+          "name": "Returns claimant's last active Intent to File submission for given benefit type.",
+          "request": {
+            "name": "Returns claimant's last active Intent to File submission for given benefit type.",
+            "description": {
+              "content": "Returns claimant's last active Intent to File submission for given benefit type of compensation, pension, or survivor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "intent-to-file",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "43f1041e-dbf2-4e60-bc59-b2ba5e1fbba6",
+              "name": "Successful response with active Intent to File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"193685\",\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"creationDate\": \"2021-03-16T19:15:21.000-05:00\",\n      \"expirationDate\": \"2022-03-16T19:15:20.000-05:00\",\n      \"type\": \"compensation\",\n      \"status\": \"active\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4e6b209-ee09-4d9c-8355-e07ac3703d8e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b659ef15-493a-48ca-b380-2fae6f0c64cb",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"No active 'C' intent to file found.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d36bc1c-f95a-479a-b4c1-61bc626a1e8a",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90dea6f8-255c-47fc-b72c-84c786e45ceb",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36d687a6-6c79-479c-9e2f-36ecf210c970",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Type of Intent to File to return. Available values - compensation, pension, survivor."
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5e8c8ed-ed81-4bee-b5d0-b3adbcea6c65",
+          "name": "Submit form 0966 Intent to File.",
+          "request": {
+            "name": "Submit form 0966 Intent to File.",
+            "description": {
+              "content": "Establishes an Intent to File for disability compensation, pension, and survivor claims.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "intent-to-file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"type\": \"<string>\",\n      \"claimantSsn\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51117b02-cc2b-4bd5-9297-4ae4cd4c14a9",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"294045\",\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"creationDate\": \"2025-02-07T09:17:18-06:00\",\n      \"expirationDate\": \"2026-02-07T07:12:40-06:00\",\n      \"type\": \"compensation\",\n      \"status\": \"duplicate\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8117a20-1c46-4d86-af33-43b0caf96915",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"invalid value for type\",\n      \"detail\": \"some-invalid-value is not valid for type\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "609a8f41-7d0f-40f6-b7e8-84c8709a9428",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a8ede57-9b03-43a2-84fe-b8b0f7e38fb3",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"Veteran ID not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62943fb4-07d6-4b8e-9289-977c36bede63",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f7a965a-e90e-4bc2-b3ae-0d45e57fa33f",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unprocessable Entity\",\n      \"detail\": \"Invalid claimantSsn parameter\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ac33fbe-7bf1-4e5e-b5d1-336d631ce2fd",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c237c486-95cf-4091-bfd2-fcb308460b80",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Gateway\",\n      \"detail\": \"Bad Gateway\",\n      \"code\": \"502\",\n      \"status\": \"502\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e0ed1bb-d52e-4f06-958e-44a62f24fe1d",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67c97607-e708-4239-861b-219f53f99368",
+          "name": "Validate form 0966 Intent to File.",
+          "request": {
+            "name": "Validate form 0966 Intent to File.",
+            "description": {
+              "content": "Validates an Intent to File for disability compensation, pension, and survivor claims.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "intent-to-file",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"type\": \"<string>\",\n      \"claimantSsn\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ddacd77-e44f-4d2b-b550-4a641de51f03",
+              "name": "0966 Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"intent_to_file_validation\",\n    \"attributes\": {\n      \"status\": \"valid\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233a03a0-f830-4514-a6d9-cb87682d7faf",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"invalid value for type\",\n      \"detail\": \"some-invalid-value is not valid for type\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66a3e862-cc76-415e-98a7-cb6dbb9c7ae3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f624ab94-0043-4eb2-b157-f38d088ef8ff",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37b3ee5c-8d76-4669-9a5f-2e2ed30df624",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edab5ac0-62ca-411b-b8e3-211f69b8f5c1",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "intent-to-file",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"intent_to_file\",\n    \"attributes\": {\n      \"type\": \"compensation\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8eb357b4-90c0-4c7e-8c02-f18c28292c6b",
+    "name": "Address Validation 5103 Waiver Intent to File API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

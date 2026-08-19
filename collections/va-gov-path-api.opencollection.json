@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Path API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Path",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Accepts document upload.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/path",
+            "headers": [
+              {
+                "name": "Content-MD5",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Accepts document metadata, document binary, and attachment binaries. Full URL, including\nquery parameters, provided from POST `/document_uploads`.\n\n## Example Payload\n\nThe following demonstrates a (redacted) multipart payload suitable for submitting to the PUT\nendpoint. Most programming languages should have provisions for assembling a multipart\npayload like this without having to do so manually.\n\n```\n--17de1ed8f01442b2a2d7a93506314b76\nContent-Disposition: form-data; name=\"metadata\"\nContent-Type"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

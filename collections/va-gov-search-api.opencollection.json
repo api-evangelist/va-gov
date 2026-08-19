@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Search API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/search",
+            "params": [
+              {
+                "name": "patient",
+                "value": "011235813V213455",
+                "type": "query",
+                "description": "The patient's ICN"
+              },
+              {
+                "name": "serviceType",
+                "value": "Gastroenterology",
+                "type": "query",
+                "description": "The patient's desired medical service type for community care"
+              },
+              {
+                "name": "extendedDriveMin",
+                "value": "",
+                "type": "query",
+                "description": "Optional extended drive-radius to include more VA medical facilities in response. This does not change overall eligibility and must exceed standard drive time for the service-type.)"
+              }
+            ]
+          },
+          "docs": "Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated Control Number (ICN) and requested medical service."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

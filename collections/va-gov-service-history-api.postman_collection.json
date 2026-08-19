@@ -1,0 +1,1360 @@
+{
+  "item": [
+    {
+      "id": "07d3da6f-28f2-4eb0-81e0-8430e59134ae",
+      "name": "Service History",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6ce46d93-52de-45b6-a7a1-39edd9849d54",
+          "name": "Retrieve service history of authorized Veteran",
+          "request": {
+            "name": "Retrieve service history of authorized Veteran",
+            "description": {
+              "content": "This endpoint provides a veteran's detailed service history including all\nmilitary service episodes with the first and last name of the Veteran, the branch of\nservice, start and end dates, paygrade, discharge status, and separation reason.\nIt also provides start and end dates and locations for each deployment within each\nepisode of service.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service_history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "14023161-d2e9-43ba-964a-547337771d81",
+              "name": "Service History retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"attributes\": {\n        \"branch_of_service\": \"Army\",\n        \"component_of_service\": \"Reserves\",\n        \"discharge_status\": \"dishonorable-for-va-purposes\",\n        \"end_date\": \"1950-05-10\",\n        \"first_name\": \"Abraham\",\n        \"last_name\": \"Lincoln\",\n        \"pay_grade\": \"W01\",\n        \"separation_reason\": \"SUFFICIENT SERVICE FOR RETIREMENT\",\n        \"service_episode_combat_pay\": false,\n        \"service_type\": \"Active Duty\",\n        \"start_date\": \"1948-04-08\",\n        \"deployments\": [\n          {\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\",\n            \"start_date\": \"1948-10-10\"\n          },\n          {\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\",\n            \"start_date\": \"1948-10-10\"\n          }\n        ]\n      },\n      \"id\": \"12312AASDf\",\n      \"type\": \"service-history-episodes\"\n    },\n    {\n      \"attributes\": {\n        \"branch_of_service\": \"Army\",\n        \"component_of_service\": \"Reserves\",\n        \"discharge_status\": \"general\",\n        \"end_date\": \"1950-05-10\",\n        \"first_name\": \"Abraham\",\n        \"last_name\": \"Lincoln\",\n        \"pay_grade\": \"W01\",\n        \"separation_reason\": \"SUFFICIENT SERVICE FOR RETIREMENT\",\n        \"service_episode_combat_pay\": false,\n        \"service_type\": \"Active Duty\",\n        \"start_date\": \"1948-04-08\",\n        \"deployments\": [\n          {\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\",\n            \"start_date\": \"1948-10-10\"\n          },\n          {\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\",\n            \"start_date\": \"1948-10-10\"\n          }\n        ]\n      },\n      \"id\": \"12312AASDf\",\n      \"type\": \"service-history-episodes\"\n    }\n  ],\n  \"military_summary\": {\n    \"active_duty_status\": \"false\",\n    \"combat_service_indicator\": false,\n    \"duty_status_code\": \"A\",\n    \"duty_status_text\": \"Active Component = full time active duty, not in the Guard or Reserve\",\n    \"first_name\": \"Abraham\",\n    \"last_name\": \"Lincoln\",\n    \"total_number_of_guard_active_duty_days\": 100,\n    \"total_number_of_regular_active_duty_days\": 100,\n    \"total_number_of_reserve_active_duty_days\": 100,\n    \"total_number_of_training_days\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2d2cc5a-f661-44c4-9212-9f1bc081efaf",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Request\",\n      \"detail\": \"Bad Request\",\n      \"code\": \"400\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f8960f8-48ef-4f56-a038-2d3850422a41",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18e40076-3efa-48f2-8cc6-7384c7061bbb",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4ac2624-0c9e-4bfc-9b50-ff2243b7c1ec",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Veteran not identifiable.\",\n      \"detail\": \"No data found for ID or demographics.\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d9bba0f-85f8-479b-b6fe-599f5c3254ba",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44d6bc8f-bdcd-4fcc-8363-255d5a6335ed",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44114332-8272-434e-8268-ede1bdcf5f51",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Internal server error\",\n      \"detail\": \"Internal server error\",\n      \"code\": \"500\",\n      \"status\": \"500\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46ef6029-d8f0-432f-b372-3d087757f717",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Gateway\",\n      \"detail\": \"Upstream Request Error.\",\n      \"code\": \"502\",\n      \"status\": \"502\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2ea67ed-3001-4ce8-957e-dc10c3c24f60",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "659f35b4-89c9-4f13-bf27-fcbdc320a1d3",
+          "name": "Retrieve the service history of a Veteran using demographics to search for the Veteran.",
+          "request": {
+            "name": "Retrieve the service history of a Veteran using demographics to search for the Veteran.",
+            "description": {
+              "content": "This endpoint provides a Veteran's detailed service history including all military\nservice episodes with the first and last name of the Veteran, the branch of service,\nstart and end dates, paygrade, discharge status, and separation reason. It also\nprovides start and end dates and locations for each deployment within each episode\nof service.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying a\nVeteran.\n* Home Address is recommended, but it may be beneficial to retry the search with\nadditional addresses if they are available and the first attempt is not confirmed.\n* To find a match, it can help to retry with different demographic information,\nsuch as alternate last names or addresses.\n* It can also help to remove special characters, hyphens, apostrophes, or spaces\nin a name prior to matching.\n\nNOTE: In the Sandbox only DOB and ZIP are required to identify the test user.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service_history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_date\": \"<date>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"street_address_line1\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"state\": \"<string>\",\n  \"street_address_line2\": \"<string>\",\n  \"street_address_line3\": \"<string>\",\n  \"home_phone_number\": \"<string>\",\n  \"birth_place_city\": \"<string>\",\n  \"birth_place_state\": \"<string>\",\n  \"birth_place_country\": \"<string>\",\n  \"mothers_maiden_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa567dd5-c659-4d2f-a03f-5ae241d4d18c",
+              "name": "Service History retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"2305d238-dee4-5c98-858a-f912e3c059f8\",\n      \"type\": \"service-history-episodes\",\n      \"attributes\": {\n        \"first_name\": \"Jessie\",\n        \"last_name\": \"Price\",\n        \"branch_of_service\": \"Air Force\",\n        \"service_type\": \"Active Duty\",\n        \"start_date\": \"1991-05-29\",\n        \"end_date\": \"2011-06-30\",\n        \"pay_grade\": \"E07\",\n        \"component_of_service\": \"Air Force\",\n        \"discharge_status\": \"honorable\",\n        \"separation_reason\": \"SUFFICIENT SERVICE FOR RETIREMENT\",\n        \"service_episode_combat_pay\": false,\n        \"deployments\": [\n          {\n            \"start_date\": \"1948-10-10\",\n            \"end_date\": \"1949-10-09\",\n            \"location\": \"KOR\"\n          }\n        ]\n      }\n    }\n  ],\n  \"militarySummary\": {\n    \"first_name\": \"Jessie\",\n    \"last_name\": \"Price\",\n    \"active_duty_status\": \"N\",\n    \"combat_service_indicator\": true,\n    \"duty_status_code\": \"02\",\n    \"duty_status_text\": \"Not on active duty: \",\n    \"total_number_of_regular_active_duty_days\": 444,\n    \"total_number_of_reserve_active_duty_days\": 90,\n    \"total_number_of_guard_active_duty_days\": 60,\n    \"total_number_of_training_days\": 10\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b0ab21d-f5ae-4d16-9215-80ed7250de97",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"code\": \"400\",\n  \"status\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45d6c91c-3786-4a6c-a29d-53fc1300eeef",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/service_history\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d65fc1ff-2fb1-42d1-8cf3-d00b7c82161e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/service_history\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfbd6ab9-d2e0-4af9-b14f-45155f036d5c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b648b5e0-ed31-4085-b597-7d605abec74e",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0474953-0b86-4db9-8fc4-20252062ca81",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d949fcca-abec-4bd7-b422-bcfad5aed1cc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d34e60e-5d4d-4ad1-8f28-3ea701fe57df",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "545d0df8-87d3-4721-ace2-e9572aa9b915",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service Unavailable\",\n      \"detail\": \"Backend Service Unavailable.\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e832e551-e67f-4300-abd8-28b5313be1fc",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service_history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bcf20f15-8623-4c42-b074-5ab5bb4f9968",
+    "name": "Address Validation 5103 Waiver Service History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

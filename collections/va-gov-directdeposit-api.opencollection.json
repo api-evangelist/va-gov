@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver DirectDeposit API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DirectDeposit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get direct deposit account and eligibility and control information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/direct-deposit",
+            "params": [
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+              }
+            ]
+          },
+          "docs": "  Get direct deposit account and eligibility and control information.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update direct deposit account information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/direct-deposit",
+            "params": [
+              {
+                "name": "icn",
+                "value": "",
+                "type": "query",
+                "description": "The authenticated Veteran or beneficiary Master Patient Index (MPI) ICN"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "  Create or update direct deposit account information.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

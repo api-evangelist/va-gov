@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Service History API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve service history of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/service_history"
+          },
+          "docs": "This endpoint provides a veteran's detailed service history including all\nmilitary service episodes with the first and last name of the Veteran, the branch of\nservice, start and end dates, paygrade, discharge status, and separation reason.\nIt also provides start and end dates and locations for each deployment within each\nepisode of service.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the service history of a Veteran using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/service_history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a Veteran's detailed service history including all military\nservice episodes with the first and last name of the Veteran, the branch of service,\nstart and end dates, paygrade, discharge status, and separation reason. It also\nprovides start and end dates and locations for each deployment within each episode\nof service.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Ge"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

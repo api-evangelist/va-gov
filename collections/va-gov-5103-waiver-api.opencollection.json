@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "5103 Waiver",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Evidence Waiver 5103",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/claims/:id/5103",
+            "params": [
+              {
+                "name": "id",
+                "value": "600400703",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              },
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit Evidence Waiver 5103 for a VA claimant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

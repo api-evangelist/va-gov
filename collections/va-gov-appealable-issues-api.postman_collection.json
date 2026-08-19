@@ -1,0 +1,869 @@
+{
+  "item": [
+    {
+      "id": "8ec171e5-f3d4-4883-b64e-a88bc10a5c1d",
+      "name": "Appealable Issues",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58318ad5-d8a5-47fb-a20d-b003e9997693",
+          "name": "Returns all appealable issues of the selected appeal type for a claimant.",
+          "request": {
+            "name": "Returns all appealable issues of the selected appeal type for a claimant.",
+            "description": {
+              "content": "Returns all issues of the selected appeal type associated with a claimant that have been decided as of the `receiptDate`. Not all issues returned are guaranteed to be eligible for appeal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "appealable-issues",
+                ":decisionReviewType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "benefitType",
+                  "value": "<string>",
+                  "description": "Type of benefit. Required if decisionReviewType is higher-level-reviews or supplemental-claims. Ignored if decisionReviewType is notice-of-disagreements."
+                },
+                {
+                  "disabled": false,
+                  "key": "receiptDate",
+                  "value": "<date>",
+                  "description": "(Required) (yyyy-mm-dd) Cutoff date for requested issues. The API returns issues that have been decided as of this date. This date must be after 2019-02-19, the Appeals Modernization Act (AMA) activation date."
+                },
+                {
+                  "disabled": false,
+                  "key": "icn",
+                  "value": "<string>",
+                  "description": "Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "decisionReviewType",
+                  "description": "(Required) Appeal type for requested issues"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3a91afce-a33c-4280-a308-db26555af2e0",
+              "name": "Claimant's appealable issues matching request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"9998\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"5010\",\n        \"ratingIssueSubjectText\": \"Post-Operative Residuals, Left Knee Arthrotomy With Osteoarthritis\",\n        \"ratingIssuePercentNumber\": \"20\",\n        \"description\": \"Service connection for post-operative residuals, left knee arthrotomy with osteoarthritis is granted with an evaluation of 20 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"9999\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"5237\",\n        \"ratingIssueSubjectText\": \"Lumbosacral Strain\",\n        \"ratingIssuePercentNumber\": \"40\",\n        \"description\": \"Service connection for lumbosacral strain is granted with an evaluation of 40 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10001\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"7913\",\n        \"ratingIssueSubjectText\": \"Diabetes Mellitus, Type II Associated With Herbicide Exposure\",\n        \"ratingIssuePercentNumber\": \"20\",\n        \"description\": \"Service connection for diabetes mellitus, type II associated with herbicide exposure is granted with a 20 percent evaluation effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10002\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"6100\",\n        \"ratingIssueSubjectText\": \"Bilateral Hearing Loss\",\n        \"ratingIssuePercentNumber\": \"10\",\n        \"description\": \"Service connection for bilateral hearing loss is granted with an evaluation of 10 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10003\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"6304\",\n        \"ratingIssueSubjectText\": \"Cocci Fever\",\n        \"ratingIssuePercentNumber\": null,\n        \"description\": \"Service connection for cocci fever is denied.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10004\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"7005\",\n        \"ratingIssueSubjectText\": \"Coronary Artery Disease\",\n        \"ratingIssuePercentNumber\": \"60\",\n        \"description\": \"Service connection for coronary artery disease is granted with an evaluation of 60 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10005\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"6260\",\n        \"ratingIssueSubjectText\": \"Tinnitus\",\n        \"ratingIssuePercentNumber\": \"10\",\n        \"description\": \"Service connection for tinnitus is granted with an evaluation of 10 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10006\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"7805\",\n        \"ratingIssueSubjectText\": \"Abrasion Upper Right Leg\",\n        \"ratingIssuePercentNumber\": null,\n        \"description\": \"Service connection for abrasion upper right leg is denied.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": true\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10007\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"7101\",\n        \"ratingIssueSubjectText\": \"Hypertension\",\n        \"ratingIssuePercentNumber\": \"10\",\n        \"description\": \"Service connection for hypertension is granted with an evaluation of 10 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10008\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"8520\",\n        \"ratingIssueSubjectText\": \"Peripheral Neuropathy, Right Lower Extremity\",\n        \"ratingIssuePercentNumber\": \"40\",\n        \"description\": \"Service connection for peripheral neuropathy, right lower extremity is granted with an evaluation of 40 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2023-09-26\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2023-09-26\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10011\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"8520\",\n        \"ratingIssueSubjectText\": \"Peripheral Neuropathy, Left Lower Extremity\",\n        \"ratingIssuePercentNumber\": \"20\",\n        \"description\": \"Service connection for peripheral neuropathy, left lower extremity is granted with an evaluation of 20 percent effective October 4, 2001.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2006-10-31\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2006-10-31\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    },\n    {\n      \"id\": null,\n      \"type\": \"appealableIssue\",\n      \"attributes\": {\n        \"ratingIssueReferenceId\": \"10012\",\n        \"ratingIssueProfileDate\": \"2023-09-26\",\n        \"ratingIssueDiagnosticCode\": \"5271\",\n        \"ratingIssueSubjectText\": \"Fracture Left Medial Malleolus\",\n        \"ratingIssuePercentNumber\": null,\n        \"description\": \"Service connection for fracture left medial malleolus is denied.\",\n        \"isRating\": true,\n        \"latestIssuesInChain\": [\n          {\n            \"id\": null,\n            \"approxDecisionDate\": \"2006-10-31\"\n          }\n        ],\n        \"decisionIssueId\": null,\n        \"ratingDecisionReferenceId\": null,\n        \"approxDecisionDate\": \"2006-10-31\",\n        \"rampClaimId\": null,\n        \"titleOfActiveReview\": null,\n        \"sourceReviewType\": null,\n        \"timely\": false,\n        \"activeReview\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ae9895f-c549-416e-8ba2-58fabca4a518",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed2f206c-92fd-4398-a7ea-3035dfcc5909",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Forbidden\",\n      \"detail\": \"Invalid 'icn' parameter: claimants may access only their own records.\",\n      \"code\": \"403\",\n      \"status\": \"403\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "879d0499-f245-46a4-afa2-19792702040f",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"A matching claimant was not found in our systems.\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64273b4f-33ce-4e60-ab42-0358515442b9",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e7a99cb-a7ec-4bae-a10d-433d4ac1e1a7",
+              "name": "Unprocessable Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Invalid option\",\n      \"detail\": \"'invalid' is not an available option.\",\n      \"code\": \"141\",\n      \"source\": {\n        \"parameter\": \"decisionReviewType\"\n      },\n      \"status\": \"422\",\n      \"meta\": {\n        \"availableOptions\": [\n          \"higher-level-reviews\",\n          \"notice-of-disagreements\",\n          \"supplemental-claims\"\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3e5c960-1ea2-40ac-b0a9-0b9aab3c1431",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1baaec19-e637-4b78-b26f-618c2cb598fa",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Internal server error\",\n      \"detail\": \"Internal server error\",\n      \"code\": \"500\",\n      \"status\": \"500\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "269fe91e-8a35-44a2-a313-979d8469e052",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service Unavailable\",\n      \"detail\": \"Received an unusable response from upstream service.\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35ac2578-7078-420c-807f-10b298d377a7",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appealable-issues",
+                    ":decisionReviewType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "benefitType",
+                      "value": "compensation"
+                    },
+                    {
+                      "key": "receiptDate",
+                      "value": "2022-01-01"
+                    },
+                    {
+                      "key": "icn",
+                      "value": "1012832025V743496"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "decisionReviewType",
+                      "description": "(Required) Appeal type for requested issues"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c61d6582-818a-4058-87d5-ef97f1870d87",
+    "name": "Address Validation 5103 Waiver Appealable Issues API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

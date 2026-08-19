@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Appealable Issues API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Appealable Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all appealable issues of the selected appeal type for a claimant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/appealable-issues/:decisionReviewType",
+            "params": [
+              {
+                "name": "decisionReviewType",
+                "value": "higher-level-reviews",
+                "type": "path",
+                "description": "Appeal type for requested issues"
+              },
+              {
+                "name": "benefitType",
+                "value": "compensation",
+                "type": "query",
+                "description": "Type of benefit. Required if decisionReviewType is higher-level-reviews or supplemental-claims. Ignored if decisionReviewType is notice-of-disagreements."
+              },
+              {
+                "name": "receiptDate",
+                "value": "2022-01-01",
+                "type": "query",
+                "description": "(yyyy-mm-dd) Cutoff date for requested issues. The API returns issues that have been decided as of this date. This date must be after 2019-02-19, the Appeals Modernization Act (AMA) activation date."
+              },
+              {
+                "name": "icn",
+                "value": "1012832025V743496",
+                "type": "query",
+                "description": "Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token."
+              }
+            ]
+          },
+          "docs": "Returns all issues of the selected appeal type associated with a claimant that have been decided as of the `receiptDate`. Not all issues returned are guaranteed to be eligible for appeal."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

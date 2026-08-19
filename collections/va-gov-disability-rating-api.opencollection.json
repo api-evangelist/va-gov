@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Disability Rating API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Disability Rating",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve disability rating of authorized Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/disability_rating"
+          },
+          "docs": "This endpoint provides a veteran's combined and individual disability rating(s) and related decisions and dates."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommen"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/restricted/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a Veteran's combined and individual disability ratings and\nrelated decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.\n\nIf using Social Security number, the following information is required:\n* Social Security number\n* First name\n* Last name\n* Birth date\n\nIf using demographic data, the following information is required:\n* First Name\n* Last Name\n* Birth date\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nThe"
+        },
+        {
+          "info": {
+            "name": "Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/summary/disability_rating"
+          },
+          "docs": "This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/summary/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommen"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/restricted/summary/disability_rating",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint provides a Veteran's disability ratings and related decisions and dates.   It allows searching for a Veteran using Social   Security number and demographic information.\n\n  If using Social Security number, the following information is required:\n  * Social Security number\n  * First name\n  * Last name\n  * Birth date\n\n  If using demographic data, the following information is required:\n  * First Name\n  * Last Name\n  * Birth date\n  * Street Address\n  * City\n  * State\n  * Country\n  * Zipc"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

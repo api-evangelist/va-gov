@@ -1,0 +1,765 @@
+{
+  "item": [
+    {
+      "id": "c4f316e5-cbc9-4a01-8432-07cd5496b85e",
+      "name": "Appeals Status",
+      "description": {
+        "content": "Caseflow appeals status API",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00a3b624-5022-48ee-bc0d-6661f4e4e07b",
+          "name": "Retrieve appeals status for the Veteran with the supplied SSN",
+          "request": {
+            "name": "Retrieve appeals status for the Veteran with the supplied SSN",
+            "description": {
+              "content": "Returns a list of all known appeal records for the given Veteran. Includes details of each appeal's current status, priority, and history of updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "appeals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) VA username of the person making the request",
+                "key": "X-VA-User",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "apikey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2aefb7b7-df2f-4d91-8ae6-4ce9822a889c",
+              "name": "Appeals retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"7387389\",\n      \"type\": \"legacyAppeal\",\n      \"attributes\": {\n        \"appealIds\": [\n          \"1234567\",\n          \"1234567\"\n        ],\n        \"updated\": \"2018-01-03T09:30:15-05:00\",\n        \"active\": true,\n        \"incompleteHistory\": false,\n        \"aoj\": \"vba\",\n        \"programArea\": \"pension\",\n        \"description\": \"Service connection, tinnitus, and 3 others\",\n        \"type\": \"reconsideration\",\n        \"aod\": false,\n        \"location\": \"bva\",\n        \"status\": {\n          \"type\": \"death\",\n          \"details\": {\n            \"lastSocDate\": \"2018-05-15\",\n            \"certificationTimeliness\": [\n              2,\n              12\n            ],\n            \"ssocTimeliness\": [\n              7,\n              20\n            ],\n            \"decisionTimeliness\": [\n              1,\n              2\n            ],\n            \"remandTimeliness\": [\n              16,\n              29\n            ],\n            \"socTimeliness\": [\n              10,\n              16\n            ],\n            \"remandSsocTimeliness\": [\n              3,\n              11\n            ],\n            \"returnTimeliness\": [\n              1,\n              2\n            ]\n          }\n        },\n        \"docket\": {\n          \"type\": \"hearingRequest\",\n          \"month\": \"2016-08-01\",\n          \"docketMonth\": \"2014-06-01\",\n          \"front\": false,\n          \"total\": 206900,\n          \"totalAllDockets\": 420012,\n          \"ahead\": 109203,\n          \"ready\": 22109,\n          \"eta\": {\n            \"directReview\": {},\n            \"evidenceSubmission\": {},\n            \"hearing\": {}\n          },\n          \"eligibleToSwitch\": true,\n          \"switchDueDate\": \"2020-06-01\"\n        },\n        \"issues\": [\n          {\n            \"active\": true,\n            \"description\": \"Service connection, tinnitus\",\n            \"diagnosticCode\": \"6260\",\n            \"lastAction\": \"allowed\",\n            \"date\": \"2016-05-30\"\n          },\n          {\n            \"active\": true,\n            \"description\": \"Service connection, tinnitus\",\n            \"diagnosticCode\": \"6260\",\n            \"lastAction\": \"cavc_remand\",\n            \"date\": \"2016-05-30\"\n          }\n        ],\n        \"alerts\": [\n          {\n            \"type\": \"form9_needed\",\n            \"details\": {}\n          },\n          {\n            \"type\": \"form9_needed\",\n            \"details\": {}\n          }\n        ],\n        \"events\": [\n          {\n            \"type\": \"soc\",\n            \"date\": \"2016-05-30\",\n            \"details\": {}\n          },\n          {\n            \"type\": \"soc\",\n            \"date\": \"2016-05-30\",\n            \"details\": {}\n          }\n        ],\n        \"evidence\": [\n          {\n            \"description\": \"Service treatment records\",\n            \"date\": \"2017-09-30\"\n          },\n          {\n            \"description\": \"Service treatment records\",\n            \"date\": \"2017-09-30\"\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"7387389\",\n      \"type\": \"legacyAppeal\",\n      \"attributes\": {\n        \"appealIds\": [\n          \"1234567\",\n          \"1234567\"\n        ],\n        \"updated\": \"2018-01-03T09:30:15-05:00\",\n        \"active\": true,\n        \"incompleteHistory\": false,\n        \"aoj\": \"vba\",\n        \"programArea\": \"pension\",\n        \"description\": \"Service connection, tinnitus, and 3 others\",\n        \"type\": \"original\",\n        \"aod\": false,\n        \"location\": \"bva\",\n        \"status\": {\n          \"type\": \"pending_form9\",\n          \"details\": {\n            \"lastSocDate\": \"2018-05-15\",\n            \"certificationTimeliness\": [\n              2,\n              12\n            ],\n            \"ssocTimeliness\": [\n              7,\n              20\n            ],\n            \"decisionTimeliness\": [\n              1,\n              2\n            ],\n            \"remandTimeliness\": [\n              16,\n              29\n            ],\n            \"socTimeliness\": [\n              10,\n              16\n            ],\n            \"remandSsocTimeliness\": [\n              3,\n              11\n            ],\n            \"returnTimeliness\": [\n              1,\n              2\n            ]\n          }\n        },\n        \"docket\": {\n          \"type\": \"hearingRequest\",\n          \"month\": \"2016-08-01\",\n          \"docketMonth\": \"2014-06-01\",\n          \"front\": false,\n          \"total\": 206900,\n          \"totalAllDockets\": 420012,\n          \"ahead\": 109203,\n          \"ready\": 22109,\n          \"eta\": {\n            \"directReview\": {},\n            \"evidenceSubmission\": {},\n            \"hearing\": {}\n          },\n          \"eligibleToSwitch\": true,\n          \"switchDueDate\": \"2020-06-01\"\n        },\n        \"issues\": [\n          {\n            \"active\": true,\n            \"description\": \"Service connection, tinnitus\",\n            \"diagnosticCode\": \"6260\",\n            \"lastAction\": \"withdrawn\",\n            \"date\": \"2016-05-30\"\n          },\n          {\n            \"active\": true,\n            \"description\": \"Service connection, tinnitus\",\n            \"diagnosticCode\": \"6260\",\n            \"lastAction\": \"remand\",\n            \"date\": \"2016-05-30\"\n          }\n        ],\n        \"alerts\": [\n          {\n            \"type\": \"form9_needed\",\n            \"details\": {}\n          },\n          {\n            \"type\": \"form9_needed\",\n            \"details\": {}\n          }\n        ],\n        \"events\": [\n          {\n            \"type\": \"soc\",\n            \"date\": \"2016-05-30\",\n            \"details\": {}\n          },\n          {\n            \"type\": \"soc\",\n            \"date\": \"2016-05-30\",\n            \"details\": {}\n          }\n        ],\n        \"evidence\": [\n          {\n            \"description\": \"Service treatment records\",\n            \"date\": \"2017-09-30\"\n          },\n          {\n            \"description\": \"Service treatment records\",\n            \"date\": \"2017-09-30\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a387490-a564-4d4a-83c0-cb806c6b9e75",
+              "name": "Missing SSN header",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f71dce7-98e6-41af-808e-40a8bc12a76b",
+              "name": "Authorization information not provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No API key found in request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3a80c4a-cfd6-48fa-814b-5c7d5fe94a9a",
+              "name": "Invalid authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You cannot consume this service\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a571890-ea2d-4172-b575-ba7d46c61fab",
+              "name": "No appeals found for supplied SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d38a1e9f-5e93-440a-a116-e1d340899ef8",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edc33d4e-e580-44c4-98fd-f3e3c4276ea6",
+              "name": "invalid SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60c910c1-e2a2-4db9-b9ea-86cfb20966fb",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95c5f1bb-3d58-45a1-a30f-2f22bd5a2487",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "858831a7-2afc-476e-a2ff-247fe982b399",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "appeals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) SSN of Veteran to retrieve appeals statuses for",
+                    "key": "X-VA-SSN",
+                    "value": "796130115"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) VA username of the person making the request",
+                    "key": "X-VA-User",
+                    "value": "va.api.user+idme.001@gmail.com"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0cc0e3ae-5bfa-4489-a9ec-8ba1d2d6d315",
+    "name": "Address Validation 5103 Waiver Appeals Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

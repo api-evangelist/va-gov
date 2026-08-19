@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Permanent And Total Disability API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permanent And Total Disability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about a Veteran's P&T disability and IU disability statuses and effective dates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/permanent_and_total_disability"
+          },
+          "docs": "This endpoint provides a Veteran's permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates, based on the ID in the bearer token."
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's P&T disability and IU disability statuses and effective dates, based on demographic data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/permanent_and_total_disability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": " This endpoint returns a Veteran's information about permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates.\n\n  Required information:\n\n  * First name\n  * Last name\n  * Date of birth\n  * Street address\n  * City\n  * State\n  * Country\n  * ZIP code\n\n  Optional information:\n\n  * Middle name\n  * Gender\n  * Mother's maiden name\n  * Home phone number\n  * Birthplace city\n  * Birthplace state\n  * Birthplace country\n\n  Tips for findin"
+        },
+        {
+          "info": {
+            "name": "Search for information about a Veteran's P&T disability and IU disability statuses and effective dates (restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/restricted/permanent_and_total_disability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint returns a Veteran's information about permanent and total (P&T) disability and total disability based on Individual Unemployability (IU) statuses and effective dates. It allows searching for a Veteran using a Social Security number and demographic information.\n\n If using a Social Security number,  the following information is required:\n\n * Social Security number\n * First name\n * Last name\n * Date of birth\n\n If using demographic data,  the following information is required:\n\n * Firs"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

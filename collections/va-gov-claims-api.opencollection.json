@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Claims API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all benefits claims for a VA claimant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/claims",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Uses the Veteran’s metadata in headers to retrieve all claims for that Veteran. An authenticated Veteran making a request with this endpoint will return their own claims, if any."
+        },
+        {
+          "info": {
+            "name": "Find Claim by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/claims/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              }
+            ]
+          },
+          "docs": "Returns data such as processing status for a single claim by ID."
+        },
+        {
+          "info": {
+            "name": "Find all benefits claims for a VA claimant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/claims",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ]
+          },
+          "docs": "Find all benefits claims for a VA claimant"
+        },
+        {
+          "info": {
+            "name": "Find claim by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/claims/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "600400703",
+                "type": "path",
+                "description": "The ID of the claim being requested"
+              },
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific claim for a Veteran"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

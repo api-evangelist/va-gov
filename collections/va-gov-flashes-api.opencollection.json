@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Flashes API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Flashes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve certain benefit flashes associated with a Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/flashes"
+          },
+          "docs": "A flash is an attribute on a Veteran's profile that describes special\ncircumstances which can apply to a Veteran. Flashes can aid in\nproperly routing claims or determining eligibility for some VA\nbenefits.\n\nThis endpoint currently shares the following flashes\nif they have been assigned to the Veteran.\n\n* Agent Orange (AO) Exposure Verified\n* Gulf War Veteran PACT Eligibility Verified\n\nIf neither of these flashes exist for the Veteran, then a 200 response\nwith an empty dataset will be returned.\n\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve certain benefit flashes associated with a Veteran using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/flashes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A flash is an attribute on a Veteran's profile that describes special\ncircumstances which can apply to a Veteran. Flashes can aid in\nproperly routing claims or determining eligibility for some VA\nbenefits.\n\nThis endpoint currently shares the following flashes\nif they have been assigned to the Veteran.\n\n* Agent Orange (AO) Exposure Verified\n* Gulf War Veteran PACT Eligibility Verified\n\nIf you have a use case for additional flashes, please\ncontact us with the details.\n\nRequired information:\n* Firs"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

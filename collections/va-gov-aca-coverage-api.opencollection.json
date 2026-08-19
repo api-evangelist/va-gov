@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver ACA Coverage API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ACA Coverage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA). (restricted access).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/restricted/aca_coverage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "  This endpoint checks a Veteran's enrollment status for minimum essential\n  coverage (MEC), as defined by the Affordable Care Act (ACA), for a specified\n  date range.\n\n  The response includes a code for Veteran's health benefits status for\n  the request's date range. If the status returned is \"APPLICANT_ENROLLED,\"\n  the response also includes the start and end dates of the coverage. If multiple\n  enrollments are found for the requested date range, multiple start and end dates are\n  returned (li"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

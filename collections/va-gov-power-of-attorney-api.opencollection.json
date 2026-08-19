@@ -1,0 +1,446 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Power of Attorney API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Power of Attorney",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gets schema for POA form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122"
+          },
+          "docs": "Returns schema to automatically generate a POA form."
+        },
+        {
+          "info": {
+            "name": "Submit a POA form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Signature images\n\n\n\nIf the request includes signature images for both the Veteran and the representative, the API will:\n\n   - Generate VA Form 21-22 PDF for organizations or VA Form 21-22a PDF for individual representatives.\n\n   - Automatically establish POA for the representative.\n\n\n\nThe signature can be provided in either of these formats:\n\n   - Base64-encoded image or signature block. This allows the API to auto-populate and attach the VA Form\n   21-22 without requiring a manual PDF upload.\n\n"
+        },
+        {
+          "info": {
+            "name": "Check POA status by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the 21-22 submission"
+              }
+            ]
+          },
+          "docs": "Based on ID, returns a 21-22 submission and current status."
+        },
+        {
+          "info": {
+            "name": "Upload a signed 21-22 document.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Power of Attorney was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Accepts a document binary as part of a multipart payload.\nUse this PUT endpoint after the POST endpoint for uploading the signed 21-22 PDF form.\n\n"
+        },
+        {
+          "info": {
+            "name": "Check active POA status.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122/active",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns the last active POA for a claimant.\nTo check the status of new POA submissions, use the GET /forms/2122/{id} endpoint.\n\n"
+        },
+        {
+          "info": {
+            "name": "21-22 POA form submission test run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/2122/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test to make sure the form submission works with your parameters.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves current power of attorney",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/power-of-attorney",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ]
+          },
+          "docs": "Retrieve a claimant’s currently appointed accredited representative with power of attorney (General POA) for the claimant. Returns empty data if no General POA is assigned."
+        },
+        {
+          "info": {
+            "name": "Creates power of attorney request for an accredited representative",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/power-of-attorney-request",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request the appointment of an accredited representative, on behalf of a claimant."
+        },
+        {
+          "info": {
+            "name": "Retrieves power of attorney requests for accredited representatives",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/power-of-attorney-requests",
+            "params": [
+              {
+                "name": "page[size]",
+                "value": "20",
+                "type": "query",
+                "description": "Number of results to return per page. Max value allowed is 100."
+              },
+              {
+                "name": "page[number]",
+                "value": "1",
+                "type": "query",
+                "description": "Number of pages of results to return. Max value allowed is 100."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for power of attorney requests by specified POA codes. Optional filters include searching by status, city, state, and country."
+        },
+        {
+          "info": {
+            "name": "Retrieves a power of attorney request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/power-of-attorney-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000010",
+                "type": "path",
+                "description": "The ID of the Power of Attorney request"
+              }
+            ]
+          },
+          "docs": "Retrieve a power of attorney request by id."
+        },
+        {
+          "info": {
+            "name": "Submits representative decision for a power of attorney request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/power-of-attorney-requests/:id/decide",
+            "params": [
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000012",
+                "type": "path",
+                "description": "The ID of the request for representation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve or decline a power of attorney request. If approved, the power of attorney request will be submitted to VA. The claimant will be notified of the decision by email."
+        },
+        {
+          "info": {
+            "name": "Validates request to establish an organization as a claimant’s accredited representative",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/2122/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate a request to establish an organization with power of attorney (VA Form 21-22). Use POST\n/veterans/{veteranId}/2122 to automatically establish submit VA Form 21-22.\n"
+        },
+        {
+          "info": {
+            "name": "Automatically establishes an organization as a claimant’s accredited representative (VA Form 21-22)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/2122",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit VA Form 21-22 to automatically establish a VA accredited organization with power of attorney\n(General POA).\n"
+        },
+        {
+          "info": {
+            "name": "Validates request to establish an individual as a claimant’s accredited representative (VA Form 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/2122a/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate a request to establish an individual with power of attorney (VA Form 21-22a). Use POST\n/veterans/{veteranId}/2122a to automatically establish submit VA Form 21-22a.\n"
+        },
+        {
+          "info": {
+            "name": "Automatically establishes an individual as a claimant’s accredited representative (VA Form 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/2122a",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit VA Form 21-22 to automatically establish a VA accredited individual with power of attorney (General POA).\n"
+        },
+        {
+          "info": {
+            "name": "Checks status of power of attorney submission (VA Forms 21-22 or 21-22a)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/power-of-attorney/:id",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              },
+              {
+                "name": "id",
+                "value": "00000000-0000-0000-0000-000000000015",
+                "type": "path",
+                "description": "The ID of the 21-22 submission"
+              }
+            ]
+          },
+          "docs": "Check the submissions status of a request to appoint power of attorney (VA Forms 21-22 or 21-22a)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

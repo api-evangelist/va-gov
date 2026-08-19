@@ -1,0 +1,1686 @@
+{
+  "item": [
+    {
+      "id": "860e8bb1-043e-49aa-9129-fa11f6299f4e",
+      "name": "Disability Compensation Claims",
+      "description": {
+        "content": "Allows authenticated and authorized users to automatically establish a Disability Compensation Claim (21-526EZ) in VBMS\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "484a6a55-909c-4877-8866-7605352e8127",
+          "name": "Submits disability compensation claim synchronously (restricted access)",
+          "request": {
+            "name": "Submits disability compensation claim synchronously (restricted access)",
+            "description": {
+              "content": "Automatically establishes a disability compensation claim (21-526EZ) in Veterans Benefits Management System (VBMS). This endpoint synchronously generates a filled and electronically signed 526EZ form and establishes the disability claim in VBMS. The 526EZ form is uploaded asynchronously.\n\nA 202 response indicates the API submission was accepted and the claim was established in VBMS. Check claim status using the GET veterans/{veteranId}/claims/{id} endpoint. The claim status details response will return the associated 526EZ PDF in the supportingDocuments list.\n\n**A substantially complete 526EZ claim must include:**\n* Veteran's name\n* Sufficient service information for VA to verify the claimed service\n* At least one claimed disability or medical condition and how it relates to service\n* Veteran and/or Representative signature\n\n**Standard and fully developed claims (FDCs)**\n\n[Fully developed claims (FDCs)](https://www.va.gov/disability/how-to-file-claim/evidence-needed/fully-developed-claims/)\nare claims certified by the submitter to include all information needed for processing. These claims process faster \nthan claims submitted through the standard claim process. If a claim is certified for the FDC, but is missing needed information, \nit will be processed as a standard claim.\n\nTo certify a claim for the FDC process, set the claimProcessType to FDC_PROGRAM.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "526",
+                "synchronous"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"claimProcessType\": \"<string>\",\n      \"disabilities\": [\n        {\n          \"disabilityActionType\": \"<string>\",\n          \"name\": \"<string>\",\n          \"exposureOrEventOrInjury\": \"<string>\",\n          \"serviceRelevance\": \"<string>\",\n          \"approximateDate\": \"<string>\",\n          \"classificationCode\": \"<string>\",\n          \"ratedDisabilityId\": \"<string>\",\n          \"diagnosticCode\": \"<integer>\",\n          \"isRelatedToToxicExposure\": false,\n          \"specialIssues\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"secondaryDisabilities\": [\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            }\n          ]\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"<string>\",\n            \"serviceComponent\": \"<string>\",\n            \"activeDutyBeginDate\": \"<string>\",\n            \"activeDutyEndDate\": \"<string>\",\n            \"separationLocationCode\": \"<string>\"\n          }\n        ],\n        \"alternateNames\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"servedInActiveCombatSince911\": \"<string>\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"<string>\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          },\n          \"unitName\": \"<string>\",\n          \"unitAddress\": \"<string>\",\n          \"unitPhone\": {\n            \"areaCode\": \"<string>\",\n            \"phoneNumber\": \"<string>\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"<string>\"\n        },\n        \"federalActivation\": {\n          \"activationDate\": \"<string>\",\n          \"anticipatedSeparationDate\": \"<string>\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          },\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          }\n        ]\n      },\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"<string>\",\n          \"city\": \"<string>\",\n          \"country\": \"<string>\",\n          \"addressLine2\": \"<string>\",\n          \"addressLine3\": \"<string>\",\n          \"state\": \"<string>\",\n          \"zipFirstFive\": \"<string>\",\n          \"zipLastFour\": \"<string>\",\n          \"internationalPostalCode\": \"<string>\"\n        },\n        \"currentVaEmployee\": \"<boolean>\",\n        \"serviceNumber\": \"<string>\",\n        \"veteranNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        },\n        \"emailAddress\": {\n          \"email\": \"<string>\",\n          \"agreeToEmailRelatedToClaim\": false\n        }\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"addressLine3\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zipFirstFive\": \"<string>\",\n        \"zipLastFour\": \"<string>\",\n        \"internationalPostalCode\": \"<string>\",\n        \"dates\": {\n          \"beginDate\": \"<string>\",\n          \"endDate\": \"<string>\"\n        }\n      },\n      \"homeless\": {\n        \"isCurrentlyHomeless\": \"<boolean>\",\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"other\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"isAtRiskOfBecomingHomeless\": \"<boolean>\",\n        \"riskOfBecomingHomeless\": {\n          \"livingSituationOptions\": \"HOUSING_WILL_BE_LOST_IN_30_DAYS\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"pointOfContact\": \"<string>\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"<string>\",\n          \"otherLocationsServed\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"specifyOtherExposures\": \"<string>\",\n          \"exposureDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          }\n        ]\n      },\n      \"treatments\": [\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        },\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        }\n      ],\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPayExplanation\": \"<string>\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"<string>\",\n          \"monthlyAmount\": \"<integer>\"\n        },\n        \"retiredStatus\": \"<string>\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"<string>\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"<string>\",\n          \"branchOfService\": \"<string>\",\n          \"preTaxAmountReceived\": \"<integer>\"\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"noAccount\": false,\n        \"accountNumber\": \"<string>\",\n        \"accountType\": \"<string>\",\n        \"financialInstitutionName\": \"<string>\",\n        \"routingNumber\": \"<string>\"\n      },\n      \"claimantCertification\": false,\n      \"claimNotes\": \"<string>\",\n      \"claimDate\": \"<string>\"\n    },\n    \"key_0\": 9945\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8ef527d-2392-4a28-a931-bdd7edff77b7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"00000000-0000-0000-0000-000000000001\",\n    \"type\": \"forms/526\",\n    \"attributes\": {\n      \"claimId\": \"600442191\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\",\n          \"internationalTelephone\": \"+44 20 1234 5678\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"addressLine2\": \"Unit 4\",\n          \"addressLine3\": \"Room 1\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"10 Peach St\",\n        \"addressLine2\": \"Unit 4\",\n        \"addressLine3\": \"Room 1\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-12-31\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"isCurrentlyHomeless\": true,\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"FLEEING_CURRENT_RESIDENCE\",\n          \"otherDescription\": \"ABCDEFGHIJKLM\"\n        },\n        \"isAtRiskOfBecomingHomeless\": false,\n        \"pointOfContact\": \"john stewart\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\",\n          \"internationalTelephone\": \"+44 20 1234 5678\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"YES\",\n          \"serviceDates\": {\n            \"beginDate\": \"2018-07\",\n            \"endDate\": \"2018-08\"\n          }\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"ABCDEFGHIJKLM\",\n          \"serviceDates\": {\n            \"beginDate\": \"2018-07\",\n            \"endDate\": \"2018-08\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"ASBESTOS\",\n            \"SHIPBOARD_HAZARD_AND_DEFENSE\"\n          ],\n          \"specifyOtherExposures\": \"Other exposure details\",\n          \"exposureDates\": {\n            \"beginDate\": \"2018-07\",\n            \"endDate\": \"2018-08\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"RADIATION\",\n            \"exposureLocation\": \"Guam\",\n            \"exposureDates\": {\n              \"beginDate\": \"2012-12\",\n              \"endDate\": \"2013-07\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Traumatic Brain Injury\",\n          \"exposureOrEventOrInjury\": \"EXPOSURE\",\n          \"serviceRelevance\": \"ABCDEFG\",\n          \"approximateDate\": \"2018-03-11\",\n          \"disabilityActionType\": \"NEW\",\n          \"classificationCode\": \"9014\",\n          \"ratedDisabilityId\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n          \"diagnosticCode\": 9020,\n          \"isRelatedToToxicExposure\": true,\n          \"secondaryDisabilities\": [\n            {\n              \"name\": \"Post Traumatic Stress Disorder (PTSD) Combat - Mental Disorders\",\n              \"exposureOrEventOrInjury\": \"EXPOSURE\",\n              \"serviceRelevance\": \"ABCDEFGHIJKLMNOPQ\",\n              \"disabilityActionType\": \"SECONDARY\",\n              \"approximateDate\": \"2018-03-12\",\n              \"classificationCode\": \"9014\"\n            }\n          ]\n        },\n        {\n          \"name\": \"Cancer - Musculoskeletal - Elbow\",\n          \"exposureOrEventOrInjury\": \"EXPOSURE\",\n          \"approximateDate\": \"2018-03-02\",\n          \"serviceRelevance\": \"ABCDEFG\",\n          \"disabilityActionType\": \"NEW\",\n          \"classificationCode\": \"9014\",\n          \"ratedDisabilityId\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n          \"diagnosticCode\": 249470,\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Cancer - Musculoskeletal - Knee\",\n          \"exposureOrEventOrInjury\": \"EXPOSURE\",\n          \"approximateDate\": \"2015\",\n          \"serviceRelevance\": \"ABCDEFG\",\n          \"disabilityActionType\": \"NEW\",\n          \"classificationCode\": \"9014\",\n          \"ratedDisabilityId\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n          \"diagnosticCode\": 249470,\n          \"isRelatedToToxicExposure\": true\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2009-03\",\n          \"treatedDisabilityNames\": [\n            \"Traumatic Brain Injury\",\n            \"Post Traumatic Stress Disorder (PTSD) Combat - Mental Disorders\",\n            \"Cancer - Musculoskeletal - Elbow\"\n          ],\n          \"center\": {\n            \"name\": \"Center One\",\n            \"city\": \"Decatur\",\n            \"state\": \"GA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"john jacob\",\n          \"johnny smith\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Public Health Service\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2008-11-14\",\n            \"activeDutyEndDate\": \"2023-10-30\",\n            \"separationLocationCode\": \"98282\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"2019-06-04\",\n            \"endDate\": \"2020-06-04\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 pine court\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"federalActivation\": {\n          \"activationDate\": \"2023-10-01\",\n          \"anticipatedSeparationDate\": \"2025-12-31\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"2018-06-04\",\n            \"approximateEndDate\": \"2018-07-04\"\n          },\n          {\n            \"approximateBeginDate\": \"2020-06\",\n            \"approximateEndDate\": \"2020-07\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"ABCDEFGHIJKLMNOPQRSTUVW\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Army\",\n          \"monthlyAmount\": 840\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"NO\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2022-03-12\",\n          \"branchOfService\": \"Naval Academy\",\n          \"preTaxAmountReceived\": 379\n        },\n        \"favorTrainingPay\": true\n      },\n      \"directDeposit\": {\n        \"noAccount\": false,\n        \"accountNumber\": \"ABCDEF\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123123123\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1457e892-5b58-489a-bdff-80e8693bac88",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"status\": \"401\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bbe1dece-7937-4650-a9c7-79a5cc41ee7f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Resource not found\",\n      \"detail\": \"Unable to locate Veteran's ID/ICN in Master Person Index (MPI). Please submit an issue at ask.va.gov or call 1-800-MyVA411 (800-698-2411) for assistance.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c95f131e-b273-43fc-962b-199690068a6a",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b88953c3-233a-41c5-a61d-cecea67081d4",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key claimProcessType\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key disabilities\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key serviceInformation\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key veteranIdentification\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a29c6802-8e10-45f6-b442-fb237c9ebc17",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfae516d-60c4-4e91-93c5-e994ec4ffb93",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "synchronous"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"1234 Couch Street\",\n          \"city\": \"Portland\",\n          \"state\": \"OR\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\"\n        },\n        \"currentVaEmployee\": false\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"hearing loss\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"2017-07\",\n          \"disabilityActionType\": \"NEW\"\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"2015-11-14\",\n            \"activeDutyEndDate\": \"2018-11-30\"\n          }\n        ]\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c468f405-e6c3-4fba-be2b-50f607a9c6ab",
+          "name": "Validates a 526 claim form submission.",
+          "request": {
+            "name": "Validates a 526 claim form submission.",
+            "description": {
+              "content": "Validates a request for a disability compensation claim submission (21-526EZ).\nThis endpoint can be used to test the request parameters for your /526 submission.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "526",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"claimProcessType\": \"<string>\",\n      \"disabilities\": [\n        {\n          \"disabilityActionType\": \"<string>\",\n          \"name\": \"<string>\",\n          \"exposureOrEventOrInjury\": \"<string>\",\n          \"serviceRelevance\": \"<string>\",\n          \"approximateDate\": \"<string>\",\n          \"classificationCode\": \"<string>\",\n          \"ratedDisabilityId\": \"<string>\",\n          \"diagnosticCode\": \"<integer>\",\n          \"isRelatedToToxicExposure\": false,\n          \"specialIssues\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"secondaryDisabilities\": [\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            }\n          ]\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"<string>\",\n            \"serviceComponent\": \"<string>\",\n            \"activeDutyBeginDate\": \"<string>\",\n            \"activeDutyEndDate\": \"<string>\",\n            \"separationLocationCode\": \"<string>\"\n          }\n        ],\n        \"alternateNames\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"servedInActiveCombatSince911\": \"<string>\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"<string>\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          },\n          \"unitName\": \"<string>\",\n          \"unitAddress\": \"<string>\",\n          \"unitPhone\": {\n            \"areaCode\": \"<string>\",\n            \"phoneNumber\": \"<string>\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"<string>\"\n        },\n        \"federalActivation\": {\n          \"activationDate\": \"<string>\",\n          \"anticipatedSeparationDate\": \"<string>\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          },\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          }\n        ]\n      },\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"<string>\",\n          \"city\": \"<string>\",\n          \"country\": \"<string>\",\n          \"addressLine2\": \"<string>\",\n          \"addressLine3\": \"<string>\",\n          \"state\": \"<string>\",\n          \"zipFirstFive\": \"<string>\",\n          \"zipLastFour\": \"<string>\",\n          \"internationalPostalCode\": \"<string>\"\n        },\n        \"currentVaEmployee\": \"<boolean>\",\n        \"serviceNumber\": \"<string>\",\n        \"veteranNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        },\n        \"emailAddress\": {\n          \"email\": \"<string>\",\n          \"agreeToEmailRelatedToClaim\": false\n        }\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"addressLine3\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zipFirstFive\": \"<string>\",\n        \"zipLastFour\": \"<string>\",\n        \"internationalPostalCode\": \"<string>\",\n        \"dates\": {\n          \"beginDate\": \"<string>\",\n          \"endDate\": \"<string>\"\n        }\n      },\n      \"homeless\": {\n        \"isCurrentlyHomeless\": \"<boolean>\",\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"other\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"isAtRiskOfBecomingHomeless\": \"<boolean>\",\n        \"riskOfBecomingHomeless\": {\n          \"livingSituationOptions\": \"HOUSING_WILL_BE_LOST_IN_30_DAYS\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"pointOfContact\": \"<string>\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"<string>\",\n          \"otherLocationsServed\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"specifyOtherExposures\": \"<string>\",\n          \"exposureDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          }\n        ]\n      },\n      \"treatments\": [\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        },\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        }\n      ],\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPayExplanation\": \"<string>\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"<string>\",\n          \"monthlyAmount\": \"<integer>\"\n        },\n        \"retiredStatus\": \"<string>\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"<string>\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"<string>\",\n          \"branchOfService\": \"<string>\",\n          \"preTaxAmountReceived\": \"<integer>\"\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"noAccount\": false,\n        \"accountNumber\": \"<string>\",\n        \"accountType\": \"<string>\",\n        \"financialInstitutionName\": \"<string>\",\n        \"routingNumber\": \"<string>\"\n      },\n      \"claimantCertification\": false,\n      \"claimNotes\": \"<string>\",\n      \"claimDate\": \"<string>\"\n    },\n    \"key_0\": 9945\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f95658af-0040-45dc-b10b-2801c662cdf4",
+              "name": "Successful response with disability",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"claims_api_auto_established_claim_validation\",\n    \"attributes\": {\n      \"status\": \"valid\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6e0ab12-a153-4c0a-974a-a1a272ac38e8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"status\": \"401\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11a841a5-0a31-4acc-b5b4-5f9eb19b3179",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Resource not found\",\n      \"detail\": \"Unable to locate Veteran's ID/ICN in Master Person Index (MPI). Please submit an issue at ask.va.gov or call 1-800-MyVA411 (800-698-2411) for assistance.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9bf5876-131b-414e-b44c-52e4e53b7465",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b271096-c26f-4d2a-be08-1b6eaaa54f8c",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key claimProcessType\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key disabilities\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key serviceInformation\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    },\n    {\n      \"title\": \"Unprocessable entity\",\n      \"detail\": \"The property / did not contain the required key veteranIdentification\",\n      \"status\": \"422\",\n      \"source\": {\n        \"pointer\": \"data/attributes/\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8366e75-2de0-4721-89e0-f357f112f37f",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5841442-3efa-4777-a8c2-6ba1db68efcb",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74cabc69-3779-4cda-9c2c-8123a27dabe0",
+          "name": "Returns filled out 526EZ form as PDF with minimum validations (restricted access)",
+          "request": {
+            "name": "Returns filled out 526EZ form as PDF with minimum validations (restricted access)",
+            "description": {
+              "content": "Returns a filled out 526EZ form for a disability compensation claim (21-526EZ).\n\nThis endpoint can be used to generate the PDF based on the request data in the case that the submission was not able to be successfully auto-established. The PDF can then be uploaded via the [Benefits Intake API](https://developer.va.gov/explore/api/benefits-intake) to digitally submit directly to the Veterans Benefits Administration's (VBA) claims intake process.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "526",
+                "generatePDF",
+                "minimum-validations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"claimantCertification\": false,\n      \"claimProcessType\": \"<string>\",\n      \"disabilities\": [\n        {\n          \"disabilityActionType\": \"<string>\",\n          \"name\": \"<string>\",\n          \"exposureOrEventOrInjury\": \"<string>\",\n          \"serviceRelevance\": \"<string>\",\n          \"approximateDate\": \"<string>\",\n          \"classificationCode\": \"<string>\",\n          \"ratedDisabilityId\": \"<string>\",\n          \"diagnosticCode\": \"<integer>\",\n          \"isRelatedToToxicExposure\": false,\n          \"specialIssues\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"secondaryDisabilities\": [\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"exposureOrEventOrInjury\": \"<string>\",\n              \"serviceRelevance\": \"<string>\",\n              \"disabilityActionType\": \"<string>\",\n              \"approximateDate\": \"<string>\",\n              \"classificationCode\": \"<string>\"\n            }\n          ]\n        }\n      ],\n      \"serviceInformation\": {\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"<string>\",\n            \"serviceComponent\": \"<string>\",\n            \"activeDutyBeginDate\": \"<string>\",\n            \"activeDutyEndDate\": \"<string>\",\n            \"separationLocationCode\": \"<string>\"\n          }\n        ],\n        \"alternateNames\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"servedInActiveCombatSince911\": \"<string>\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"<string>\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          },\n          \"unitName\": \"<string>\",\n          \"unitAddress\": \"<string>\",\n          \"unitPhone\": {\n            \"areaCode\": \"<string>\",\n            \"phoneNumber\": \"<string>\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"<string>\"\n        },\n        \"federalActivation\": {\n          \"activationDate\": \"<string>\",\n          \"anticipatedSeparationDate\": \"<string>\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          },\n          {\n            \"approximateBeginDate\": \"<string>\",\n            \"approximateEndDate\": \"<string>\"\n          }\n        ]\n      },\n      \"veteranIdentification\": {\n        \"mailingAddress\": {\n          \"addressLine1\": \"<string>\",\n          \"city\": \"<string>\",\n          \"country\": \"<string>\",\n          \"addressLine2\": \"<string>\",\n          \"addressLine3\": \"<string>\",\n          \"state\": \"<string>\",\n          \"zipFirstFive\": \"<string>\",\n          \"zipLastFour\": \"<string>\",\n          \"internationalPostalCode\": \"<string>\"\n        },\n        \"currentVaEmployee\": \"<boolean>\",\n        \"serviceNumber\": \"<string>\",\n        \"veteranNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        },\n        \"emailAddress\": {\n          \"email\": \"<string>\",\n          \"agreeToEmailRelatedToClaim\": false\n        }\n      },\n      \"claimDate\": \"<string>\",\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"addressLine3\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zipFirstFive\": \"<string>\",\n        \"zipLastFour\": \"<string>\",\n        \"internationalPostalCode\": \"<string>\",\n        \"dates\": {\n          \"beginDate\": \"<string>\",\n          \"endDate\": \"<string>\"\n        }\n      },\n      \"homeless\": {\n        \"isCurrentlyHomeless\": \"<boolean>\",\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"other\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"isAtRiskOfBecomingHomeless\": \"<boolean>\",\n        \"riskOfBecomingHomeless\": {\n          \"livingSituationOptions\": \"HOUSING_WILL_BE_LOST_IN_30_DAYS\",\n          \"otherDescription\": \"<string>\"\n        },\n        \"pointOfContact\": \"<string>\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"<string>\",\n          \"internationalTelephone\": \"<string>\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"<string>\",\n          \"otherLocationsServed\": \"<string>\",\n          \"serviceDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"specifyOtherExposures\": \"<string>\",\n          \"exposureDates\": {\n            \"beginDate\": \"<string>\",\n            \"endDate\": \"<string>\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"<string>\",\n            \"exposureLocation\": \"<string>\",\n            \"exposureDates\": {\n              \"beginDate\": \"<string>\",\n              \"endDate\": \"<string>\"\n            }\n          }\n        ]\n      },\n      \"treatments\": [\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        },\n        {\n          \"beginDate\": \"<string>\",\n          \"treatedDisabilityNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"center\": {\n            \"name\": \"<string>\",\n            \"city\": \"<string>\",\n            \"state\": \"<string>\"\n          }\n        }\n      ],\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPay\": \"<string>\",\n        \"futureMilitaryRetiredPayExplanation\": \"<string>\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"<string>\",\n          \"monthlyAmount\": \"<integer>\"\n        },\n        \"retiredStatus\": \"<string>\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"<string>\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"<string>\",\n          \"branchOfService\": \"<string>\",\n          \"preTaxAmountReceived\": \"<integer>\"\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"noAccount\": false,\n        \"accountNumber\": \"<string>\",\n        \"accountType\": \"<string>\",\n        \"financialInstitutionName\": \"<string>\",\n        \"routingNumber\": \"<string>\"\n      },\n      \"claimNotes\": \"<string>\"\n    },\n    \"key_0\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eea1f5de-f89d-4531-ba57-92004b87b081",
+              "name": "post pdf response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/pdf"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/pdf"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc0069da-8ae4-4cb9-9146-aef3510e8029",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"status\": \"401\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5ff2193-4085-4daf-9a9b-60f207332889",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Resource not found\",\n      \"detail\": \"Unable to locate Veteran's ID/ICN in Master Person Index (MPI). Please submit an issue at ask.va.gov or call 1-800-MyVA411 (800-698-2411) for assistance.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5376a9b5-3702-42cb-854f-4f010ff0054b",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15bdf606-d9e1-4b0b-8639-034958f34845",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff09ca4a-1c7c-490b-aa7f-4bbeaffc31f6",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "526",
+                    "generatePDF",
+                    "minimum-validations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"form/526\",\n    \"attributes\": {\n      \"claimDate\": \"2018-06-25\",\n      \"claimProcessType\": \"STANDARD_CLAIM_PROCESS\",\n      \"claimNotes\": \"Some things that are important to know, and are not included in any other place.\",\n      \"veteranIdentification\": {\n        \"serviceNumber\": \"123456789\",\n        \"veteranNumber\": {\n          \"telephone\": \"5555555555\"\n        },\n        \"mailingAddress\": {\n          \"addressLine1\": \"123 Main Street\",\n          \"addressLine2\": \"Unit 1\",\n          \"addressLine3\": \"Room 2\",\n          \"city\": \"Schenectady\",\n          \"state\": \"NY\",\n          \"country\": \"USA\",\n          \"zipFirstFive\": \"12345\",\n          \"zipLastFour\": \"1234\"\n        },\n        \"emailAddress\": {\n          \"email\": \"valid@somedomain.com\",\n          \"agreeToEmailRelatedToClaim\": true\n        },\n        \"currentVaEmployee\": false\n      },\n      \"changeOfAddress\": {\n        \"typeOfAddressChange\": \"TEMPORARY\",\n        \"addressLine1\": \"456 Main Street\",\n        \"addressLine2\": \"Unit 3\",\n        \"addressLine3\": \"Room 4\",\n        \"city\": \"Schenectady\",\n        \"state\": \"NY\",\n        \"country\": \"USA\",\n        \"zipFirstFive\": \"12345\",\n        \"zipLastFour\": \"9897\",\n        \"dates\": {\n          \"beginDate\": \"2025-06-04\",\n          \"endDate\": \"2025-12-31\"\n        }\n      },\n      \"homeless\": {\n        \"currentlyHomeless\": {\n          \"homelessSituationOptions\": \"OTHER\",\n          \"otherDescription\": \"Other living situation\"\n        },\n        \"pointOfContact\": \"John Doe\",\n        \"pointOfContactNumber\": {\n          \"telephone\": \"5555555555\"\n        }\n      },\n      \"toxicExposure\": {\n        \"gulfWarHazardService\": {\n          \"servedInGulfWarHazardLocations\": \"NO\"\n        },\n        \"herbicideHazardService\": {\n          \"servedInHerbicideHazardLocations\": \"YES\",\n          \"otherLocationsServed\": \"Other locations served\",\n          \"serviceDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"additionalHazardExposures\": {\n          \"additionalExposures\": [\n            \"OTHER\"\n          ],\n          \"specifyOtherExposures\": \"Agent Orange\",\n          \"exposureDates\": {\n            \"beginDate\": \"1972-05\",\n            \"endDate\": \"1980-10\"\n          }\n        },\n        \"multipleExposures\": [\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1972-05\",\n              \"endDate\": \"1973-01\"\n            }\n          },\n          {\n            \"hazardExposedTo\": \"Agent Orange\",\n            \"exposureLocation\": \"Vietnam\",\n            \"exposureDates\": {\n              \"beginDate\": \"1979-04\",\n              \"endDate\": \"1980-10\"\n            }\n          }\n        ]\n      },\n      \"disabilities\": [\n        {\n          \"name\": \"Diabetes\",\n          \"exposureOrEventOrInjury\": \"Agent Orange\",\n          \"serviceRelevance\": \"Service in Vietnam War\",\n          \"approximateDate\": \"1975-05\",\n          \"disabilityActionType\": \"NEW\",\n          \"isRelatedToToxicExposure\": true\n        },\n        {\n          \"name\": \"Hearing Loss\",\n          \"exposureOrEventOrInjury\": \"Noise\",\n          \"serviceRelevance\": \"Heavy equipment operator in service\",\n          \"approximateDate\": \"1968-07\",\n          \"disabilityActionType\": \"INCREASE\",\n          \"classificationCode\": \"8987\",\n          \"ratedDisabilityId\": \"1234567\",\n          \"diagnosticCode\": 5678,\n          \"isRelatedToToxicExposure\": false\n        }\n      ],\n      \"treatments\": [\n        {\n          \"beginDate\": \"2021-04\",\n          \"treatedDisabilityNames\": [\n            \"Diabetes\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        },\n        {\n          \"beginDate\": \"1996-03\",\n          \"treatedDisabilityNames\": [\n            \"Hearing Loss\"\n          ],\n          \"center\": {\n            \"name\": \"ATLANTA VA MEDICAL CENTER\",\n            \"state\": \"GA\",\n            \"city\": \"ATLANTA\"\n          }\n        }\n      ],\n      \"serviceInformation\": {\n        \"alternateNames\": [\n          \"Jon Doe\",\n          \"Jane Doe\"\n        ],\n        \"servicePeriods\": [\n          {\n            \"serviceBranch\": \"Air Force\",\n            \"serviceComponent\": \"Active\",\n            \"activeDutyBeginDate\": \"1964-11-14\",\n            \"activeDutyEndDate\": \"1980-10-30\",\n            \"separationLocationCode\": \"98289\"\n          }\n        ],\n        \"servedInActiveCombatSince911\": \"NO\",\n        \"reservesNationalGuardService\": {\n          \"component\": \"National Guard\",\n          \"obligationTermsOfService\": {\n            \"beginDate\": \"1990-11-24\",\n            \"endDate\": \"1995-11-17\"\n          },\n          \"unitName\": \"National Guard Unit Name\",\n          \"unitAddress\": \"1243 Main Street\",\n          \"unitPhone\": {\n            \"areaCode\": \"555\",\n            \"phoneNumber\": \"5555555\"\n          },\n          \"receivingInactiveDutyTrainingPay\": \"YES\"\n        },\n        \"confinements\": [\n          {\n            \"approximateBeginDate\": \"1970-06-11\",\n            \"approximateEndDate\": \"1970-09-11\"\n          }\n        ]\n      },\n      \"servicePay\": {\n        \"receivingMilitaryRetiredPay\": \"NO\",\n        \"futureMilitaryRetiredPay\": \"YES\",\n        \"futureMilitaryRetiredPayExplanation\": \"Explanation of future military retired pay\",\n        \"militaryRetiredPay\": {\n          \"branchOfService\": \"Air Force\",\n          \"monthlyAmount\": 240\n        },\n        \"retiredStatus\": \"PERMANENT_DISABILITY_RETIRED_LIST\",\n        \"favorMilitaryRetiredPay\": false,\n        \"receivedSeparationOrSeverancePay\": \"YES\",\n        \"separationSeverancePay\": {\n          \"datePaymentReceived\": \"2018-07-31\",\n          \"branchOfService\": \"Air Force\",\n          \"preTaxAmountReceived\": 179\n        },\n        \"favorTrainingPay\": false\n      },\n      \"directDeposit\": {\n        \"accountNumber\": \"123123123123\",\n        \"accountType\": \"CHECKING\",\n        \"financialInstitutionName\": \"Chase\",\n        \"routingNumber\": \"123456789\"\n      },\n      \"claimantCertification\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9414f3cb-6897-43e6-b4a2-821eeb9b73a7",
+    "name": "Address Validation 5103 Waiver Disability Compensation Claims API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

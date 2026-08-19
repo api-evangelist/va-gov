@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Legacy Appeals API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Legacy Appeals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns eligible appeals in the legacy process for a claimant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/legacy-appeals",
+            "params": [
+              {
+                "name": "icn",
+                "value": "1012832025V743496",
+                "type": "query",
+                "description": "Claimant's Integration Control Number (ICN). Optional when using a veteran-scoped token. Required when using a representative- or system-scoped token."
+              }
+            ]
+          },
+          "docs": "Returns eligible legacy appeals for a claimant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

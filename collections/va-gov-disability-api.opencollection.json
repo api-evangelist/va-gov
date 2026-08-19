@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Disability API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Disability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a 526 schema for a claim.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/526"
+          },
+          "docs": "Returns a single 526 schema to automatically generate a form. Using this GET endpoint allows users to download our current validations.\n"
+        },
+        {
+          "info": {
+            "name": "Submits form 526",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/526",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Establishes a [Disability Compensation Claim](https://www.vba.va.gov/pubs/forms/VBA-21-526EZ-ARE.pdf) in VBMS. Submits any PDF attachments as a multi-part payload and returns an ID. For claims that are not original claims, this endpoint generates a filled 526 PDF along with the submission.\n<br/><br/>\nA 200 response indicates the submission was successful, but the claim has not reached VBMS until it has a “claim established” status. Check claim status using the GET /claims/{id} endpoint.\n<br/><br"
+        },
+        {
+          "info": {
+            "name": "Upload a 526 document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/526/:id",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Disability Claim was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Used to upload a completed, signed 526 PDF to establish an original claim. Use this endpoint only after following the instructions in the POST /forms/526 endpoint to begin the claim submission.\n<br/><br/>\nThis endpoint works by accepting a document binary PDF as part of a multi-part payload (for example, attachment1, attachment2, attachment3). Each attachment should be encoded separately rather than encoding the whole payload together as with the Benefits Intake API.\n<br/><br/>\nFor other attachm"
+        },
+        {
+          "info": {
+            "name": "Validates a 526 claim form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/526/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test to make sure the form submission works with your parameters.\nSubmission validates against the schema returned by the GET /forms/526 endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Upload documents supporting a 526 claim",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/526/:id/attachments",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID given when Disability Claim was submitted"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "attachment1",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment2",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Used to attach supporting documents for a 526 claim. For wet-signature PDFs, use the PUT /forms/526/{id} endpoint.\n\n<br/><br/>\nThis endpoint accepts a document binary PDF as part of a multi-part payload (for example, attachment1, attachment2, attachment3).\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

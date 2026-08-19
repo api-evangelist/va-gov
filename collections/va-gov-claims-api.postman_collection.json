@@ -1,0 +1,2100 @@
+{
+  "item": [
+    {
+      "id": "b2511666-1e49-4b88-9b3c-3191a08490c8",
+      "name": "Claims",
+      "description": {
+        "content": "Allows authenticated and authorized users to access claims data for a single claim by ID, or for all claims based on claimant data. No data is returned if the user is not authenticated and authorized.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "41b7b301-810c-4e6f-a62c-5362c5e03bb5",
+          "name": "Find all benefits claims for a VA claimant",
+          "request": {
+            "name": "Find all benefits claims for a VA claimant",
+            "description": {
+              "content": "Uses the Veteran’s metadata in headers to retrieve all claims for that Veteran. An authenticated Veteran making a request with this endpoint will return their own claims, if any.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "claims"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Claimant SSN if consumer is representative",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant first name if consumer is representative",
+                "key": "X-VA-First-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant last name if consumer is representative",
+                "key": "X-VA-Last-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                "key": "X-VA-Birth-Date",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "7da35465-8ce8-428f-9fbd-b2129dea5758",
+              "name": "claim response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"600354175\",\n      \"type\": \"evss_claims\",\n      \"attributes\": {\n        \"evss_id\": 600354175,\n        \"open\": false,\n        \"waiver_submitted\": false,\n        \"requested_decision\": false,\n        \"claim_type\": \"Compensation\",\n        \"date_filed\": \"2022-12-01\",\n        \"min_est_date\": null,\n        \"max_est_date\": null,\n        \"development_letter_sent\": false,\n        \"decision_letter_sent\": false,\n        \"documents_needed\": false,\n        \"status\": \"Complete\"\n      }\n    },\n    {\n      \"id\": \"600354178\",\n      \"type\": \"evss_claims\",\n      \"attributes\": {\n        \"evss_id\": 600354178,\n        \"open\": false,\n        \"waiver_submitted\": false,\n        \"requested_decision\": false,\n        \"claim_type\": \"Compensation\",\n        \"date_filed\": \"2022-12-01\",\n        \"min_est_date\": null,\n        \"max_est_date\": null,\n        \"development_letter_sent\": false,\n        \"decision_letter_sent\": false,\n        \"documents_needed\": false,\n        \"status\": \"Complete\"\n      }\n    },\n    {\n      \"id\": \"600311927\",\n      \"type\": \"evss_claims\",\n      \"attributes\": {\n        \"evss_id\": 600311927,\n        \"open\": false,\n        \"waiver_submitted\": false,\n        \"requested_decision\": false,\n        \"claim_type\": \"Compensation\",\n        \"date_filed\": \"2022-06-23\",\n        \"min_est_date\": null,\n        \"max_est_date\": null,\n        \"development_letter_sent\": false,\n        \"decision_letter_sent\": true,\n        \"documents_needed\": false,\n        \"status\": \"Complete\"\n      }\n    },\n    {\n      \"id\": \"600309680\",\n      \"type\": \"evss_claims\",\n      \"attributes\": {\n        \"evss_id\": 600309680,\n        \"open\": false,\n        \"waiver_submitted\": false,\n        \"requested_decision\": false,\n        \"claim_type\": \"Compensation\",\n        \"date_filed\": \"2022-06-09\",\n        \"min_est_date\": null,\n        \"max_est_date\": null,\n        \"development_letter_sent\": false,\n        \"decision_letter_sent\": true,\n        \"documents_needed\": false,\n        \"status\": \"Complete\"\n      }\n    },\n    {\n      \"id\": \"600308831\",\n      \"type\": \"evss_claims\",\n      \"attributes\": {\n        \"evss_id\": 600308831,\n        \"open\": false,\n        \"waiver_submitted\": false,\n        \"requested_decision\": false,\n        \"claim_type\": \"Compensation\",\n        \"date_filed\": \"2022-06-06\",\n        \"min_est_date\": null,\n        \"max_est_date\": null,\n        \"development_letter_sent\": false,\n        \"decision_letter_sent\": true,\n        \"documents_needed\": false,\n        \"status\": \"Complete\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30290209-5611-4a73-90bd-5fe246c21783",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bd47f49-8c91-4cb3-832d-bc5524750eb8",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"The Resource was not found.\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3c30d54-07b6-404c-9e8e-6d0e3e6f0f4b",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a5fbd1e-942d-4b17-9ce4-296f561fee96",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3a0fbb9-e9af-4356-9c2c-9a495e596006",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71272fc3-2892-46d3-a39d-167bb80047ea",
+          "name": "Find Claim by ID",
+          "request": {
+            "name": "Find Claim by ID",
+            "description": {
+              "content": "Returns data such as processing status for a single claim by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "claims",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the claim being requested"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Claimant SSN if consumer is representative",
+                "key": "X-VA-SSN",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant first name if consumer is representative",
+                "key": "X-VA-First-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant last name if consumer is representative",
+                "key": "X-VA-Last-Name",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                "key": "X-VA-Birth-Date",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "abbf582b-87e6-48b6-be26-41b6ae9fe471",
+              "name": "claims response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"00000000-0000-0000-0000-000000000010\",\n    \"type\": \"claims_api_claim\",\n    \"attributes\": {\n      \"evss_id\": 600118851,\n      \"open\": false,\n      \"waiver_submitted\": false,\n      \"requested_decision\": false,\n      \"claim_type\": \"Compensation\",\n      \"date_filed\": \"2017-12-08\",\n      \"min_est_date\": null,\n      \"max_est_date\": null,\n      \"development_letter_sent\": false,\n      \"decision_letter_sent\": false,\n      \"documents_needed\": false,\n      \"contention_list\": [],\n      \"events_timeline\": [\n        {\n          \"type\": \"phase7\",\n          \"date\": \"2018-06-12\"\n        },\n        {\n          \"type\": \"completed\",\n          \"date\": \"2018-06-12\"\n        },\n        {\n          \"type\": \"filed\",\n          \"date\": \"2017-12-08\"\n        }\n      ],\n      \"va_representative\": \"AMERICAN LEGION\",\n      \"status\": \"Complete\",\n      \"supporting_documents\": [\n        {\n          \"id\": \"00000000-0000-0000-0000-000000000011\",\n          \"type\": \"claim_supporting_document\",\n          \"md5\": \"84e997702baca501734d4e23dae0f9af\",\n          \"header_hash\": \"c2714a50560affd76bfc376a90ec4e52d49e1a09d073456b7a1594452fd7ccc7\",\n          \"filename\": \"custom_file_name.pdf\",\n          \"uploaded_at\": \"2024-01-01T00:00:00.000Z\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "055bb7fa-b2d0-4e47-9f27-4857fe987127",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\",\n      \"code\": \"401\",\n      \"status\": \"401\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a4f2119-c184-4b73-bec5-f9a624c0d521",
+              "name": "Record Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"Claim not found\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a9561f8-beb4-437e-b15e-13d44bc67b39",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07d4a81e-185d-42e9-b5e4-9963e30f204f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unprocessable Entity\",\n      \"detail\": \"Unknown EVSS Async Error\",\n      \"code\": \"422\",\n      \"status\": \"422\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86903ae7-876e-4397-aa0a-10e6b3e1f329",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0134434-2791-400b-9beb-3106b90c6996",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant SSN if consumer is representative",
+                    "key": "X-VA-SSN",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant first name if consumer is representative",
+                    "key": "X-VA-First-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant last name if consumer is representative",
+                    "key": "X-VA-Last-Name",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Claimant birthdate if consumer is representative, in iso8601 format",
+                    "key": "X-VA-Birth-Date",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8abcbda1-b7a8-432a-984e-ed00a6aceae4",
+          "name": "Find all benefits claims for a VA claimant",
+          "request": {
+            "name": "Find all benefits claims for a VA claimant",
+            "description": {},
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "claims"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8544fc67-22c9-4dfd-86c9-7379f3492e88",
+              "name": "claim response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"555555555\",\n      \"type\": \"claim\",\n      \"attributes\": {\n        \"baseEndProductCode\": \"400\",\n        \"claimDate\": \"2017-05-02\",\n        \"claimPhaseDates\": {\n          \"phaseChangeDate\": \"2017-10-18\",\n          \"phaseType\": \"COMPLETE\"\n        },\n        \"claimType\": \"Compensation\",\n        \"claimTypeCode\": \"400PREDSCHRG\",\n        \"closeDate\": \"2017-10-18\",\n        \"decisionLetterSent\": false,\n        \"developmentLetterSent\": false,\n        \"documentsNeeded\": false,\n        \"endProductCode\": \"404\",\n        \"evidenceWaiverSubmitted5103\": false,\n        \"lighthouseId\": null,\n        \"status\": \"COMPLETE\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a88f2e2b-98f4-4261-b7a8-f8be819c2a33",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1d05c48-dad9-49e9-8aab-649cfd14a5eb",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bef5de6b-c6b4-463a-888b-f2b7f1a6a088",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1bd2937-a33d-44f7-bec1-fd42763ca6d7",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ffecbfc7-1668-4739-aa16-fae9484f9f8a",
+          "name": "Find claim by ID.",
+          "request": {
+            "name": "Find claim by ID.",
+            "description": {
+              "content": "Retrieves a specific claim for a Veteran",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "veterans",
+                ":veteranId",
+                "claims",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the claim being requested"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "veteranId",
+                  "description": "(Required) ID of claimant"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "89b2ad53-187b-4e09-8519-eba4fcc8bb26",
+              "name": "errored claim response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"555555555\",\n    \"type\": \"claim\",\n    \"attributes\": {\n      \"claimTypeCode\": \"400PREDSCHRG\",\n      \"claimDate\": \"2017-05-02\",\n      \"claimPhaseDates\": {\n        \"phaseChangeDate\": \"2017-10-18\",\n        \"currentPhaseBack\": false,\n        \"latestPhaseType\": \"COMPLETE\",\n        \"previousPhases\": {\n          \"phase7CompleteDate\": \"2017-10-18\"\n        }\n      },\n      \"claimType\": \"Compensation\",\n      \"closeDate\": \"2017-10-18\",\n      \"contentions\": [\n        {\n          \"name\": \"abnormal heart (New)\"\n        },\n        {\n          \"name\": \"abscess kidney (New)\"\n        },\n        {\n          \"name\": \"encephalitis lethargica residuals (New)\"\n        },\n        {\n          \"name\": \"dracunculiasis (New)\"\n        },\n        {\n          \"name\": \"gingivitis (New)\"\n        },\n        {\n          \"name\": \"abnormal weight loss (New)\"\n        },\n        {\n          \"name\": \"groin condition (New)\"\n        },\n        {\n          \"name\": \"metritis (New)\"\n        }\n      ],\n      \"decisionLetterSent\": false,\n      \"developmentLetterSent\": false,\n      \"documentsNeeded\": false,\n      \"endProductCode\": \"404\",\n      \"evidenceWaiverSubmitted5103\": false,\n      \"errors\": [],\n      \"jurisdiction\": \"National Work Queue\",\n      \"lighthouseId\": null,\n      \"maxEstClaimDate\": null,\n      \"minEstClaimDate\": null,\n      \"status\": \"CANCELED\",\n      \"submitterApplicationCode\": \"EBN\",\n      \"submitterRoleCode\": \"VET\",\n      \"supportingDocuments\": [],\n      \"tempJurisdiction\": null,\n      \"trackedItems\": [\n        {\n          \"closedDate\": \"2021-06-04\",\n          \"description\": null,\n          \"displayName\": \"21-4142a\",\n          \"overdue\": false,\n          \"receivedDate\": null,\n          \"requestedDate\": \"2021-05-05\",\n          \"status\": \"NO_LONGER_REQUIRED\",\n          \"suspenseDate\": \"2021-06-04\",\n          \"id\": 293440,\n          \"uploadsAllowed\": false\n        },\n        {\n          \"closedDate\": \"2021-06-04\",\n          \"description\": null,\n          \"displayName\": \"Employment info needed\",\n          \"overdue\": false,\n          \"receivedDate\": null,\n          \"requestedDate\": \"2021-05-05\",\n          \"status\": \"NO_LONGER_REQUIRED\",\n          \"suspenseDate\": \"2021-06-04\",\n          \"id\": 293443,\n          \"uploadsAllowed\": false\n        },\n        {\n          \"closedDate\": \"2021-06-04\",\n          \"description\": null,\n          \"displayName\": \"Accidental injury - 21-4176 needed\",\n          \"overdue\": false,\n          \"receivedDate\": null,\n          \"requestedDate\": \"2021-05-05\",\n          \"status\": \"NO_LONGER_REQUIRED\",\n          \"suspenseDate\": \"2021-06-04\",\n          \"id\": 293444,\n          \"uploadsAllowed\": false\n        },\n        {\n          \"closedDate\": \"2021-06-04\",\n          \"description\": null,\n          \"displayName\": \"Buddy mentioned - No complete address\",\n          \"overdue\": false,\n          \"receivedDate\": null,\n          \"requestedDate\": \"2021-05-05\",\n          \"status\": \"NO_LONGER_REQUIRED\",\n          \"suspenseDate\": \"2021-06-04\",\n          \"id\": 293446,\n          \"uploadsAllowed\": false\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59d79046-6e1a-4a98-974c-fb902ff1b508",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Not authorized\",\n      \"detail\": \"Not authorized\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58060462-ec29-473d-bb95-aeee3489276f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource not found\",\n      \"detail\": \"Claim not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35a8e825-b8b7-45fb-aebd-3d544cfa6e70",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4d5071f-c646-4f57-8cd9-eb1e5b368b08",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4fe7434-4d78-4852-9f35-5a2a49f075fd",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "veterans",
+                    ":veteranId",
+                    "claims",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the claim being requested"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "veteranId",
+                      "description": "(Required) ID of claimant"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bb1782dd-4531-4151-b650-473b2f3261e7",
+    "name": "Address Validation 5103 Waiver Claims API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

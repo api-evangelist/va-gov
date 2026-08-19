@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Uploads API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a location for subsequent document upload PUT request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/uploads",
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a location for subsequent document upload PUT request"
+        },
+        {
+          "info": {
+            "name": "Get status for a previous benefits document upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/uploads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "6d8433c1-cd55-4c24-affd-f592287a7572",
+                "type": "path",
+                "description": "ID as returned by a previous create upload request"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "A request to the `/uploads/{id}` endpoint will return a real-time status for that GUID, and update its status in `/uploads/report`.\\n\\nThe `updated_at` field indicates the last time the status for a given GUID was updated."
+        },
+        {
+          "info": {
+            "name": "Download zip of \"what the server sees\"",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/uploads/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "6d8433c1-cd55-4c24-affd-f592287a7572",
+                "type": "path",
+                "description": "ID as returned by a previous create upload request"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "An endpoint that will allow you to see exactly what the server sees. We split apart all submitted docs and metadata and zip the file to make it available to you to help with debugging purposes. Files are deleted after 10 days. Only available in testing environments, not production."
+        },
+        {
+          "info": {
+            "name": "Get a bulk status report for a list of previous uploads",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/uploads/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "apikey",
+              "value": "{{apikey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Due to current system limitations, data for the `/uploads/report` endpoint is cached for one hour.\\n\\nA request to the `/uploads/{id}` endpoint will return a real-time status for that GUID, and update its status in `/uploads/report`.\\n\\nThe `updated_at` field indicates the last time the status for a given GUID was updated."
+        },
+        {
+          "info": {
+            "name": "Validate an individual document against system file requirements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/uploads/validate_document"
+          },
+          "docs": "Using this endpoint will decrease the likelihood of errors associated with individual documents during\nthe submission process. Validations performed:\n* Document is a valid PDF (Note: `Content-Type` header value must be \"application/pdf\")\n* Document does not have a user password (an owner password is acceptable)\n* File size does not exceed 100 MB\n* Page size does not exceed 78\" x 101\"\n\nEach PDF document is sent as a direct file upload. The request body should contain nothing other than the docume"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

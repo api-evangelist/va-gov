@@ -1,0 +1,4231 @@
+{
+  "item": [
+    {
+      "id": "1d34a101-470e-447c-8928-57690860b002",
+      "name": "Disability Rating",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6a8e46fd-ca66-4f88-ac7a-8062f710dc26",
+          "name": "Retrieve disability rating of authorized Veteran",
+          "request": {
+            "name": "Retrieve disability rating of authorized Veteran",
+            "description": {
+              "content": "This endpoint provides a veteran's combined and individual disability rating(s) and related decisions and dates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "660e61b8-c7e9-47aa-a95a-3196fa6f2ca9",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"type\": \"string\",\n    \"attributes\": {\n      \"combined_disability_rating\": 5002,\n      \"combined_effective_date\": \"1949-04-11\",\n      \"legal_effective_date\": \"1952-06-07\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"string\",\n          \"effective_date\": \"1982-12-15\",\n          \"rating_percentage\": 1290\n        },\n        {\n          \"decision\": \"string\",\n          \"effective_date\": \"2007-08-05\",\n          \"rating_percentage\": 2807\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdccca03-fa4a-4186-be88-8f1cc79e1a9a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Request\",\n      \"detail\": \"Bad Request\",\n      \"code\": \"400\",\n      \"status\": \"400\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f08a01af-9364-49e2-bfc4-e11db8aad18b",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e86f7034-3a93-45d8-bcd2-1b993f478183",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67989236-008a-4e30-9ce6-cdcef74d47e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Veteran not identifiable.\",\n      \"detail\": \"No data found for ID or demographics.\",\n      \"code\": \"404\",\n      \"status\": \"404\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e286051-4f8e-4184-9882-72f64363e560",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46965a9d-6a61-4eeb-a9dc-dfd0c36f20ff",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af9f2efd-d416-426e-a43e-492720b889eb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Internal server error\",\n      \"detail\": \"Internal server error\",\n      \"code\": \"500\",\n      \"status\": \"500\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "237ca8b4-81f8-41fc-afb2-463fca870e28",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Bad Gateway\",\n      \"detail\": \"Upstream Request Error.\",\n      \"code\": \"502\",\n      \"status\": \"502\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30e075eb-563c-4044-8dba-023861e4169b",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b8de40f-2863-4c86-b434-3ae3d3320d4e",
+          "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.",
+          "request": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.",
+            "description": {
+              "content": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommended, but it may be beneficial to retry the search with\nadditional addresses if they are available and the first attempt is not confirmed.\n* To find a match, it can help to retry with different demographic information,\nsuch as alternate last names or addresses.\n* It can also help to remove special characters, hyphens, apostrophes, or spaces\nin a name prior to matching.\n\nNOTE: In the Sandbox only DOB and ZIP are required to identify the test user.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_date\": \"<date>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"street_address_line1\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"state\": \"<string>\",\n  \"street_address_line2\": \"<string>\",\n  \"street_address_line3\": \"<string>\",\n  \"home_phone_number\": \"<string>\",\n  \"birth_place_city\": \"<string>\",\n  \"birth_place_state\": \"<string>\",\n  \"birth_place_country\": \"<string>\",\n  \"mothers_maiden_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74cb0ac9-4c82-44f9-a405-8bc2f7779bcd",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"12303\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27\",\n      \"legal_effective_date\": \"2018-03-27\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"disability_rating_id\": \"1070379\",\n          \"effective_date\": \"2018-03-27\",\n          \"rating_end_date\": \"2022-08-27\",\n          \"rating_percentage\": 50,\n          \"diagnostic_type_code\": \"0502\",\n          \"hyph_diagnostic_type_code\": \"1234\",\n          \"diagnostic_type_name\": \"Schizophrenia, disorganized type\",\n          \"diagnostic_text\": \"bilateral hearing loss\",\n          \"static_ind\": true\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80af5116-f415-4bde-9c9c-b602526a924c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"code\": \"400\",\n  \"status\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29c6058b-49d3-4454-8d7c-fee3d380813b",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0f228a4-55f4-42d3-a07e-b61b47f8c986",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26c02fb5-5b62-4dc5-8967-6d0fb935dcd9",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7462fef5-b830-4bdb-bc46-29ddbeb0a219",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fc39516-3ef3-4fcd-9fb0-d67e2140eb3d",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "299ac290-175b-4e17-8d92-a2ca7e29361a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c800a542-6294-4eed-8519-3720d8656d16",
+              "name": "Bad Gateway. Also, could indicate Person Not Found in MPI backend.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Gateway\",\n  \"detail\": \"Upstream Request Error.\",\n  \"code\": \"502\",\n  \"status\": \"502\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a488557-cf40-4e57-8342-8a448edab70a",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service Unavailable\",\n      \"detail\": \"Backend Service Unavailable.\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b86bc356-3c69-4497-8bae-26c27ae33e58",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24e08505-e485-423e-a77b-aed8827fa291",
+          "name": "Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).",
+          "request": {
+            "name": "Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).",
+            "description": {
+              "content": "This endpoint provides a Veteran's combined and individual disability ratings and\nrelated decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.\n\nIf using Social Security number, the following information is required:\n* Social Security number\n* First name\n* Last name\n* Birth date\n\nIf using demographic data, the following information is required:\n* First Name\n* Last Name\n* Birth date\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nThe following optional information may also be used with Social Security number\nor demographic data:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and Birth date are often essential to uniquely\nidentifying a Veteran.\n* Home address is recommended, but it may also help to retry the search with\nadditional available addresses when the first attempt is not confirmed.\n* To find a match, it can help to retry with different demographic information,\nsuch as alternate last names or addresses.\n* It can also help to remove special characters, hyphens, apostrophes, or spaces\nin a name prior to matching.\n\nNOTE: In the Sandbox only birth date and zip code are required to identify the\ntest user.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "restricted",
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_date\": \"<date>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"ssn\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"country\": \"<string>\",\n  \"street_address_line1\": \"<string>\",\n  \"street_address_line2\": \"<string>\",\n  \"street_address_line3\": \"<string>\",\n  \"home_phone_number\": \"<string>\",\n  \"birth_place_city\": \"<string>\",\n  \"birth_place_state\": \"<string>\",\n  \"birth_place_country\": \"<string>\",\n  \"mothers_maiden_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5cd065c6-a887-4b0f-8be7-b317c79318cd",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"12303\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27\",\n      \"legal_effective_date\": \"2018-03-27\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"disability_rating_id\": \"1070379\",\n          \"effective_date\": \"2018-03-27\",\n          \"rating_end_date\": \"2022-08-27\",\n          \"rating_percentage\": 50,\n          \"diagnostic_type_code\": \"0502\",\n          \"hyph_diagnostic_type_code\": \"1234\",\n          \"diagnostic_type_name\": \"Schizophrenia, disorganized type\",\n          \"diagnostic_text\": \"bilateral hearing loss\",\n          \"static_ind\": true\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41eb6764-72f3-4c73-9ca7-df5f3ae8031a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"status\": \"400\",\n  \"code\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6fc4a5e-f05c-4bf7-a053-4a72efd26d02",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/restricted/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e149b76-01c7-4bdb-a4b5-468545f813e6",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/restricted/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "038a1b55-01e2-4cde-b92c-935a50bd436b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40c493f9-9c31-431c-8a66-a3c1fc92f6b3",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2edc2ce6-13b6-44e1-aaa0-5f63d725e1b8",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6325af01-e574-4910-aaa5-b6db95e34d30",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88425c36-d560-4215-893c-320ed1d37b02",
+              "name": "Bad Gateway. Also, could indicate Person Not Found in MPI backend.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Gateway\",\n  \"detail\": \"Upstream Request Error.\",\n  \"status\": \"502\",\n  \"code\": \"502\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7914488f-1e0c-4c1b-9b2c-431f3569bb3a",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53aa5d38-502a-437b-8bae-cc619329ef69",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd7c9d78-4dca-46e5-a6c0-a57ead5bc7a0",
+          "name": "Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+          "request": {
+            "name": "Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "description": {
+              "content": "This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "summary",
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "4a83edff-c189-4f8e-8686-b5870fa54c4c",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"12303\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27\",\n      \"legal_effective_date\": \"2018-03-27\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"disability_rating_id\": \"1070379\",\n          \"effective_date\": \"2018-03-27\",\n          \"rating_end_date\": \"2022-08-27\",\n          \"rating_percentage\": 50,\n          \"static_ind\": true\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2094e167-d41f-45b4-add4-6d909fceade1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"code\": \"400\",\n  \"status\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d0bee1e-b3c1-4c2b-a3b5-b14f8de8e9d8",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/summary/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23a9ea7c-6e6d-4bdd-b792-9dca8a4a651a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/summary/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bdc2132-e3a9-4bb4-8ed5-45e02f34b61d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e0362b6-1e28-41d2-a048-4890994d8668",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b54e3b6-399d-4cd2-9d80-d1fd71954a58",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8864252-4a32-463d-86b2-1e4639eabdc9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82a6783c-50ea-41f7-827b-6264c8c50c6e",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"503\",\n      \"status\": \"503\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b169f600-c052-4db3-bc1a-f15368c312dc",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3945e098-10f7-4623-9ac3-5aa58cac66a4",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ff6f5c6-93ff-40a4-be93-ac7966381b64",
+          "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+          "request": {
+            "name": "Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.",
+            "description": {
+              "content": "This endpoint provides a Veteran's disability ratings and related decisions and dates.\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n* Mother's Maiden Name\n* Home Phone Number\n* Birth Place City\n* Birth Place State\n* Birth Place Country\n\nTips for finding a match:\n* First and Last Name, Address and DOB are often essential to uniquely identifying\na Veteran.\n* Home Address is recommended, but it may be beneficial to retry the search with\nadditional addresses if they are available and the first attempt is not confirmed.\n* To find a match, it can help to retry with different demographic information,\nsuch as alternate last names or addresses.\n* It can also help to remove special characters, hyphens, apostrophes, or spaces\nin a name prior to matching.\n\nNOTE: In the Sandbox only DOB and ZIP are required to identify the test user.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "summary",
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_date\": \"<date>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"street_address_line1\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"state\": \"<string>\",\n  \"street_address_line2\": \"<string>\",\n  \"street_address_line3\": \"<string>\",\n  \"home_phone_number\": \"<string>\",\n  \"birth_place_city\": \"<string>\",\n  \"birth_place_state\": \"<string>\",\n  \"birth_place_country\": \"<string>\",\n  \"mothers_maiden_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a992f258-4682-40e3-9f23-36e872ba8e2f",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"12303\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27\",\n      \"legal_effective_date\": \"2018-03-27\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"disability_rating_id\": \"1070379\",\n          \"effective_date\": \"2018-03-27\",\n          \"rating_end_date\": \"2022-08-27\",\n          \"rating_percentage\": 50,\n          \"static_ind\": true\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dd86c5e-dff0-4262-8182-82da7cfc3ab3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"code\": \"400\",\n  \"status\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25a3fc3a-5f4d-4e5f-a2a7-33d2baf31541",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/summary/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82d88a9b-b406-4f5c-a455-06c19a042572",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/summary/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68b1b0f0-9c5e-4770-8b6a-0dc299d8ae77",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "199d60a8-2466-4f68-a005-45d31b6e08c8",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75aa6a28-acf7-47e9-887a-17d126e4f216",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58ef965b-7521-44a7-aafc-07ccbe5df73f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f286b4a0-3748-4128-9d9b-3c7aa1ba01f1",
+              "name": "Bad Gateway. Also, could indicate Person Not Found in MPI backend.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Gateway\",\n  \"detail\": \"Upstream Request Error.\",\n  \"code\": \"502\",\n  \"status\": \"502\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35b57e4c-f50f-4883-9808-c57fcea97a22",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8635f71-dbe2-4b19-b9f1-234b5804e25d",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2c2fc5e-bb77-4d76-baa5-70f2fdc25fd6",
+          "name": "Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)",
+          "request": {
+            "name": "Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)",
+            "description": {
+              "content": "This endpoint provides a Veteran's disability ratings and related decisions and dates.   It allows searching for a Veteran using Social   Security number and demographic information.\n\n  If using Social Security number, the following information is required:\n  * Social Security number\n  * First name\n  * Last name\n  * Birth date\n\n  If using demographic data, the following information is required:\n  * First Name\n  * Last Name\n  * Birth date\n  * Street Address\n  * City\n  * State\n  * Country\n  * Zipcode\n\n  The following optional information may also be used with Social Security number\n  or demographic data:\n  * Middle Name\n  * Gender\n  * Mother's Maiden Name\n  * Home Phone Number\n  * Birth Place City\n  * Birth Place State\n  * Birth Place Country\n\n  Tips for finding a match:\n  * First and Last Name, Address and Birth date are often essential to uniquely\n  identifying a Veteran.\n  * Home address is recommended, but it may also help to retry the search with\n  additional available addresses when the first attempt is not confirmed.\n  * To find a match, it can help to retry with different demographic information,\n  such as alternate last names or addresses.\n  * It can also help to remove special characters, hyphens, apostrophes, or spaces\n  in a name prior to matching.\n\n  NOTE: In the Sandbox only birth date and zip code are required to identify the\n  test user.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "restricted",
+                "summary",
+                "disability_rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{version}}",
+                  "key": "version"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_date\": \"<date>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"ssn\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"middle_name\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"country\": \"<string>\",\n  \"street_address_line1\": \"<string>\",\n  \"street_address_line2\": \"<string>\",\n  \"street_address_line3\": \"<string>\",\n  \"home_phone_number\": \"<string>\",\n  \"birth_place_city\": \"<string>\",\n  \"birth_place_state\": \"<string>\",\n  \"birth_place_country\": \"<string>\",\n  \"mothers_maiden_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8f3caf78-7cb0-4bdd-9c88-8460950fcc2b",
+              "name": "Disability Rating retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"12303\",\n    \"type\": \"disability-rating\",\n    \"attributes\": {\n      \"combined_disability_rating\": 100,\n      \"combined_effective_date\": \"2018-03-27\",\n      \"legal_effective_date\": \"2018-03-27\",\n      \"individual_ratings\": [\n        {\n          \"decision\": \"Service Connected\",\n          \"disability_rating_id\": \"1070379\",\n          \"effective_date\": \"2018-03-27\",\n          \"rating_end_date\": \"2022-08-27\",\n          \"rating_percentage\": 50,\n          \"static_ind\": true\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "910d45ab-90d9-4ee5-9fcb-ae688877b385",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Bad Request\",\n  \"status\": \"400\",\n  \"code\": \"400\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "664aeeb9-df04-4dd2-8570-8b4044b2c561",
+              "name": "Not Authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"401\",\n  \"error\": \"Invalid Token.\",\n  \"path\": \"/veteran_verification/v2/restricted/summarydisability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b5c1bee-6bbf-4a7e-9717-d52eb3e80b39",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"403\",\n  \"error\": \"Token not granted requested scope.\",\n  \"path\": \"/veteran_verification/v2/restricted/summary/disability_rating\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed59037b-c02c-4196-b1a6-295818f233e8",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Veteran not identifiable.\",\n  \"detail\": \"No data found for ID or demographics.\",\n  \"code\": \"404\",\n  \"status\": \"404\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6616c74-1511-46aa-be0b-39f9d68f519c",
+              "name": "Payload too large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Request size limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb58d410-8188-4acc-8950-5a06631fa4b4",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"API rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a3806d6-5211-4297-b542-fc4334e5e3c3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal server error\",\n  \"detail\": \"Internal server error\",\n  \"code\": \"500\",\n  \"status\": \"500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "591faa57-658a-4dce-9b4f-9ed4250958d2",
+              "name": "Bad Gateway. Also, could indicate Person Not Found in MPI backend.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Gateway\",\n  \"detail\": \"Upstream Request Error.\",\n  \"status\": \"502\",\n  \"code\": \"502\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba196b95-a00f-461d-a3fc-0f2a417a4fdb",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    },\n    {\n      \"title\": \"Error title\",\n      \"detail\": \"Detailed error message\",\n      \"code\": \"Error Code\",\n      \"status\": \"Error Code\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19103642-c618-453b-b885-4681416782e2",
+              "name": "Gateway Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "restricted",
+                    "summary",
+                    "disability_rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "{{version}}",
+                      "key": "version"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "apikey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ssn\": \"796-01-2476\",\n  \"first_name\": \"Alfredo\",\n  \"last_name\": \"Armstrong\",\n  \"birth_date\": \"1993-06-08\",\n  \"middle_name\": \"M\",\n  \"gender\": \"M\",\n  \"street_address_line1\": \"17020 Tortoise St\",\n  \"street_address_line2\": \"\",\n  \"street_address_line3\": \"\",\n  \"city\": \"Round Rock\",\n  \"zipcode\": \"78664\",\n  \"state\": \"TX\",\n  \"country\": \"USA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The server took too long to respond\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3",
+      "key": "version"
+    },
+    {
+      "type": "string",
+      "value": "https://sandbox-api.va.gov/services/address-validation/{{version}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apikey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "13ea8885-c743-488d-ab35-ca09c907af13",
+    "name": "Address Validation 5103 Waiver Disability Rating API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us).",
+      "type": "text/plain"
+    }
+  }
+}

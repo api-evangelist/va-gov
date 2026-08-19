@@ -1,0 +1,211 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Intent to File API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Intent to File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get 0966 JSON Schema for form.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/0966"
+          },
+          "docs": "Returns a single 0966 JSON schema to auto generate a form."
+        },
+        {
+          "info": {
+            "name": "Submit form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/0966",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Establishes an intent to file for disability compensation, burial, or pension claims.\n"
+        },
+        {
+          "info": {
+            "name": "Returns last active 0966 Intent to File form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/0966/active",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "type",
+                "value": "compensation",
+                "type": "query",
+                "description": "The type of 0966 you wish to get the active submission for."
+              }
+            ]
+          },
+          "docs": "Returns the last active 0966 form for a Veteran."
+        },
+        {
+          "info": {
+            "name": "Test the 0966 Intent to File form submission.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/forms/0966/validate",
+            "headers": [
+              {
+                "name": "X-VA-SSN",
+                "value": ""
+              },
+              {
+                "name": "X-VA-First-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Last-Name",
+                "value": ""
+              },
+              {
+                "name": "X-VA-Birth-Date",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test to ensure the form submission works with your parameters.\nSubmission is validated against the GET /forms/0966 schema.\n"
+        },
+        {
+          "info": {
+            "name": "Returns claimant's last active Intent to File submission for given benefit type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/intent-to-file/:type",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              },
+              {
+                "name": "type",
+                "value": "compensation",
+                "type": "path",
+                "description": "Type of Intent to File to return. Available values - compensation, pension, survivor."
+              }
+            ]
+          },
+          "docs": "Returns claimant's last active Intent to File submission for given benefit type of compensation, pension, or survivor."
+        },
+        {
+          "info": {
+            "name": "Submit form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/intent-to-file",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Establishes an Intent to File for disability compensation, pension, and survivor claims."
+        },
+        {
+          "info": {
+            "name": "Validate form 0966 Intent to File.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/veterans/:veteranId/intent-to-file/validate",
+            "params": [
+              {
+                "name": "veteranId",
+                "value": "1012667145V762142",
+                "type": "path",
+                "description": "ID of claimant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates an Intent to File for disability compensation, pension, and survivor claims."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

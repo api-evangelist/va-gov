@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver veteran_confirmation_status API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "veteran_confirmation_status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get confirmation about an individual's Veteran status according to the VA",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get confirmation about an individual's Veteran status according to the VA"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Enrolled Benefits API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enrolled Benefits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get enrolled benefits information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/enrolled_benefits"
+          },
+          "docs": "This endpoint returns select enrolled benefits for a Veteran.\nIf the Veteran is enrolled, the codes and names for benefits they are\nreceiving will be returned for the following benefit types:\n\n* Compensation (Code C)\n* 306 Pension (Code 306P)\n* Old Law Pension (Code OLP)\n* Improved Pension (Code IP)\n"
+        },
+        {
+          "info": {
+            "name": "Get enrolled benefits information using demographics to search for the Veteran.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/enrolled_benefits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint returns select enrolled benefits for a Veteran.\nIf the Veteran is enrolled, the codes and names for benefits they are\nreceiving will be returned for the following benefit types:\n\n* Compensation (Code C)\n* 306 Pension (Code 306P)\n* Old Law Pension (Code OLP)\n* Improved Pension (Code IP)\n\nRequired information:\n* First Name\n* Last Name\n* Date of Birth\n* Street Address\n* City\n* State\n* Country\n* Zipcode\n\nOptional information:\n* Middle Name\n* Gender\n\nTips for finding a match:\n\n* First a"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

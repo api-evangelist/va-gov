@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Address Validation 5103 Waiver Status API",
+    "version": "3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apikey",
+      "value": "{{apikey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Confirms whether an individual is a Veteran",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/status"
+          },
+          "docs": "The Veteran Confirmation API allows you to confirm Veteran status for a given person. This can be useful for offering Veterans discounts or other benefits."
+        },
+        {
+          "info": {
+            "name": "Confirm whether an individual is a Title 38 Veteran using demographics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts demographic information for the person to\nbe confirmed and matches it against VA records. If there are\ndifferences between the data entered and the data on file, a\nmatch to a person may not be found. If a successful match is\nidentified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different things, depending on\nthe followin"
+        },
+        {
+          "info": {
+            "name": "Confirm whether an individual is a Title 38 veteran using Social Security number and demographics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox-api.va.gov/services/address-validation/{version}/restricted/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm an individual's Title 38 Veteran status according to VA.\nThis endpoint accepts a Social Security number and/or demographic\ninformation for the person to be confirmed and matches it against\nVA records. If there are differences between the data entered and\nthe data on file, a match to a person may not be found. If a\nsuccessful match is identified, Title 38 Veteran status is checked.\n\n- ```\"confirmed\"``` indicates Title 38 Veteran status.\n- ```\"not confirmed\"``` can mean several different t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
