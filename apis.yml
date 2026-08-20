@@ -596,6 +596,8 @@ apis:
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
   tags:
+  - Direct Deposit
+  tags_raw:
   - DirectDeposit
   properties:
   - type: OpenAPI
@@ -1090,6 +1092,8 @@ apis:
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
   tags:
+  - Facilities
+  tags_raw:
   - facilities
   properties:
   - type: OpenAPI
@@ -1336,6 +1340,8 @@ apis:
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
   tags:
+  - Intent To File
+  tags_raw:
   - Intent to File
   properties:
   - type: OpenAPI
@@ -1663,7 +1669,8 @@ apis:
   description: Loan Review Public Resource
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
-  tags:
+  tags: []
+  tags_raw:
   - loanReviewPublic
   properties:
   - type: OpenAPI
@@ -2403,7 +2410,8 @@ apis:
   description: Veteran Confirmation - Veteran Status
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
-  tags:
+  tags: []
+  tags_raw:
   - veteran_confirmation_status
   properties:
   - type: OpenAPI
