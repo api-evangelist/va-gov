@@ -2610,6 +2610,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/va-gov.png
 access: 3rd-Party
 common:
+- type: CapabilityMap
+  url: capabilities/va-gov-capability-edges.yml
+  name: VA Lighthouse Business Capability Map
 - type: AgenticAccess
   url: agentic-access/va-gov-agentic-access.yml
 - type: VulnerabilityDisclosure

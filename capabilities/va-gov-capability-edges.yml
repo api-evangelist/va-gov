@@ -1,0 +1,27 @@
+slug: va-gov
+provider: VA Lighthouse
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Search
+  spec_file: va-gov-search-api-openapi.yml
+  capability_id: BC-2800.30
+  capability_id_l1: BC-2800
+  capability_name: Eligibility & Benefits Verification
+  confidence: 0.72
+  evidence: '"Estimate the likelihood of a VA patient''s eligibility for community care based on their
+    Integrated Control Number (ICN) and requested medical service." — schemas CommunityCareEligibilityResponse,
+    EligibilityCode'
+  reason: Despite the generic tag name, the single operation determines a patient's coverage eligibility
+    for a requested medical service before care is delivered, which is eligibility & benefits verification
+    in patient access. Confidence moderated because it is one endpoint and the tag itself is generic.
