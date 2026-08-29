@@ -18,10 +18,10 @@ edges:
   capability_id: BC-2800.30
   capability_id_l1: BC-2800
   capability_name: Eligibility & Benefits Verification
-  confidence: 0.72
-  evidence: '"Estimate the likelihood of a VA patient''s eligibility for community care based on their
-    Integrated Control Number (ICN) and requested medical service." — schemas CommunityCareEligibilityResponse,
-    EligibilityCode'
-  reason: Despite the generic tag name, the single operation determines a patient's coverage eligibility
-    for a requested medical service before care is delivered, which is eligibility & benefits verification
-    in patient access. Confidence moderated because it is one endpoint and the tag itself is generic.
+  confidence: 0.75
+  evidence: Estimate the likelihood of a VA patient's eligibility for community care based on their Integrated
+    Control Number (ICN) and requested medical service; schemas CommunityCareEligibilityResponse, EligibilityCode
+  reason: Despite the generic 'Search' tag, the single operation determines a patient's coverage eligibility
+    for a requested medical service before care is delivered, which is eligibility and benefits verification
+    within Patient Access Management. Confidence tempered because the surface is a single endpoint and
+    the vendor sits on the payer/agency side of the eligibility determination.
