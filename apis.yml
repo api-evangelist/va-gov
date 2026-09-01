@@ -596,7 +596,7 @@ apis:
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
   tags:
-  - DirectDeposit
+  - Direct Deposit
   tags_raw:
   - DirectDeposit
   properties:
@@ -1340,7 +1340,7 @@ apis:
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
   tags:
-  - Intent to File
+  - Intent To File
   tags_raw:
   - Intent to File
   properties:
