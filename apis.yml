@@ -590,90 +590,6 @@ apis:
     url: https://developer.va.gov/explore/api/loan-review/docs
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
-- aid: va-gov:va-gov-directdeposit-api
-  name: VA Lighthouse DirectDeposit API
-  description: The DirectDeposit API from VA Lighthouse — 1 operation(s) for directdeposit.
-  humanURL: https://developer.va.gov/explore/api/va-facilities/docs
-  baseURL: https://api.va.gov/services/va_facilities/v1
-  tags:
-  - Direct Deposit
-  tags_raw:
-  - DirectDeposit
-  properties:
-  - type: OpenAPI
-    url: openapi/va-gov-directdeposit-api-openapi.yml
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/va-facilities/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/va-facilities/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/va-forms/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/va-forms/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/benefits-claims/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/benefits-claims/authorization-code
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/benefits-claims/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/benefits-intake/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/benefits-intake/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/benefits-documents/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/benefits-documents/client-credentials
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/benefits-documents/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/benefits-reference-data/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/benefits-reference-data/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/appeals-status/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/appeals-status/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/appealable-issues/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/appealable-issues/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/legacy-appeals/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/legacy-appeals/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/patient-health/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/patient-health/authorization-code
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/clinical-health/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/clinical-health/authorization-code
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/community-care-eligibility/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/community-care-eligibility/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/veteran-confirmation/docs
-  - type: ChangeLog
-    url: https://developer.va.gov/explore/api/veteran-confirmation/release-notes
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/address-validation/docs
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/direct-deposit-management/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/direct-deposit-management/client-credentials
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/va-letter-generator/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/va-letter-generator/client-credentials
-  - type: Documentation
-    url: https://developer.va.gov/explore/api/loan-review/docs
-  - type: Authentication
-    url: https://developer.va.gov/explore/api/loan-review/client-credentials
 - aid: va-gov:va-gov-disability-api
   name: VA Lighthouse Disability API
   description: Used for 526 claims.
@@ -2405,17 +2321,17 @@ apis:
     url: https://developer.va.gov/explore/api/loan-review/docs
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
-- aid: va-gov:va-gov-veteran-confirmation-status-api
-  name: VA Lighthouse veteran_confirmation_status API
-  description: Veteran Confirmation - Veteran Status
+- aid: va-gov:va-gov-veteran-verification-api
+  name: VA Lighthouse Veteran Verification API
+  description: >-
+    The Veteran Verification API from VA Lighthouse — 3 operation(s) for veteran verification.
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
-  tags: []
-  tags_raw:
-  - veteran_confirmation_status
+  tags:
+  - Veteran Verification
   properties:
   - type: OpenAPI
-    url: openapi/va-gov-veteran-confirmation-status-api-openapi.yml
+    url: openapi/va-gov-veteran-verification-api-openapi.yml
   - type: Documentation
     url: https://developer.va.gov/explore/api/va-facilities/docs
   - type: ChangeLog
@@ -2488,17 +2404,16 @@ apis:
     url: https://developer.va.gov/explore/api/loan-review/docs
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
-- aid: va-gov:va-gov-veteran-verification-api
-  name: VA Lighthouse Veteran Verification API
-  description: >-
-    The Veteran Verification API from VA Lighthouse — 3 operation(s) for veteran verification.
-  humanURL: https://developer.va.gov/explore/api/va-facilities/docs
-  baseURL: https://api.va.gov/services/va_facilities/v1
+- aid: va-gov:va-gov-direct-deposit-api
+  name: VA Lighthouse Direct Deposit API
+  description: The Direct Deposit API from VA Lighthouse — 1 operation(s) for direct deposit.
+  humanURL: https://developer.va.gov/explore/api/decision-reviews/docs
+  baseURL: https://api.va.gov/services/appeals/v2
   tags:
-  - Veteran Verification
+  - Direct Deposit
   properties:
   - type: OpenAPI
-    url: openapi/va-gov-veteran-verification-api-openapi.yml
+    url: openapi/va-gov-direct-deposit-api-openapi.yml
   - type: Documentation
     url: https://developer.va.gov/explore/api/va-facilities/docs
   - type: ChangeLog
