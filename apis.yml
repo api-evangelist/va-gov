@@ -46,6 +46,12 @@ apis:
   - Government
   - Veterans Affairs
   - Home Loans
+  - Mortgage
+  - Loan Guaranty
+  tags_raw:
+  - Government
+  - Veterans Affairs
+  - Home Loans
   - Mortgages
   - Loan Guaranty
   humanURL: https://developer.va.gov/explore/api/loan-guaranty/docs
