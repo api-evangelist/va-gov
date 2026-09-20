@@ -11,8 +11,63 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 1
+edge_count: 12
 edges:
+- tag: Appeals Status
+  spec_file: va-gov-appeals-status-api-openapi.yml
+  capability_id: BC-3220.50
+  capability_id_l1: BC-3220
+  capability_name: Appeals & Ombudsman Management
+  confidence: 0.82
+  evidence: GET /appeals  "Retrieve appeals status for the Veteran with the supplied SSN" ; schemas Appeal,
+    Appeals, Issue, Evidence
+  reason: Provides status of a veteran's appeals of agency decisions, i.e. administrative review/appeals
+    administration. The misleading Address Validation title was ignored in favour of the operation.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Appealable Issues
+  spec_file: va-gov-appealable-issues-api-openapi.yml
+  capability_id: BC-3220.50
+  capability_id_l1: BC-3220
+  capability_name: Appeals & Ombudsman Management
+  confidence: 0.78
+  evidence: '"Returns all appealable issues of the selected appeal type for a claimant." ; schemas appealableIssue,
+    appealableIssues'
+  reason: Enumerating appealable issues by decision review type supports administrative review/appeal
+    of agency benefit decisions, matching Appeals & Ombudsman Management.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Claims
+  spec_file: va-gov-claims-api-openapi.yml
+  capability_id: BC-3230
+  capability_id_l1: BC-3230
+  capability_name: Public Benefits & Entitlements Management
+  confidence: 0.78
+  evidence: '"Find all benefits claims for a VA claimant" ; "Find claim by ID."'
+  reason: Retrieval of veterans' benefits claims is squarely public benefits and entitlements administration;
+    the read-only claim lookup does not identify a single sub-capability (eligibility, award, or monitoring),
+    so L1 only.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Disability Compensation Claims
+  spec_file: va-gov-disability-compensation-claims-api-openapi.yml
+  capability_id: BC-3230.20
+  capability_id_l1: BC-3230
+  capability_name: Eligibility Determination
+  confidence: 0.75
+  evidence: POST /veterans/{veteranId}/526/synchronous  Submits disability compensation claim synchronously
+  reason: Operations submit, validate and generate the 526EZ disability compensation claim for a veteran
+    — statutory benefit claim intake feeding eligibility determination under public benefits and entitlements
+    management.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Disability Rating
+  spec_file: va-gov-disability-rating-api-openapi.yml
+  capability_id: BC-3230.30
+  capability_id_l1: BC-3230
+  capability_name: Benefit Calculation & Award
+  confidence: 0.75
+  evidence: GET /summary/disability_rating  Get information about a Veteran's VA disability ratings. Data
+    returned includes individual and combined ratings and eligibility dates for compensation
+  reason: Returns individual and combined disability ratings and compensation eligibility dates — the
+    award/rating assessment underlying benefit calculation and award for a statutory entitlement programme.
+  recovered_from: vertical-public-sector-government-edges.json
 - tag: Search
   spec_file: va-gov-search-api-openapi.yml
   capability_id: BC-2800.30
@@ -25,3 +80,74 @@ edges:
     for a requested medical service before care is delivered, which is eligibility and benefits verification
     within Patient Access Management. Confidence tempered because the surface is a single endpoint and
     the vendor sits on the payer/agency side of the eligibility determination.
+- tag: 5103 Waiver
+  spec_file: va-gov-5103-waiver-api-openapi.yml
+  capability_id: BC-3230
+  capability_id_l1: BC-3230
+  capability_name: Public Benefits & Entitlements Management
+  confidence: 0.72
+  evidence: POST /veterans/{veteranId}/claims/{id}/5103  "Submit Evidence Waiver 5103"
+  reason: Submitting a 5103 evidence waiver is a step in adjudicating a veteran's benefits claim, i.e.
+    public benefits/entitlements administration. The exact sub-capability (eligibility determination vs.
+    case handling) is not pinned down by the single operation, so no L2. Note the OpenAPI title (Address
+    Validation) belongs to a different tag and was disregarded.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: DirectDeposit
+  spec_file: va-gov-direct-deposit-api-openapi.yml
+  capability_id: BC-3230.40
+  capability_id_l1: BC-3230
+  capability_name: Benefit Disbursement Operations
+  confidence: 0.7
+  evidence: '"Create or update direct deposit account information." ; schemas EftInformation, DirectDepositResponse,
+    ControlInformation'
+  reason: Managing the EFT account into which VA benefit payments are made is part of benefit disbursement
+    operations (payment channel setup). Could arguably be read as generic payment-method management, hence
+    0.7.
+  recovered_from: vertical-public-sector-government-edges.json
+  reanchored_from: va-gov-directdeposit-api-openapi.yml
+- tag: Disability
+  spec_file: va-gov-disability-api-openapi.yml
+  capability_id: BC-3230.20
+  capability_id_l1: BC-3230
+  capability_name: Eligibility Determination
+  confidence: 0.7
+  evidence: POST /forms/526  Submits form 526 ... POST /forms/526/{id}/attachments  Upload documents supporting
+    a 526 claim
+  reason: VA Form 526 is the veterans disability compensation benefit claim application; operations submit
+    and validate the claim form and supporting evidence, which is public benefits/entitlements claim intake
+    and eligibility determination. Sub-capability choice between intake/eligibility is somewhat ambiguous,
+    hence moderate confidence.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Enrolled Benefits
+  spec_file: va-gov-enrolled-benefits-api-openapi.yml
+  capability_id: BC-3230
+  capability_id_l1: BC-3230
+  capability_name: Public Benefits & Entitlements Management
+  confidence: 0.7
+  evidence: 'GET /enrolled_benefits  Get enrolled benefits information. ... schemas: VeteranEnrolledBenefitsConfirmation,
+    VeteranEnrolledBenefit'
+  reason: Returns confirmation of the statutory benefits a veteran is enrolled in — benefit entitlement/enrolment
+    status data. L1 only, as the endpoints just expose enrolment status without a clear sub-process.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Legacy Appeals
+  spec_file: va-gov-legacy-appeals-api-openapi.yml
+  capability_id: BC-3220.50
+  capability_id_l1: BC-3220
+  capability_name: Appeals & Ombudsman Management
+  confidence: 0.7
+  evidence: GET /legacy-appeals  Returns eligible appeals in the legacy process for a claimant.
+  reason: Exposes a claimant's appeals in the legacy VA appeals process — administrative review of agency
+    benefit decisions. Single read-only endpoint, so confidence moderate.
+  recovered_from: vertical-public-sector-government-edges.json
+- tag: Veteran Verification
+  spec_file: va-gov-veteran-verification-api-openapi.yml
+  capability_id: BC-3220.20
+  capability_id_l1: BC-3220
+  capability_name: Citizen Identity & Authentication
+  confidence: 0.7
+  evidence: Get confirmation about an individual's Veteran status according to the VA / Retrieve disability
+    rating of authorized Veteran
+  reason: Bundles veteran status confirmation, disability rating and service history retrieval — government
+    verification of a citizen's status and entitlement attributes for third parties. Citizen Identity
+    & Authentication is the closest fit, though disability rating also touches benefits eligibility.
+  recovered_from: vertical-public-sector-government-edges.json
