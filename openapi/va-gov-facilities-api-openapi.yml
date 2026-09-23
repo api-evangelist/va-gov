@@ -1,32 +1,31 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver facilities API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Va Gov Facilities API
+  contact:
+    name: developer.va.gov
+  version: '1.0'
+  description: 'Operations tagged facilities across 2 of this provider''s published API definitions: va-gov-facilities-v0-openapi.json, va-gov-facilities-v1-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/va_facilities/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v0
+- url: https://api.va.gov/services/va_facilities/{version}
   description: Production
   variables:
     version:
-      default: v3
+      default: v0
 security:
 - apikey: []
 tags:
-- name: facilities
+- name: Facilities
   description: VA Facilities API
 paths:
   /facilities/all:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Bulk download information for all facilities
       description: Retrieve all available facilities in a single operation, formatted as either a GeoJSON FeatureCollection or as a CSV. Due to the complexity of the facility resource type, the CSV response contains a subset of available facility data - specifically it omits the available services, patient satisfaction, and patient wait time data.
       operationId: GET:/facilities/all
@@ -116,12 +115,61 @@ paths:
                     type: string
                 example:
                   message: API rate limit exceeded
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v0
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v0
   /facilities:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Query facilities by location or IDs, with optional filters
-      description: "Query facilities by bounding box, latitude and longitude, state, visn, or zip code. Bounding box is specified as four `bbox[]` parameters, long1, lat1, long2, lat2. (Relative order is unimportant.)\n\nA query by latitude and longitude returns all facilities in the system, sorted by distance from that location. Providing an optional radius in miles to this query will narrow the scope of the returned facilities to those falling within the specified radius from that location.\n\nAll location queries support filtering by facility type, available services, and mobile status.\n\nOne can also retrieve facilities by ID using a comma-separated list like `?ids=id1,id2`. When requesting multiple facilities by ID, the API will return as many results as it can find matches for, omitting IDs where there is no match. It will not return an HTTP error code if it is unable to match a requested ID. Clients may supply IDs up to the limit their HTTP client enforces for URI path lengths. (Usually 2048 characters.)\n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\n### Parameter combinations\nYou may optionally specify `page` and `per_page` with any query. You must specify one of the following parameter combinations: \n\n- `bbox[]`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n- `ids`\n\n- `lat` and `long`, with the option of any combination of `radius`, `ids`, `type`, `services[]`, or `mobile`\n\n- `state`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n- `visn`\n\n- `zip`, with the option of any combination of `type`, `services[]`, or `mobile`\n\n Invalid combinations will return `400 Bad Request`. "
+      description: 'Query facilities by bounding box, latitude and longitude, state, visn, or zip code. Bounding box is specified as four `bbox[]` parameters, long1, lat1, long2, lat2. (Relative order is unimportant.)
+
+
+        A query by latitude and longitude returns all facilities in the system, sorted by distance from that location. Providing an optional radius in miles to this query will narrow the scope of the returned facilities to those falling within the specified radius from that location.
+
+
+        All location queries support filtering by facility type, available services, and mobile status.
+
+
+        One can also retrieve facilities by ID using a comma-separated list like `?ids=id1,id2`. When requesting multiple facilities by ID, the API will return as many results as it can find matches for, omitting IDs where there is no match. It will not return an HTTP error code if it is unable to match a requested ID. Clients may supply IDs up to the limit their HTTP client enforces for URI path lengths. (Usually 2048 characters.)
+
+
+        Results are paginated. JSON responses include pagination information in the standard JSON API "links" and "meta" elements.
+
+
+        ### Parameter combinations
+
+        You may optionally specify `page` and `per_page` with any query. You must specify one of the following parameter combinations:
+
+
+        - `bbox[]`, with the option of any combination of `type`, `services[]`, or `mobile`
+
+
+        - `ids`
+
+
+        - `lat` and `long`, with the option of any combination of `radius`, `ids`, `type`, `services[]`, or `mobile`
+
+
+        - `state`, with the option of any combination of `type`, `services[]`, or `mobile`
+
+
+        - `visn`
+
+
+        - `zip`, with the option of any combination of `type`, `services[]`, or `mobile`
+
+
+        Invalid combinations will return `400 Bad Request`.'
       operationId: GET:/facilities
       parameters:
       - name: ids
@@ -314,10 +362,21 @@ paths:
                     type: string
                 example:
                   message: API rate limit exceeded
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v0
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v0
   /facilities/{id}:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Retrieve a specific facility by ID
       operationId: GET:/facilities/{id}
       parameters:
@@ -403,10 +462,21 @@ paths:
                     type: string
                 example:
                   message: API rate limit exceeded
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v0
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v0
   /ids:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Bulk download of all facility IDs
       description: Retrieves all available facility IDs only
       operationId: GET:/ids
@@ -478,11 +548,22 @@ paths:
                     type: string
                 example:
                   message: API rate limit exceeded
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v0
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v0
   /nearby:
     get:
       tags:
-      - facilities
-      summary: Retrieve all VA health facilities reachable by driving within the specified time period
+      - Facilities
+      summary: Retrieve all VA health facilities reachable by driving within the specified…
       description: 'Retrieve all VA health facilities that are located within a specified drive time from a specified location based on coordinates (lat and lng). Optional filter parameters include drive_time and services[]. Address (street_address, city, state, and zip) no longer returns results.
 
 
@@ -638,10 +719,21 @@ paths:
                     type: string
                 example:
                   message: API rate limit exceeded
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v0
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v0
   /facilities/{facilityId}:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Retrieve a specific facility by ID
       operationId: GET:/facilities/{facilityId}
       parameters:
@@ -732,12 +824,29 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /facilities/{facilityId}/services/{serviceId}:
     get:
       tags:
-      - facilities
-      summary: Query a specific facility service using a service ID and a facility ID.
-      description: "Query facility services using service parameter. Simply provide the service like `services/cardiology`. \n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\nYou may optionally specify `page` and `per_page` with any query. "
+      - Facilities
+      summary: Query a specific facility service using a service ID and a facility ID
+      description: 'Query facility services using service parameter. Simply provide the service like `services/cardiology`.
+
+
+        Results are paginated. JSON responses include pagination information in the standard JSON API "links" and "meta" elements.
+
+
+        You may optionally specify `page` and `per_page` with any query.'
       operationId: GET:/facilities/{facilityId}/services/{serviceId}
       parameters:
       - name: facilityId
@@ -834,12 +943,40 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /facilities/{facilityId}/services:
     get:
       tags:
-      - facilities
+      - Facilities
       summary: Retrieve all services for a given facility
-      description: "Queries for services associated with a facility. Supports optional search parameters to narrow the results. By default, all services for the given facility will be returned. A search may specify a comma separated list of service ids to include by using the `serviceIds` parameter. The type of services (e.g. \"health\", \"benefits\", etc) may be specified in the `type` parameter.\n\n\nResults are paginated. JSON responses include pagination information in the standard JSON API \"links\" and \"meta\" elements. \n\n\n\n### Parameter combinations\nYou may optionally specify `page` and `per_page` with any query. You can query with any combination of the following: \n\n- `serviceIds`\n\n- `serviceType`\n\nBoth parameters are optional, and both may be used independently of each other or not at all."
+      description: 'Queries for services associated with a facility. Supports optional search parameters to narrow the results. By default, all services for the given facility will be returned. A search may specify a comma separated list of service ids to include by using the `serviceIds` parameter. The type of services (e.g. "health", "benefits", etc) may be specified in the `type` parameter.
+
+
+        Results are paginated. JSON responses include pagination information in the standard JSON API "links" and "meta" elements.
+
+
+        ### Parameter combinations
+
+        You may optionally specify `page` and `per_page` with any query. You can query with any combination of the following:
+
+
+        - `serviceIds`
+
+
+        - `serviceType`
+
+
+        Both parameters are optional, and both may be used independently of each other or not at all.'
       operationId: GET:/facilities/{facilityId}/services
       parameters:
       - name: facilityId
@@ -943,565 +1080,93 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/va_facilities/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/va_facilities/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
 components:
   schemas:
-    Address:
-      type: object
+    Hours:
+      type:
+      - object
+      - 'null'
       properties:
-        zip:
-          type: string
-          description: Postal (ZIP) code.
-          nullable: true
-          example: 20422-0001
-        city:
-          type: string
-          description: City name.
-          nullable: true
-          example: Washington
-        state:
-          type: string
-          description: State code.
-          nullable: true
-          example: DC
-        address_1:
-          type: string
-          description: Street name and number.
-          nullable: true
-          example: 50 Irving Street, Northwest
-        address_2:
-          type: string
-          description: Second line of address if applicable (such as a building number).
-          nullable: true
-          example: Bldg 2
-        address_3:
-          type: string
-          description: Third line of address if applicable (such as a unit or suite number).
-          nullable: true
-          example: Suite 7
-      description: Description of an address.
-      nullable: true
-    OperatingStatus:
+        monday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Monday.
+          example: 9AM-5PM
+        tuesday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Tuesday.
+          example: 9AM-5PM
+        wednesday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Wednesday.
+          example: 9AM-5PM
+        thursday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Thursday.
+          example: 9AM-5PM
+        friday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Friday.
+          example: 9AM-5PM
+        saturday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Saturday.
+          example: Closed
+        sunday:
+          type:
+          - string
+          - 'null'
+          description: Hours of operation for Sunday.
+          example: Closed
+      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
+      example: '"monday": "9:30AM-4:00PM",'
+    Distance:
       required:
-      - code
+      - distance
+      - id
       type: object
       properties:
-        code:
+        id:
           type: string
-          description: Status codes indicate normal hours/services, limited hours/services, closed operations, or published facility notices for visitors.
-          nullable: true
-          example: NORMAL
-          enum:
-          - NORMAL
-          - NOTICE
-          - LIMITED
-          - CLOSED
-        additional_info:
-          type: string
-          description: Details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.
-          nullable: true
-        supplemental_status:
-          type: array
-          description: List of supplemental statuses for VA facility.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/SupplementalStatus'
-      description: 'Current status of facility operations. The overall status of the facility, which can be: Normal Hours and Services, Facility Notice, Limited Hours and/or Services, or Closed. This field replaces active_status.'
-      nullable: true
-      example: NORMAL
-    Satisfaction:
-      type: object
-      properties:
-        health:
-          $ref: '#/components/schemas/PatientSatisfaction'
-        effective_date:
-          type: string
-          format: date
-          nullable: true
-          example: '2018-01-01'
-      description: Scores that indicate patient satisfaction at given facility per service.
-      nullable: true
-    Satisfaction_2:
-      type: object
-      properties:
-        health:
-          $ref: '#/components/schemas/PatientSatisfaction_2'
-        effectiveDate:
-          type: string
-          format: date
-          nullable: true
-          example: '2018-01-01'
-      description: Scores that indicate patient satisfaction at given facility per service.
-      nullable: true
-    ServiceHealthService:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of facility service.
-          nullable: true
-          example: Example Service Name
-        serviceId:
-          type: string
-          description: Unique identifier for facility service.
-          nullable: true
-          example: exampleServiceId
-        link:
-          type: string
-          description: Fully qualified link for facility service.
-          nullable: true
-          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
-      description: Service info block.
-    DetailedServiceEmailContact_2:
-      type: object
-      properties:
-        emailAddress:
-          type: string
-          description: Email address for facility service contact.
-          nullable: true
-          example: georgea@va.gov
-        emailLabel:
-          type: string
-          description: Email address label.
-          nullable: true
-          example: George Anderson
-      description: Email contact information for facility service.
-      nullable: true
-    GeoFacilitiesResponse:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - FeatureCollection
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeoFacility'
-      description: GeoJSON API-compliant response object describing one or more VA facilities.
-    DetailedServiceAddress:
-      type: object
-      properties:
-        building_name_number:
-          type: string
-          description: Building name and/or number of service.
-          nullable: true
-          example: Baxter Building
-        wing_floor_or_room_number:
-          type: string
-          description: Wing, floor, or room number of service.
-          nullable: true
-          example: Wing East
-        address_line1:
-          type: string
-          description: Street name and number.
-          nullable: true
-          example: 50 Irving Street, Northwest
-        address_line2:
-          type: string
-          description: Building number.
-          nullable: true
-          example: Bldg 2
-        city:
-          type: string
-          description: City name.
-          nullable: true
-          example: Washington
-        state:
-          type: string
-          description: State code.
-          nullable: true
-          example: DC
-        zip_code:
-          type: string
-          description: Postal (ZIP) code.
-          nullable: true
-          example: 20422-0001
-        country_code:
-          type: string
-          description: Country code.
-          nullable: true
-          example: US
-      description: Service location address.
-      nullable: true
-    Meta:
-      type: object
-      properties:
-        band_version:
-          type: string
-          description: Version of the drive time band data set used to generate this response.
-          nullable: true
-          example: APR2021
-      description: JSON API-compliant object containing metadata about this response.
-      nullable: true
-    ErrorMessage:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: '103'
-        status:
-          type: string
-          example: '400'
-    DetailedService_2:
-      type: object
-      properties:
-        serviceInfo:
-          $ref: '#/components/schemas/ServiceInfo'
-        appointmentLeadIn:
-          type: string
-          description: Additional appointment information. May contain html / string formatting characters.
-          nullable: true
-          example: Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.
-        appointmentPhones:
-          type: array
-          description: List of phone numbers related to scheduling appointments for this service.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/AppointmentPhoneNumber'
-        serviceLocations:
-          type: array
-          description: List of service locations.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/DetailedServiceLocation_2'
-        waitTime:
-          $ref: '#/components/schemas/PatientWaitTime_2'
-        lastUpdated:
-          type: string
-          description: Date and time of most recent upload of detailed service from CMS.
-          format: date-time
-          nullable: true
-        path:
-          type: string
-          description: URL to a page with additional details for this service within the associated facility's health care system.
-          nullable: true
-          example: https://www.boston.va.gov/services/covid-19-vaccines.asp
-        serviceId:
-          $ref: '#/components/schemas/DetailedService_2'
-        name:
-          $ref: '#/components/schemas/DetailedService_2'
-      description: Detailed information of a facility service.
-      nullable: true
-    Services:
-      type: object
-      properties:
-        other:
-          type: array
-          description: List of other services not included in one of the other service categories.
-          nullable: true
-          items:
-            type: string
-            enum:
-            - OnlineScheduling
-        health:
-          type: array
-          description: List of health services for given facility.
-          nullable: true
-          items:
-            type: string
-            enum:
-            - Audiology
-            - Cardiology
-            - CaregiverSupport
-            - Covid19Vaccine
-            - DentalServices
-            - Dermatology
-            - EmergencyCare
-            - Gastroenterology
-            - Gynecology
-            - MentalHealthCare
-            - Ophthalmology
-            - Optometry
-            - Orthopedics
-            - Nutrition
-            - Podiatry
-            - PrimaryCare
-            - SpecialtyCare
-            - UrgentCare
-            - Urology
-            - WomensHealth
-        benefits:
-          type: array
-          description: List of benefits services for given facility.
-          nullable: true
-          items:
-            type: string
-            enum:
-            - ApplyingForBenefits
-            - BurialClaimAssistance
-            - DisabilityClaimAssistance
-            - eBenefitsRegistrationAssistance
-            - EducationAndCareerCounseling
-            - EducationClaimAssistance
-            - FamilyMemberClaimAssistance
-            - HomelessAssistance
-            - InsuranceClaimAssistanceAndFinancialCounseling
-            - IntegratedDisabilityEvaluationSystemAssistance
-            - Pensions
-            - PreDischargeClaimAssistance
-            - TransitionAssistance
-            - UpdatingDirectDepositInformation
-            - VAHomeLoanAssistance
-            - VocationalRehabilitationAndEmploymentAssistance
-        last_updated:
-          type: string
-          description: Date of the most recent change in offered services.
-          format: date
-          nullable: true
-          example: '2018-01-01'
-      description: All services offered by a VA health or benefits facility grouped by service type.
-      nullable: true
-    DetailedServicesMetadata:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination_2'
-      description: "\t\nObject containing metadata about detailed service response"
-    ApiError:
-      required:
-      - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      description: API invocation or processing error
-    GenericError:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-          example: Detailed Error Message
-      description: A general error json response for things like Authorization Errors or Bad Requests (ex. invalid parameter values).
-    DetailedService:
-      type: object
-      properties:
-        service_id:
-          type: string
-          description: Service id.
-          example: covid19Vaccine
-        name:
-          type: string
-          description: Service name.
-          nullable: true
-          example: COVID-19 vaccines
-        description_facility:
-          type: string
-          description: Deprecated until further notice.
-          nullable: true
-          example: 'null'
-        appointment_leadin:
-          type: string
-          description: Additional appointment information. May contain html / string formatting characters.
-          nullable: true
-          example: Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.
-        appointment_phones:
-          type: array
-          description: List of phone numbers related to scheduling appointments for this service.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/AppointmentPhoneNumber'
-        online_scheduling_available:
-          type: string
-          description: String detailing online scheduling availability.
-          nullable: true
-          example: 'True'
-        referral_required:
-          type: string
-          description: String detailing if referrals are required for the service.
-          nullable: true
-          example: 'False'
-        walk_ins_accepted:
-          type: string
-          description: String detailing if walk-ins are accepted for the service.
-          nullable: true
-          example: 'True'
-        service_locations:
-          type: array
-          deprecated: true
-          items:
-            $ref: '#/components/schemas/DetailedServiceLocation'
-        last_updated:
-          type: string
-          description: Date and time of most recent upload of detailed service from CMS.
-          format: date-time
-          nullable: true
-        path:
-          type: string
-          description: URL to a page with additional details for this service within the associated facility's health care system.
-          nullable: true
-          example: https://www.boston.va.gov/services/covid-19-vaccines.asp
-      description: Detailed information of a facility service.
-      nullable: true
-    Phone_2:
-      type: object
-      properties:
-        fax:
-          type: string
-          description: Phone number used for faxing to given facility.
-          nullable: true
-          example: 202-555-1212
-        main:
-          type: string
-          description: Phone number for given facility.
-          nullable: true
-          example: 512-325-1255
-        healthConnect:
-          type: string
-          description: Phone number for VA Health Connect.
-          nullable: true
-          example: 312-122-4516
-        pharmacy:
-          type: string
-          description: Phone number for pharmacy for given facility.
-          nullable: true
-          example: 202-555-1212
-        afterHours:
-          type: string
-          description: Phone number that may be reached outside of operating hours for given facility.
-          nullable: true
-          example: 202-555-1212
-        patientAdvocate:
-          type: string
-          description: Phone number for patient advocate for given facility.
-          nullable: true
-          example: 202-555-1212
-        mentalHealthClinic:
-          type: string
-          description: Phone number for mental health clinic for given facility.
-          nullable: true
-          example: 202-555-1212
-        enrollmentCoordinator:
-          type: string
-          description: Phone number for enrollment coordinator for given facility.
-          nullable: true
-          example: 202-555-1212
-      description: 'Collection of all telephone contact numbers for given facility. '
-      nullable: true
-      example: 1-800-827-1000
-    FacilityReadResponse:
-      required:
-      - data
+          description: Identifier of facility.
+          example: vc_0101V
+        distance:
+          type: number
+          description: Distance to facility in decimal format.
+          example: 54.13
+      description: 'Distance to facility in miles using decimal format. Used when querying for facilities proximal to a location. '
+      example: 54.13
+    FacilitiesIdsResponse:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Facility'
-      description: Response that contains facility data.
-    GeoFacility:
-      required:
-      - geometry
-      - properties
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Top level category describing the type of facility.
-          example: Feature
-          enum:
-          - Feature
-        geometry:
-          $ref: '#/components/schemas/Geometry'
-        properties:
-          $ref: '#/components/schemas/Properties'
-      description: GeoJSON-complaint Feature object describing a VA Facility
-    Pagination_2:
-      type: object
-      properties:
-        currentPage:
-          type: integer
-          description: Current page of response.
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          description: Number of results per page.
-          format: int32
-          example: 20
-        totalPages:
-          type: integer
-          description: Total number of pages matching this query.
-          format: int32
-          example: 250
-        totalEntries:
-          type: integer
-          description: Total number of entries matching this query.
-          format: int32
-          example: 2162
-      description: Pagination data reflecting response that has been seperated into discrete pages.
-    PatientWaitTime_2:
-      type: object
-      properties:
-        effectiveDate:
-          type: string
-          format: date
-          nullable: true
-          example: '2018-01-01'
-        new:
-          type: number
-          description: Average number of days a Veteran who hasn't been to this location has to wait for a non-urgent appointment.
-          nullable: true
-          example: 28.175438
-        established:
-          type: number
-          description: Average number of days a patient who has already been to this location has to wait for a non-urgent appointment.
-          nullable: true
-          example: 4.359409
-      description: Expected wait times for new and established patients for a given health care service at VA health facilities.
-      nullable: true
-      example: 10
-    Hours:
-      type: object
-      properties:
-        monday:
-          type: string
-          description: Hours of operation for Monday.
-          nullable: true
-          example: 9AM-5PM
-        tuesday:
-          type: string
-          description: Hours of operation for Tuesday.
-          nullable: true
-          example: 9AM-5PM
-        wednesday:
-          type: string
-          description: Hours of operation for Wednesday.
-          nullable: true
-          example: 9AM-5PM
-        thursday:
-          type: string
-          description: Hours of operation for Thursday.
-          nullable: true
-          example: 9AM-5PM
-        friday:
-          type: string
-          description: Hours of operation for Friday.
-          nullable: true
-          example: 9AM-5PM
-        saturday:
-          type: string
-          description: Hours of operation for Saturday.
-          nullable: true
-          example: Closed
-        sunday:
-          type: string
-          description: Hours of operation for Sunday.
-          nullable: true
-          example: Closed
-      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
-      nullable: true
-      example: '"monday": "9:30AM-4:00PM",'
+          type: array
+          description: List of VA facility ids.
+          items:
+            type: string
+      description: JSON API response for a query for facility ids.
     Pagination:
       required:
       - current_page
@@ -1531,40 +1196,97 @@ components:
           format: int32
           example: 2162
       description: Pagination data reflecting response that has been seperated into discrete pages.
-    Services_2:
+    PatientSatisfaction:
+      type:
+      - object
+      - 'null'
+      properties:
+        primary_care_urgent:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent primary care visit, NOT an urgent care visit.'
+          format: float
+          example: 0.85
+        primary_care_routine:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine primary care visit.'
+          format: float
+          example: 0.85
+        specialty_care_urgent:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent specialty care visit, NOT an urgent care visit.'
+          format: float
+          example: 0.85
+        specialty_care_routine:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine specialty care visit.'
+          format: float
+          example: 0.85
+      description: Veteran-reported satisfaction score for health care services at VA health facilities.
+    Address:
+      type:
+      - object
+      - 'null'
+      properties:
+        zip:
+          type:
+          - string
+          - 'null'
+          description: Postal (ZIP) code.
+          example: 20422-0001
+        city:
+          type:
+          - string
+          - 'null'
+          description: City name.
+          example: Washington
+        state:
+          type:
+          - string
+          - 'null'
+          description: State code.
+          example: DC
+        address_1:
+          type:
+          - string
+          - 'null'
+          description: Street name and number.
+          example: 50 Irving Street, Northwest
+        address_2:
+          type:
+          - string
+          - 'null'
+          description: Second line of address if applicable (such as a building number).
+          example: Bldg 2
+        address_3:
+          type:
+          - string
+          - 'null'
+          description: Third line of address if applicable (such as a unit or suite number).
+          example: Suite 7
+      description: Description of an address.
+    ErrorMessage:
       type: object
       properties:
-        health:
-          type: array
-          description: List of health service objects for given facility.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/ServiceHealthService'
-        benefits:
-          type: array
-          description: List of benefits service objects for given facility.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/ServiceBenefitsService'
-        other:
-          type: array
-          description: List of benefits service objects for given facility.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/ServiceOtherService'
-        link:
+        title:
           type: string
-          description: Base services link for services at facility.
-          nullable: true
-          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/
-        lastUpdated:
+          example: Error title
+        detail:
           type: string
-          description: Date of the most recent change in offered services.
-          format: date
-          nullable: true
-          example: '2018-01-01'
-      description: All services offered by a VA facility grouped by service type.
-      nullable: true
+          example: Detailed error message
+        code:
+          type: string
+          example: '103'
+        status:
+          type: string
+          example: '400'
     Facility:
       required:
       - attributes
@@ -1585,6 +1307,164 @@ components:
         attributes:
           $ref: '#/components/schemas/FacilityAttributes'
       description: JSON API representation of a Facility.
+    AppointmentPhoneNumber:
+      type:
+      - object
+      - 'null'
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          description: Appointment phone number extension.
+          example: '71234'
+        label:
+          type:
+          - string
+          - 'null'
+          description: Appointment phone number label (e.g. 'Main phone', 'Appointment phone', etc).
+          example: Main phone
+        number:
+          type:
+          - string
+          - 'null'
+          description: Appointment phone number.
+          example: 937-268-6511
+        type:
+          type:
+          - string
+          - 'null'
+          description: Appointment contact number type (e.g. 'tel', 'fax', etc)
+          example: tel
+      description: Phone number information for scheduling an appointment.
+    DetailedService:
+      type:
+      - object
+      - 'null'
+      properties:
+        service_id:
+          type: string
+          description: Service id.
+          example: covid19Vaccine
+        name:
+          type:
+          - string
+          - 'null'
+          description: Service name.
+          example: COVID-19 vaccines
+        description_facility:
+          type:
+          - string
+          - 'null'
+          description: Deprecated until further notice.
+          example: 'null'
+        appointment_leadin:
+          type:
+          - string
+          - 'null'
+          description: Additional appointment information. May contain html / string formatting characters.
+          example: Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.
+        appointment_phones:
+          type:
+          - array
+          - 'null'
+          description: List of phone numbers related to scheduling appointments for this service.
+          items:
+            $ref: '#/components/schemas/AppointmentPhoneNumber'
+        online_scheduling_available:
+          type:
+          - string
+          - 'null'
+          description: String detailing online scheduling availability.
+          example: 'True'
+        referral_required:
+          type:
+          - string
+          - 'null'
+          description: String detailing if referrals are required for the service.
+          example: 'False'
+        walk_ins_accepted:
+          type:
+          - string
+          - 'null'
+          description: String detailing if walk-ins are accepted for the service.
+          example: 'True'
+        service_locations:
+          type: array
+          deprecated: true
+          items:
+            $ref: '#/components/schemas/DetailedServiceLocation'
+        last_updated:
+          type:
+          - string
+          - 'null'
+          description: Date and time of most recent upload of detailed service from CMS.
+          format: date-time
+        path:
+          type:
+          - string
+          - 'null'
+          description: URL to a page with additional details for this service within the associated facility's health care system.
+          example: https://www.boston.va.gov/services/covid-19-vaccines.asp
+      description: Detailed information of a facility service.
+    Addresses:
+      type:
+      - object
+      - 'null'
+      properties:
+        mailing:
+          $ref: '#/components/schemas/Address'
+        physical:
+          $ref: '#/components/schemas/Address'
+      description: Collection of addresses associated with a facility.
+    Geometry:
+      required:
+      - type
+      type:
+      - object
+      - 'null'
+      properties:
+        type:
+          type: string
+          description: Describes the type of geometric data provided.
+          example: Point
+          enum:
+          - Point
+        coordinates:
+          type:
+          - array
+          - 'null'
+          description: The latitude and longitude of the Facility's physical location.
+          example:
+          - -77.0367761
+          - 38.9004181
+          items:
+            type:
+            - number
+            - 'null'
+            description: The latitude and longitude of the Facility's physical location.
+      description: Geometric data giving the physical location of a VA Facility.
+    GenericError:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          example: Detailed Error Message
+      description: A general error json response for things like Authorization Errors or Bad Requests (ex. invalid parameter values).
+    NearbyResponse:
+      type:
+      - object
+      - 'null'
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nearby'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      description: Response which contains minimum and maximum time it takes to reach facility.
     GeoFacilityReadResponse:
       required:
       - geometry
@@ -1601,129 +1481,45 @@ components:
         properties:
           $ref: '#/components/schemas/Properties'
       description: Response that contains GeoFacility data.
-    Facility_2:
-      type: object
+    OperatingStatus:
+      required:
+      - code
+      type:
+      - object
+      - 'null'
       properties:
-        id:
-          type: string
-          description: Identifier representing facility.
-          example: vha_688
-        type:
-          type: string
-          description: Top level facility type.
-          example: va_facilities
+        code:
+          type:
+          - string
+          - 'null'
+          description: Status codes indicate normal hours/services, limited hours/services, closed operations, or published facility notices for visitors.
+          example: NORMAL
           enum:
-          - va_facilities
-        attributes:
-          $ref: '#/components/schemas/FacilityAttributes_2'
-      description: Representation of a Facility.
-    HealthCareSystem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the health care system.
-          nullable: true
-      description: Health Care System of the facility
-      nullable: true
-    DetailedServiceLocation_2:
-      type: object
-      properties:
-        officeName:
-          type: string
-          description: Name of given office location.
-          nullable: true
-          example: ENT Clinic
-        serviceAddress:
-          $ref: '#/components/schemas/DetailedServiceAddress_2'
-        phones:
-          type: array
-          description: List of appointment phone information.
-          nullable: true
+          - NORMAL
+          - NOTICE
+          - LIMITED
+          - CLOSED
+        additional_info:
+          type:
+          - string
+          - 'null'
+          description: Details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.
+        supplemental_status:
+          type:
+          - array
+          - 'null'
+          description: List of supplemental statuses for VA facility.
           items:
-            $ref: '#/components/schemas/AppointmentPhoneNumber'
-        emailContacts:
-          type: array
-          description: List of email contact information regarding facility services.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/DetailedServiceEmailContact_2'
-        serviceHours:
-          $ref: '#/components/schemas/DetailedServiceHours_2'
-        additionalHoursInfo:
-          type: string
-          description: Additional information related to service location hours.
-          nullable: true
-          example: Location hours times may vary depending on staff availability
-        onlineSchedulingAvailable:
-          type: string
-          description: String detailing online scheduling availability.
-          nullable: true
-          example: 'True'
-        referralRequired:
-          type: string
-          description: String detailing if referrals are required for the service.
-          nullable: true
-          example: 'False'
-        walkInsAccepted:
-          type: string
-          description: String detailing if walk-ins are accepted for the service.
-          nullable: true
-          example: 'True'
-      description: Details for a location offering a service.
-      nullable: true
-    DetailedServiceLocation:
-      type: object
-      properties:
-        email_contacts:
-          type: array
-          description: List of email contact information regarding facility services.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/DetailedServiceEmailContact'
-        additional_hours_info:
-          type: string
-          description: Additional information related to service location hours.
-          nullable: true
-          example: Location hours times may vary depending on staff availability
-        service_hours:
-          $ref: '#/components/schemas/DetailedServiceHours'
-        phones:
-          type: array
-          description: List of appointment phone information.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/AppointmentPhoneNumber'
-        walk_ins_accepted:
-          type: string
-          description: String detailing if walk-ins are accepted for the service.
-          nullable: true
-          example: 'True'
-        online_scheduling_available:
-          type: string
-          description: String detailing online scheduling availability.
-          nullable: true
-          example: 'True'
-        referral_required:
-          type: string
-          description: String detailing if referrals are required for the service.
-          nullable: true
-          example: 'False'
-        office_name:
-          type: string
-          description: Name of given office location.
-          nullable: true
-          example: ENT Clinic
-        service_address:
-          $ref: '#/components/schemas/DetailedServiceAddress'
-      description: Details for a location offering a service.
-      nullable: true
-      deprecated: true
+            $ref: '#/components/schemas/SupplementalStatus'
+      description: 'Current status of facility operations. The overall status of the facility, which can be: Normal Hours and Services, Facility Notice, Limited Hours and/or Services, or Closed. This field replaces active_status.'
+      example: NORMAL
     NearbyAttributes:
       required:
       - max_time
       - min_time
-      type: object
+      type:
+      - object
+      - 'null'
       properties:
         min_time:
           type: integer
@@ -1735,221 +1531,6 @@ components:
           description: Maximum time to reach facility.
           format: int32
           example: 20
-      nullable: true
-    FacilityAttributes_2:
-      required:
-      - operatingStatus
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name associated with given facility.
-          example: Washington VA Medical Center
-        facilityType:
-          type: string
-          description: One of facility top-level type categories (e.g.) health, benefits, cemetery and vet center.
-          example: va_health_facility
-          enum:
-          - va_benefits_facility
-          - va_cemetery
-          - va_health_facility
-          - vet_center
-        classification:
-          type: string
-          description: Subtype of facility which can further be used to describe facility.
-          nullable: true
-          example: VA Medical Center (VAMC)
-        parent:
-          $ref: '#/components/schemas/Parent'
-        website:
-          type: string
-          description: Web address of facility
-          nullable: true
-          example: http://www.washingtondc.va.gov
-        lat:
-          type: number
-          description: Facility latitude.
-          format: float
-          example: 38.9311137
-        long:
-          type: number
-          description: Facility longitude.
-          format: float
-          example: -77.0109110499999
-        timeZone:
-          type: string
-          description: Facility time zone.
-          format: String
-          example: America/New_York
-        address:
-          $ref: '#/components/schemas/Addresses'
-        phone:
-          $ref: '#/components/schemas/Phone_2'
-        hours:
-          $ref: '#/components/schemas/Hours'
-        operationalHoursSpecialInstructions:
-          type: array
-          description: Additional information about a VA health or Vet Center facility's operating hours.
-          nullable: true
-          example:
-          - More hours are available for some services.
-          - If you need to talk to someone, call the Vet Center at 1-877-927-8387.
-          - Vet Center hours are dependent upon outreach assignments.
-          items:
-            type: string
-            description: Additional information about a VA health or Vet Center facility's operating hours.
-            nullable: true
-            example: '["More hours are available for some services.","If you need to talk to someone, call the Vet Center at 1-877-927-8387.","Vet Center hours are dependent upon outreach assignments."]'
-        services:
-          $ref: '#/components/schemas/Services_2'
-        satisfaction:
-          $ref: '#/components/schemas/Satisfaction_2'
-        mobile:
-          type: boolean
-          nullable: true
-          example: false
-        operatingStatus:
-          $ref: '#/components/schemas/OperatingStatus_2'
-        visn:
-          type: string
-          nullable: true
-          example: '20'
-        healthCareSystem:
-          $ref: '#/components/schemas/HealthCareSystem'
-      description: Details describing a facility.
-      nullable: true
-    ServiceOtherService:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of facility service.
-          nullable: true
-          example: Example Service Name
-        serviceId:
-          type: string
-          description: Unique identifier for facility service.
-          nullable: true
-          example: exampleServiceId
-        link:
-          type: string
-          description: Fully qualified link for facility service.
-          nullable: true
-          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
-      description: Service info block.
-    WaitTimes:
-      type: object
-      properties:
-        health:
-          type: array
-          description: List of expected patient wait times for given health service.
-          nullable: true
-          items:
-            $ref: '#/components/schemas/PatientWaitTime'
-        effective_date:
-          type: string
-          description: The effective date of when the access to care survey was carried out.
-          format: date
-          nullable: true
-          example: '2018-01-01'
-      description: Collection of wait times reported for various services based on access to care survey.
-      nullable: true
-      example: 10
-    PageLinks:
-      required:
-      - self
-      type: object
-      properties:
-        related:
-          type: string
-          description: Link to related pages of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?id=vha_688
-        self:
-          type: string
-          description: Link to current page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
-        first:
-          type: string
-          description: Link to first page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
-        prev:
-          type: string
-          description: Link to previous page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
-        next:
-          type: string
-          description: Link to next page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=2&per_page=1000
-        last:
-          type: string
-          description: Link to last page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=4&per_page=1000
-      description: Links for first page, next page, previous and last page of response.
-    AppointmentPhoneNumber:
-      type: object
-      properties:
-        extension:
-          type: string
-          description: Appointment phone number extension.
-          nullable: true
-          example: '71234'
-        label:
-          type: string
-          description: Appointment phone number label (e.g. 'Main phone', 'Appointment phone', etc).
-          nullable: true
-          example: Main phone
-        number:
-          type: string
-          description: Appointment phone number.
-          nullable: true
-          example: 937-268-6511
-        type:
-          type: string
-          description: Appointment contact number type (e.g. 'tel', 'fax', etc)
-          nullable: true
-          example: tel
-      description: Phone number information for scheduling an appointment.
-      nullable: true
-    PageLinks_2:
-      type: object
-      properties:
-        related:
-          type: string
-          description: Link to related pages of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?id=vha_688
-        self:
-          type: string
-          description: Link to current page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
-        first:
-          type: string
-          description: Link to first page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
-        prev:
-          type: string
-          description: Link to previous page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
-        next:
-          type: string
-          description: Link to next page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=2&per_page=1000
-        last:
-          type: string
-          description: Link to last page of response.
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=4&per_page=1000
-      description: Links for first page, next page, previous and last page of response.
     FacilityAttributes:
       required:
       - facility_type
@@ -1957,7 +1538,9 @@ components:
       - long
       - name
       - operating_status
-      type: object
+      type:
+      - object
+      - 'null'
       properties:
         name:
           type: string
@@ -1973,14 +1556,16 @@ components:
           - va_health_facility
           - vet_center
         classification:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Subtype of facility which can further be used to describe facility.
-          nullable: true
           example: VA Medical Center (VAMC)
         website:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Web address of facility.
-          nullable: true
           example: http://www.washingtondc.va.gov
         lat:
           type: number
@@ -2004,9 +1589,10 @@ components:
         hours:
           $ref: '#/components/schemas/Hours'
         operational_hours_special_instructions:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Additional information about a VA health or Vet Center facility's operating hours.
-          nullable: true
           example: Normal business hours are Monday through Friday, 8:00 a.m. to 4:30 p.m.
         services:
           $ref: '#/components/schemas/Services'
@@ -2015,288 +1601,92 @@ components:
         wait_times:
           $ref: '#/components/schemas/WaitTimes'
         mobile:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           example: false
         active_status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: This field is deprecated and replaced with "operating_status".
-          nullable: true
           enum:
           - A
           - T
         operating_status:
           $ref: '#/components/schemas/OperatingStatus'
         detailed_services:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/DetailedService'
         visn:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: '20'
       description: Details describing a facility.
-      nullable: true
-    Addresses:
+    ApiError:
+      required:
+      - errors
       type: object
       properties:
-        mailing:
-          $ref: '#/components/schemas/Address'
-        physical:
-          $ref: '#/components/schemas/Address'
-      description: Collection of addresses associated with a facility.
-      nullable: true
-    DetailedServiceHours:
-      type: object
-      properties:
-        Monday:
-          type: string
-          description: Service availability on Mondays.
-          nullable: true
-          example: 9AM-5PM
-        Tuesday:
-          type: string
-          description: Service availability on Tuesdays.
-          nullable: true
-          example: 9AM-5PM
-        Wednesday:
-          type: string
-          description: Service availability on Wednesdays.
-          nullable: true
-          example: 9AM-5PM
-        Thursday:
-          type: string
-          description: Service availability on Thursdays.
-          nullable: true
-          example: 9AM-5PM
-        Friday:
-          type: string
-          description: Service availability on Fridays.
-          nullable: true
-          example: 9AM-5PM
-        Saturday:
-          type: string
-          description: Service availability on Saturdays.
-          nullable: true
-          example: Closed
-        Sunday:
-          type: string
-          description: Service availability on Sundays.
-          nullable: true
-          example: Closed
-      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
-      nullable: true
-    NearbyResponse:
-      type: object
-      properties:
-        data:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Nearby'
-        meta:
-          $ref: '#/components/schemas/Meta'
-      description: Response which contains minimum and maximum time it takes to reach facility.
-      nullable: true
+            $ref: '#/components/schemas/ErrorMessage'
+      description: API invocation or processing error
     DetailedServiceEmailContact:
-      type: object
+      type:
+      - object
+      - 'null'
       properties:
         email_address:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Email address for facility service contact.
-          nullable: true
           example: georgea@va.gov
         email_label:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Email address label.
-          nullable: true
           example: George Anderson
       description: Email contact information for facility service.
-      nullable: true
-    DetailedServiceAddress_2:
-      type: object
-      properties:
-        buildingNameNumber:
-          type: string
-          description: Building name and/or number of service.
-          nullable: true
-          example: Baxter Building
-        wingFloorOrRoomNumber:
-          type: string
-          description: Wing, floor, or room number of service.
-          nullable: true
-          example: Wing East
-        addressLine1:
-          type: string
-          description: Street name and number.
-          nullable: true
-          example: 50 Irving Street, Northwest
-        addressLine2:
-          type: string
-          description: Building number.
-          nullable: true
-          example: Bldg 2
-        city:
-          type: string
-          description: City name.
-          nullable: true
-          example: Washington
-        state:
-          type: string
-          description: State code.
-          nullable: true
-          example: DC
-        zipCode:
-          type: string
-          description: Postal (ZIP) code.
-          nullable: true
-          example: 20422-0001
-        countryCode:
-          type: string
-          description: Country code.
-          nullable: true
-          example: US
-      description: Service location address.
-      nullable: true
-    Properties:
+    SupplementalStatus:
       required:
-      - facility_type
       - id
-      - operating_status
-      type: object
+      - label
+      type:
+      - object
+      - 'null'
       properties:
         id:
           type: string
-          description: Identifier representing the Facility.
-          example: vha_688
-        name:
+          description: Unique id for supplemental status.
+          example: COVID_LOW
+        label:
           type: string
-          description: Name associated with given facility.
-          example: Washington VA Medical Center
-        facility_type:
-          type: string
-          description: One of facility top-level type categories (e.g.) health, benefits, cemetery and vet center.
-          example: va_health_facility
-          enum:
-          - va_benefits_facility
-          - va_cemetery
-          - va_health_facility
-          - vet_center
-        classification:
-          type: string
-          description: Subtype of facility which can further be used to describe facility.
-          nullable: true
-          example: VA Medical Center (VAMC)
-        website:
-          type: string
-          description: Web address of facility.
-          nullable: true
-          example: http://www.washingtondc.va.gov
-        time_zone:
-          type: string
-          description: Facility time zone
-          format: String
-          example: America/New_York
-        address:
-          $ref: '#/components/schemas/Addresses'
-        phone:
-          $ref: '#/components/schemas/Phone'
-        hours:
-          $ref: '#/components/schemas/Hours'
-        operational_hours_special_instructions:
-          type: string
-          description: Additional information about facility operating hours.
-          nullable: true
-          example: '["More hours are available for some services.","If you need to talk to someone, call the Vet Center at 1-877-927-8387.","Vet Center hours are dependent upon outreach assignments."]'
-        services:
-          $ref: '#/components/schemas/Services'
-        satisfaction:
-          $ref: '#/components/schemas/Satisfaction'
-        wait_times:
-          $ref: '#/components/schemas/WaitTimes'
-        mobile:
-          type: boolean
-          nullable: true
-          example: false
-        active_status:
-          type: string
-          description: This field is deprecated and replaced with "operating_status".
-          nullable: true
-          enum:
-          - A
-          - T
-        operating_status:
-          $ref: '#/components/schemas/OperatingStatus'
-        visn:
-          type: string
-          nullable: true
-          example: '20'
-        detailed_services:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/DetailedService'
-      description: Details describing a facility.
-      nullable: true
-    DetailedServiceResponse:
+          description: Descriptive label for supplemental status.
+          example: 'COVID-19 health protection guidelines: Levels low'
+      description: Supplemental status for VA facility.
+    FacilitiesResponse:
+      required:
+      - links
+      - meta
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/DetailedService_2'
-      description: Expanded details for a service.
-    OperatingStatus_2:
-      required:
-      - code
-      type: object
-      properties:
-        code:
-          type: string
-          description: Status codes indicate normal hours/services, limited hours/services, closed operations, or published facility notices for visitors.
-          nullable: true
-          example: NORMAL
-          enum:
-          - NORMAL
-          - NOTICE
-          - LIMITED
-          - CLOSED
-          - TEMPORARY_CLOSURE
-          - TEMPORARY_LOCATION
-          - VIRTUAL_CARE
-          - COMING_SOON
-        additionalInfo:
-          type: string
-          description: Details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.
-          nullable: true
-        supplementalStatus:
           type: array
-          description: List of supplemental statuses for VA facility.
-          nullable: true
           items:
-            $ref: '#/components/schemas/SupplementalStatus'
-      description: 'Current status of facility operations. The overall status of the facility, which can be: Normal Hours and Services, Facility Notice, Limited Hours and/or Services, or Closed. This field replaces active_status.'
-      nullable: true
-      example: NORMAL
-    Nearby:
-      required:
-      - attributes
-      - id
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier for facility.
-          example: vha_688
-        type:
-          type: string
-          description: Type of facility.
-          example: va_health_facility
-          enum:
-          - nearby_facility
-        attributes:
-          $ref: '#/components/schemas/NearbyAttributes'
-      description: JSON API-compliant object describing a nearby VA facility.
-      nullable: true
+            $ref: '#/components/schemas/Facility'
+        links:
+          $ref: '#/components/schemas/PageLinks'
+        meta:
+          $ref: '#/components/schemas/FacilitiesMetadata'
+      description: JSON API-compliant response object describing one or more VA facilities
     FacilitiesMetadata:
       required:
       - pagination
@@ -2309,296 +1699,12 @@ components:
           items:
             $ref: '#/components/schemas/Distance'
       description: Metadata representation for data in response. This metadata includes paginated items that allow user to see the current page, objects perPage, total pages and total entries.
-    Distance:
-      required:
-      - distance
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of facility.
-          example: vc_0101V
-        distance:
-          type: number
-          description: Distance to facility in decimal format.
-          example: 54.13
-      description: 'Distance to facility in miles using decimal format. Used when querying for facilities proximal to a location. '
-      example: 54.13
-    FacilitiesIdsResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of VA facility ids.
-          items:
-            type: string
-      description: JSON API response for a query for facility ids.
-    ApiError_2:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      description: API invocation or processing error
-    PatientSatisfaction:
-      type: object
-      properties:
-        primary_care_urgent:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent primary care visit, NOT an urgent care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        primary_care_routine:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine primary care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        specialty_care_urgent:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent specialty care visit, NOT an urgent care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        specialty_care_routine:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine specialty care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-      description: Veteran-reported satisfaction score for health care services at VA health facilities.
-      nullable: true
-    Parent:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Parent facility id
-          nullable: true
-          example: vha_402
-        link:
-          type: string
-          description: URL for an API request for parent facility
-          nullable: true
-          example: https://api.va.gov/services/va_facilities/v0/facilities/vha_402
-      description: Reference to facility's parent
-      nullable: true
-    DetailedServiceHours_2:
-      type: object
-      properties:
-        monday:
-          type: string
-          description: Service availability on Mondays.
-          nullable: true
-          example: 9AM-5PM
-        tuesday:
-          type: string
-          description: Service availability on Tuesdays.
-          nullable: true
-          example: 9AM-5PM
-        wednesday:
-          type: string
-          description: Service availability on Wednesdays.
-          nullable: true
-          example: 9AM-5PM
-        thursday:
-          type: string
-          description: Service availability on Thursdays.
-          nullable: true
-          example: 9AM-5PM
-        friday:
-          type: string
-          description: Service availability on Fridays.
-          nullable: true
-          example: 9AM-5PM
-        saturday:
-          type: string
-          description: Service availability on Saturdays.
-          nullable: true
-          example: Closed
-        sunday:
-          type: string
-          description: Service availability on Sundays.
-          nullable: true
-          example: Closed
-      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
-      nullable: true
-    Phone:
-      type: object
-      properties:
-        fax:
-          type: string
-          description: Phone number used for faxing to given facility.
-          nullable: true
-          example: 202-555-1212
-        main:
-          type: string
-          description: Phone number for given facility.
-          nullable: true
-          example: 202-555-1212
-        pharmacy:
-          type: string
-          description: Phone number for pharmacy for given facility.
-          nullable: true
-          example: 202-555-1212
-        after_hours:
-          type: string
-          description: Phone number that may be reached outside of operating hours for given facility.
-          nullable: true
-          example: 202-555-1212
-        patient_advocate:
-          type: string
-          description: Phone number for patient advocate for given facility.
-          nullable: true
-          example: 202-555-1212
-        mental_health_clinic:
-          type: string
-          description: Phone number for mental health clinic for given facility.
-          nullable: true
-          example: 202-555-1212
-        enrollment_coordinator:
-          type: string
-          description: Phone number for enrollment coordinator for given facility.
-          nullable: true
-          example: 202-555-1212
-        health_connect:
-          type: string
-          description: Phone number for VA Health Connect.
-          nullable: true
-          example: 312-122-4516
-      description: 'Collection of all telephone contact numbers for given facility. '
-      nullable: true
-      example: 1-800-827-1000
-    ServiceInfo:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Service name.
-          nullable: true
-          example: COVID-19 vaccines
-        serviceId:
-          type: string
-          description: Service identifier.
-          example: covid19Vaccine
-        serviceType:
-          type: string
-          description: Service type.
-          nullable: true
-          example: Health
-          enum:
-          - benefits
-          - health
-          - other
-      description: Service information.
-    ServiceBenefitsService:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of facility service.
-          nullable: true
-          example: Example Service Name
-        serviceId:
-          type: string
-          description: Unique identifier for facility service.
-          nullable: true
-          example: exampleServiceId
-        link:
-          type: string
-          description: Fully qualified link for facility service.
-          nullable: true
-          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
-      description: Service info block.
-    SupplementalStatus:
-      required:
-      - id
-      - label
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique id for supplemental status.
-          example: COVID_LOW
-        label:
-          type: string
-          description: Descriptive label for supplemental status.
-          example: 'COVID-19 health protection guidelines: Levels low'
-      description: Supplemental status for VA facility.
-      nullable: true
-    PatientSatisfaction_2:
-      type: object
-      properties:
-        primaryCareUrgent:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent primary care visit, NOT an urgent care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        primaryCareRoutine:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine primary care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        specialtyCareUrgent:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent specialty care visit, NOT an urgent care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-        specialtyCareRoutine:
-          type: number
-          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine specialty care visit.'
-          format: float
-          nullable: true
-          example: 0.85
-      description: Veteran-reported satisfaction score for health care services at VA health facilities.
-      nullable: true
-    Geometry:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Describes the type of geometric data provided.
-          example: Point
-          enum:
-          - Point
-        coordinates:
-          type: array
-          description: The latitude and longitude of the Facility's physical location.
-          nullable: true
-          example:
-          - -77.0367761
-          - 38.9004181
-          items:
-            type: number
-            description: The latitude and longitude of the Facility's physical location.
-            nullable: true
-      description: Geometric data giving the physical location of a VA Facility.
-      nullable: true
-    DetailedServicesResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          description: List of objects containing service details.
-          items:
-            $ref: '#/components/schemas/DetailedService_2'
-        links:
-          $ref: '#/components/schemas/PageLinks_2'
-        meta:
-          $ref: '#/components/schemas/DetailedServicesMetadata'
-      description: An object containing a list of services.
     PatientWaitTime:
       required:
       - service
-      type: object
+      type:
+      - object
+      - 'null'
       properties:
         service:
           type: string
@@ -2625,40 +1731,1449 @@ components:
           - Urology
           - WomensHealth
         new:
-          type: number
+          type:
+          - number
+          - 'null'
           description: Average number of days a Veteran who hasn't been to this location has to wait for a non-urgent appointment.
-          nullable: true
           example: 10
         established:
-          type: number
+          type:
+          - number
+          - 'null'
           description: Average number of days a patient who has already been to this location has to wait for a non-urgent appointment.
-          nullable: true
           example: 5
       description: Expected wait times for new and established patients for a given health care service at VA health facilities.
-      nullable: true
-    FacilitiesResponse:
+    GeoFacilitiesResponse:
       required:
-      - links
-      - meta
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoFacility'
+      description: GeoJSON API-compliant response object describing one or more VA facilities.
+    PageLinks:
+      required:
+      - self
+      type: object
+      properties:
+        related:
+          type:
+          - string
+          - 'null'
+          description: Link to related pages of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?id=vha_688
+        self:
+          type:
+          - string
+          - 'null'
+          description: Link to current page of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to first page of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to previous page of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=1&per_page=1000
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to next page of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=2&per_page=1000
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to last page of response.
+          example: https://api.va.gov/services/va_facilities/v0/facilities?type=health&page=4&per_page=1000
+      description: Links for first page, next page, previous and last page of response.
+    DetailedServiceAddress:
+      type:
+      - object
+      - 'null'
+      properties:
+        building_name_number:
+          type:
+          - string
+          - 'null'
+          description: Building name and/or number of service.
+          example: Baxter Building
+        wing_floor_or_room_number:
+          type:
+          - string
+          - 'null'
+          description: Wing, floor, or room number of service.
+          example: Wing East
+        address_line1:
+          type:
+          - string
+          - 'null'
+          description: Street name and number.
+          example: 50 Irving Street, Northwest
+        address_line2:
+          type:
+          - string
+          - 'null'
+          description: Building number.
+          example: Bldg 2
+        city:
+          type:
+          - string
+          - 'null'
+          description: City name.
+          example: Washington
+        state:
+          type:
+          - string
+          - 'null'
+          description: State code.
+          example: DC
+        zip_code:
+          type:
+          - string
+          - 'null'
+          description: Postal (ZIP) code.
+          example: 20422-0001
+        country_code:
+          type:
+          - string
+          - 'null'
+          description: Country code.
+          example: US
+      description: Service location address.
+    Phone:
+      type:
+      - object
+      - 'null'
+      properties:
+        fax:
+          type:
+          - string
+          - 'null'
+          description: Phone number used for faxing to given facility.
+          example: 202-555-1212
+        main:
+          type:
+          - string
+          - 'null'
+          description: Phone number for given facility.
+          example: 202-555-1212
+        pharmacy:
+          type:
+          - string
+          - 'null'
+          description: Phone number for pharmacy for given facility.
+          example: 202-555-1212
+        after_hours:
+          type:
+          - string
+          - 'null'
+          description: Phone number that may be reached outside of operating hours for given facility.
+          example: 202-555-1212
+        patient_advocate:
+          type:
+          - string
+          - 'null'
+          description: Phone number for patient advocate for given facility.
+          example: 202-555-1212
+        mental_health_clinic:
+          type:
+          - string
+          - 'null'
+          description: Phone number for mental health clinic for given facility.
+          example: 202-555-1212
+        enrollment_coordinator:
+          type:
+          - string
+          - 'null'
+          description: Phone number for enrollment coordinator for given facility.
+          example: 202-555-1212
+        health_connect:
+          type:
+          - string
+          - 'null'
+          description: Phone number for VA Health Connect.
+          example: 312-122-4516
+      description: 'Collection of all telephone contact numbers for given facility. '
+      example: 1-800-827-1000
+    DetailedServiceHours:
+      type:
+      - object
+      - 'null'
+      properties:
+        Monday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Mondays.
+          example: 9AM-5PM
+        Tuesday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Tuesdays.
+          example: 9AM-5PM
+        Wednesday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Wednesdays.
+          example: 9AM-5PM
+        Thursday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Thursdays.
+          example: 9AM-5PM
+        Friday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Fridays.
+          example: 9AM-5PM
+        Saturday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Saturdays.
+          example: Closed
+        Sunday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Sundays.
+          example: Closed
+      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
+    Meta:
+      type:
+      - object
+      - 'null'
+      properties:
+        band_version:
+          type:
+          - string
+          - 'null'
+          description: Version of the drive time band data set used to generate this response.
+          example: APR2021
+      description: JSON API-compliant object containing metadata about this response.
+    FacilityReadResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Facility'
+      description: Response that contains facility data.
+    GeoFacility:
+      required:
+      - geometry
+      - properties
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Top level category describing the type of facility.
+          example: Feature
+          enum:
+          - Feature
+        geometry:
+          $ref: '#/components/schemas/Geometry'
+        properties:
+          $ref: '#/components/schemas/Properties'
+      description: GeoJSON-complaint Feature object describing a VA Facility
+    Nearby:
+      required:
+      - attributes
+      - id
+      - type
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          description: Identifier for facility.
+          example: vha_688
+        type:
+          type: string
+          description: Type of facility.
+          example: va_health_facility
+          enum:
+          - nearby_facility
+        attributes:
+          $ref: '#/components/schemas/NearbyAttributes'
+      description: JSON API-compliant object describing a nearby VA facility.
+    Properties:
+      required:
+      - facility_type
+      - id
+      - operating_status
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          description: Identifier representing the Facility.
+          example: vha_688
+        name:
+          type: string
+          description: Name associated with given facility.
+          example: Washington VA Medical Center
+        facility_type:
+          type: string
+          description: One of facility top-level type categories (e.g.) health, benefits, cemetery and vet center.
+          example: va_health_facility
+          enum:
+          - va_benefits_facility
+          - va_cemetery
+          - va_health_facility
+          - vet_center
+        classification:
+          type:
+          - string
+          - 'null'
+          description: Subtype of facility which can further be used to describe facility.
+          example: VA Medical Center (VAMC)
+        website:
+          type:
+          - string
+          - 'null'
+          description: Web address of facility.
+          example: http://www.washingtondc.va.gov
+        time_zone:
+          type: string
+          description: Facility time zone
+          format: String
+          example: America/New_York
+        address:
+          $ref: '#/components/schemas/Addresses'
+        phone:
+          $ref: '#/components/schemas/Phone'
+        hours:
+          $ref: '#/components/schemas/Hours'
+        operational_hours_special_instructions:
+          type:
+          - string
+          - 'null'
+          description: Additional information about facility operating hours.
+          example: '["More hours are available for some services.","If you need to talk to someone, call the Vet Center at 1-877-927-8387.","Vet Center hours are dependent upon outreach assignments."]'
+        services:
+          $ref: '#/components/schemas/Services'
+        satisfaction:
+          $ref: '#/components/schemas/Satisfaction'
+        wait_times:
+          $ref: '#/components/schemas/WaitTimes'
+        mobile:
+          type:
+          - boolean
+          - 'null'
+          example: false
+        active_status:
+          type:
+          - string
+          - 'null'
+          description: This field is deprecated and replaced with "operating_status".
+          enum:
+          - A
+          - T
+        operating_status:
+          $ref: '#/components/schemas/OperatingStatus'
+        visn:
+          type:
+          - string
+          - 'null'
+          example: '20'
+        detailed_services:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DetailedService'
+      description: Details describing a facility.
+    WaitTimes:
+      type:
+      - object
+      - 'null'
+      properties:
+        health:
+          type:
+          - array
+          - 'null'
+          description: List of expected patient wait times for given health service.
+          items:
+            $ref: '#/components/schemas/PatientWaitTime'
+        effective_date:
+          type:
+          - string
+          - 'null'
+          description: The effective date of when the access to care survey was carried out.
+          format: date
+          example: '2018-01-01'
+      description: Collection of wait times reported for various services based on access to care survey.
+      example: 10
+    Services:
+      type:
+      - object
+      - 'null'
+      properties:
+        other:
+          type:
+          - array
+          - 'null'
+          description: List of other services not included in one of the other service categories.
+          items:
+            type: string
+            enum:
+            - OnlineScheduling
+        health:
+          type:
+          - array
+          - 'null'
+          description: List of health services for given facility.
+          items:
+            type: string
+            enum:
+            - Audiology
+            - Cardiology
+            - CaregiverSupport
+            - Covid19Vaccine
+            - DentalServices
+            - Dermatology
+            - EmergencyCare
+            - Gastroenterology
+            - Gynecology
+            - MentalHealthCare
+            - Ophthalmology
+            - Optometry
+            - Orthopedics
+            - Nutrition
+            - Podiatry
+            - PrimaryCare
+            - SpecialtyCare
+            - UrgentCare
+            - Urology
+            - WomensHealth
+        benefits:
+          type:
+          - array
+          - 'null'
+          description: List of benefits services for given facility.
+          items:
+            type: string
+            enum:
+            - ApplyingForBenefits
+            - BurialClaimAssistance
+            - DisabilityClaimAssistance
+            - eBenefitsRegistrationAssistance
+            - EducationAndCareerCounseling
+            - EducationClaimAssistance
+            - FamilyMemberClaimAssistance
+            - HomelessAssistance
+            - InsuranceClaimAssistanceAndFinancialCounseling
+            - IntegratedDisabilityEvaluationSystemAssistance
+            - Pensions
+            - PreDischargeClaimAssistance
+            - TransitionAssistance
+            - UpdatingDirectDepositInformation
+            - VAHomeLoanAssistance
+            - VocationalRehabilitationAndEmploymentAssistance
+        last_updated:
+          type:
+          - string
+          - 'null'
+          description: Date of the most recent change in offered services.
+          format: date
+          example: '2018-01-01'
+      description: All services offered by a VA health or benefits facility grouped by service type.
+    DetailedServiceLocation:
+      type:
+      - object
+      - 'null'
+      properties:
+        email_contacts:
+          type:
+          - array
+          - 'null'
+          description: List of email contact information regarding facility services.
+          items:
+            $ref: '#/components/schemas/DetailedServiceEmailContact'
+        additional_hours_info:
+          type:
+          - string
+          - 'null'
+          description: Additional information related to service location hours.
+          example: Location hours times may vary depending on staff availability
+        service_hours:
+          $ref: '#/components/schemas/DetailedServiceHours'
+        phones:
+          type:
+          - array
+          - 'null'
+          description: List of appointment phone information.
+          items:
+            $ref: '#/components/schemas/AppointmentPhoneNumber'
+        walk_ins_accepted:
+          type:
+          - string
+          - 'null'
+          description: String detailing if walk-ins are accepted for the service.
+          example: 'True'
+        online_scheduling_available:
+          type:
+          - string
+          - 'null'
+          description: String detailing online scheduling availability.
+          example: 'True'
+        referral_required:
+          type:
+          - string
+          - 'null'
+          description: String detailing if referrals are required for the service.
+          example: 'False'
+        office_name:
+          type:
+          - string
+          - 'null'
+          description: Name of given office location.
+          example: ENT Clinic
+        service_address:
+          $ref: '#/components/schemas/DetailedServiceAddress'
+      description: Details for a location offering a service.
+      deprecated: true
+    Satisfaction:
+      type:
+      - object
+      - 'null'
+      properties:
+        health:
+          $ref: '#/components/schemas/PatientSatisfaction'
+        effective_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '2018-01-01'
+      description: Scores that indicate patient satisfaction at given facility per service.
+    Distance_2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of facility.
+          example: vc_0101V
+        distance:
+          type: number
+          description: Distance to facility in decimal format.
+          example: 54.13
+      description: 'Distance to facility in miles using decimal format. Used when querying for facilities proximal to a location. '
+      example: 54.13
+    FacilitiesIdsResponse_2:
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of VA facility ids.
+          items:
+            type: string
+      description: A list of facility ids.
+    Pagination_2:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          description: Current page of response.
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          description: Number of results per page.
+          format: int32
+          example: 20
+        totalPages:
+          type: integer
+          description: Total number of pages matching this query.
+          format: int32
+          example: 250
+        totalEntries:
+          type: integer
+          description: Total number of entries matching this query.
+          format: int32
+          example: 2162
+      description: Pagination data reflecting response that has been seperated into discrete pages.
+    Parent:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Parent facility id
+          example: vha_402
+        link:
+          type:
+          - string
+          - 'null'
+          description: URL for an API request for parent facility
+          example: https://api.va.gov/services/va_facilities/v0/facilities/vha_402
+      description: Reference to facility's parent
+    ServiceOtherService:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of facility service.
+          example: Example Service Name
+        serviceId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for facility service.
+          example: exampleServiceId
+        link:
+          type:
+          - string
+          - 'null'
+          description: Fully qualified link for facility service.
+          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
+      description: Service info block.
+    PatientSatisfaction_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        primaryCareUrgent:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent primary care visit, NOT an urgent care visit.'
+          format: float
+          example: 0.85
+        primaryCareRoutine:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a primary care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine primary care visit.'
+          format: float
+          example: 0.85
+        specialtyCareUrgent:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need urgent attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for an urgent specialty care visit, NOT an urgent care visit.'
+          format: float
+          example: 0.85
+        specialtyCareRoutine:
+          type:
+          - number
+          - 'null'
+          description: 'Percentage of Veterans who say they usually or always get an appointment when they need routine attention at a specialty care location. NOTE: Veterans are rating their satisfaction of getting an appointment for a routine specialty care visit.'
+          format: float
+          example: 0.85
+      description: Veteran-reported satisfaction score for health care services at VA health facilities.
+    Address_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        address1:
+          type:
+          - string
+          - 'null'
+          description: Street name and number.
+          example: 50 Irving Street, Northwest
+        address2:
+          type:
+          - string
+          - 'null'
+          description: Second line of address if applicable (such as a building number).
+          example: Bldg 2
+        address3:
+          type:
+          - string
+          - 'null'
+          description: Third line of address if applicable (such as a unit or suite number).
+          example: Suite 7
+        zip:
+          type:
+          - string
+          - 'null'
+          description: Postal (ZIP) code.
+          example: 20422-0001
+        city:
+          type:
+          - string
+          - 'null'
+          description: City name.
+          example: Washington
+        state:
+          type:
+          - string
+          - 'null'
+          description: State code.
+          example: DC
+      description: Description of an address.
+    Facility_2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier representing facility.
+          example: vha_688
+        type:
+          type: string
+          description: Top level facility type.
+          example: va_facilities
+          enum:
+          - va_facilities
+        attributes:
+          $ref: '#/components/schemas/FacilityAttributes_2'
+      description: Representation of a Facility.
+    DetailedService_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        serviceInfo:
+          $ref: '#/components/schemas/ServiceInfo'
+        appointmentLeadIn:
+          type:
+          - string
+          - 'null'
+          description: Additional appointment information. May contain html / string formatting characters.
+          example: Your VA health care team will contact you if you're eligible to get a vaccine during this time. As the supply of vaccine increases, we'll work with our care teams to let Veterans know their options.
+        appointmentPhones:
+          type:
+          - array
+          - 'null'
+          description: List of phone numbers related to scheduling appointments for this service.
+          items:
+            $ref: '#/components/schemas/AppointmentPhoneNumber'
+        serviceLocations:
+          type:
+          - array
+          - 'null'
+          description: List of service locations.
+          items:
+            $ref: '#/components/schemas/DetailedServiceLocation_2'
+        waitTime:
+          $ref: '#/components/schemas/PatientWaitTime_2'
+        lastUpdated:
+          type:
+          - string
+          - 'null'
+          description: Date and time of most recent upload of detailed service from CMS.
+          format: date-time
+        path:
+          type:
+          - string
+          - 'null'
+          description: URL to a page with additional details for this service within the associated facility's health care system.
+          example: https://www.boston.va.gov/services/covid-19-vaccines.asp
+        serviceId:
+          $ref: '#/components/schemas/DetailedService_2'
+        name:
+          $ref: '#/components/schemas/DetailedService_2'
+      description: Detailed information of a facility service.
+    GenericError_2:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Detailed Error Message
+      description: A general error json response for things like Authorization Errors or Bad Requests (ex. invalid parameter values).
+    NearbyResponse_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nearby_2'
+        meta:
+          $ref: '#/components/schemas/Meta_2'
+      description: Object containing minimum and maximum time it takes to reach a facility.
+    ServiceBenefitsService:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of facility service.
+          example: Example Service Name
+        serviceId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for facility service.
+          example: exampleServiceId
+        link:
+          type:
+          - string
+          - 'null'
+          description: Fully qualified link for facility service.
+          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
+      description: Service info block.
+    DetailedServicesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          description: List of objects containing service details.
+          items:
+            $ref: '#/components/schemas/DetailedService_2'
+        links:
+          $ref: '#/components/schemas/PageLinks_2'
+        meta:
+          $ref: '#/components/schemas/DetailedServicesMetadata'
+      description: An object containing a list of services.
+    OperatingStatus_2:
+      required:
+      - code
+      type:
+      - object
+      - 'null'
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: Status codes indicate normal hours/services, limited hours/services, closed operations, or published facility notices for visitors.
+          example: NORMAL
+          enum:
+          - NORMAL
+          - NOTICE
+          - LIMITED
+          - CLOSED
+          - TEMPORARY_CLOSURE
+          - TEMPORARY_LOCATION
+          - VIRTUAL_CARE
+          - COMING_SOON
+        additionalInfo:
+          type:
+          - string
+          - 'null'
+          description: Details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.
+        supplementalStatus:
+          type:
+          - array
+          - 'null'
+          description: List of supplemental statuses for VA facility.
+          items:
+            $ref: '#/components/schemas/SupplementalStatus'
+      description: 'Current status of facility operations. The overall status of the facility, which can be: Normal Hours and Services, Facility Notice, Limited Hours and/or Services, or Closed. This field replaces active_status.'
+      example: NORMAL
+    NearbyAttributes_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        minTime:
+          type: integer
+          description: Minimum time to reach facility.
+          format: int32
+          example: 10
+        maxTime:
+          type: integer
+          description: Maximum time to reach facility.
+          format: int32
+          example: 20
+    FacilityAttributes_2:
+      required:
+      - operatingStatus
+      type:
+      - object
+      - 'null'
+      properties:
+        name:
+          type: string
+          description: Name associated with given facility.
+          example: Washington VA Medical Center
+        facilityType:
+          type: string
+          description: One of facility top-level type categories (e.g.) health, benefits, cemetery and vet center.
+          example: va_health_facility
+          enum:
+          - va_benefits_facility
+          - va_cemetery
+          - va_health_facility
+          - vet_center
+        classification:
+          type:
+          - string
+          - 'null'
+          description: Subtype of facility which can further be used to describe facility.
+          example: VA Medical Center (VAMC)
+        parent:
+          $ref: '#/components/schemas/Parent'
+        website:
+          type:
+          - string
+          - 'null'
+          description: Web address of facility
+          example: http://www.washingtondc.va.gov
+        lat:
+          type: number
+          description: Facility latitude.
+          format: float
+          example: 38.9311137
+        long:
+          type: number
+          description: Facility longitude.
+          format: float
+          example: -77.0109110499999
+        timeZone:
+          type: string
+          description: Facility time zone.
+          format: String
+          example: America/New_York
+        address:
+          $ref: '#/components/schemas/Addresses'
+        phone:
+          $ref: '#/components/schemas/Phone_2'
+        hours:
+          $ref: '#/components/schemas/Hours'
+        operationalHoursSpecialInstructions:
+          type:
+          - array
+          - 'null'
+          description: Additional information about a VA health or Vet Center facility's operating hours.
+          example:
+          - More hours are available for some services.
+          - If you need to talk to someone, call the Vet Center at 1-877-927-8387.
+          - Vet Center hours are dependent upon outreach assignments.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Additional information about a VA health or Vet Center facility's operating hours.
+            example: '["More hours are available for some services.","If you need to talk to someone, call the Vet Center at 1-877-927-8387.","Vet Center hours are dependent upon outreach assignments."]'
+        services:
+          $ref: '#/components/schemas/Services_2'
+        satisfaction:
+          $ref: '#/components/schemas/Satisfaction_2'
+        mobile:
+          type:
+          - boolean
+          - 'null'
+          example: false
+        operatingStatus:
+          $ref: '#/components/schemas/OperatingStatus_2'
+        visn:
+          type:
+          - string
+          - 'null'
+          example: '20'
+        healthCareSystem:
+          $ref: '#/components/schemas/HealthCareSystem'
+      description: Details describing a facility.
+    ApiError_2:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      description: API invocation or processing error
+    DetailedServiceEmailContact_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: Email address for facility service contact.
+          example: georgea@va.gov
+        emailLabel:
+          type:
+          - string
+          - 'null'
+          description: Email address label.
+          example: George Anderson
+      description: Email contact information for facility service.
+    FacilitiesResponse_2:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Facility'
+            $ref: '#/components/schemas/Facility_2'
         links:
-          $ref: '#/components/schemas/PageLinks'
+          $ref: '#/components/schemas/PageLinks_2'
         meta:
-          $ref: '#/components/schemas/FacilitiesMetadata'
-      description: JSON API-compliant response object describing one or more VA facilities
+          $ref: '#/components/schemas/FacilitiesMetadata_2'
+      description: An object describing one or more VA facilities
+    FacilitiesMetadata_2:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination_2'
+        distances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Distance_2'
+      description: Metadata representation for data in response. This metadata includes paginated items that allow user to see the current page, objects perPage, total pages and total entries.
+    DetailedServiceResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DetailedService_2'
+      description: Expanded details for a service.
+    PatientWaitTime_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        effectiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '2018-01-01'
+        new:
+          type:
+          - number
+          - 'null'
+          description: Average number of days a Veteran who hasn't been to this location has to wait for a non-urgent appointment.
+          example: 28.175438
+        established:
+          type:
+          - number
+          - 'null'
+          description: Average number of days a patient who has already been to this location has to wait for a non-urgent appointment.
+          example: 4.359409
+      description: Expected wait times for new and established patients for a given health care service at VA health facilities.
+      example: 10
+    PageLinks_2:
+      type: object
+      properties:
+        related:
+          type:
+          - string
+          - 'null'
+          description: Link to related pages of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?id=vha_688
+        self:
+          type:
+          - string
+          - 'null'
+          description: Link to current page of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to first page of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to previous page of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=1&per_page=1000
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to next page of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=2&per_page=1000
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to last page of response.
+          example: https://api.va.gov/services/va_facilities/v1/facilities?type=health&page=4&per_page=1000
+      description: Links for first page, next page, previous and last page of response.
+    ServiceInfo:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Service name.
+          example: COVID-19 vaccines
+        serviceId:
+          type: string
+          description: Service identifier.
+          example: covid19Vaccine
+        serviceType:
+          type:
+          - string
+          - 'null'
+          description: Service type.
+          example: Health
+          enum:
+          - benefits
+          - health
+          - other
+      description: Service information.
+    Phone_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        fax:
+          type:
+          - string
+          - 'null'
+          description: Phone number used for faxing to given facility.
+          example: 202-555-1212
+        main:
+          type:
+          - string
+          - 'null'
+          description: Phone number for given facility.
+          example: 512-325-1255
+        healthConnect:
+          type:
+          - string
+          - 'null'
+          description: Phone number for VA Health Connect.
+          example: 312-122-4516
+        pharmacy:
+          type:
+          - string
+          - 'null'
+          description: Phone number for pharmacy for given facility.
+          example: 202-555-1212
+        afterHours:
+          type:
+          - string
+          - 'null'
+          description: Phone number that may be reached outside of operating hours for given facility.
+          example: 202-555-1212
+        patientAdvocate:
+          type:
+          - string
+          - 'null'
+          description: Phone number for patient advocate for given facility.
+          example: 202-555-1212
+        mentalHealthClinic:
+          type:
+          - string
+          - 'null'
+          description: Phone number for mental health clinic for given facility.
+          example: 202-555-1212
+        enrollmentCoordinator:
+          type:
+          - string
+          - 'null'
+          description: Phone number for enrollment coordinator for given facility.
+          example: 202-555-1212
+      description: 'Collection of all telephone contact numbers for given facility. '
+      example: 1-800-827-1000
+    DetailedServiceAddress_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        buildingNameNumber:
+          type:
+          - string
+          - 'null'
+          description: Building name and/or number of service.
+          example: Baxter Building
+        wingFloorOrRoomNumber:
+          type:
+          - string
+          - 'null'
+          description: Wing, floor, or room number of service.
+          example: Wing East
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          description: Street name and number.
+          example: 50 Irving Street, Northwest
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Building number.
+          example: Bldg 2
+        city:
+          type:
+          - string
+          - 'null'
+          description: City name.
+          example: Washington
+        state:
+          type:
+          - string
+          - 'null'
+          description: State code.
+          example: DC
+        zipCode:
+          type:
+          - string
+          - 'null'
+          description: Postal (ZIP) code.
+          example: 20422-0001
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: Country code.
+          example: US
+      description: Service location address.
+    HealthCareSystem:
+      type:
+      - object
+      - 'null'
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the health care system.
+      description: Health Care System of the facility
+    DetailedServiceHours_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        monday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Mondays.
+          example: 9AM-5PM
+        tuesday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Tuesdays.
+          example: 9AM-5PM
+        wednesday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Wednesdays.
+          example: 9AM-5PM
+        thursday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Thursdays.
+          example: 9AM-5PM
+        friday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Fridays.
+          example: 9AM-5PM
+        saturday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Saturdays.
+          example: Closed
+        sunday:
+          type:
+          - string
+          - 'null'
+          description: Service availability on Sundays.
+          example: Closed
+      description: Standard hours of operation. Currently formatted as descriptive text suitable for display, with no guarantee of a standard parseable format. Hours of operation may vary due to holidays or other events.
+    Meta_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        bandVersion:
+          type:
+          - string
+          - 'null'
+          description: Version of the drive time band data set used to generate this response.
+          example: APR2021
+      description: Object containing metadata about this response.
     FacilityReadResponse_2:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/Facility_2'
       description: An object containing facility data.
+    Nearby_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          type: string
+          description: Identifier for facility.
+          example: vha_688
+        type:
+          type: string
+          description: Type of facility.
+          example: va_health_facility
+          enum:
+          - nearby_facility
+        attributes:
+          $ref: '#/components/schemas/NearbyAttributes_2'
+      description: Object describing a nearby VA facility.
+    DetailedServicesMetadata:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination_2'
+      description: "\t\nObject containing metadata about detailed service response"
+    Services_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        health:
+          type:
+          - array
+          - 'null'
+          description: List of health service objects for given facility.
+          items:
+            $ref: '#/components/schemas/ServiceHealthService'
+        benefits:
+          type:
+          - array
+          - 'null'
+          description: List of benefits service objects for given facility.
+          items:
+            $ref: '#/components/schemas/ServiceBenefitsService'
+        other:
+          type:
+          - array
+          - 'null'
+          description: List of benefits service objects for given facility.
+          items:
+            $ref: '#/components/schemas/ServiceOtherService'
+        link:
+          type:
+          - string
+          - 'null'
+          description: Base services link for services at facility.
+          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/
+        lastUpdated:
+          type:
+          - string
+          - 'null'
+          description: Date of the most recent change in offered services.
+          format: date
+          example: '2018-01-01'
+      description: All services offered by a VA facility grouped by service type.
+    DetailedServiceLocation_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        officeName:
+          type:
+          - string
+          - 'null'
+          description: Name of given office location.
+          example: ENT Clinic
+        serviceAddress:
+          $ref: '#/components/schemas/DetailedServiceAddress_2'
+        phones:
+          type:
+          - array
+          - 'null'
+          description: List of appointment phone information.
+          items:
+            $ref: '#/components/schemas/AppointmentPhoneNumber'
+        emailContacts:
+          type:
+          - array
+          - 'null'
+          description: List of email contact information regarding facility services.
+          items:
+            $ref: '#/components/schemas/DetailedServiceEmailContact_2'
+        serviceHours:
+          $ref: '#/components/schemas/DetailedServiceHours_2'
+        additionalHoursInfo:
+          type:
+          - string
+          - 'null'
+          description: Additional information related to service location hours.
+          example: Location hours times may vary depending on staff availability
+        onlineSchedulingAvailable:
+          type:
+          - string
+          - 'null'
+          description: String detailing online scheduling availability.
+          example: 'True'
+        referralRequired:
+          type:
+          - string
+          - 'null'
+          description: String detailing if referrals are required for the service.
+          example: 'False'
+        walkInsAccepted:
+          type:
+          - string
+          - 'null'
+          description: String detailing if walk-ins are accepted for the service.
+          example: 'True'
+      description: Details for a location offering a service.
+    ServiceHealthService:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of facility service.
+          example: Example Service Name
+        serviceId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for facility service.
+          example: exampleServiceId
+        link:
+          type:
+          - string
+          - 'null'
+          description: Fully qualified link for facility service.
+          example: http://api.va.gov/services/va_facilities/v1/facilities/vha_558GA/services/covid19Vaccine
+      description: Service info block.
+    Satisfaction_2:
+      type:
+      - object
+      - 'null'
+      properties:
+        health:
+          $ref: '#/components/schemas/PatientSatisfaction_2'
+        effectiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '2018-01-01'
+      description: Scores that indicate patient satisfaction at given facility per service.
   securitySchemes:
     apikey:
-      type: apiKey
-      name: apikey
       in: header
+      name: apikey
+      type: apiKey
+x-refined-from:
+- va-gov-facilities-v0-openapi.json
+- va-gov-facilities-v1-openapi.json

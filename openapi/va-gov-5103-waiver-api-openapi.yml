@@ -1,24 +1,25 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Benefits Claims 5103 Waiver API
+  version: v2
+  description: '## Background
+
+
+    The Benefits Claims API Version 2 lets internal consumers:
+
+
+    - Retrieve existing claim information, including status, by claim ID.'
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/claims/{version}/
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v2
+- url: https://api.va.gov/services/claims/{version}/
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v2
 tags:
 - name: 5103 Waiver
   description: Allows authenticated and authorized users to file a 5103 Notice Response on a claim.
@@ -197,8 +198,9 @@ paths:
                       properties:
                         trackedItemIds:
                           description: Array of tracked items ids.
-                          type: array
-                          nullable: true
+                          type:
+                          - array
+                          - 'null'
                           uniqueItems: true
                           items:
                             type: integer
@@ -211,7 +213,27 @@ paths:
                     - 1234
 components:
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    bearer_token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    productionOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/client-credentials)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/authorization
+          tokenUrl: https://api.va.gov/oauth2/token
+          scopes:
+            system/claim.read: Retrieve claim data
+            system/claim.write: Submit claim data
+    sandboxOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/client-credentials)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/token
+          scopes:
+            system/claim.read: Retrieve claim data
+            system/claim.write: Submit claim data

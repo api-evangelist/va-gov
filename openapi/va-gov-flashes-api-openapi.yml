@@ -1,24 +1,23 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Flashes API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Veteran Service History and Eligibility Flashes API
+  description: 'With this API you can
+
+    * Return enrolled benefits for a Veteran.'
+  contact:
+    name: VA.gov
+  version: 2.1.0
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/veteran_verification/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v2
+- url: https://api.va.gov/services/veteran_verification/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v2
 tags:
 - name: Flashes
 paths:
@@ -26,7 +25,7 @@ paths:
     get:
       tags:
       - Flashes
-      summary: Retrieve certain benefit flashes associated with a Veteran.
+      summary: Retrieve certain benefit flashes associated with a Veteran
       description: 'A flash is an attribute on a Veteran''s profile that describes special
 
         circumstances which can apply to a Veteran. Flashes can aid in
@@ -53,9 +52,7 @@ paths:
 
         If you have a use case for additional flashes, please
 
-        contact us with the details.
-
-        '
+        contact us with the details.'
       operationId: GET:/flashes
       responses:
         '200':
@@ -159,7 +156,7 @@ paths:
     post:
       tags:
       - Flashes
-      summary: Retrieve certain benefit flashes associated with a Veteran using demographics to search for the Veteran.
+      summary: Retrieve certain benefit flashes associated with a Veteran using demographics…
       description: 'A flash is an attribute on a Veteran''s profile that describes special
 
         circumstances which can apply to a Veteran. Flashes can aid in
@@ -234,9 +231,7 @@ paths:
 
         If neither of these flashes exist for the Veteran, then a 200 response
 
-        with an empty dataset will be returned.
-
-        '
+        with an empty dataset will be returned.'
       operationId: POST:/flashes
       requestBody:
         content:
@@ -358,28 +353,6 @@ paths:
         - flashes.read
 components:
   schemas:
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    EligibilityFlashesResponse:
-      required:
-      - flashes
-      type: object
-      properties:
-        flashes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EligibilityFlashesData'
     AuthorizationError:
       type: object
       properties:
@@ -392,19 +365,6 @@ components:
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
     InaccessibleServiceDefintionErrorApiError:
       type: object
       properties:
@@ -418,51 +378,6 @@ components:
           detail: Upstream Request Error.
           code: '502'
           status: '502'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    EligibilityFlashesData:
-      type: object
-      properties:
-        flash_name:
-          type: string
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
     VeteranAttributes:
       required:
       - birth_date
@@ -596,8 +511,152 @@ components:
         are not found.
 
         '
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    EligibilityFlashesData:
+      type: object
+      properties:
+        flash_name:
+          type: string
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    EligibilityFlashesResponse:
+      required:
+      - flashes
+      type: object
+      properties:
+        flashes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityFlashesData'
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    productionOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+    sandboxOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status

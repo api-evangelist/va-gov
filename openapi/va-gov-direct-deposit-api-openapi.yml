@@ -1,35 +1,36 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver DirectDeposit API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Management Direct Deposit API
+  description: 'Internal, front-end VA applications can use
+
+    this API to let eligible Veterans or their
+
+    beneficiaries manage direct deposit information
+
+    for VA disability, pension, and education benefit payments.'
+  contact:
+    name: VA.gov
+  version: 0.0.1
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/direct-deposit-management/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/direct-deposit-management/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
 tags:
-- name: DirectDeposit
+- name: Direct Deposit
 paths:
   /direct-deposit:
     get:
       tags:
-      - DirectDeposit
-      summary: Get direct deposit account and eligibility and control information.
-      description: '  Get direct deposit account and eligibility and control information.
-
-        '
+      - Direct Deposit
+      summary: Get direct deposit account and eligibility and control information
+      description: Get direct deposit account and eligibility and control information.
       operationId: GET:/direct-deposit
       parameters:
       - name: icn
@@ -136,11 +137,9 @@ paths:
       - OAuth: []
     put:
       tags:
-      - DirectDeposit
-      summary: Create or update direct deposit account information.
-      description: '  Create or update direct deposit account information.
-
-        '
+      - Direct Deposit
+      summary: Create or update direct deposit account information
+      description: Create or update direct deposit account information.
       operationId: PUT:/direct-deposit
       parameters:
       - name: icn
@@ -266,6 +265,65 @@ paths:
       - OAuth: []
 components:
   schemas:
+    ControlInformation:
+      type: object
+      properties:
+        canUpdateDirectDeposit:
+          type: boolean
+          description: "All control information elements from the source system must be true (\"Y\") for update deposit to be set to true (\"Y\"), with the following exception:\none of the three payment type fields must also be true (\"Y\").\n  1. isEduClaimAvailable\n  2. hasCpClaim\n  3. hasCpAward\n\nMore than one of these payment types can be true, but at least one of them must be for update deposit to be set to true (\"Y\")."
+          example: true
+        isCorpAvailable:
+          type: boolean
+          description: If user record is found corpAvailInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
+          example: true
+        isEduClaimAvailable:
+          type: boolean
+          description: If user record is found eduClaimInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
+          example: true
+        hasCpClaim:
+          type: boolean
+          description: If user record is found cpClaimInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
+          example: true
+        hasCpAward:
+          type: boolean
+          description: If user record is found authAwdInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
+          example: true
+        isCorpRecFound:
+          type: boolean
+          description: If user record is found, corpRecFoundInd is set to 'Y', else it is set to 'N' for retrieve operation. In case of update, it is set to 'N' if user record is not found or else it is not populated.
+          example: true
+        hasNoBdnPayments:
+          type: boolean
+          description: This indicator only checks for Chapter 18 payments. If the PaymentInformationService has no paymentType for "Benefits for Children of Vietnam Veterans (inc. Spina Bifida)" this indicator is set to 'Y'.
+          example: true
+        hasIndentity:
+          type: boolean
+          description: If the user record is found and the last name and birth date matches with the queried parameters, indentityInd is set to 'Y' or else it is set to 'N'.
+          example: true
+        hasIndex:
+          type: boolean
+          description: If index record is found on BDN, indexInd is set based on who owns the Index (Award) record. If it is owned by VETSNET, it is set to 'V' and if it is owned by BDN it is set to 'B'. If index record is not found, it is set to 'X'.
+          example: true
+        isCompetent:
+          type: boolean
+          description: If person is incompetent, incompetentInd is set to 'Y' or else it is set to 'N'. If the user has an existing fiduciary or is incompetent (by rating or by court), no address information will be displayed or updatable.
+          example: true
+        hasMailingAddress:
+          type: boolean
+          description: If the Mailing address exists this field was set to 'Y', else it was set to 'N'.
+          example: true
+        hasNoFiduciaryAssigned:
+          type: boolean
+          description: If person record has a fiduciary, fiduciaryInd is set to 'Y' or else it is set to 'N'. If the user has an existing fiduciary, no address information will be displayed or updatable.
+          example: true
+        isNotDeceased:
+          type: boolean
+          description: If person record is found and has Date of Death, deathDtInd is set to 'Y' or else it is set to 'N'.
+          example: true
+        hasPaymentAddress:
+          type: boolean
+          description: If the Payment Address exists this field is set to 'Y', else it was set to 'N'.
+          example: true
     EftInformation:
       type: object
       properties:
@@ -338,89 +396,7 @@ components:
         errorCodes:
         - errorCode: payment.restriction.indicators.present
           detail: hasNoBdnPayments is false.
-    ControlInformation:
-      type: object
-      properties:
-        canUpdateDirectDeposit:
-          type: boolean
-          description: "All control information elements from the source system must be true (\"Y\") for update deposit to be set to true (\"Y\"), with the following exception:\none of the three payment type fields must also be true (\"Y\").\n  1. isEduClaimAvailable\n  2. hasCpClaim\n  3. hasCpAward\n\nMore than one of these payment types can be true, but at least one of them must be for update deposit to be set to true (\"Y\")."
-          example: true
-        isCorpAvailable:
-          type: boolean
-          description: If user record is found corpAvailInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
-          example: true
-        isEduClaimAvailable:
-          type: boolean
-          description: If user record is found eduClaimInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
-          example: true
-        hasCpClaim:
-          type: boolean
-          description: If user record is found cpClaimInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
-          example: true
-        hasCpAward:
-          type: boolean
-          description: If user record is found authAwdInd is set to 'Y', else it is not returned. In case of any exception, it is set to 'N'.
-          example: true
-        isCorpRecFound:
-          type: boolean
-          description: If user record is found, corpRecFoundInd is set to 'Y', else it is set to 'N' for retrieve operation. In case of update, it is set to 'N' if user record is not found or else it is not populated.
-          example: true
-        hasNoBdnPayments:
-          type: boolean
-          description: This indicator only checks for Chapter 18 payments. If the PaymentInformationService has no paymentType for "Benefits for Children of Vietnam Veterans (inc. Spina Bifida)" this indicator is set to 'Y'.
-          example: true
-        hasIndentity:
-          type: boolean
-          description: If the user record is found and the last name and birth date matches with the queried parameters, indentityInd is set to 'Y' or else it is set to 'N'.
-          example: true
-        hasIndex:
-          type: boolean
-          description: If index record is found on BDN, indexInd is set based on who owns the Index (Award) record. If it is owned by VETSNET, it is set to 'V' and if it is owned by BDN it is set to 'B'. If index record is not found, it is set to 'X'.
-          example: true
-        isCompetent:
-          type: boolean
-          description: If person is incompetent, incompetentInd is set to 'Y' or else it is set to 'N'. If the user has an existing fiduciary or is incompetent (by rating or by court), no address information will be displayed or updatable.
-          example: true
-        hasMailingAddress:
-          type: boolean
-          description: If the Mailing address exists this field was set to 'Y', else it was set to 'N'.
-          example: true
-        hasNoFiduciaryAssigned:
-          type: boolean
-          description: If person record has a fiduciary, fiduciaryInd is set to 'Y' or else it is set to 'N'. If the user has an existing fiduciary, no address information will be displayed or updatable.
-          example: true
-        isNotDeceased:
-          type: boolean
-          description: If person record is found and has Date of Death, deathDtInd is set to 'Y' or else it is set to 'N'.
-          example: true
-        hasPaymentAddress:
-          type: boolean
-          description: If the Payment Address exists this field is set to 'Y', else it was set to 'N'.
-          example: true
-    UpdateRequest:
-      type: object
-      properties:
-        paymentAccount:
-          $ref: '#/components/schemas/EftInformation'
-    DirectDepositResponse:
-      required:
-      - controlInformation
-      - paymentAccount
-      type: object
-      properties:
-        paymentAccount:
-          $ref: '#/components/schemas/EftInformation'
-        veteranStatus:
-          type: string
-          example: VETERAN
-          enum:
-          - VETERAN
-          - DEPENDENT
-          - NEITHER_VETERAN_NOR_DEPENDENT
-          - COULD_NOT_DETERMINE_DUE_TO_EXCEPTION
-        controlInformation:
-          $ref: '#/components/schemas/ControlInformation'
-    NotAcceptable:
+    UserNotFound:
       type: object
       properties:
         type:
@@ -453,10 +429,10 @@ components:
           description: A URI reference that identifies the specific occurrence of the problem.  It may or may not yield further information if dereferenced.
           example: e6d1119e-dc91-4b4d-b583-0f309de0807b
       example:
-        type: https://api.va.gov/direct-deposit-management/errors/not-acceptable
-        title: Media type not acceptable
-        status: 406
-        detail: Could not find acceptable representation
+        type: https://api.va.gov/services/direct-deposit-management/errors/generic/not-found
+        title: Person for ICN not found
+        status: 404
+        detail: No data found for ICN
         instance: e6d1119e-dc91-4b4d-b583-0f309de0807b
     InternalServerError:
       type: object
@@ -539,15 +515,11 @@ components:
         detail: getDirectDeposit.icn must be between 17 and 17
         instance: e48e3aeb-f312-11ec-88e8-f55e56a472a2
         errorCodes: []
-    ErrorCode:
+    UpdateRequest:
       type: object
       properties:
-        errorCode:
-          type: string
-          example: payment.restriction.indicators.present
-        detail:
-          type: string
-          example: hasNoBdnPayments was false
+        paymentAccount:
+          $ref: '#/components/schemas/EftInformation'
     BadGateway:
       type: object
       properties:
@@ -592,7 +564,34 @@ components:
         detail: Bad Gateway
         instance: e6d1119e-dc91-4b4d-b583-0f309de0807b
         debuggingPayload: asdfghjklasdfghjkl
-    UserNotFound:
+    DirectDepositResponse:
+      required:
+      - controlInformation
+      - paymentAccount
+      type: object
+      properties:
+        paymentAccount:
+          $ref: '#/components/schemas/EftInformation'
+        veteranStatus:
+          type: string
+          example: VETERAN
+          enum:
+          - VETERAN
+          - DEPENDENT
+          - NEITHER_VETERAN_NOR_DEPENDENT
+          - COULD_NOT_DETERMINE_DUE_TO_EXCEPTION
+        controlInformation:
+          $ref: '#/components/schemas/ControlInformation'
+    ErrorCode:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          example: payment.restriction.indicators.present
+        detail:
+          type: string
+          example: hasNoBdnPayments was false
+    NotAcceptable:
       type: object
       properties:
         type:
@@ -625,13 +624,17 @@ components:
           description: A URI reference that identifies the specific occurrence of the problem.  It may or may not yield further information if dereferenced.
           example: e6d1119e-dc91-4b4d-b583-0f309de0807b
       example:
-        type: https://api.va.gov/services/direct-deposit-management/errors/generic/not-found
-        title: Person for ICN not found
-        status: 404
-        detail: No data found for ICN
+        type: https://api.va.gov/direct-deposit-management/errors/not-acceptable
+        title: Media type not acceptable
+        status: 406
+        detail: Could not find acceptable representation
         instance: e6d1119e-dc91-4b4d-b583-0f309de0807b
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    OAuth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/direct-deposit-management/system/v1/token
+          scopes:
+            direct-deposit-management.read: The veteran's access to direct deposit management that provides viewing of current EFT settings.
+            direct-deposit-management.write: The veteran's access to direct deposit management that provides updating of current EFT settings.

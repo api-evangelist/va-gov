@@ -1,24 +1,23 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Disability Rating API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Veteran Service History and Eligibility Disability Rating…
+  description: 'With this API you can
+
+    * Return enrolled benefits for a Veteran.'
+  contact:
+    name: VA.gov
+  version: 2.1.0
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/veteran_verification/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v2
+- url: https://api.va.gov/services/veteran_verification/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v2
 tags:
 - name: Disability Rating
 paths:
@@ -26,8 +25,8 @@ paths:
     get:
       tags:
       - Disability Rating
-      summary: Retrieve disability rating of authorized Veteran
-      description: This endpoint provides a veteran's combined and individual disability rating(s) and related decisions and dates.
+      summary: Get information about a Veteran's VA disability ratings.
+      description: This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token.
       operationId: GET:/disability_rating
       responses:
         '200':
@@ -35,35 +34,68 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DisabilityRatingResponseV1'
+                $ref: '#/components/schemas/DisabilityRatingResponseV2'
+              example:
+                data:
+                  id: '12303'
+                  type: disability-rating
+                  attributes:
+                    combined_disability_rating: 100
+                    combined_effective_date: '2018-03-27'
+                    legal_effective_date: '2018-03-27'
+                    individual_ratings:
+                    - decision: Service Connected
+                      disability_rating_id: '1070379'
+                      effective_date: '2018-03-27'
+                      rating_end_date: '2022-08-27'
+                      rating_percentage: 50
+                      diagnostic_type_code: '0502'
+                      hyph_diagnostic_type_code: '1234'
+                      diagnostic_type_name: Schizophrenia, disorganized type
+                      diagnostic_text: bilateral hearing loss
+                      static_ind: true
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServerSoapFaultApiError'
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
         '401':
-          description: Not authorized
+          description: Not Authorized
           content:
             application/json:
               schema:
-                type: string
-                example:
-                  message: Invalid authentication credentials
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/disability_rating
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                type: string
-                example:
-                  message: You cannot consume this service
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/disability_rating
         '404':
           description: Not Found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
         '413':
           description: Payload too large
           content:
@@ -92,6 +124,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
         '502':
           description: Bad Gateway
           content:
@@ -104,13 +141,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BackendServiceApiError'
-      deprecated: true
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
       security:
-      - bearer_token: []
+      - sandboxOauth2:
+        - disability_rating.read
+      - productionOauth2:
+        - disability_rating.read
     post:
       tags:
       - Disability Rating
-      summary: Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.
+      summary: Search for information about a Veteran's VA disability ratings using…
       description: 'This endpoint provides a Veteran''s disability ratings and related decisions and dates.
 
 
@@ -169,9 +219,7 @@ paths:
         in a name prior to matching.
 
 
-        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
-
-        '
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.'
       operationId: POST:/disability_rating
       requestBody:
         content:
@@ -309,7 +357,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -330,7 +378,7 @@ paths:
     post:
       tags:
       - Disability Rating
-      summary: Search for information about a Veteran's disability rating using Social Security number and demographic data Data returned includes individual and combined ratings, diagnoses, and eligibility dates for compensation for service-connected conditions.(restricted access).
+      summary: Search for information about a Veteran's disability rating using Social…
       description: 'This endpoint provides a Veteran''s combined and individual disability ratings and
 
         related decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.
@@ -406,9 +454,7 @@ paths:
 
         NOTE: In the Sandbox only birth date and zip code are required to identify the
 
-        test user.
-
-        '
+        test user.'
       operationId: POST:/restricted/disability_rating
       requestBody:
         content:
@@ -547,7 +593,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -568,7 +614,7 @@ paths:
     get:
       tags:
       - Disability Rating
-      summary: Get information about a Veteran's VA disability ratings. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.
+      summary: Get information about a Veteran's VA disability ratings.
       description: This endpoint provides disability ratings and related decisions and dates for a Veteran, based on the ID in the bearer token.
       operationId: GET:/summary/disability_rating
       responses:
@@ -679,7 +725,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -699,7 +745,7 @@ paths:
     post:
       tags:
       - Disability Rating
-      summary: Search for information about a Veteran's VA disability ratings using demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions.
+      summary: Search for information about a Veteran's VA disability ratings using…
       description: 'This endpoint provides a Veteran''s disability ratings and related decisions and dates.
 
 
@@ -758,10 +804,7 @@ paths:
         in a name prior to matching.
 
 
-        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
-
-
-        '
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.'
       operationId: POST:/summary/disability_rating
       requestBody:
         content:
@@ -895,7 +938,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -916,8 +959,81 @@ paths:
     post:
       tags:
       - Disability Rating
-      summary: Search for information about a Veteran's VA disability ratings using Social Security number and demographic data. Data returned includes individual and combined ratings and eligibility dates for compensation for service-connected conditions. (restricted access)
-      description: "This endpoint provides a Veteran's disability ratings and related decisions and dates.   It allows searching for a Veteran using Social   Security number and demographic information.\n\n  If using Social Security number, the following information is required:\n  * Social Security number\n  * First name\n  * Last name\n  * Birth date\n\n  If using demographic data, the following information is required:\n  * First Name\n  * Last Name\n  * Birth date\n  * Street Address\n  * City\n  * State\n  * Country\n  * Zipcode\n\n  The following optional information may also be used with Social Security number\n  or demographic data:\n  * Middle Name\n  * Gender\n  * Mother's Maiden Name\n  * Home Phone Number\n  * Birth Place City\n  * Birth Place State\n  * Birth Place Country\n\n  Tips for finding a match:\n  * First and Last Name, Address and Birth date are often essential to uniquely\n  identifying a Veteran.\n  * Home address is recommended, but it may also help to retry the search with\n  additional available addresses when the first attempt is not confirmed.\n  * To find a match, it can help to retry with different demographic information,\n  such as alternate last names or addresses.\n  * It can also help to remove special characters, hyphens, apostrophes, or spaces\n  in a name prior to matching.\n\n  NOTE: In the Sandbox only birth date and zip code are required to identify the\n  test user.\n"
+      summary: Search for information about a Veteran's VA disability ratings using Social…
+      description: 'This endpoint provides a Veteran''s disability ratings and related decisions and dates. It allows searching for a Veteran using Social Security number and demographic information.
+
+
+        If using Social Security number, the following information is required:
+
+        * Social Security number
+
+        * First name
+
+        * Last name
+
+        * Birth date
+
+
+        If using demographic data, the following information is required:
+
+        * First Name
+
+        * Last Name
+
+        * Birth date
+
+        * Street Address
+
+        * City
+
+        * State
+
+        * Country
+
+        * Zipcode
+
+
+        The following optional information may also be used with Social Security number
+
+        or demographic data:
+
+        * Middle Name
+
+        * Gender
+
+        * Mother''s Maiden Name
+
+        * Home Phone Number
+
+        * Birth Place City
+
+        * Birth Place State
+
+        * Birth Place Country
+
+
+        Tips for finding a match:
+
+        * First and Last Name, Address and Birth date are often essential to uniquely
+
+        identifying a Veteran.
+
+        * Home address is recommended, but it may also help to retry the search with
+
+        additional available addresses when the first attempt is not confirmed.
+
+        * To find a match, it can help to retry with different demographic information,
+
+        such as alternate last names or addresses.
+
+        * It can also help to remove special characters, hyphens, apostrophes, or spaces
+
+        in a name prior to matching.
+
+
+        NOTE: In the Sandbox only birth date and zip code are required to identify the
+
+        test user.'
       operationId: POST:/restricted/summary/disability_rating
       requestBody:
         content:
@@ -1052,7 +1168,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -1071,57 +1187,40 @@ paths:
         - disability_rating_summary_restricted.read
 components:
   schemas:
-    ServerSoapFaultApiError:
+    DisabilityRatingData:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    MissingIcn:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Veteran not identifiable.
-          detail: No data found for ID or demographics.
-          code: '404'
-          status: '404'
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails_2'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    ForbiddenServerError:
+        id:
+          type: string
+        type:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes'
+    AuthorizationError:
       type: object
       properties:
         status:
           type: string
-          example: '403'
+          example: '401'
         error:
           type: string
-          example: Token not granted requested scope.
+          example: Invalid token.
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
     VeteranAttributes:
       required:
       - birth_date
@@ -1255,16 +1354,6 @@ components:
         are not found.
 
         '
-    DisabilityRatingData:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        attributes:
-          $ref: '#/components/schemas/DisabilityRatingAttributes'
-      deprecated: true
     FederalVeteranAttributes:
       required:
       - birth_date
@@ -1400,127 +1489,7 @@ components:
         are not found.
 
         '
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: '503'
-        status:
-          type: string
-          example: '503'
-    IndividualRating:
-      type: object
-      properties:
-        decision:
-          type: string
-        effective_date:
-          type: string
-          format: date
-        rating_percentage:
-          type: integer
-          format: int32
-      deprecated: true
     DisabilityRatingAttributes:
-      type: object
-      properties:
-        combined_disability_rating:
-          type: integer
-          format: int32
-        combined_effective_date:
-          type: string
-          format: date
-        legal_effective_date:
-          type: string
-          format: date
-        individual_ratings:
-          type: array
-          items:
-            $ref: '#/components/schemas/IndividualRating'
-      deprecated: true
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    DisabilityRatingResponseV2:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/DisabilityRatingData_2'
-    BackendServiceApiError_2:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails_2'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    DisabilityRatingData_2:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        attributes:
-          $ref: '#/components/schemas/DisabilityRatingAttributes_2'
-    ApiErrorDetails_2:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
-    AuthorizationError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '401'
-        error:
-          type: string
-          example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    DisabilityRatingAttributes_2:
       type: object
       properties:
         combined_disability_rating:
@@ -1542,23 +1511,8 @@ components:
           type: array
           description: Information about each disability rating, which makes up the combined disability rating
           items:
-            $ref: '#/components/schemas/IndividualRating_2'
-    DisabilityRatingSummaryResponseV2:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/DisabilityRatingData_2'
-    DisabilityRatingResponseV1:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/DisabilityRatingData'
-      deprecated: true
-    InaccessibleServiceDefintionErrorApiError:
+            $ref: '#/components/schemas/IndividualRating'
+    InternalServerApiError:
       type: object
       properties:
         errors:
@@ -1567,11 +1521,58 @@ components:
             $ref: '#/components/schemas/ApiErrorDetails'
       example:
         errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
-    IndividualRating_2:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    DisabilityRatingResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DisabilityRatingData'
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    IndividualRating:
       type: object
       properties:
         decision:
@@ -1672,8 +1673,105 @@ components:
           description: The purpose of this field is to allow users to make a "yes" or "no" decision about re-examination for all disabilities that have not been determined to be static.
           example: true
       description: Information about each disability rating, which makes up the combined disability rating
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    MissingIcn:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    DisabilityRatingSummaryResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DisabilityRatingData'
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    productionOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+    sandboxOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status

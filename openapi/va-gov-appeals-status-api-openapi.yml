@@ -1,24 +1,22 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Appeals Status API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  version: 0.0.1
+  title: Appeals Status API
+  description: The Appeals Status API allows you to request the statuses of all decision reviews for a Veteran, including decision reviews following the AMA process and legacy benefit appeals.
+  termsOfService: https://developer.va.gov/terms-of-service
+  contact:
+    name: Vets.gov
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/appeals/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v0
+- url: https://api.va.gov/services/appeals/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v0
 tags:
 - name: Appeals Status
   description: Caseflow appeals status API
@@ -123,6 +121,132 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
+    Event:
+      type: object
+      description: Event during the appeals process
+      properties:
+        type:
+          type: string
+          example: soc
+          description: Enum of possible event types. Acronyms used include, nod (Notice of Disagreement), soc (Statement of Case), ssoc (Supplemental Statement of Case), ftr (Failed to Report), bva (Board of Veteran Appeals), cavc (Court of Appeals for Veteran Claims), and dro (Decision Review Officer).
+          enum:
+          - claim_decision
+          - nod
+          - soc
+          - form9
+          - ssoc
+          - certified
+          - hearing_held
+          - hearing_no_show
+          - bva_decision
+          - field_grant
+          - withdrawn
+          - ftr
+          - ramp
+          - death
+          - merged
+          - record_designation
+          - reconsideration
+          - vacated
+          - other_close
+          - cavc_decision
+          - ramp_notice
+          - transcript
+          - remand_return
+          - ama_nod
+          - docket_change
+          - distributed_to_vlj
+          - bva_decision_effectuation
+          - dta_decision
+          - sc_request
+          - sc_decision
+          - sc_other_close
+          - hlr_request
+          - hlr_decision
+          - hlr_dta_error
+          - hlr_other_close
+          - statutory_opt_in
+        date:
+          type: string
+          format: date
+          description: Date the event occurred
+          example: '2016-05-30'
+        details:
+          description: Further information about the event
+          type: object
+    Evidence:
+      type: object
+      description: Documentation and other evidence that has been submitted in support of the appeal
+      properties:
+        description:
+          type: string
+          example: Service treatment records
+          description: Short text describing what the evidence is
+        date:
+          type: string
+          format: date
+          description: Date the evidence was added to the case
+          example: '2017-09-30'
+    Appeals:
+      type: array
+      items:
+        $ref: '#/components/schemas/Appeal'
+    Issue:
+      type: object
+      description: Issues on appeal
+      properties:
+        active:
+          type: boolean
+          example: true
+          description: Whether the issue is presently under contention.
+        description:
+          type: string
+          example: Service connection, tinnitus
+          description: Description of the Issue
+        diagnosticCode:
+          type: string
+          example: '6260'
+          description: The CFR (Code of Federal Regulations) diagnostic code for the issue, if applicable
+        lastAction:
+          type: string
+          description: Most recent decision made on this issue
+          enum:
+          - field_grant
+          - withdrawn
+          - allowed
+          - denied
+          - remand
+          - cavc_remand
+        date:
+          type: string
+          format: date
+          description: The date of the most recent decision on the issue
+          example: '2016-05-30'
+    Alert:
+      type: object
+      description: Notification of a request for more information or of a change in the appeal status that requires action.
+      properties:
+        type:
+          type: string
+          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
+          example: form9_needed
+          enum:
+          - form9_needed
+          - scheduled_hearing
+          - hearing_no_show
+          - held_for_evidence
+          - cavc_option
+          - ramp_eligible
+          - ramp_ineligible
+          - decision_soon
+          - blocked_by_vso
+          - scheduled_dro_hearing
+          - dro_hearing_no_show
+          - evidentiary_period
+          - ama_post_decision
+        details:
+          description: Further information about the alert
+          type: object
     Eta:
       type: object
       description: Estimated decision dates for each docket.
@@ -390,132 +514,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Evidence'
-    Appeals:
-      type: array
-      items:
-        $ref: '#/components/schemas/Appeal'
-    Alert:
-      type: object
-      description: Notification of a request for more information or of a change in the appeal status that requires action.
-      properties:
-        type:
-          type: string
-          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
-          example: form9_needed
-          enum:
-          - form9_needed
-          - scheduled_hearing
-          - hearing_no_show
-          - held_for_evidence
-          - cavc_option
-          - ramp_eligible
-          - ramp_ineligible
-          - decision_soon
-          - blocked_by_vso
-          - scheduled_dro_hearing
-          - dro_hearing_no_show
-          - evidentiary_period
-          - ama_post_decision
-        details:
-          description: Further information about the alert
-          type: object
-    Evidence:
-      type: object
-      description: Documentation and other evidence that has been submitted in support of the appeal
-      properties:
-        description:
-          type: string
-          example: Service treatment records
-          description: Short text describing what the evidence is
-        date:
-          type: string
-          format: date
-          description: Date the evidence was added to the case
-          example: '2017-09-30'
-    Issue:
-      type: object
-      description: Issues on appeal
-      properties:
-        active:
-          type: boolean
-          example: true
-          description: Whether the issue is presently under contention.
-        description:
-          type: string
-          example: Service connection, tinnitus
-          description: Description of the Issue
-        diagnosticCode:
-          type: string
-          example: '6260'
-          description: The CFR (Code of Federal Regulations) diagnostic code for the issue, if applicable
-        lastAction:
-          type: string
-          description: Most recent decision made on this issue
-          enum:
-          - field_grant
-          - withdrawn
-          - allowed
-          - denied
-          - remand
-          - cavc_remand
-        date:
-          type: string
-          format: date
-          description: The date of the most recent decision on the issue
-          example: '2016-05-30'
-    Event:
-      type: object
-      description: Event during the appeals process
-      properties:
-        type:
-          type: string
-          example: soc
-          description: Enum of possible event types. Acronyms used include, nod (Notice of Disagreement), soc (Statement of Case), ssoc (Supplemental Statement of Case), ftr (Failed to Report), bva (Board of Veteran Appeals), cavc (Court of Appeals for Veteran Claims), and dro (Decision Review Officer).
-          enum:
-          - claim_decision
-          - nod
-          - soc
-          - form9
-          - ssoc
-          - certified
-          - hearing_held
-          - hearing_no_show
-          - bva_decision
-          - field_grant
-          - withdrawn
-          - ftr
-          - ramp
-          - death
-          - merged
-          - record_designation
-          - reconsideration
-          - vacated
-          - other_close
-          - cavc_decision
-          - ramp_notice
-          - transcript
-          - remand_return
-          - ama_nod
-          - docket_change
-          - distributed_to_vlj
-          - bva_decision_effectuation
-          - dta_decision
-          - sc_request
-          - sc_decision
-          - sc_other_close
-          - hlr_request
-          - hlr_decision
-          - hlr_dta_error
-          - hlr_other_close
-          - statutory_opt_in
-        date:
-          type: string
-          format: date
-          description: Date the event occurred
-          example: '2016-05-30'
-        details:
-          description: Further information about the event
-          type: object
   securitySchemes:
     apikey:
       type: apiKey

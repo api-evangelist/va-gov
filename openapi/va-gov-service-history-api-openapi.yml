@@ -1,24 +1,23 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Service History API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Veteran and Eligibility Service History API
+  description: 'With this API you can
+
+    * Return enrolled benefits for a Veteran.'
+  contact:
+    name: VA.gov
+  version: 2.1.0
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/veteran_verification/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v2
+- url: https://api.va.gov/services/veteran_verification/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v2
 tags:
 - name: Service History
 paths:
@@ -26,18 +25,8 @@ paths:
     get:
       tags:
       - Service History
-      summary: Retrieve service history of authorized Veteran
-      description: 'This endpoint provides a veteran''s detailed service history including all
-
-        military service episodes with the first and last name of the Veteran, the branch of
-
-        service, start and end dates, paygrade, discharge status, and separation reason.
-
-        It also provides start and end dates and locations for each deployment within each
-
-        episode of service.
-
-        '
+      summary: Retrieve the service history of a Veteran
+      description: This endpoint provides a Veteran's detailed service history, including all military service episodes with the first and last name of the Veteran, the branch of service, start and end dates, paygrade, discharge status, and separation reason. It also provides start and end dates and locations for each deployment within each episode of service.
       operationId: GET:/service_history
       responses:
         '200':
@@ -46,34 +35,79 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceHistoryResponse'
+              example:
+                data:
+                - id: 2305d238-dee4-5c98-858a-f912e3c059f8
+                  type: service-history-episodes
+                  attributes:
+                    first_name: Jessie
+                    last_name: Price
+                    branch_of_service: Air Force
+                    service_type: Active Duty
+                    start_date: '1991-05-29'
+                    end_date: '2011-06-30'
+                    pay_grade: E07
+                    component_of_service: Air Force
+                    discharge_status: honorable
+                    separation_reason: SUFFICIENT SERVICE FOR RETIREMENT
+                    service_episode_combat_pay: false
+                    deployments:
+                    - start_date: '1948-10-10'
+                      end_date: '1949-10-09'
+                      location: KOR
+                militarySummary:
+                  first_name: Jessie
+                  last_name: Price
+                  active_duty_status: N
+                  combat_service_indicator: true
+                  duty_status_code: '02'
+                  duty_status_text: 'Not on active duty: '
+                  total_number_of_regular_active_duty_days: 444
+                  total_number_of_reserve_active_duty_days: 90
+                  total_number_of_guard_active_duty_days: 60
+                  total_number_of_training_days: 10
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServerSoapFaultApiError'
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: Bad Request
+                detail: Bad Request
+                code: '400'
+                status: '400'
         '401':
-          description: Not authorized
+          description: Not Authorized
           content:
             application/json:
               schema:
-                type: string
-                example:
-                  message: Invalid authentication credentials
+                $ref: '#/components/schemas/AuthorizationError'
+              example:
+                status: '401'
+                error: Invalid Token.
+                path: /veteran_verification/v2/service_history
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                type: string
-                example:
-                  message: You cannot consume this service
+                $ref: '#/components/schemas/ForbiddenServerError'
+              example:
+                status: '403'
+                error: Token not granted requested scope.
+                path: /veteran_verification/v2/service_history
         '404':
           description: Not Found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MissingIcn'
+              example:
+                title: Veteran not identifiable.
+                detail: No data found for ID or demographics.
+                code: '404'
+                status: '404'
         '413':
           description: Payload too large
           content:
@@ -102,6 +136,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerApiError'
+              example:
+                title: Internal server error
+                detail: Internal server error
+                code: '500'
+                status: '500'
         '502':
           description: Bad Gateway
           content:
@@ -114,13 +153,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BackendServiceApiError'
-      deprecated: true
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: The server took too long to respond
       security:
-      - bearer_token: []
+      - sandboxOauth2:
+        - service_history.read
+      - productionOauth2:
+        - service_history.read
     post:
       tags:
       - Service History
-      summary: Retrieve the service history of a Veteran using demographics to search for the Veteran.
+      summary: Retrieve the service history of a Veteran using demographics to search for the…
       description: 'This endpoint provides a Veteran''s detailed service history including all military
 
         service episodes with the first and last name of the Veteran, the branch of service,
@@ -177,9 +229,7 @@ paths:
         in a name prior to matching.
 
 
-        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.
-
-        '
+        NOTE: In the Sandbox only DOB and ZIP are required to identify the test user.'
       operationId: POST:/service_history
       requestBody:
         content:
@@ -324,7 +374,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackendServiceApiError_2'
+                $ref: '#/components/schemas/BackendServiceApiError'
         '504':
           description: Gateway Timeout
           content:
@@ -343,34 +393,6 @@ paths:
         - service_history.read
 components:
   schemas:
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    ApiErrorDetails_2:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
     Deployment:
       required:
       - end_date
@@ -379,50 +401,27 @@ components:
       type: object
       properties:
         start_date:
-          type: string
+          type:
+          - string
+          - 'null'
           description: beginning of deployment (YYYY-mm-dd)
           format: date
-          nullable: true
           example: '1948-10-10'
         end_date:
-          type: string
+          type:
+          - string
+          - 'null'
           description: end of deployment (YYYY-mm-dd)
           format: date
-          nullable: true
           example: '1949-10-09'
         location:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Three letter ISO country code of deployment location
-          nullable: true
           example: KOR
       description: Deployment during a service history episode
       deprecated: true
-    ServerSoapFaultApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    MissingIcn:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Veteran not identifiable.
-          detail: No data found for ID or demographics.
-          code: '404'
-          status: '404'
     AuthorizationError:
       type: object
       properties:
@@ -435,80 +434,6 @@ components:
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
-    BackendServiceApiError_2:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails_2'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    ServiceHistoryResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceHistoryEpisode'
-        military_summary:
-          $ref: '#/components/schemas/ServiceHistoryMilitarySummary'
-      description: verification service_history endpoint
-      deprecated: true
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails_2'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    ServiceHistoryEpisode:
-      required:
-      - attributes
-      - id
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          description: Service History Episode ID
-          example: 12312AASDf
-        type:
-          type: string
-          example: service-history-episodes
-        attributes:
-          $ref: '#/components/schemas/ServiceHistoryAttributes'
-      description: Service history for authorized Veteran
-    InaccessibleServiceDefintionErrorApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
     ServiceHistoryAttributes:
       required:
       - branch_of_service
@@ -529,14 +454,16 @@ components:
           items:
             $ref: '#/components/schemas/Deployment'
         first_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Veteran first name
-          nullable: true
           example: Abraham
         last_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Veteran last name
-          nullable: true
           example: Lincoln
         branch_of_service:
           type: string
@@ -551,28 +478,31 @@ components:
           description: If veteran is on active duty or not
           example: Active Duty
         start_date:
-          type: string
+          type:
+          - string
+          - 'null'
           description: start date of a service history episode (YYYY-mm-dd)
           format: date
-          nullable: true
           example: '1948-04-08'
         end_date:
-          type: string
+          type:
+          - string
+          - 'null'
           description: end date of a service history episode (YYYY-mm-dd)
           format: date
-          nullable: true
           example: '1950-05-10'
         pay_grade:
           type: string
           description: "Defines the level of compensation for a position, normalized across military branches.\n\nPossible values include the concatenation of Pay Plan Code and Pay Grade Code.\nPay Plan Code is represented as a two-character code, and can be one of five values:\n  - CC (Commissioned Corps)\n  - MC (Cadet)\n  - ME (Enlisted)\n  - MO (Officer)\n  - MW (Warrant Officer)\n\nPay Grade Code is a value between 01 and 10.\n\nPay Plan Code is concatenated with Pay Grade Code to determine the full Pay Grade value, with the leading character (M or C) stripped from Pay Plan Code."
           example: W01
         discharge_status:
-          type: string
+          type:
+          - string
+          - 'null'
           description: 'Character of discharge from service episode. Possible values are:
 
 
             Both "honorable-for-va-purposes" and "dishonorable-for-va-purposes" represent a change in character of discharge based on an administrative decision, for purposes of VA benefits administration. The original character of discharge for other purposes was either "bad-conduct" or "other-than-honorable". "honorable-absence-of-negative-report" represents an unreported character of service that the Department of Defense classifies as honorable.'
-          nullable: true
           example: HONORABLE
           enum:
           - honorable
@@ -590,107 +520,25 @@ components:
           description: Additional text description for separation reason beyond discharge_status value
           example: SUFFICIENT SERVICE FOR RETIREMENT
         service_episode_combat_pay:
-          type: boolean
-          description: If there is any combat pay in the VA Profile service's CombatPayBio with the same serviceEpisodeIdentifier, then indicate Y
-          nullable: true
+          type:
+          - boolean
+          - 'null'
+          description: If there is any record of combat pay for a Veteran's service period, return "true."
           example: false
       description: Attributes for service_history endpoint
-    ForbiddenServerError:
+    InaccessibleServiceDefintionErrorApiError:
       type: object
       properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: '503'
-        status:
-          type: string
-          example: '503'
-    ServiceHistoryMilitarySummary:
-      required:
-      - active_duty_status
-      - combat_service_indicator
-      - duty_status_code
-      - duty_status_text
-      - first_name
-      - last_name
-      - total_number_of_guard_active_duty_days
-      - total_number_of_regular_active_duty_days
-      - total_number_of_reserve_active_duty_days
-      - total_number_of_training_days
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: Veteran first name
-          nullable: true
-          example: Abraham
-        last_name:
-          type: string
-          description: Veteran last name
-          nullable: true
-          example: Lincoln
-        active_duty_status:
-          type: string
-          description: Indicates the Veteran's current active duty status
-          nullable: true
-          example: 'false'
-        combat_service_indicator:
-          type: boolean
-          description: Indicates whether the service member has ever been a part of active combat duty
-          nullable: true
-          example: false
-        duty_status_code:
-          type: string
-          description: Describes the individual's status
-          nullable: true
-          example: A
-        duty_status_text:
-          type: string
-          description: Relates to an individual's affiliation with the US Military.
-          nullable: true
-          example: Active Component = full time active duty, not in the Guard or Reserve
-        total_number_of_regular_active_duty_days:
-          type: integer
-          description: Total number of regular active duty days
-          format: int32
-          nullable: true
-          example: 100
-        total_number_of_reserve_active_duty_days:
-          type: integer
-          description: Total number of reserve active duty days
-          format: int32
-          nullable: true
-          example: 100
-        total_number_of_guard_active_duty_days:
-          type: integer
-          description: Total number of guard active duty days
-          format: int32
-          nullable: true
-          example: 100
-        total_number_of_training_days:
-          type: integer
-          description: Total number of training days
-          format: int32
-          nullable: true
-          example: 100
-      description: Military Summary for Veteran
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
     VeteranAttributes:
       required:
       - birth_date
@@ -824,8 +672,258 @@ components:
         are not found.
 
         '
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    ServiceHistoryMilitarySummary:
+      required:
+      - active_duty_status
+      - combat_service_indicator
+      - duty_status_code
+      - duty_status_text
+      - first_name
+      - last_name
+      - total_number_of_guard_active_duty_days
+      - total_number_of_regular_active_duty_days
+      - total_number_of_reserve_active_duty_days
+      - total_number_of_training_days
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: Veteran first name
+          example: Abraham
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Veteran last name
+          example: Lincoln
+        active_duty_status:
+          type:
+          - string
+          - 'null'
+          description: Indicates the Veteran's current active duty status
+          example: 'false'
+        combat_service_indicator:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the service member has ever been a part of active combat duty
+          example: false
+        duty_status_code:
+          type:
+          - string
+          - 'null'
+          description: Describes the individual's status
+          example: A
+        duty_status_text:
+          type:
+          - string
+          - 'null'
+          description: Relates to an individual's affiliation with the US Military.
+          example: Active Component = full time active duty, not in the Guard or Reserve
+        total_number_of_regular_active_duty_days:
+          type:
+          - integer
+          - 'null'
+          description: Total number of regular active duty days
+          format: int32
+          example: 100
+        total_number_of_reserve_active_duty_days:
+          type:
+          - integer
+          - 'null'
+          description: Total number of reserve active duty days
+          format: int32
+          example: 100
+        total_number_of_guard_active_duty_days:
+          type:
+          - integer
+          - 'null'
+          description: Total number of guard active duty days
+          format: int32
+          example: 100
+        total_number_of_training_days:
+          type:
+          - integer
+          - 'null'
+          description: Total number of training days
+          format: int32
+          example: 100
+      description: Military Summary for Veteran
+    ServiceHistoryResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHistoryEpisode'
+        military_summary:
+          $ref: '#/components/schemas/ServiceHistoryMilitarySummary'
+      description: verification service_history endpoint
+      deprecated: true
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    MissingIcn:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    ServiceHistoryEpisode:
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Service History Episode ID
+          example: 12312AASDf
+        type:
+          type: string
+          example: service-history-episodes
+        attributes:
+          $ref: '#/components/schemas/ServiceHistoryAttributes'
+      description: Service history for authorized Veteran
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    productionOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+    sandboxOauth2:
+      type: oauth2
+      description: This API uses OAuth 2.0 with client credentials grant flow and authorization code grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            disability_rating_summary_restricted.read: For approved federal consumers, view a Veteran's VA disability rating summary using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            launch.read: Retrieve Launch
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            permanent_and_total_disability_restricted.read: 'Vew a Veteran''s P&T and IU disability statuses and effective dates, based on restricted user attributes. '
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/veteran-verification/system/v1/token
+          scopes:
+            aca_coverage_restricted.read: Return a Veteran's enrollment status in minimum essential coverage (MEC) as defined by the Affordable Care Act (ACA).  (restricted access).
+            disability_rating.read: Retrieve Disability Rating
+            disability_rating_summary.read: Retrieve Disability Rating Summary
+            disability_rating_restricted.read: For approved federal consumers, view a Veteran's VA disability ratings and their effective dates using Social Security number and demographic information.
+            enrolled_benefits.read: Retrieve Veteran Enrolled Benefits
+            flashes.read: Retrieve Flashes
+            permanent_and_total_disability.read: View a Veteran's P&T and IU disability statuses and effective dates.
+            service_history.read: Retrieve Service History
+            status_restricted.read: For approved federal consumers, confirm the Veteran status of an individual using Social Security number and demographic information.
+            veteran_status.read: Retrieve Veteran Status

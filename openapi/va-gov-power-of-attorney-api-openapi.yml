@@ -1,31 +1,36 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Power of Attorney API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Va Gov Power of Attorney API
+  version: '1.0'
+  description: 'Operations tagged Power of Attorney across 2 of this provider''s published API definitions: va-gov-benefits-claims-v1-openapi.json, va-gov-benefits-claims-v2-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/claims/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/claims/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
+- url: https://sandbox-api.va.gov/services/claims/{version}/
+  description: Sandbox
+  variables:
+    version:
+      default: v2
+- url: https://api.va.gov/services/claims/{version}/
+  description: Production
+  variables:
+    version:
+      default: v2
 tags:
 - name: Power of Attorney
   description: Used for 21-22 and 21-22a form submissions.
 paths:
   /forms/2122:
     get:
-      summary: Gets schema for POA form.
+      summary: Gets schema for POA form
       deprecated: true
       tags:
       - Power of Attorney
@@ -434,7 +439,7 @@ paths:
                 example:
                   message: The server took too long to respond
     post:
-      summary: Submit a POA form.
+      summary: Submit a POA form
       tags:
       - Power of Attorney
       operationId: POST:/forms/2122
@@ -446,7 +451,57 @@ paths:
         - claim.read
         - claim.write
       - bearer_token: []
-      description: "Signature images\n\n\n\nIf the request includes signature images for both the Veteran and the representative, the API will:\n\n   - Generate VA Form 21-22 PDF for organizations or VA Form 21-22a PDF for individual representatives.\n\n   - Automatically establish POA for the representative.\n\n\n\nThe signature can be provided in either of these formats:\n\n   - Base64-encoded image or signature block. This allows the API to auto-populate and attach the VA Form\n   21-22 without requiring a manual PDF upload.\n\n   - PDF of VA Form 21-22 with an ink signature. This should be attached using the PUT /forms/2122/{id}\n   endpoint.\n\n\n\n   If signature images are not included in the initial request, the response will return an id which must be\n   used to submit the signed PDF via the PUT /forms/2122/{id} endpoint.\n\n\n\nDependent claimant information:\n\n   - If dependent claimant information is included in the request, the dependentʼs relationship to the Veteran\n   will be validated.\n\n   - In this case, the representative will be appointed to the dependent claimant, not the Veteran.\n\n\n\nResponse information:\n\n   - A successful submission returns a 200 response, indicating that the request was successfully processed.\n\n   - A 200 response does not confirm that the POA has been appointed.\n\n   - To check the status of a POA submission, use the GET /forms/2122/{id} endpoint.\n\n"
+      description: 'Signature images
+
+
+        If the request includes signature images for both the Veteran and the representative, the API will:
+
+
+        - Generate VA Form 21-22 PDF for organizations or VA Form 21-22a PDF for individual representatives.
+
+
+        - Automatically establish POA for the representative.
+
+
+        The signature can be provided in either of these formats:
+
+
+        - Base64-encoded image or signature block. This allows the API to auto-populate and attach the VA Form
+
+        21-22 without requiring a manual PDF upload.
+
+
+        - PDF of VA Form 21-22 with an ink signature. This should be attached using the PUT /forms/2122/{id}
+
+        endpoint.
+
+
+        If signature images are not included in the initial request, the response will return an id which must be
+
+        used to submit the signed PDF via the PUT /forms/2122/{id} endpoint.
+
+
+        Dependent claimant information:
+
+
+        - If dependent claimant information is included in the request, the dependentʼs relationship to the Veteran
+
+        will be validated.
+
+
+        - In this case, the representative will be appointed to the dependent claimant, not the Veteran.
+
+
+        Response information:
+
+
+        - A successful submission returns a 200 response, indicating that the request was successfully processed.
+
+
+        - A 200 response does not confirm that the POA has been appointed.
+
+
+        - To check the status of a POA submission, use the GET /forms/2122/{id} endpoint.'
       parameters:
       - in: header
         name: X-VA-SSN
@@ -543,8 +598,9 @@ paths:
                                     type: string
                                     description: Power of Attorney Code submitted for Veteran
                           previous_poa:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Current or Previous Power of Attorney Code submitted for Veteran
         '401':
           description: Unauthorized
@@ -1059,9 +1115,20 @@ paths:
                           country: USA
                           zipFirstFive: '12345'
                         relationship: Spouse
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /forms/2122/{id}:
     put:
-      summary: Upload a signed 21-22 document.
+      summary: Upload a signed 21-22 document
       tags:
       - Power of Attorney
       operationId: PUT:/forms/2122/{id}
@@ -1075,10 +1142,7 @@ paths:
       - bearer_token: []
       description: 'Accepts a document binary as part of a multipart payload.
 
-        Use this PUT endpoint after the POST endpoint for uploading the signed 21-22 PDF form.
-
-
-        '
+        Use this PUT endpoint after the POST endpoint for uploading the signed 21-22 PDF form.'
       parameters:
       - name: id
         in: path
@@ -1181,8 +1245,9 @@ paths:
                                     type: string
                                     description: Power of Attorney Code submitted for Veteran
                           previous_poa:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Current or Previous Power of Attorney Code submitted for Veteran
         '400':
           description: Bad Request
@@ -1450,7 +1515,7 @@ paths:
                     '
         required: true
     get:
-      summary: Check POA status by ID.
+      summary: Check POA status by ID
       tags:
       - Power of Attorney
       operationId: GET:/forms/2122/{id}
@@ -1563,8 +1628,9 @@ paths:
                                     type: string
                                     description: Power of Attorney Code submitted for Veteran
                           previous_poa:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Current or Previous Power of Attorney Code submitted for Veteran
         '401':
           description: Unauthorized
@@ -1687,9 +1753,20 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /forms/2122/active:
     get:
-      summary: Check active POA status.
+      summary: Check active POA status
       tags:
       - Power of Attorney
       operationId: GET:/forms/2122/active
@@ -1701,10 +1778,7 @@ paths:
       - bearer_token: []
       description: 'Returns the last active POA for a claimant.
 
-        To check the status of new POA submissions, use the GET /forms/2122/{id} endpoint.
-
-
-        '
+        To check the status of new POA submissions, use the GET /forms/2122/{id} endpoint.'
       parameters:
       - in: header
         name: X-VA-SSN
@@ -1785,8 +1859,9 @@ paths:
                             - updated
                             - errored
                           date_request_accepted:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Date request was first accepted
                             format: date
                           representative:
@@ -1806,26 +1881,30 @@ paths:
                                     description: Power of Attorney Code submitted for Veteran
                                   first_name:
                                     description: First name of representative, null if representative is an organization
-                                    type: string
-                                    nullable: true
+                                    type:
+                                    - string
+                                    - 'null'
                                     example: Jane
                                   last_name:
                                     description: Last name of representative, null if representative is an organization
-                                    type: string
-                                    nullable: true
+                                    type:
+                                    - string
+                                    - 'null'
                                     example: Doe
                                   organization_name:
                                     description: Name of representing organization, null if representative is an individual
-                                    type: string
-                                    nullable: true
+                                    type:
+                                    - string
+                                    - 'null'
                                     example: Some Great Organization
                                   phone_number:
                                     description: Phone number of representative. Can be organization or individual phone number.
                                     type: string
                                     example: 555-555-5555
                           previous_poa:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Current or Previous Power of Attorney Code submitted for Veteran
         '401':
           description: Unauthorized
@@ -1948,9 +2027,20 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /forms/2122/validate:
     post:
-      summary: 21-22 POA form submission test run.
+      summary: 21-22 POA form submission test run
       deprecated: true
       tags:
       - Power of Attorney
@@ -1963,9 +2053,7 @@ paths:
         - claim.read
         - claim.write
       - bearer_token: []
-      description: 'Test to make sure the form submission works with your parameters.
-
-        '
+      description: Test to make sure the form submission works with your parameters.
       parameters:
       - in: header
         name: X-VA-SSN
@@ -2516,6 +2604,17 @@ paths:
                               title: Signature of the Veteran Representative
                               type: string
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /veterans/{veteranId}/power-of-attorney:
     get:
       summary: Retrieves current power of attorney
@@ -2564,8 +2663,9 @@ paths:
                     - attributes
                     properties:
                       type:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Type of representative, organization or individual
                         example: individual
                       attributes:
@@ -2577,18 +2677,21 @@ paths:
                         - phoneNumber
                         properties:
                           code:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Power of Attorney Code currently assigned to Veteran
                           name:
                             description: Name of individual representative or organization
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             example: Jane Smith
                           phoneNumber:
                             description: Phone number of representative. Can be organization or individual phone number.
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             example: 555-555-5555
         '401':
           description: Unauthorized
@@ -2739,6 +2842,17 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/power-of-attorney-request:
     post:
       summary: Creates power of attorney request for an accredited representative
@@ -3373,6 +3487,17 @@ paths:
                     - HIV
                     - ALCOHOLISM
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/power-of-attorney-requests:
     post:
       summary: Retrieves power of attorney requests for accredited representatives
@@ -3775,6 +3900,17 @@ paths:
                       city: Portland
                       country: USA
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/power-of-attorney-requests/{id}:
     get:
       summary: Retrieves a power of attorney request
@@ -4028,6 +4164,17 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/power-of-attorney-requests/{id}/decide:
     post:
       summary: Submits representative decision for a power of attorney request
@@ -4352,9 +4499,10 @@ paths:
                           - ACCEPTED
                           - DECLINED
                         declinedReason:
-                          type: string
+                          type:
+                          - string
+                          - 'null'
                           description: The reason for declining the request.
-                          nullable: true
                         representativeId:
                           type: string
                           description: The unique identifier of the requestʼs representative.
@@ -4365,9 +4513,20 @@ paths:
                     representativeId: '12345678'
                     declinedReason: null
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/2122/validate:
     post:
-      summary: Validates request to establish an organization as a claimant’s accredited representative
+      summary: Validates request to establish an organization as a claimant’s accredited…
       tags:
       - Power of Attorney
       operationId: POST:/veterans/{veteranId}/2122/validate
@@ -4389,9 +4548,7 @@ paths:
           type: string
       description: 'Validate a request to establish an organization with power of attorney (VA Form 21-22). Use POST
 
-        /veterans/{veteranId}/2122 to automatically establish submit VA Form 21-22.
-
-        '
+        /veterans/{veteranId}/2122 to automatically establish submit VA Form 21-22.'
       responses:
         '200':
           description: Valid request response
@@ -4873,14 +5030,23 @@ paths:
                       poaCode: 083
                       registrationNumber: '999999999999'
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/2122:
     post:
-      summary: Automatically establishes an organization as a claimant’s accredited representative (VA Form 21-22)
+      summary: Automatically establishes an organization as a claimant’s accredited…
       description: 'Submit VA Form 21-22 to automatically establish a VA accredited organization with power of attorney
 
-        (General POA).
-
-        '
+        (General POA).'
       tags:
       - Power of Attorney
       operationId: POST:/veterans/{veteranId}/2122
@@ -5426,9 +5592,20 @@ paths:
                           zipCode: '12345'
                         relationship: Spouse
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/2122a/validate:
     post:
-      summary: Validates request to establish an individual as a claimant’s accredited representative (VA Form 21-22a)
+      summary: Validates request to establish an individual as a claimant’s accredited…
       tags:
       - Power of Attorney
       operationId: POST:/veterans/{veteranId}/2122a/validate
@@ -5450,9 +5627,7 @@ paths:
           type: string
       description: 'Validate a request to establish an individual with power of attorney (VA Form 21-22a). Use POST
 
-        /veterans/{veteranId}/2122a to automatically establish submit VA Form 21-22a.
-
-        '
+        /veterans/{veteranId}/2122a to automatically establish submit VA Form 21-22a.'
       responses:
         '200':
           description: Valid request response
@@ -5991,9 +6166,20 @@ paths:
                         zipCode: '12345'
                         zipCodeSuffix: '6789'
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/2122a:
     post:
-      summary: Automatically establishes an individual as a claimant’s accredited representative (VA Form 21-22a)
+      summary: Automatically establishes an individual as a claimant’s accredited…
       tags:
       - Power of Attorney
       operationId: POST:/veterans/{veteranId}/2122a
@@ -6013,9 +6199,7 @@ paths:
         description: ID of claimant
         schema:
           type: string
-      description: 'Submit VA Form 21-22 to automatically establish a VA accredited individual with power of attorney (General POA).
-
-        '
+      description: Submit VA Form 21-22 to automatically establish a VA accredited individual with power of attorney (General POA).
       responses:
         '202':
           description: Valid request response
@@ -6621,6 +6805,17 @@ paths:
                           zipCode: '12345'
                         relationship: Spouse
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/power-of-attorney/{id}:
     get:
       summary: Checks status of power of attorney submission (VA Forms 21-22 or 21-22a)
@@ -6887,9 +7082,42 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
 components:
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    bearer_token:
+      type: http
+      scheme: bearer
+    productionOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/authorization
+          tokenUrl: https://api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+    sandboxOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+x-refined-from:
+- va-gov-benefits-claims-v1-openapi.json
+- va-gov-benefits-claims-v2-openapi.json

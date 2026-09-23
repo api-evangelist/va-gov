@@ -1,24 +1,19 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver loanReviewPublic API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: VA Loan Guaranty - Loan Review REST Loan Review Public API
+  description: The Loan Review API lets lenders transmit post-close loan review related documents.
+  version: 26.2.1.0
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/loan-review/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/loan-review/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
 tags:
 - name: loanReviewPublic
   description: Loan Review Public Resource
@@ -237,8 +232,19 @@ paths:
         - system.loan-review.write
 components:
   schemas:
-    AdditionalDocNotFound:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 404,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"LIN 202060874991 not found.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
+    LgyFieldError:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+        rejectedValue:
+          type: string
+        field:
+          type: string
+    AdditionalDocInternalError:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 500,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Internal Error - An unexpected error occurred\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
     LoanReviewTransmitDocsRequest:
       required:
       - loanIdentifier
@@ -269,53 +275,32 @@ components:
           description: The name of the file. If one is not provided, it will be automatically assigned.
           example: Evidence.pdf
       description: Request payload interface for lender to transmit documents of a loan selected for post-close loan review, including the final UCD and ULAD XMLs.
-    NotFound:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 404,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"LIN 202060874991 not found.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
-    ExceptionResponse:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        status:
-          type: integer
-          format: int32
-        lgyRequestUuid:
-          type: string
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/LgyFieldError'
-    Forbidden:
+    AdditionalDocForbidden:
       example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 403,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Your account was deactivated due to inactivity for 90 days or more. To reactivate your account, please work with your Lender Admin to have your Account reactivated.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
-    LoanReviewExceptionResponse:
+    LoanReviewAdditionalDocsRequest:
+      required:
+      - loanIdentifier
       type: object
       properties:
-        timestamp:
-          type: integer
-          description: The UNIX time representation of when the request was received by the server. See <https://en.wikipedia.org/wiki/Unix_time>.
-          format: int64
-          example: 1544224725393
-        status:
-          type: integer
-          description: The HTTP response status code. May be removed in future versions of the API.
-          format: int32
-        lgyRequestUuid:
+        loanIdentifier:
+          pattern: '[\d]{12}'
           type: string
-          description: A unique request ID generated by the server. The primary purpose of this ID is forensic log investigation.
-          example: a4c1b87031473607
-        errors:
+          description: The twelve digit VA Loan Identification Number (LIN) without dashes on the loan selected for loan review for which the lender is providing additional documents for. This number is generated for a prospective loan and provided to the lender when the VA appraisal or IRRRL is ordered through WebLGY.
+          example: '101010101010'
+        xmlUCDBase64:
+          type: string
+          description: The updated final Uniform Closing Dataset conformant XML for the loan whose documents are being remitted for VA post-close loan review expressed in MISMO Residential Reference model version 3.3. If the UCD is identical to the UCD provided with initial Loan Review document submission, there is no need to include it. Only one file may be included.
+          example: dGVzdHN0cmluZw==
+        xmlULADBase64:
+          type: string
+          description: The updated final Uniform Loan Application Dataset conformant XML for the loan whose documents are being remitted for VA post-close loan review expressed in MISMO Residential Reference model version 3.4. If the ULAD is identical to the ULAD provided with initial Loan Review document submission, there is no need to include it. Only one file may be included.
+          example: dGVzdHN0cmluZw==
+        additionalDocuments:
           type: array
-          description: Collection of errors which were identified during the processing of the loan documents being remitted to VA to conduct a post-close review that are transmitted within the LoanReviewFieldError container under LoanReviewExceptionResponse schema.
+          description: A collection of additional loan review documents being provided by the lender within the additionalDocuments container under the LoanReviewAdditionalDocsRequest schema. Up to 5 PDFs may be included, ideally consolidated into one PDF when possible, where all files in the submission align to a single documentType (either 'LR File' or 'LR Deficiency'). Files of both types should not be included in the same additional documents submission.
           items:
-            $ref: '#/components/schemas/LoanReviewFieldError'
-      description: Response payload if errors are identified during the processing of the loan documents being remitted to VA to conduct a post-close review.
-    BadRequest:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 400,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"The UCD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.ucdXmlBase64\"\n  }, {\n    \"message\" : \"The ULAD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.uladXmlBase64\"\n  }, {\n    \"message\" : \"The request does not contain a UCD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"UCD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"ULAD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a ULAD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a LR File.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file size must not be greater than 524288000B\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Documentation has already been uploaded. Please use the Additional Documents API if you wish to upload more.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process UCD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process ULAD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process LR file.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"LIN provided is not ready for FFLR processing.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file {name} was not successfully submitted.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The UCD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The ULAD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
-    AdditionalDocBadRequest:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 400,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"The UCD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.ucdXmlBase64\"\n  }, {\n    \"message\" : \"The ULAD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.uladXmlBase64\"\n  }, {\n    \"message\" : \"The request does not contain a UCD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"UCD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"ULAD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a ULAD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a LR File.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file size must not be greater than 524288000B\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process UCD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process ULAD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Too many files in the request. Please provide five files or less in the request.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process LR file.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Please provide at least one additional document in the request.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Initial documentation has not been uploaded. Please use the Loan Review API before adding additional documentation.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"LIN provided is not ready for FFLR processing.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The UCD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The ULAD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
-    AdditionalDocInternalError:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 500,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Internal Error - An unexpected error occurred\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
+            $ref: '#/components/schemas/AdditionalDocument'
+      description: Request payload interface for lender to transmit additional documents of a loan selected for post-close loan review, optionally including updated UCD and ULAD XMLs.
     AdditionalDocument:
       required:
       - description
@@ -348,29 +333,16 @@ components:
           description: Base 64 encoded PDF of the document being provided for VA to conduct post-close loan review on the loan.
           example: dGVzdHN0cmluZw==
       description: Additional loan review document being provided by the lender.
-    AdditionalDocForbidden:
-      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 403,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Your account was deactivated due to inactivity for 90 days or more. To reactivate your account, please work with your Lender Admin to have your Account reactivated.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
+    NotFound:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 404,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"LIN 202060874991 not found.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
     InternalError:
       example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 500,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Internal Error - An unexpected error occurred\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
-    LoanReviewTransmitDocsResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: True if document transmission was successful or else false.
-          example: true
-      description: Response payload for lender to transmit documents of a loan selected for review.
-    LgyFieldError:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-        rejectedValue:
-          type: string
-        field:
-          type: string
+    Forbidden:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 403,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"Your account was deactivated due to inactivity for 90 days or more. To reactivate your account, please work with your Lender Admin to have your Account reactivated.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
+    AdditionalDocNotFound:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 404,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"LIN 202060874991 not found.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
+    BadRequest:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 400,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"The UCD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.ucdXmlBase64\"\n  }, {\n    \"message\" : \"The ULAD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.uladXmlBase64\"\n  }, {\n    \"message\" : \"The request does not contain a UCD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"UCD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"ULAD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a ULAD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a LR File.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file size must not be greater than 524288000B\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Documentation has already been uploaded. Please use the Additional Documents API if you wish to upload more.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process UCD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process ULAD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process LR file.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"LIN provided is not ready for FFLR processing.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file {name} was not successfully submitted.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The UCD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The ULAD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
     LoanReviewFieldError:
       required:
       - message
@@ -389,32 +361,58 @@ components:
           description: The field with a rejected value prompting an error during the processing of the loan documents being remitted to VA to conduct a post-close review.
           example: Loan Identifier
       description: Collection of errors which were identified during the processing of the loan documents being remitted to VA to conduct a post-close review that are transmitted within the LoanReviewFieldError container under LoanReviewExceptionResponse schema.
-    LoanReviewAdditionalDocsRequest:
-      required:
-      - loanIdentifier
+    ExceptionResponse:
       type: object
       properties:
-        loanIdentifier:
-          pattern: '[\d]{12}'
+        timestamp:
+          type: integer
+          format: int64
+        status:
+          type: integer
+          format: int32
+        lgyRequestUuid:
           type: string
-          description: The twelve digit VA Loan Identification Number (LIN) without dashes on the loan selected for loan review for which the lender is providing additional documents for. This number is generated for a prospective loan and provided to the lender when the VA appraisal or IRRRL is ordered through WebLGY.
-          example: '101010101010'
-        xmlUCDBase64:
-          type: string
-          description: The updated final Uniform Closing Dataset conformant XML for the loan whose documents are being remitted for VA post-close loan review expressed in MISMO Residential Reference model version 3.3. If the UCD is identical to the UCD provided with initial Loan Review document submission, there is no need to include it. Only one file may be included.
-          example: dGVzdHN0cmluZw==
-        xmlULADBase64:
-          type: string
-          description: The updated final Uniform Loan Application Dataset conformant XML for the loan whose documents are being remitted for VA post-close loan review expressed in MISMO Residential Reference model version 3.4. If the ULAD is identical to the ULAD provided with initial Loan Review document submission, there is no need to include it. Only one file may be included.
-          example: dGVzdHN0cmluZw==
-        additionalDocuments:
+        errors:
           type: array
-          description: A collection of additional loan review documents being provided by the lender within the additionalDocuments container under the LoanReviewAdditionalDocsRequest schema. Up to 5 PDFs may be included, ideally consolidated into one PDF when possible, where all files in the submission align to a single documentType (either 'LR File' or 'LR Deficiency'). Files of both types should not be included in the same additional documents submission.
           items:
-            $ref: '#/components/schemas/AdditionalDocument'
-      description: Request payload interface for lender to transmit additional documents of a loan selected for post-close loan review, optionally including updated UCD and ULAD XMLs.
+            $ref: '#/components/schemas/LgyFieldError'
+    LoanReviewExceptionResponse:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          description: The UNIX time representation of when the request was received by the server. See <https://en.wikipedia.org/wiki/Unix_time>.
+          format: int64
+          example: 1544224725393
+        status:
+          type: integer
+          description: The HTTP response status code. May be removed in future versions of the API.
+          format: int32
+        lgyRequestUuid:
+          type: string
+          description: A unique request ID generated by the server. The primary purpose of this ID is forensic log investigation.
+          example: a4c1b87031473607
+        errors:
+          type: array
+          description: Collection of errors which were identified during the processing of the loan documents being remitted to VA to conduct a post-close review that are transmitted within the LoanReviewFieldError container under LoanReviewExceptionResponse schema.
+          items:
+            $ref: '#/components/schemas/LoanReviewFieldError'
+      description: Response payload if errors are identified during the processing of the loan documents being remitted to VA to conduct a post-close review.
+    LoanReviewTransmitDocsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: True if document transmission was successful or else false.
+          example: true
+      description: Response payload for lender to transmit documents of a loan selected for review.
+    AdditionalDocBadRequest:
+      example: "{\n  \"timestamp\" : 1544224725393,\n  \"status\" : 400,\n  \"lgyRequestUuid\" : \"d9fb08f3c9f9a084\",\n  \"errors\" : [ {\n    \"message\" : \"The UCD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.ucdXmlBase64\"\n  }, {\n    \"message\" : \"The ULAD XML provided is not valid.\",\n    \"rejectedValue\" : \"dGVzdHN0cmluZw==\",\n    \"field\" : \"newLoan.uladXmlBase64\"\n  }, {\n    \"message\" : \"The request does not contain a UCD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"UCD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"ULAD failed to upload because LIN is missing or does not match. Please ensure that the LOAN_IDENTIFIER field is present in the XML and has the correct LIN\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a ULAD.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The request does not contain a LR File.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The file size must not be greater than 524288000B\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process UCD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process ULAD\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Too many files in the request. Please provide five files or less in the request.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Internal Error - Unable to process LR file.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Please provide at least one additional document in the request.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"Initial documentation has not been uploaded. Please use the Loan Review API before adding additional documentation.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"LIN provided is not ready for FFLR processing.\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The UCD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  }, {\n    \"message\" : \"The ULAD XML Should only contain one LOAN element\",\n    \"rejectedValue\" : null,\n    \"field\" : null\n  } ]\n}"
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://staging-api.va.gov/oauth2/loan-guaranty/system/v1/token
+          scopes:
+            system.loan-review.write: Transmit loan review documents

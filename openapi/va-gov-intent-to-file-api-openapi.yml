@@ -1,34 +1,39 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Intent to File API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Va Gov Intent to File API
+  version: '1.0'
+  description: 'Operations tagged Intent to File across 2 of this provider''s published API definitions: va-gov-benefits-claims-v1-openapi.json, va-gov-benefits-claims-v2-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/claims/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/claims/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
+- url: https://sandbox-api.va.gov/services/claims/{version}/
+  description: Sandbox
+  variables:
+    version:
+      default: v2
+- url: https://api.va.gov/services/claims/{version}/
+  description: Production
+  variables:
+    version:
+      default: v2
 tags:
-- name: Intent to File
+- name: Intent To File
   description: Used for 0966 submissions.
 paths:
   /forms/0966:
     get:
-      summary: Get 0966 JSON Schema for form.
+      summary: Get 0966 JSON Schema for form
       deprecated: true
       tags:
-      - Intent to File
+      - Intent To File
       operationId: GET:/forms/0966
       description: Returns a single 0966 JSON schema to auto generate a form.
       responses:
@@ -103,9 +108,9 @@ paths:
                 example:
                   message: The server took too long to respond
     post:
-      summary: Submit form 0966 Intent to File.
+      summary: Submit form 0966 Intent to File
       tags:
-      - Intent to File
+      - Intent To File
       operationId: POST:/forms/0966
       security:
       - productionOauth:
@@ -115,9 +120,7 @@ paths:
         - claim.read
         - claim.write
       - bearer_token: []
-      description: 'Establishes an intent to file for disability compensation, burial, or pension claims.
-
-        '
+      description: Establishes an intent to file for disability compensation, burial, or pension claims.
       parameters:
       - in: header
         name: X-VA-SSN
@@ -405,11 +408,22 @@ paths:
                           example: '123456789'
                           description: SSN of the Claimant.
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /forms/0966/active:
     get:
-      summary: Returns last active 0966 Intent to File form submission.
+      summary: Returns last active 0966 Intent to File form submission
       tags:
-      - Intent to File
+      - Intent To File
       operationId: GET:/forms/0966/active
       security:
       - productionOauth:
@@ -489,8 +503,9 @@ paths:
                         - status
                         properties:
                           creation_date:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             format: date
                             description: Date the Intent to File was received at the VA
                           expiration_date:
@@ -675,12 +690,23 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /forms/0966/validate:
     post:
-      summary: Test the 0966 Intent to File form submission.
+      summary: Test the 0966 Intent to File form submission
       deprecated: true
       tags:
-      - Intent to File
+      - Intent To File
       operationId: POST:/forms/0966/validate
       security:
       - productionOauth:
@@ -692,9 +718,7 @@ paths:
       - bearer_token: []
       description: 'Test to ensure the form submission works with your parameters.
 
-        Submission is validated against the GET /forms/0966 schema.
-
-        '
+        Submission is validated against the GET /forms/0966 schema.'
       parameters:
       - in: header
         name: X-VA-SSN
@@ -911,11 +935,22 @@ paths:
                           example: '123456789'
                           description: SSN of the Claimant.
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /veterans/{veteranId}/intent-to-file/{type}:
     get:
-      summary: Returns claimant's last active Intent to File submission for given benefit type.
+      summary: Returns claimant's last active Intent to File submission for given benefit type
       tags:
-      - Intent to File
+      - Intent To File
       operationId: GET:/veterans/{veteranId}/intent-to-file/{type}
       security:
       - productionOauth:
@@ -1109,11 +1144,22 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/intent-to-file:
     post:
-      summary: Submit form 0966 Intent to File.
+      summary: Submit form 0966 Intent to File
       tags:
-      - Intent to File
+      - Intent To File
       operationId: POST:/veterans/{veteranId}/intent-to-file
       security:
       - productionOauth:
@@ -1461,11 +1507,22 @@ paths:
                   attributes:
                     type: compensation
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/intent-to-file/validate:
     post:
-      summary: Validate form 0966 Intent to File.
+      summary: Validate form 0966 Intent to File
       tags:
-      - Intent to File
+      - Intent To File
       operationId: POST:/veterans/{veteranId}/intent-to-file/validate
       security:
       - productionOauth:
@@ -1668,9 +1725,42 @@ paths:
                   attributes:
                     type: compensation
         required: true
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
 components:
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    bearer_token:
+      type: http
+      scheme: bearer
+    productionOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/authorization
+          tokenUrl: https://api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+    sandboxOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+x-refined-from:
+- va-gov-benefits-claims-v1-openapi.json
+- va-gov-benefits-claims-v2-openapi.json

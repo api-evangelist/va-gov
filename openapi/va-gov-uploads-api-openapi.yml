@@ -1,24 +1,26 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Uploads API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  version: 1.0.0
+  title: Benefits Intake Uploads API
+  description: The Benefits Intake API enables authorized third-party systems, such as those used by Veteran Service Organizations (VSOs), agencies, and Veterans, to digitally submit documents for VA benefits claims directly to the claims intake process of the Veterans Benefits Administration (VBA).
+  contact:
+    name: va.gov
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/vba_documents/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/vba_documents/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
+basePath: /services/vba_documents/v1
+consumes:
+- application/json
+produces:
+- application/json
 tags:
 - name: Uploads
 paths:
@@ -1005,12 +1007,28 @@ paths:
 
         A `422` response indicates one or more problems with the document that should be resolved before submitting it in the
 
-        full document submission payload.
-
-        '
+        full document submission payload.'
       operationId: POST:/uploads/validate_document
 components:
   schemas:
+    PdfDimensionAttributes:
+      required:
+      - height
+      - width
+      - oversized_pdf
+      properties:
+        height:
+          description: The document height
+          type: integer
+          example: '11.0'
+        width:
+          description: The document width
+          type: integer
+          example: '8.5'
+        oversized_pdf:
+          description: Indicates if this is an oversized PDF (greater than 78x101)
+          type: boolean
+          example: 'false'
     DocumentUploadStatus:
       description: Status record for a previously initiated document submission.
       required:
@@ -1029,6 +1047,107 @@ components:
           example: document_upload
         attributes:
           $ref: '#/components/schemas/DocumentUploadStatusAttributes'
+    DocumentUploadStatusAttributes:
+      required:
+      - guid
+      - status
+      properties:
+        guid:
+          description: The document upload identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        status:
+          description: 'Document upload status.
+
+            '
+          type: string
+          enum:
+          - pending
+          - uploaded
+          - received
+          - processing
+          - success
+          - vbms
+          - error
+          example: error
+        code:
+          description: 'Unambiguous status code. Only present if status = "error"
+
+
+            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+            * `DOC105` - Invalid or unknown id
+
+            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+            * `DOC107` - Empty payload.
+
+            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+            * `DOC201` - Upload server error.
+
+            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+            '
+          type: string
+          example: DOC108
+        detail:
+          description: Human readable error detail. Only present if status = "error"
+          type: string
+          example: Maximum page size exceeded. Limit is 78 in x 101 in.
+        final_status:
+          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
+          type: boolean
+          example: true
+        updated_at:
+          description: The last time the submission was updated
+          type: string
+          format: date-time
+          example: '2018-07-30T17:31:15.958Z'
+        uploaded_pdf:
+          $ref: '#/components/schemas/PdfUploadAttributes'
+    ErrorModel:
+      description: Errors with some details for the given request
+      required:
+      - status
+      - detail
+      properties:
+        status:
+          type: integer
+          format: int32
+          example: '422'
+          description: Standard HTTP Status returned with Error
+        detail:
+          type: string
+          example: DOC104 - Upload rejected by upstream system. Processing failed and upload must be resubmitted
+          description: A more detailed message about why an error occurred
+    UploadsReportBadRequestErrorModel:
+      description: Validation error for uploads/report request payload
+      required:
+      - title
+      - detail
+      - code
+      - status
+      properties:
+        title:
+          type: string
+          example: Too many items submitted
+        detail:
+          type: string
+          example: '"ids" cannot exceed 1000 items (submitted 1001)'
+        code:
+          type: string
+          example: '111'
+        status:
+          type: string
+          example: '400'
     PdfUploadAttributes:
       required:
       - total_documents
@@ -1063,6 +1182,43 @@ components:
                     example: '2'
                   dimensions:
                     $ref: '#/components/schemas/PdfDimensionAttributes'
+    DocumentValidationErrorModel:
+      type: object
+      description: Error returned from the document validation endpoint.
+      required:
+      - title
+      - detail
+      - status
+      properties:
+        title:
+          type: string
+          example: Document failed validation
+          description: Error title
+        detail:
+          type: string
+          description: 'Error detail
+
+
+            Possible values:
+
+            * Document was not provided
+
+            * Document is not a PDF
+
+            * Document exceeds the file size limit of 100 MB
+
+            * Document exceeds the page size limit of 78 in. x 101 in.
+
+            * Document is locked with a user password
+
+            * Document is not a valid PDF
+
+            '
+          example: Document is locked with a user password
+        status:
+          type: string
+          example: '422'
+          description: HTTP error code
     DocumentUploadPath:
       description: Status record for a previously initiated document submission.
       required:
@@ -1095,21 +1251,6 @@ components:
             example: 6d8433c1-cd55-4c24-affd-f592287a7572
           minItems: 1
           maxItems: 1000
-    ErrorModel:
-      description: Errors with some details for the given request
-      required:
-      - status
-      - detail
-      properties:
-        status:
-          type: integer
-          format: int32
-          example: '422'
-          description: Standard HTTP Status returned with Error
-        detail:
-          type: string
-          example: DOC104 - Upload rejected by upstream system. Processing failed and upload must be resubmitted
-          description: A more detailed message about why an error occurred
     DocumentUploadAttributes:
       required:
       - guid
@@ -1182,147 +1323,6 @@ components:
         uploaded_pdf:
           description: Only populated after submission starts processing
           example: 'null'
-    DocumentUploadStatusAttributes:
-      required:
-      - guid
-      - status
-      properties:
-        guid:
-          description: The document upload identifier
-          type: string
-          format: uuid
-          example: 6d8433c1-cd55-4c24-affd-f592287a7572
-        status:
-          description: 'Document upload status.
-
-            '
-          type: string
-          enum:
-          - pending
-          - uploaded
-          - received
-          - processing
-          - success
-          - vbms
-          - error
-          example: error
-        code:
-          description: 'Unambiguous status code. Only present if status = "error"
-
-
-            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
-
-            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
-
-            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
-
-            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
-
-            * `DOC105` - Invalid or unknown id
-
-            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
-
-            * `DOC107` - Empty payload.
-
-            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
-
-            * `DOC201` - Upload server error.
-
-            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
-
-            '
-          type: string
-          example: DOC108
-        detail:
-          description: Human readable error detail. Only present if status = "error"
-          type: string
-          example: Maximum page size exceeded. Limit is 78 in x 101 in.
-        final_status:
-          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
-          type: boolean
-          example: true
-        updated_at:
-          description: The last time the submission was updated
-          type: string
-          format: date-time
-          example: '2018-07-30T17:31:15.958Z'
-        uploaded_pdf:
-          $ref: '#/components/schemas/PdfUploadAttributes'
-    UploadsReportBadRequestErrorModel:
-      description: Validation error for uploads/report request payload
-      required:
-      - title
-      - detail
-      - code
-      - status
-      properties:
-        title:
-          type: string
-          example: Too many items submitted
-        detail:
-          type: string
-          example: '"ids" cannot exceed 1000 items (submitted 1001)'
-        code:
-          type: string
-          example: '111'
-        status:
-          type: string
-          example: '400'
-    PdfDimensionAttributes:
-      required:
-      - height
-      - width
-      - oversized_pdf
-      properties:
-        height:
-          description: The document height
-          type: integer
-          example: '11.0'
-        width:
-          description: The document width
-          type: integer
-          example: '8.5'
-        oversized_pdf:
-          description: Indicates if this is an oversized PDF (greater than 78x101)
-          type: boolean
-          example: 'false'
-    DocumentValidationErrorModel:
-      type: object
-      description: Error returned from the document validation endpoint.
-      required:
-      - title
-      - detail
-      - status
-      properties:
-        title:
-          type: string
-          example: Document failed validation
-          description: Error title
-        detail:
-          type: string
-          description: 'Error detail
-
-
-            Possible values:
-
-            * Document was not provided
-
-            * Document is not a PDF
-
-            * Document exceeds the file size limit of 100 MB
-
-            * Document exceeds the page size limit of 78 in. x 101 in.
-
-            * Document is locked with a user password
-
-            * Document is not a valid PDF
-
-            '
-          example: Document is locked with a user password
-        status:
-          type: string
-          example: '422'
-          description: HTTP error code
     DocumentUploadStatusReport:
       type: array
       items:

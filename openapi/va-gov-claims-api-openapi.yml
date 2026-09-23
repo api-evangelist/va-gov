@@ -1,29 +1,32 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Address Validation 5103 Waiver Claims API
-  description: "The Address Validation API accepts and validates an address and standardizes it for mailing. It can also help you process an address by:\n* Inferring missing or incorrect address components\n* Supplementing an address with additional information, such as geocode, latitude and longitude, and postal service metadata (when available)\n## Technical Overview\nThe Address Validation API returns validated addresses as they appear in the USPS database for domestic addresses. It validates by separating the address into individual components and then providing component-level validation checks.\n\nThis API is certified by the United States Postal Service (USPS) Coding Accuracy Support System (CASS) and adheres to [United States Postal Service (USPS) Publication 28 standards](https://pe.usps.com/text/pub28/welcome.htm) for domestic, military, and US territory addresses.\n\nFor international addresses, validation relies on Universal Postal Union (UPU) standards. \n\n## Validation\nIf an address is found, it is considered valid based on metadata returned by the Address Validation service, such as the confidence score and the [Delivery Point Validation (DPV)](https://postalpro.usps.com/address-quality/dpv).\n\nIf an address is found, there are multiple checks performed on the validated address. The address can fail validation for a variety of reasons, such as the inability to deliver (for domestic mailing addresses) or the format. For specific reasons why an address failed, refer to the error messages returned.\n\nIf an address is not found, it automatically fails validation.\n\n## Address override indicator\nSometimes an entered address is accurate for a Veteran but does not pass validation rules. These instances can occur when an address is newer than what is in the CASS software or in regions where address data is less accurate.\n\nSystems can accept these addresses despite the lack of address validation by submitting an \"accepted address\" (usually confirmed by the Veteran) to the Contact Information API (see Requirements below). An address is considered accepted after the address has been sent to the validation API and has failed validation, but the Veteran has confirmed the address is correct as entered. The accepted address can then be passed to the Contact Information API using an address override indicator set to show that the validation was overridden. To set an override indicator, the original address and the `overrideValidationKey` returned in the validation API response must be provided to the Contact Information API, in order to prove that a validation attempt has been made before overriding.\n\n## Version Interoperability\n\nTo ensure interoperability between APIs and eliminate the need for transforming data as one API feeds into the other, we strongly recommend using versions of the following APIs that are compatible.\n\n|     <h3>If Using</h3>           | <h3>Then Use...</h3>                           |\n| :------------------------------:|:----------------------------------------------:|\n| Address Validation API v1/v2    | Contact Information API v1<br><br>Profile Service API v1/v2 |\n| Address Validation API v3       | Contact Information API v2<br><br>Profile Service API v3    |\n\n## Authorization\nAPI requests are authorized through a symmetric API token provided in an HTTP header with name apikey.\n\n**Important**: To get production access, you must either work for VA or have specific VA agreements in place. If you have questions, [contact us](https://developer.va.gov/support/contact-us)."
-  license:
-    name: Creative Commons
-    url: https://developer.va.gov/terms-of-service
-  version: '3'
+  title: Va Gov Claims API
+  version: '1.0'
+  description: 'Operations tagged Claims across 2 of this provider''s published API definitions: va-gov-benefits-claims-v1-openapi.json, va-gov-benefits-claims-v2-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://sandbox-api.va.gov/services/address-validation/{version}
+- url: https://sandbox-api.va.gov/services/claims/{version}
   description: Sandbox
   variables:
     version:
-      default: v3
-- url: https://api.va.gov/services/address-validation/{version}
+      default: v1
+- url: https://api.va.gov/services/claims/{version}
   description: Production
   variables:
     version:
-      default: v3
-security:
-- apikey: []
+      default: v1
+- url: https://sandbox-api.va.gov/services/claims/{version}/
+  description: Sandbox
+  variables:
+    version:
+      default: v2
+- url: https://api.va.gov/services/claims/{version}/
+  description: Production
+  variables:
+    version:
+      default: v2
 tags:
 - name: Claims
-  description: 'Allows authenticated and authorized users to access claims data for a single claim by ID, or for all claims based on claimant data. No data is returned if the user is not authenticated and authorized.
-
-    '
+  description: Allows authenticated and authorized users to access claims data for a single claim by ID, or for all claims based on claimant data. No data is returned if the user is not authenticated and authorized.
 paths:
   /claims:
     get:
@@ -364,6 +367,17 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /claims/{id}:
     get:
       summary: Find Claim by ID
@@ -484,8 +498,9 @@ paths:
                         - supporting_documents
                         properties:
                           evss_id:
-                            type: integer
-                            nullable: true
+                            type:
+                            - integer
+                            - 'null'
                             description: Upstream service identifier
                           date_filed:
                             type: string
@@ -784,6 +799,17 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}
+      description: Sandbox
+      variables:
+        version:
+          default: v1
+    - url: https://api.va.gov/services/claims/{version}
+      description: Production
+      variables:
+        version:
+          default: v1
   /veterans/{veteranId}/claims:
     get:
       summary: Find all benefits claims for a VA claimant
@@ -846,8 +872,9 @@ paths:
                       description: Claim details
                       properties:
                         id:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: Claim ID in VBMS. If a claim was submitted with Lighthouse and not successfully established upstream, it could have a null claimId.
                           example: '600131328'
                         type:
@@ -924,13 +951,15 @@ paths:
                               type: string
                               description: End product code of claim
                             evidenceWaiverSubmitted5103:
-                              type: boolean
-                              nullable: true
+                              type:
+                              - boolean
+                              - 'null'
                               description: If true, indicates a decision has been requested and/or a Waiver 5103 has been submitted
                               example: 'false'
                             lighthouseId:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               description: Claim ID in Lighthouse
                               example: 00000000-0000-0000-0000-000000000006
                             status:
@@ -1018,9 +1047,20 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
   /veterans/{veteranId}/claims/{id}:
     get:
-      summary: Find claim by ID.
+      summary: Find claim by ID
       tags:
       - Claims
       operationId: GET:/veterans/{veteranId}/claims/{id}
@@ -1181,8 +1221,9 @@ paths:
                     description: Claim details
                     properties:
                       id:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Claim ID in VBMS. If a claim was submitted with Lighthouse and not successfully established upstream, it could have a null claimId.
                         example: '600131328'
                       type:
@@ -1234,8 +1275,9 @@ paths:
                                   example: abscess kidney (New)
                           claimDate:
                             format: date
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: The date a claim was filed
                             example: '2017-10-18'
                           claimPhaseDates:
@@ -1245,7 +1287,9 @@ paths:
                                 type: boolean
                                 description: Indicates whether the current phase is moving backward.
                               latestPhaseType:
-                                type: string
+                                type:
+                                - string
+                                - 'null'
                                 enum:
                                 - CLAIM_RECEIVED
                                 - UNDER_REVIEW
@@ -1255,12 +1299,12 @@ paths:
                                 - PENDING_DECISION_APPROVAL
                                 - PREPARATION_FOR_NOTIFICATION
                                 - COMPLETE
-                                nullable: true
                                 description: The most current phase for the claim
                               phaseChangeDate:
                                 format: date
-                                type: string
-                                nullable: true
+                                type:
+                                - string
+                                - 'null'
                                 description: The date that the claim changed to its current phase
                                 example: '2017-10-18'
                               previousPhases:
@@ -1308,8 +1352,9 @@ paths:
                                     example: '2017-10-18'
                           closeDate:
                             format: date
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Date claim was closed
                             example: '2019-09-04'
                           decisionLetterSent:
@@ -1326,8 +1371,9 @@ paths:
                             description: End product code of claim
                             example: '930'
                           evidenceWaiverSubmitted5103:
-                            type: boolean
-                            nullable: true
+                            type:
+                            - boolean
+                            - 'null'
                             description: If true, indicates a decision has been requested and/or a Waiver 5103 has been submitted
                             example: 'false'
                           errors:
@@ -1345,20 +1391,23 @@ paths:
                             type: string
                             description: Regional office to which the claim is currently assigned.
                           lighthouseId:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Claim ID in Lighthouse
                             example: 00000000-0000-0000-0000-000000000008
                           minEstClaimDate:
                             format: date
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Minimum estimated claim completion date
                             example: '2019-06-04'
                           maxEstClaimDate:
                             format: date
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                             description: Maximum estimated claim completion date
                             example: '2019-09-04'
                           status:
@@ -1390,31 +1439,37 @@ paths:
                                   type: string
                                   description: Unique identifier for the current version of this document
                                 documentUuid:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Version-independent UUID for this document
-                                  nullable: true
                                 documentTypeLabel:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                 originalFileName:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Name of document
-                                  nullable: true
                                 trackedItemId:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                 uploadDate:
                                   format: date
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Date document was uploaded
                                   example: '2023-04-14'
-                                  nullable: true
                                 uploadDateTime:
                                   format: date
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Date and time document was uploaded in UTC format
                                   example: '2023-04-14T13:54:52Z'
-                                  nullable: true
                           tempJurisdiction:
                             type: string
                             description: Temporary jurisdiction of claim
@@ -1427,19 +1482,22 @@ paths:
                               properties:
                                 closedDate:
                                   format: date
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Date the tracked item was closed
                                   example: '2017-10-18'
                                 description:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Description of the tracked item
                                   example: You may also submit statements from individuals having knowledge of your claimed condition.
                                 requestedDate:
                                   format: date
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Date the tracked item was requested
                                   example: '2017-10-18'
                                 id:
@@ -1447,24 +1505,28 @@ paths:
                                   description: ID of the tracked item
                                   example: 293454
                                 displayName:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Description of the tracked item
                                   example: Submit buddy statement(s)
                                 receivedDate:
                                   format: date
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Date the tracked item was received
                                   example: '2017-10-18'
                                 overdue:
-                                  type: boolean
-                                  nullable: true
+                                  type:
+                                  - boolean
+                                  - 'null'
                                   description: True if the item is overdue
                                   example: true
                                 status:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: Enum with the status of the tracked item
                                   example: NO_LONGER_REQUIRED
                                   enum:
@@ -1476,8 +1538,9 @@ paths:
                                   - SUBMITTED_AWAITING_REVIEW
                                 suspenseDate:
                                   format: date
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   example: '2017-10-18'
                                 uploadsAllowed:
                                   type: boolean
@@ -1629,9 +1692,42 @@ paths:
                     type: string
                 example:
                   message: The server took too long to respond
+    servers:
+    - url: https://sandbox-api.va.gov/services/claims/{version}/
+      description: Sandbox
+      variables:
+        version:
+          default: v2
+    - url: https://api.va.gov/services/claims/{version}/
+      description: Production
+      variables:
+        version:
+          default: v2
 components:
   securitySchemes:
-    apikey:
-      type: apiKey
-      name: apikey
-      in: header
+    bearer_token:
+      type: http
+      scheme: bearer
+    productionOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.va.gov/oauth2/authorization
+          tokenUrl: https://api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+    sandboxOauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorization code grant flow. [More info](https://developer.va.gov/explore/api/benefits-claims/authorization-code)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox-api.va.gov/oauth2/authorization
+          tokenUrl: https://sandbox-api.va.gov/oauth2/token
+          scopes:
+            claim.read: Retrieve claim data
+            claim.write: Submit claim data
+x-refined-from:
+- va-gov-benefits-claims-v1-openapi.json
+- va-gov-benefits-claims-v2-openapi.json
