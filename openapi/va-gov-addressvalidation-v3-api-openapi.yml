@@ -474,38 +474,192 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse'
 components:
   schemas:
-    County:
+    Geocode:
       type: object
       properties:
-        countyName:
+        calcDate:
+          type: string
+          description: Date when geocode precision calculation value occurred. Can be used to determine if more accurate mapping functionality is now available and therefore geocode precision could be recalculated.<br><br>Date/Time format; yyyy-mm-ddThh:mm:ss.fffZ
+          format: date-time
+        locationPrecision:
+          type: number
+          description: Indicates how precisely an address can be placed from a geocoding perspective.
+          format: double
+          example: 10
+        latitude:
+          type: number
+          description: Calculated value of Latitude coordinates for address
+          format: double
+          example: 38.0293
+        longitude:
+          type: number
+          description: Calculated value of Longitude coordinates for address.
+          format: double
+          example: -78.4767
+    Province:
+      type: object
+      properties:
+        provinceName:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: The name for the province of the requested address
+          example: Ontario
+        provinceCode:
+          type: string
+          description: The 2-digit code for the province of an address
+          example: 'ON'
+      description: Name of political subdivision used by country other than United States in its postal addresses, such as name of province, territory, state, county, etc.
+    Country:
+      type: object
+      properties:
+        countryName:
           maxLength: 35
           minLength: 0
           type: string
-          example: Albemarle Count
-        countyCode:
-          maxLength: 5
+          description: Name of country address.
+          example: United States
+        countryCodeFIPS:
+          maxLength: 2
           minLength: 0
-          pattern: '[0-9]+'
+          pattern: ^[a-zA-Z]+$
           type: string
-          example: '51003'
-      description: US addresses only. The name of the county in the address
-    CandidateAddressResponse:
+          description: Two-letter country codes using FIPS. Assigned via lookup table.
+          example: US
+        countryCodeISO2:
+          maxLength: 2
+          minLength: 0
+          pattern: ^[a-zA-Z]+$
+          type: string
+          description: Two-letter country codes defined in ISO 3166-1, part of ISO 3166 standard.
+          example: US
+        countryCodeISO3:
+          maxLength: 3
+          minLength: 0
+          pattern: ^[a-zA-Z]+$
+          type: string
+          description: Three-letter country codes defined in ISO 3166-1, part of ISO 3166 standard.
+          example: USA
+      description: Provide either country name or code, but not both
+    Locality:
+      required:
+      - cityName
+      - cityType
+      - country
+      - province
+      - state
+      type: object
+      properties:
+        country:
+          $ref: '#/components/schemas/Country'
+        state:
+          $ref: '#/components/schemas/State'
+        province:
+          $ref: '#/components/schemas/Province'
+        cityName:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Name of city or town of postal address.
+          example: Charlottesville
+        cityType:
+          type: string
+          description: The USPS standardized city name type (United States localities only).<br><br><br>V - Vanity (non-mailing) city name. <br>P - Primary. The city name is the primary mailing city name. <br>S - Secondary. The city name is an alternate city name but is acceptable. A city can have multiple secondary city names.
+          example: P
+    CityStateAddressV3Response:
+      required:
+      - intPostalCode
+      - zipCode5
       type: object
       properties:
         messages:
           type: array
           items:
             $ref: '#/components/schemas/Message'
-        candidateAddresses:
-          maxItems: 100
+        zipCode5:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: Five-digit postal code assigned by United States Post Office to postal address.
+          example: '22911'
+        intPostalCode:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Alphanumeric code used by country other than United States for postal addresses.
+          example: N0A0C0
+        locality:
+          maxItems: 999
           minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/ResponseAddress'
-        overrideValidationKey:
-          type: integer
-          description: Hash code for current request to be validated during overrides
-          format: int32
+            $ref: '#/components/schemas/Locality'
+    CandidateAddressRequest:
+      required:
+      - address
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/RequestAddress'
+      description: Request format to describe the address to correct and validate.
+    RequestAddress:
+      type: object
+      properties:
+        addressLine1:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: 'First line of postal address, typically house or apartment number and street, including unit or apartment number if applicable, or Post Office Box address.<br><br>                            Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
+          example: 590 Peter Jefferson Pkwy
+        addressLine2:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: 'Second line of postal address, typically whatever address elements do not fit or are not assigned to first address line. In Dual Address format the Post Office Box value goes on this line.                                    <br><br>                                    Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
+          example: 2nd Floor
+        addressLine3:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: 'Third line of postal address, typically whatever address elements do not fit or are not assigned to first two address lines.                                    <br><br>                                    Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
+          example: Suite 250
+        cityName:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Name of city or town of postal address.
+          example: Charlottesville
+        zipCode5:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: Five-digit postal code assigned by United States Post Office to postal address.
+          example: '22911'
+        zipCode4:
+          maxLength: 4
+          minLength: 0
+          pattern: '[0-9]+'
+          type: string
+          description: Four-digit postal code assigned by United States Post Office to postal address.
+          example: '1111'
+        intPostalCode:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Alphanumeric code used by country other than United States for postal addresses.
+          example: N0A0C0
+        state:
+          $ref: '#/components/schemas/State'
+        province:
+          $ref: '#/components/schemas/Province'
+        country:
+          $ref: '#/components/schemas/Country'
+        addressPOU:
+          type: string
+          description: Purpose for which postal address has been specified by address owner or authorized third party to be used. A Residence address is understood to also be used for all purposes, unless distinct address is specified for one or more other uses.
+          enum:
+          - RESIDENCE
+          - CORRESPONDENCE
     ResponseAddress:
       required:
       - county
@@ -592,29 +746,31 @@ components:
           description: A value from 0 to 100. A calculation of how closely the given address matches the address found in the databases. The closer the match the higher the score. No match is 0, a perfect match is 100. For addresses to pass, a threshold of 80 for domestic addresses and 70 for international addresses is required.
           format: double
           example: 90
-    Geocode:
+    ServiceResponse:
       type: object
       properties:
-        calcDate:
-          type: string
-          description: Date when geocode precision calculation value occurred. Can be used to determine if more accurate mapping functionality is now available and therefore geocode precision could be recalculated.<br><br>Date/Time format; yyyy-mm-ddThh:mm:ss.fffZ
-          format: date-time
-        locationPrecision:
-          type: number
-          description: Indicates how precisely an address can be placed from a geocoding perspective.
-          format: double
-          example: 10
-        latitude:
-          type: number
-          description: Calculated value of Latitude coordinates for address
-          format: double
-          example: 38.0293
-        longitude:
-          type: number
-          description: Calculated value of Longitude coordinates for address.
-          format: double
-          example: -78.4767
-    CandidateAddressRequest:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+    CandidateAddressResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        candidateAddresses:
+          maxItems: 100
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseAddress'
+        overrideValidationKey:
+          type: integer
+          description: Hash code for current request to be validated during overrides
+          format: int32
+    AddressValidationRequest:
       required:
       - address
       type: object
@@ -622,34 +778,6 @@ components:
         address:
           $ref: '#/components/schemas/RequestAddress'
       description: Request format to describe the address to correct and validate.
-    State:
-      type: object
-      properties:
-        stateName:
-          maxLength: 50
-          minLength: 0
-          type: string
-          description: The name for the state of the requested address
-          example: Virginia
-        stateCode:
-          type: string
-          description: The 2-digit code for the state of an address
-          example: VA
-      description: Provide either state name or code, but not both
-    Province:
-      type: object
-      properties:
-        provinceName:
-          maxLength: 255
-          minLength: 0
-          type: string
-          description: The name for the province of the requested address
-          example: Ontario
-        provinceCode:
-          type: string
-          description: The 2-digit code for the province of an address
-          example: 'ON'
-      description: Name of political subdivision used by country other than United States in its postal addresses, such as name of province, territory, state, county, etc.
     AddressValidationResponse:
       type: object
       properties:
@@ -663,132 +791,6 @@ components:
           type: integer
           description: Hash code for current request to be validated during overrides
           format: int32
-    Locality:
-      required:
-      - cityName
-      - cityType
-      - country
-      - province
-      - state
-      type: object
-      properties:
-        country:
-          $ref: '#/components/schemas/Country'
-        state:
-          $ref: '#/components/schemas/State'
-        province:
-          $ref: '#/components/schemas/Province'
-        cityName:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: Name of city or town of postal address.
-          example: Charlottesville
-        cityType:
-          type: string
-          description: The USPS standardized city name type (United States localities only).<br><br><br>V - Vanity (non-mailing) city name. <br>P - Primary. The city name is the primary mailing city name. <br>S - Secondary. The city name is an alternate city name but is acceptable. A city can have multiple secondary city names.
-          example: P
-    AddressValidationRequest:
-      required:
-      - address
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/RequestAddress'
-      description: Request format to describe the address to correct and validate.
-    CityStateAddressV3Response:
-      required:
-      - intPostalCode
-      - zipCode5
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-        zipCode5:
-          maxLength: 5
-          minLength: 0
-          type: string
-          description: Five-digit postal code assigned by United States Post Office to postal address.
-          example: '22911'
-        intPostalCode:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: Alphanumeric code used by country other than United States for postal addresses.
-          example: N0A0C0
-        locality:
-          maxItems: 999
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/Locality'
-    RequestAddress:
-      type: object
-      properties:
-        addressLine1:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: 'First line of postal address, typically house or apartment number and street, including unit or apartment number if applicable, or Post Office Box address.<br><br>                            Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
-          example: 590 Peter Jefferson Pkwy
-        addressLine2:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: 'Second line of postal address, typically whatever address elements do not fit or are not assigned to first address line. In Dual Address format the Post Office Box value goes on this line.                                    <br><br>                                    Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
-          example: 2nd Floor
-        addressLine3:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: 'Third line of postal address, typically whatever address elements do not fit or are not assigned to first two address lines.                                    <br><br>                                    Business Rule: Optional field, however, at least one of the 3 address lines must have an valid address.'
-          example: Suite 250
-        cityName:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: Name of city or town of postal address.
-          example: Charlottesville
-        zipCode5:
-          maxLength: 5
-          minLength: 0
-          type: string
-          description: Five-digit postal code assigned by United States Post Office to postal address.
-          example: '22911'
-        zipCode4:
-          maxLength: 4
-          minLength: 0
-          pattern: '[0-9]+'
-          type: string
-          description: Four-digit postal code assigned by United States Post Office to postal address.
-          example: '1111'
-        intPostalCode:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: Alphanumeric code used by country other than United States for postal addresses.
-          example: N0A0C0
-        state:
-          $ref: '#/components/schemas/State'
-        province:
-          $ref: '#/components/schemas/Province'
-        country:
-          $ref: '#/components/schemas/Country'
-        addressPOU:
-          type: string
-          description: Purpose for which postal address has been specified by address owner or authorized third party to be used. A Residence address is understood to also be used for all purposes, unless distinct address is specified for one or more other uses.
-          enum:
-          - RESIDENCE
-          - CORRESPONDENCE
-    ServiceResponse:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
     Message:
       required:
       - code
@@ -811,37 +813,35 @@ components:
           - FATAL
         potentiallySelfCorrectingOnRetry:
           type: boolean
-    Country:
+    State:
       type: object
       properties:
-        countryName:
+        stateName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: The name for the state of the requested address
+          example: Virginia
+        stateCode:
+          type: string
+          description: The 2-digit code for the state of an address
+          example: VA
+      description: Provide either state name or code, but not both
+    County:
+      type: object
+      properties:
+        countyName:
           maxLength: 35
           minLength: 0
           type: string
-          description: Name of country address.
-          example: United States
-        countryCodeFIPS:
-          maxLength: 2
+          example: Albemarle Count
+        countyCode:
+          maxLength: 5
           minLength: 0
-          pattern: ^[a-zA-Z]+$
+          pattern: '[0-9]+'
           type: string
-          description: Two-letter country codes using FIPS. Assigned via lookup table.
-          example: US
-        countryCodeISO2:
-          maxLength: 2
-          minLength: 0
-          pattern: ^[a-zA-Z]+$
-          type: string
-          description: Two-letter country codes defined in ISO 3166-1, part of ISO 3166 standard.
-          example: US
-        countryCodeISO3:
-          maxLength: 3
-          minLength: 0
-          pattern: ^[a-zA-Z]+$
-          type: string
-          description: Three-letter country codes defined in ISO 3166-1, part of ISO 3166 standard.
-          example: USA
-      description: Provide either country name or code, but not both
+          example: '51003'
+      description: US addresses only. The name of the county in the address
   securitySchemes:
     apikey:
       type: apiKey

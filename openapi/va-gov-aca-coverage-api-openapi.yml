@@ -208,18 +208,6 @@ paths:
         - aca_coverage_restricted.read
 components:
   schemas:
-    AuthorizationError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '401'
-        error:
-          type: string
-          example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
     VhaDataError:
       type: object
       properties:
@@ -228,22 +216,6 @@ components:
           items:
             $ref: '#/components/schemas/ApiErrorDetails'
       example: "    {\n     \"errors\": [\n                 {\n                  \"title\": \"V1000 - Data Error/Invalid Request\",\n                  \"detail\": \"Required element invalid or missing in\n                  request.\",\n                  \"code\": \"422\",\n                  \"status\": \"422\"\n                 }\n               ]\n     }\n"
-    AcaCoverageData:
-      type: object
-      properties:
-        response_code:
-          type: string
-          description: Returns a response code
-          example: V0000
-        description:
-          type: string
-          description: Defines reason for response code
-          example: APPLICANT_ENROLLED
-        aca_coverage_periods:
-          type: array
-          description: Returns a list of enrollment coverage periods
-          items:
-            $ref: '#/components/schemas/AcaCoveragePeriods'
     AcaCoveragePeriods:
       type: object
       properties:
@@ -256,55 +228,6 @@ components:
           description: Indicates Enrollment Status Coverage Period end date
           example: '2019-10-09'
       description: Returns a list of enrollment coverage periods
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    AcaCoverageResponse:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AcaCoverageData'
-      description: Response codes and descriptions from source system if successful Veteran match is found:<br>V0000 - APPLICANT_ENROLLED<br>V0001 - APPLICANT_NOT_ENROLLED<br>V0002 - APPLICANT_NOT_FOUND<br>V0003 - APPLICANT_DECEASED<br>V0004 - APPLICANT_DECEASED_ENROLLED<br>V0005 - APPLICANT_DECEASED_NOT_ENROLLED<br>
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
     ForbiddenServerError:
       type: object
       properties:
@@ -330,6 +253,83 @@ components:
           detail: System error.
           code: '502'
           status: '502'
+    AcaCoverageResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AcaCoverageData'
+      description: Response codes and descriptions from source system if successful Veteran match is found:<br>V0000 - APPLICANT_ENROLLED<br>V0001 - APPLICANT_NOT_ENROLLED<br>V0002 - APPLICANT_NOT_FOUND<br>V0003 - APPLICANT_DECEASED<br>V0004 - APPLICANT_DECEASED_ENROLLED<br>V0005 - APPLICANT_DECEASED_NOT_ENROLLED<br>
+    AuthorizationError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '401'
+        error:
+          type: string
+          example: Invalid token.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    AcaCoverageData:
+      type: object
+      properties:
+        response_code:
+          type: string
+          description: Returns a response code
+          example: V0000
+        description:
+          type: string
+          description: Defines reason for response code
+          example: APPLICANT_ENROLLED
+        aca_coverage_periods:
+          type: array
+          description: Returns a list of enrollment coverage periods
+          items:
+            $ref: '#/components/schemas/AcaCoveragePeriods'
     VhaSystemUnavailable:
       type: object
       properties:

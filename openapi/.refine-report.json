@@ -105,7 +105,7 @@
     "tag 'Power of Attorney' spans 2 source specs (va-gov-benefits-claims-v1-openapi.json, va-gov-benefits-claims-v2-openapi.json): per-path servers applied",
     "tag 'facilities' spans 2 source specs (va-gov-facilities-v0-openapi.json, va-gov-facilities-v1-openapi.json): per-path servers applied",
     "superseded outputs removed: va-gov-direct-deposit-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 34 total)"
+    "apis.yml register: written (+1 apis, 36 total)"
   ],
   "skipped": [
     "_original/va-gov-veteran-verification-v1-openapi.json: archived document superseded by a larger archived document",

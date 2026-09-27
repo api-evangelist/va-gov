@@ -171,66 +171,12 @@ paths:
                   message: API rate limit exceeded
 components:
   schemas:
-    Deployment:
-      description: 'Deployment during a service history episode
-
-        '
-      type: object
-      required:
-      - start_date
-      - end_date
-      - location
-      properties:
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: beginning of deployment (YYYY-mm-dd)
-          example: '1948-10-10'
-        end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: end of deployment (YYYY-mm-dd)
-          example: '1949-10-09'
-        location:
-          type:
-          - string
-          - 'null'
-          description: Three letter ISO country code of deployment location
-          example: KOR
-    DisabilityRatingToken:
-      description: 'A token containing signed claims about a Veteran''s disability rating percentage
+    ServiceHistoryToken:
+      description: 'A token containing signed claims about a Veteran''s service history
 
         '
       type: string
-      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
-    VeteranStatusConfirmation:
-      description: 'Veteran status confirmation for an individual
-
-        '
-      type: object
-      properties:
-        id:
-          type: string
-          description: Confirmation UUID
-          example: 833c6ffc-efef-4775-9355-f836b4f57501
-        type:
-          type: string
-          example: veteran_status_confirmations
-        attributes:
-          type: object
-          properties:
-            veteran_status:
-              type: string
-              description: 'Whether the system could confirm the Veteran status of the authorized individual
-
-                '
-              enum:
-              - confirmed
-              - not confirmed
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoiMTIzMTJBQVNEZiIsInR5cGUiOiJzZXJ2aWNlLWhpc3RvcnktZXBpc29kZXMiLCJhdHRyaWJ1dGVzIjp7InN0YXJ0X2RhdGUiOiIxOTQ4LTA0LTA4IiwiZW5kX2RhdGUiOiIxOTUwLTA1LTEwIiwiYnJhbmNoIjoiQWlyIEZvcmNlIiwiZGlzY2hhcmdlX3N0YXR1cyI6Imhvbm9yYWJsZSIsImRlcGxveW1lbnRzIjpbeyJzdGFydF9kYXRlIjoiMTk0OC0xMC0xMCIsImVuZF9kYXRlIjoiMTk0OS0xMC0wOSIsImxvY2F0aW9uIjoiS09SIn1dfX19.S39hmL-5nxvdJnJ_PSHdfiP744dTcGzrUKsqcVQa1FomUU15Dr2A2gQMF7XWO2DCLrdM0bCtIS8mCSwI00nqQFqXGjZVGQTIyzQJDPHxV6jnYwwaXD1vzbxlsycWF2ZQ_5Wx6TIhnXiEkbn_rzW_VleVnHjLCRQwzmpwGGDsL_I
     DisabilityRatingAttributes:
       description: 'Body of the disability rating response
 
@@ -283,6 +229,36 @@ components:
           example: disability-rating
         attributes:
           $ref: '#/components/schemas/DisabilityRatingAttributes'
+    Deployment:
+      description: 'Deployment during a service history episode
+
+        '
+      type: object
+      required:
+      - start_date
+      - end_date
+      - location
+      properties:
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: beginning of deployment (YYYY-mm-dd)
+          example: '1948-10-10'
+        end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: end of deployment (YYYY-mm-dd)
+          example: '1949-10-09'
+        location:
+          type:
+          - string
+          - 'null'
+          description: Three letter ISO country code of deployment location
+          example: KOR
     individual_ratings:
       description: list of service connected disability ratings
       required:
@@ -309,12 +285,36 @@ components:
           - number
           - 'null'
           example: 50
-    ServiceHistoryToken:
-      description: 'A token containing signed claims about a Veteran''s service history
+    VeteranStatusConfirmation:
+      description: 'Veteran status confirmation for an individual
+
+        '
+      type: object
+      properties:
+        id:
+          type: string
+          description: Confirmation UUID
+          example: 833c6ffc-efef-4775-9355-f836b4f57501
+        type:
+          type: string
+          example: veteran_status_confirmations
+        attributes:
+          type: object
+          properties:
+            veteran_status:
+              type: string
+              description: 'Whether the system could confirm the Veteran status of the authorized individual
+
+                '
+              enum:
+              - confirmed
+              - not confirmed
+    DisabilityRatingToken:
+      description: 'A token containing signed claims about a Veteran''s disability rating percentage
 
         '
       type: string
-      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoiMTIzMTJBQVNEZiIsInR5cGUiOiJzZXJ2aWNlLWhpc3RvcnktZXBpc29kZXMiLCJhdHRyaWJ1dGVzIjp7InN0YXJ0X2RhdGUiOiIxOTQ4LTA0LTA4IiwiZW5kX2RhdGUiOiIxOTUwLTA1LTEwIiwiYnJhbmNoIjoiQWlyIEZvcmNlIiwiZGlzY2hhcmdlX3N0YXR1cyI6Imhvbm9yYWJsZSIsImRlcGxveW1lbnRzIjpbeyJzdGFydF9kYXRlIjoiMTk0OC0xMC0xMCIsImVuZF9kYXRlIjoiMTk0OS0xMC0wOSIsImxvY2F0aW9uIjoiS09SIn1dfX19.S39hmL-5nxvdJnJ_PSHdfiP744dTcGzrUKsqcVQa1FomUU15Dr2A2gQMF7XWO2DCLrdM0bCtIS8mCSwI00nqQFqXGjZVGQTIyzQJDPHxV6jnYwwaXD1vzbxlsycWF2ZQ_5Wx6TIhnXiEkbn_rzW_VleVnHjLCRQwzmpwGGDsL_I
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
     ServiceHistoryEpisode:
       description: 'Service History for authorized Veteran
 

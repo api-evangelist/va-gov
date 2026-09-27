@@ -121,59 +121,6 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    Event:
-      type: object
-      description: Event during the appeals process
-      properties:
-        type:
-          type: string
-          example: soc
-          description: Enum of possible event types. Acronyms used include, nod (Notice of Disagreement), soc (Statement of Case), ssoc (Supplemental Statement of Case), ftr (Failed to Report), bva (Board of Veteran Appeals), cavc (Court of Appeals for Veteran Claims), and dro (Decision Review Officer).
-          enum:
-          - claim_decision
-          - nod
-          - soc
-          - form9
-          - ssoc
-          - certified
-          - hearing_held
-          - hearing_no_show
-          - bva_decision
-          - field_grant
-          - withdrawn
-          - ftr
-          - ramp
-          - death
-          - merged
-          - record_designation
-          - reconsideration
-          - vacated
-          - other_close
-          - cavc_decision
-          - ramp_notice
-          - transcript
-          - remand_return
-          - ama_nod
-          - docket_change
-          - distributed_to_vlj
-          - bva_decision_effectuation
-          - dta_decision
-          - sc_request
-          - sc_decision
-          - sc_other_close
-          - hlr_request
-          - hlr_decision
-          - hlr_dta_error
-          - hlr_other_close
-          - statutory_opt_in
-        date:
-          type: string
-          format: date
-          description: Date the event occurred
-          example: '2016-05-30'
-        details:
-          description: Further information about the event
-          type: object
     Evidence:
       type: object
       description: Documentation and other evidence that has been submitted in support of the appeal
@@ -187,10 +134,6 @@ components:
           format: date
           description: Date the evidence was added to the case
           example: '2017-09-30'
-    Appeals:
-      type: array
-      items:
-        $ref: '#/components/schemas/Appeal'
     Issue:
       type: object
       description: Issues on appeal
@@ -222,44 +165,6 @@ components:
           format: date
           description: The date of the most recent decision on the issue
           example: '2016-05-30'
-    Alert:
-      type: object
-      description: Notification of a request for more information or of a change in the appeal status that requires action.
-      properties:
-        type:
-          type: string
-          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
-          example: form9_needed
-          enum:
-          - form9_needed
-          - scheduled_hearing
-          - hearing_no_show
-          - held_for_evidence
-          - cavc_option
-          - ramp_eligible
-          - ramp_ineligible
-          - decision_soon
-          - blocked_by_vso
-          - scheduled_dro_hearing
-          - dro_hearing_no_show
-          - evidentiary_period
-          - ama_post_decision
-        details:
-          description: Further information about the alert
-          type: object
-    Eta:
-      type: object
-      description: Estimated decision dates for each docket.
-      properties:
-        directReview:
-          format: date
-          example: '2020-02-01'
-        evidenceSubmission:
-          format: date
-          example: '2024-06-01'
-        hearing:
-          format: date
-          example: '2024-06-01'
     Appeal:
       type: object
       properties:
@@ -514,6 +419,101 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Evidence'
+    Eta:
+      type: object
+      description: Estimated decision dates for each docket.
+      properties:
+        directReview:
+          format: date
+          example: '2020-02-01'
+        evidenceSubmission:
+          format: date
+          example: '2024-06-01'
+        hearing:
+          format: date
+          example: '2024-06-01'
+    Appeals:
+      type: array
+      items:
+        $ref: '#/components/schemas/Appeal'
+    Event:
+      type: object
+      description: Event during the appeals process
+      properties:
+        type:
+          type: string
+          example: soc
+          description: Enum of possible event types. Acronyms used include, nod (Notice of Disagreement), soc (Statement of Case), ssoc (Supplemental Statement of Case), ftr (Failed to Report), bva (Board of Veteran Appeals), cavc (Court of Appeals for Veteran Claims), and dro (Decision Review Officer).
+          enum:
+          - claim_decision
+          - nod
+          - soc
+          - form9
+          - ssoc
+          - certified
+          - hearing_held
+          - hearing_no_show
+          - bva_decision
+          - field_grant
+          - withdrawn
+          - ftr
+          - ramp
+          - death
+          - merged
+          - record_designation
+          - reconsideration
+          - vacated
+          - other_close
+          - cavc_decision
+          - ramp_notice
+          - transcript
+          - remand_return
+          - ama_nod
+          - docket_change
+          - distributed_to_vlj
+          - bva_decision_effectuation
+          - dta_decision
+          - sc_request
+          - sc_decision
+          - sc_other_close
+          - hlr_request
+          - hlr_decision
+          - hlr_dta_error
+          - hlr_other_close
+          - statutory_opt_in
+        date:
+          type: string
+          format: date
+          description: Date the event occurred
+          example: '2016-05-30'
+        details:
+          description: Further information about the event
+          type: object
+    Alert:
+      type: object
+      description: Notification of a request for more information or of a change in the appeal status that requires action.
+      properties:
+        type:
+          type: string
+          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
+          example: form9_needed
+          enum:
+          - form9_needed
+          - scheduled_hearing
+          - hearing_no_show
+          - held_for_evidence
+          - cavc_option
+          - ramp_eligible
+          - ramp_ineligible
+          - decision_soon
+          - blocked_by_vso
+          - scheduled_dro_hearing
+          - dro_hearing_no_show
+          - evidentiary_period
+          - ama_post_decision
+        details:
+          description: Further information about the alert
+          type: object
   securitySchemes:
     apikey:
       type: apiKey

@@ -973,23 +973,61 @@ paths:
         - documents.read
 components:
   schemas:
-    UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses:
+    ClaimDocumentsRequestV1.ClaimDocuments:
       type: object
       properties:
-        statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
-        requestIdsNotFound:
-          type: array
-          description: 'A list populated with requestIds whose status was not found.
+        claimId:
+          type: integer
+          format: int64
+          description: The VBMS-issued claim identifier with which the document is associated.
+          example: 1234
+          maximum: 9223372036854776000
+          minimum: 1
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
 
             '
-          items:
-            type: integer
-            format: int64
+          example: 999012105
       required:
-      - requestIdsNotFound
+      - claimId
+    UploadRequestAsyncProcessingStatusV1.WorkflowTime:
+      type: object
+      description: Workflow timing information.
+      properties:
+        startTime:
+          type: integer
+          format: int64
+          description: The time, in milliseconds since epoch, that the workflow began executing.
+          example: 1502199000
+        endTime:
+          type: integer
+          format: int64
+          description: 'The time, in milliseconds since epoch, that the workflow finished executing.
+
+            In the case of a currently executing workflow, this will be null.
+
+            '
+          example: 1502199000
+    ClaimDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimDocumentsRequestV1.ClaimDocuments'
+      required:
+      - data
+    ValidateUploadClaimantRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ValidateUploadClaimantRequestV1.ValidateUploadData'
     ValidateUploadClaimantRequestV1.ValidateUploadData:
       type: object
       properties:
@@ -1023,314 +1061,7 @@ components:
           minimum: 1
       required:
       - docType
-    Pagination:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-          description: 1-based page number to retrieve. Defaults to 1.
-          example: 1
-        pageSize:
-          type: integer
-          format: int32
-          description: Number of results per page (1–100). Defaults to 100.
-          example: 25
-    UploadRequestAsyncProcessingStatusResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
-      required:
-      - data
-    ClaimantValidationResponseV1.ValidationSuccess:
-      type: object
-      properties:
-        validationToken:
-          type: string
-          description: The validation token.
-        validUntil:
-          type: integer
-          format: int64
-          description: The time, in milliseconds since epoch, that the token expires.
-      required:
-      - validUntil
-      - validationToken
-    VbmsSearchDocumentsResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/VbmsSearchDocumentsResponseV1.Documents'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      required:
-      - data
-    FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData:
-      type: object
-      properties:
-        docTypeIds:
-          type: array
-          description: 'The numeric document types to search for. If not provided, then
-
-            all downloadable claim letter documents matching the other
-
-            request criteria will be returned.
-
-            '
-          example:
-          - 27
-          - 34
-          - 184
-          - 408
-          - 700
-          - 704
-          - 706
-          - 858
-          - 859
-          - 864
-          - 942
-          - 1605
-          items:
-            type: integer
-            format: int32
-        fileNumber:
-          type: string
-          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
-          example: '999012105'
-        participantId:
-          type: integer
-          format: int64
-          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
-
-            linking patients to their records across VA systems.
-
-            '
-          example: 999012105
-    FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments:
-      type: object
-      properties:
-        documents:
-          type: array
-          description: 'The list of claim letter documents available for download.
-
-            '
-          items:
-            $ref: '#/components/schemas/ClaimLetterDocumentV1'
-    VbmsDocumentsIdentifier:
-      type: object
-      properties:
-        participantId:
-          type: integer
-          format: int64
-          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
-
-            linking patients to their records across VA systems.
-
-            '
-          example: 999012105
-    UploadRequestV1.UploadData:
-      type: object
-      properties:
-        trackedItemIds:
-          type: array
-          description: 'A list of tracked item IDs that are associated
-
-            with the document being uploaded.
-
-            '
-          example:
-          - 1
-          - 2
-          - 3
-          items:
-            type: integer
-            format: int64
-        systemName:
-          type: string
-          description: Indicates which system is uploading the document.
-          example: va.gov
-        docType:
-          type: string
-          description: Indicates the L code of the type of document being uploaded.
-          example: L122
-        fileNumber:
-          type: string
-          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
-          example: '999012105'
-        participantId:
-          type: integer
-          format: int64
-          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
-
-            linking patients to their records across VA systems.
-
-            '
-          example: 999012105
-        claimId:
-          type: integer
-          format: int64
-          description: The VBMS-issued claim identifier with which the document is associated.
-          example: 1234
-          maximum: 9223372036854776000
-          minimum: 1
-        fileName:
-          type: string
-          description: The name of the file being uploaded.
-          example: Document.pdf
-          maxLength: 256
-        validationToken:
-          type: string
-          description: 'An optional validation token obtained during request claimant pre-validation,
-
-            that bypasses duplicate validation calls. For more information, review the section
-
-            on request pre-validation.
-
-            '
-          maxLength: 64
-      required:
-      - claimId
-      - docType
-      - fileName
-      - systemName
-    ClaimDocumentsRequestV1.ClaimDocuments:
-      type: object
-      properties:
-        claimId:
-          type: integer
-          format: int64
-          description: The VBMS-issued claim identifier with which the document is associated.
-          example: 1234
-          maximum: 9223372036854776000
-          minimum: 1
-        fileNumber:
-          type: string
-          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
-          example: '999012105'
-        participantId:
-          type: integer
-          format: int64
-          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
-
-            linking patients to their records across VA systems.
-
-            '
-          example: 999012105
-      required:
-      - claimId
-    VbmsSearchDocumentsRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/VbmsDocumentsIdentifier'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    ClaimDocumentsResponseV1.Documents:
-      type: object
-      properties:
-        documents:
-          type: array
-          description: 'The list of benefits claim documents.
-
-            '
-          items:
-            $ref: '#/components/schemas/ClaimDocumentV1'
-    UploadResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/UploadResponseV1.UploadInfo'
-      required:
-      - data
-    FindClaimLetterDocumentsRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData'
-      required:
-      - data
-    ClaimDocumentsRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ClaimDocumentsRequestV1.ClaimDocuments'
-      required:
-      - data
-    VbmsDownloadDocumentRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/VbmsDownloadDocumentRequestV1.DocumentInfo'
-      required:
-      - data
-    BasicErrorDocumentV1:
-      type: object
-      description: An error response in JSON:API format (see https://jsonapi.org/format/#document-structure).
-      properties:
-        errors:
-          type: array
-          description: The list of errors returned from the attempted operation.
-          items:
-            $ref: '#/components/schemas/BasicErrorV1'
-      required:
-      - errors
-    UploadResponseV1.UploadInfo:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the upload request was successful.
-          example: true
-        requestId:
-          type: integer
-          format: int64
-          description: The upload request identifier.
-          example: 12345678
-          maximum: 9223372036854776000
-      required:
-      - requestId
-      - success
-    UploadRequestAsyncProcessingStatusV1:
-      type: object
-      description: The asynchronous processing workflow status of a single upload request.
-      properties:
-        requestId:
-          type: integer
-          format: int64
-          description: The requestId of the upload request.
-          example: 600000001
-        time:
-          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowTime'
-        status:
-          type: string
-          description: 'The current execution status of the workflow:
-
-            * `IN_PROGRESS`: the workflow is currently executing.
-
-            * `SUCCESS`: the workflow has completed all steps successfully.
-
-            * `FAILED`: the workflow could not complete because a step encountered
-
-            a non-recoverable error.
-
-            '
-          enum:
-          - IN_PROGRESS
-          - SUCCESS
-          - FAILED
-        steps:
-          type: array
-          description: The list of workflow steps that process the document upload, ordered by their sequence.
-          items:
-            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.Step'
-        error:
-          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowError'
-      required:
-      - requestId
-      - status
-      - steps
-      - time
-    VbmsDownloadDocumentRequestV1.DocumentInfo:
+    DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo:
       type: object
       properties:
         fileNumber:
@@ -1358,118 +1089,34 @@ components:
           example: 12345678-ABCD-0123-cdef-124345679ABC
       required:
       - documentUuid
-    BasicErrorV1:
+    DownloadClaimLetterDocumentRequestV1:
       type: object
-      description: API invocation or processing error
       properties:
-        detail:
+        data:
+          $ref: '#/components/schemas/DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo'
+      required:
+      - data
+    ClaimantValidationResponseV1.ValidationError:
+      type: object
+      properties:
+        message:
           type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Code must match "^[A-Z]{2}$"
-        status:
+          description: The validation error message.
+      required:
+      - message
+    Pagination:
+      type: object
+      properties:
+        pageNumber:
           type: integer
           format: int32
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          example: 400
-        type:
-          type: string
-          description: A URI reference that identifies the problem type.
-          example: https://example.net/validation-error
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          example: Invalid field value
-        instance:
-          type: string
-          description: A URI reference that identifies the specific occurrence of the problem.
-          example: e6d1119e-dc91-4b4d-b583-0f309de0807b
-        diagnostics:
-          type: string
-          description: Diagnostic information that can be submitted with a support request to aid with diagnosing and solving issues.
-          example: e6d1119edc914b4db5830f309de0807b
-    VbmsSearchDocumentsResponseV1.Documents:
-      type: object
-      properties:
-        documents:
-          type: array
-          description: 'The list of VBMS documents.
-
-            '
-          items:
-            $ref: '#/components/schemas/VbmsDocumentV1'
-    UploadRequestAsyncProcessingStatusV1.WorkflowError:
-      type: object
-      description: Workflow error information.
-      properties:
-        detail:
-          type: string
-          description: A human-readable summary of the error.
-        step:
-          type: string
-          description: 'The workflow step name:
-
-            * `CLAIMS_EVIDENCE`: the workflow step that uploads the document to Claims Evidence.
-
-            * `BENEFITS_GATEWAY_SERVICE`: the workflow step that uploads the document to Benefits
-
-            Gateway Service.
-
-            * `REMOVE_FILE_BINARY`: the workflow step that removes file binary
-
-            Gateway Service.
-
-            '
-          enum:
-          - REMOVE_FILE_BINARY
-          - BENEFITS_GATEWAY_SERVICE
-          - CLAIMS_EVIDENCE
-    ClaimDocumentsResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ClaimDocumentsResponseV1.Documents'
-      required:
-      - data
-    ValidateUploadClaimantRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ValidateUploadClaimantRequestV1.ValidateUploadData'
-    ClaimantValidationResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationResult'
-      required:
-      - data
-    FindClaimLetterDocumentsResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments'
-      required:
-      - data
-    ClaimantValidationResponseV1.ValidationResult:
-      type: object
-      properties:
-        valid:
-          type: boolean
-          description: Whether the claimant was validated successfully.
-        success:
-          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationSuccess'
-          description: The validation result, populated in the case of successful validation.
-        error:
-          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationError'
-          description: The validation error, populated in the case of failed validation.
-      required:
-      - valid
-    UploadRequestV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/UploadRequestV1.UploadData'
-      required:
-      - data
+          description: 1-based page number to retrieve. Defaults to 1.
+          example: 1
+        pageSize:
+          type: integer
+          format: int32
+          description: Number of results per page (1–100). Defaults to 100.
+          example: 25
     UploadRequestAsyncProcessingStatusV1.Step:
       type: object
       description: The description of a single workflow step.
@@ -1535,55 +1182,60 @@ components:
           - IN_PROGRESS
           - SUCCESS
           - FAILED
-    ClaimDocumentV1:
+    BasicErrorV1:
+      type: object
+      description: API invocation or processing error
+      properties:
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Code must match "^[A-Z]{2}$"
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          example: 400
+        type:
+          type: string
+          description: A URI reference that identifies the problem type.
+          example: https://example.net/validation-error
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          example: Invalid field value
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem.
+          example: e6d1119e-dc91-4b4d-b583-0f309de0807b
+        diagnostics:
+          type: string
+          description: Diagnostic information that can be submitted with a support request to aid with diagnosing and solving issues.
+          example: e6d1119edc914b4db5830f309de0807b
+    UploadRequestV1.UploadData:
       type: object
       properties:
-        documentId:
-          type: string
-          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
-        documentUuid:
-          type: string
-          description: 'The document''s unique identifier in VBMS.
+        trackedItemIds:
+          type: array
+          description: 'A list of tracked item IDs that are associated
 
-            Note that this differs from the document''s current version UUID.
+            with the document being uploaded.
 
             '
-          example: 12345678-ABCD-0123-cdef-124345679ABC
-        currentVersionUuid:
+          example:
+          - 1
+          - 2
+          - 3
+          items:
+            type: integer
+            format: int64
+        systemName:
           type: string
-          description: This value is obtained from the currentVersionUuid field from BIP Claims Evidence.
-          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
-        originalFileName:
+          description: Indicates which system is uploading the document.
+          example: va.gov
+        docType:
           type: string
-          example: SupportingDocument.pdf
-        documentTypeLabel:
-          type: string
-          example: VA 21-526 Veterans Application for Compensation or Pension
-        trackedItemId:
-          type: integer
-          format: int64
-          example: 600000001
-        uploadedDateTime:
-          type: string
-          format: date-time
-          example: '2016-02-04T17:51:56Z'
-      required:
-      - currentVersionUuid
-      - documentId
-      - documentTypeLabel
-      - documentUuid
-      - originalFileName
-      - uploadedDateTime
-    UploadRequestAsyncProcessingStatusBulkResponseV1:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses'
-      required:
-      - data
-    DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo:
-      type: object
-      properties:
+          description: Indicates the L code of the type of document being uploaded.
+          example: L122
         fileNumber:
           type: string
           description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
@@ -1597,18 +1249,142 @@ components:
 
             '
           example: 999012105
-        documentUuid:
+        claimId:
+          type: integer
+          format: int64
+          description: The VBMS-issued claim identifier with which the document is associated.
+          example: 1234
+          maximum: 9223372036854776000
+          minimum: 1
+        fileName:
           type: string
-          description: 'The document''s unique identifier in VBMS, obtained by making a Document Service API
+          description: The name of the file being uploaded.
+          example: Document.pdf
+          maxLength: 256
+        validationToken:
+          type: string
+          description: 'An optional validation token obtained during request claimant pre-validation,
 
-            request to search for documents that are available to download for the Veteran.
+            that bypasses duplicate validation calls. For more information, review the section
 
-            Note that this differs from the document''s current version UUID.
+            on request pre-validation.
 
             '
-          example: 12345678-ABCD-0123-cdef-124345679ABC
+          maxLength: 64
       required:
-      - documentUuid
+      - claimId
+      - docType
+      - fileName
+      - systemName
+    UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds:
+      type: object
+      properties:
+        requestIds:
+          type: array
+          description: The list of requestIds that identify upload requests to retrieve status for.
+          items:
+            type: integer
+            format: int64
+      required:
+      - requestIds
+    UploadRequestAsyncProcessingStatusV1:
+      type: object
+      description: The asynchronous processing workflow status of a single upload request.
+      properties:
+        requestId:
+          type: integer
+          format: int64
+          description: The requestId of the upload request.
+          example: 600000001
+        time:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowTime'
+        status:
+          type: string
+          description: 'The current execution status of the workflow:
+
+            * `IN_PROGRESS`: the workflow is currently executing.
+
+            * `SUCCESS`: the workflow has completed all steps successfully.
+
+            * `FAILED`: the workflow could not complete because a step encountered
+
+            a non-recoverable error.
+
+            '
+          enum:
+          - IN_PROGRESS
+          - SUCCESS
+          - FAILED
+        steps:
+          type: array
+          description: The list of workflow steps that process the document upload, ordered by their sequence.
+          items:
+            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.Step'
+        error:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1.WorkflowError'
+      required:
+      - requestId
+      - status
+      - steps
+      - time
+    VbmsDownloadDocumentRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsDownloadDocumentRequestV1.DocumentInfo'
+      required:
+      - data
+    UploadResponseV1.UploadInfo:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the upload request was successful.
+          example: true
+        requestId:
+          type: integer
+          format: int64
+          description: The upload request identifier.
+          example: 12345678
+          maximum: 9223372036854776000
+      required:
+      - requestId
+      - success
+    FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of claim letter documents available for download.
+
+            '
+          items:
+            $ref: '#/components/schemas/ClaimLetterDocumentV1'
+    FindClaimLetterDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/FindClaimLetterDocumentsResponseV1.ClaimLetterDocuments'
+      required:
+      - data
+    VbmsSearchDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsDocumentsIdentifier'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    BasicErrorDocumentV1:
+      type: object
+      description: An error response in JSON:API format (see https://jsonapi.org/format/#document-structure).
+      properties:
+        errors:
+          type: array
+          description: The list of errors returned from the attempted operation.
+          items:
+            $ref: '#/components/schemas/BasicErrorV1'
+      required:
+      - errors
     ClaimLetterDocumentV1:
       type: object
       properties:
@@ -1661,14 +1437,253 @@ components:
       - originalFileName
       - subject
       - uploadedDateTime
-    UploadRequestAsyncProcessingStatusBulkRequestV1:
+    ClaimantValidationResponseV1.ValidationResult:
       type: object
-      description: Requests the asynchronous processing status of more than one document upload request.
+      properties:
+        valid:
+          type: boolean
+          description: Whether the claimant was validated successfully.
+        success:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationSuccess'
+          description: The validation result, populated in the case of successful validation.
+        error:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationError'
+          description: The validation error, populated in the case of failed validation.
+      required:
+      - valid
+    ClaimDocumentsResponseV1.Documents:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of benefits claim documents.
+
+            '
+          items:
+            $ref: '#/components/schemas/ClaimDocumentV1'
+    UploadRequestV1:
+      type: object
       properties:
         data:
-          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds'
+          $ref: '#/components/schemas/UploadRequestV1.UploadData'
       required:
       - data
+    UploadResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadResponseV1.UploadInfo'
+      required:
+      - data
+    ClaimDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimDocumentsResponseV1.Documents'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
+        requestIdsNotFound:
+          type: array
+          description: 'A list populated with requestIds whose status was not found.
+
+            '
+          items:
+            type: integer
+            format: int64
+      required:
+      - requestIdsNotFound
+    ClaimDocumentV1:
+      type: object
+      properties:
+        documentId:
+          type: string
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+        currentVersionUuid:
+          type: string
+          description: This value is obtained from the currentVersionUuid field from BIP Claims Evidence.
+          example: '{12345678-ABCD-0123-cdef-124345679ABC}'
+        originalFileName:
+          type: string
+          example: SupportingDocument.pdf
+        documentTypeLabel:
+          type: string
+          example: VA 21-526 Veterans Application for Compensation or Pension
+        trackedItemId:
+          type: integer
+          format: int64
+          example: 600000001
+        uploadedDateTime:
+          type: string
+          format: date-time
+          example: '2016-02-04T17:51:56Z'
+      required:
+      - currentVersionUuid
+      - documentId
+      - documentTypeLabel
+      - documentUuid
+      - originalFileName
+      - uploadedDateTime
+    VbmsSearchDocumentsResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/VbmsSearchDocumentsResponseV1.Documents'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+    FindClaimLetterDocumentsRequestV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData'
+      required:
+      - data
+    VbmsDocumentsIdentifier:
+      type: object
+      properties:
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+    UploadRequestAsyncProcessingStatusV1.WorkflowError:
+      type: object
+      description: Workflow error information.
+      properties:
+        detail:
+          type: string
+          description: A human-readable summary of the error.
+        step:
+          type: string
+          description: 'The workflow step name:
+
+            * `CLAIMS_EVIDENCE`: the workflow step that uploads the document to Claims Evidence.
+
+            * `BENEFITS_GATEWAY_SERVICE`: the workflow step that uploads the document to Benefits
+
+            Gateway Service.
+
+            * `REMOVE_FILE_BINARY`: the workflow step that removes file binary
+
+            Gateway Service.
+
+            '
+          enum:
+          - REMOVE_FILE_BINARY
+          - BENEFITS_GATEWAY_SERVICE
+          - CLAIMS_EVIDENCE
+    VbmsDownloadDocumentRequestV1.DocumentInfo:
+      type: object
+      properties:
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
+        documentUuid:
+          type: string
+          description: 'The document''s unique identifier in VBMS, obtained by making a Document Service API
+
+            request to search for documents that are available to download for the Veteran.
+
+            Note that this differs from the document''s current version UUID.
+
+            '
+          example: 12345678-ABCD-0123-cdef-124345679ABC
+      required:
+      - documentUuid
+    ClaimantValidationResponseV1.ValidationSuccess:
+      type: object
+      properties:
+        validationToken:
+          type: string
+          description: The validation token.
+        validUntil:
+          type: integer
+          format: int64
+          description: The time, in milliseconds since epoch, that the token expires.
+      required:
+      - validUntil
+      - validationToken
+    VbmsSearchDocumentsResponseV1.Documents:
+      type: object
+      properties:
+        documents:
+          type: array
+          description: 'The list of VBMS documents.
+
+            '
+          items:
+            $ref: '#/components/schemas/VbmsDocumentV1'
+    FindClaimLetterDocumentsRequestV1.FindClaimLetterDocumentsData:
+      type: object
+      properties:
+        docTypeIds:
+          type: array
+          description: 'The numeric document types to search for. If not provided, then
+
+            all downloadable claim letter documents matching the other
+
+            request criteria will be returned.
+
+            '
+          example:
+          - 27
+          - 34
+          - 184
+          - 408
+          - 700
+          - 704
+          - 706
+          - 858
+          - 859
+          - 864
+          - 942
+          - 1605
+          items:
+            type: integer
+            format: int32
+        fileNumber:
+          type: string
+          description: "The Veteran's VBMS fileNumber used when uploading the document to VBMS.\n It indicates the eFolder in which the document resides.\n"
+          example: '999012105'
+        participantId:
+          type: integer
+          format: int64
+          description: 'A unique identifier assigned to each patient entry in the Master Patient Index
+
+            linking patients to their records across VA systems.
+
+            '
+          example: 999012105
     VbmsDocumentV1:
       type: object
       properties:
@@ -1704,48 +1719,33 @@ components:
         receivedAt:
           type: string
           example: '2016-02-04'
-    ClaimantValidationResponseV1.ValidationError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The validation error message.
-      required:
-      - message
-    UploadRequestAsyncProcessingStatusV1.WorkflowTime:
-      type: object
-      description: Workflow timing information.
-      properties:
-        startTime:
-          type: integer
-          format: int64
-          description: The time, in milliseconds since epoch, that the workflow began executing.
-          example: 1502199000
-        endTime:
-          type: integer
-          format: int64
-          description: 'The time, in milliseconds since epoch, that the workflow finished executing.
-
-            In the case of a currently executing workflow, this will be null.
-
-            '
-          example: 1502199000
-    UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds:
-      type: object
-      properties:
-        requestIds:
-          type: array
-          description: The list of requestIds that identify upload requests to retrieve status for.
-          items:
-            type: integer
-            format: int64
-      required:
-      - requestIds
-    DownloadClaimLetterDocumentRequestV1:
+    UploadRequestAsyncProcessingStatusBulkResponseV1:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/DownloadClaimLetterDocumentRequestV1.ClaimLetterDocumentInfo'
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkResponseV1.UploadRequestStatuses'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusV1'
+      required:
+      - data
+    UploadRequestAsyncProcessingStatusBulkRequestV1:
+      type: object
+      description: Requests the asynchronous processing status of more than one document upload request.
+      properties:
+        data:
+          $ref: '#/components/schemas/UploadRequestAsyncProcessingStatusBulkRequestV1.UploadRequestIds'
+      required:
+      - data
+    ClaimantValidationResponseV1:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClaimantValidationResponseV1.ValidationResult'
       required:
       - data
   securitySchemes:

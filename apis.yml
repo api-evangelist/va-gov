@@ -1009,7 +1009,7 @@ apis:
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
 - aid: va-gov:va-gov-facilities-api
-  name: VA Lighthouse facilities API
+  name: VA Lighthouse Facilities API
   description: VA Facilities API
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
@@ -1587,7 +1587,7 @@ apis:
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
 - aid: va-gov:va-gov-loanreviewpublic-api
-  name: VA Lighthouse loanReviewPublic API
+  name: VA Lighthouse Loan Review Public API
   description: Loan Review Public Resource
   humanURL: https://developer.va.gov/explore/api/va-facilities/docs
   baseURL: https://api.va.gov/services/va_facilities/v1
@@ -2410,9 +2410,42 @@ apis:
     url: https://developer.va.gov/explore/api/loan-review/docs
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
+- aid: va-gov:va-community-care-eligibility-api
+  name: VA Community Care Eligibility API
+  description: >-
+    Determine whether a Veteran is eligible for community-care services under VA referral programs.
+  humanURL: https://developer.va.gov/explore/api/community-care-eligibility
+  tags:
+  - Health
+  - Eligibility
+  properties:
+  - type: Documentation
+    url: https://developer.va.gov/explore/api/community-care-eligibility
+  - type: ChangeLog
+    url: https://developer.va.gov/explore/api/community-care-eligibility/release-notes
+- name: Patient Health API (FHIR)
+  description: >-
+    Allows Veterans and authorized third parties to access patient health data using the HL7 FHIR R4 standard,
+    including records, medications, conditions, immunizations, and appointments from VA facilities.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.va.gov/explore/api/patient-health
+  baseURL: https://api.va.gov/services/fhir/v0/r4
+  tags:
+  - Health
+  - FHIR
+  - Medical Records
+  - R4
+  properties:
+  - type: Documentation
+    url: https://developer.va.gov/explore/api/patient-health/docs
+  contact:
+  - FN: VA API Platform Support
+    email: api@va.gov
 - aid: va-gov:va-gov-direct-deposit-api
-  name: VA Lighthouse Direct Deposit API
-  description: The Direct Deposit API from VA Lighthouse — 1 operation(s) for direct deposit.
+  name: Department of Veterans Affairs (VA Lighthouse) Direct Deposit API
+  description: >-
+    The Direct Deposit API from Department of Veterans Affairs (VA Lighthouse) — 1 operation(s) for direct
+    deposit.
   humanURL: https://developer.va.gov/explore/api/decision-reviews/docs
   baseURL: https://api.va.gov/services/appeals/v2
   tags:
@@ -2492,7 +2525,7 @@ apis:
     url: https://developer.va.gov/explore/api/loan-review/docs
   - type: Authentication
     url: https://developer.va.gov/explore/api/loan-review/client-credentials
-name: VA Lighthouse
+name: Department of Veterans Affairs (VA Lighthouse)
 tags:
 - Government
 - Veterans Affairs
@@ -2502,19 +2535,29 @@ tags:
 - FHIR
 - Open Data
 - Federal
+- Health
+- Appeals
+- Federal Government
 kind: contract
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - department-of-veterans-affairs/health-apis-bulk-fhir
+    - department-of-veterans-affairs/health-apis-clinical-fhir
+    - department-of-veterans-affairs/lighthouse-fhir-apis-consumer-docs
+    - department-of-veterans-affairs/lighthouse-oas-tests
+    - department-of-veterans-affairs/vets-api
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown

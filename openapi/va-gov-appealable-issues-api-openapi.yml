@@ -1057,6 +1057,13 @@ components:
                     items:
                       type: string
                     description: List of missing fields
+    appealableIssues:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/appealableIssue'
     appealableIssue:
       type: object
       description: An appealable issue. To appeal this issue, include it when creating a Higher-Level Review, Notice of Disagreement, or Supplemental Claim.
@@ -1180,13 +1187,6 @@ components:
               type: boolean
               description: Indicates whether this issue is already part of an active Decision Review that is being processed by VA. Submitting a Decision Review that includes a listed issue with an activeReview of true may result in VA rejecting the submission.
               example: false
-    appealableIssues:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/appealableIssue'
   securitySchemes:
     productionOauth:
       type: oauth2

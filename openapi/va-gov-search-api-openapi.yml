@@ -120,18 +120,6 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    PatientRequest:
-      type: object
-      properties:
-        patientIcn:
-          type: string
-        serviceType:
-          type: string
-        extendedDriveMin:
-          type: integer
-          format: int32
-        timestamp:
-          type: string
     CommunityCareEligibilityResponse:
       type: object
       properties:
@@ -226,36 +214,6 @@ components:
         eligible: false
         processingStatus: successful
         pactStatus: Active
-    NotFound:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        type:
-          type: string
-        message:
-          type: string
-      example:
-        timestamp: 1557407878250
-        type: UnknownPatientIcnException
-        message: 'Unknown patient ICN: 011235813V213455'
-    DriveMinutes:
-      type: object
-      properties:
-        min:
-          type: integer
-          format: int32
-        max:
-          type: integer
-          format: int32
-    EligibilityCode:
-      type: object
-      properties:
-        description:
-          type: string
-        code:
-          type: string
     Address:
       type: object
       properties:
@@ -269,20 +227,25 @@ components:
           type: string
         zip:
           type: string
-    BadRequest:
+    Coordinates:
       type: object
       properties:
-        timestamp:
+        latitude:
+          type: number
+        longitude:
+          type: number
+    PatientRequest:
+      type: object
+      properties:
+        patientIcn:
+          type: string
+        serviceType:
+          type: string
+        extendedDriveMin:
           type: integer
-          format: int64
-        type:
+          format: int32
+        timestamp:
           type: string
-        message:
-          type: string
-      example:
-        timestamp: 1557407878250
-        type: UnknownServiceTypeException
-        message: 'Unknown service type: dentistry'
     Facility:
       type: object
       properties:
@@ -304,13 +267,50 @@ components:
           type: boolean
         active:
           type: boolean
-    Coordinates:
+    BadRequest:
       type: object
       properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownServiceTypeException
+        message: 'Unknown service type: dentistry'
+    NotFound:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownPatientIcnException
+        message: 'Unknown patient ICN: 011235813V213455'
+    EligibilityCode:
+      type: object
+      properties:
+        description:
+          type: string
+        code:
+          type: string
+    DriveMinutes:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
   securitySchemes:
     OauthFlow:
       type: oauth2

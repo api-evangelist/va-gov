@@ -393,152 +393,17 @@ paths:
         - service_history.read
 components:
   schemas:
-    Deployment:
-      required:
-      - end_date
-      - location
-      - start_date
+    ServiceHistoryResponse:
       type: object
       properties:
-        start_date:
-          type:
-          - string
-          - 'null'
-          description: beginning of deployment (YYYY-mm-dd)
-          format: date
-          example: '1948-10-10'
-        end_date:
-          type:
-          - string
-          - 'null'
-          description: end of deployment (YYYY-mm-dd)
-          format: date
-          example: '1949-10-09'
-        location:
-          type:
-          - string
-          - 'null'
-          description: Three letter ISO country code of deployment location
-          example: KOR
-      description: Deployment during a service history episode
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceHistoryEpisode'
+        military_summary:
+          $ref: '#/components/schemas/ServiceHistoryMilitarySummary'
+      description: verification service_history endpoint
       deprecated: true
-    AuthorizationError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '401'
-        error:
-          type: string
-          example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    ServiceHistoryAttributes:
-      required:
-      - branch_of_service
-      - component_of_service
-      - discharge_status
-      - end_date
-      - first_name
-      - last_name
-      - pay_grade
-      - separation_reason
-      - service_episode_combat_pay
-      - service_type
-      - start_date
-      type: object
-      properties:
-        deployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment'
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: Veteran first name
-          example: Abraham
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: Veteran last name
-          example: Lincoln
-        branch_of_service:
-          type: string
-          description: The branch of service such as National Guard, Coast Guard, Reserves, Army, Navy, Air Force, Marines
-          example: Army
-        component_of_service:
-          type: string
-          description: A component of service such as Reserves, National Guard
-          example: Reserves
-        service_type:
-          type: string
-          description: If veteran is on active duty or not
-          example: Active Duty
-        start_date:
-          type:
-          - string
-          - 'null'
-          description: start date of a service history episode (YYYY-mm-dd)
-          format: date
-          example: '1948-04-08'
-        end_date:
-          type:
-          - string
-          - 'null'
-          description: end date of a service history episode (YYYY-mm-dd)
-          format: date
-          example: '1950-05-10'
-        pay_grade:
-          type: string
-          description: "Defines the level of compensation for a position, normalized across military branches.\n\nPossible values include the concatenation of Pay Plan Code and Pay Grade Code.\nPay Plan Code is represented as a two-character code, and can be one of five values:\n  - CC (Commissioned Corps)\n  - MC (Cadet)\n  - ME (Enlisted)\n  - MO (Officer)\n  - MW (Warrant Officer)\n\nPay Grade Code is a value between 01 and 10.\n\nPay Plan Code is concatenated with Pay Grade Code to determine the full Pay Grade value, with the leading character (M or C) stripped from Pay Plan Code."
-          example: W01
-        discharge_status:
-          type:
-          - string
-          - 'null'
-          description: 'Character of discharge from service episode. Possible values are:
-
-
-            Both "honorable-for-va-purposes" and "dishonorable-for-va-purposes" represent a change in character of discharge based on an administrative decision, for purposes of VA benefits administration. The original character of discharge for other purposes was either "bad-conduct" or "other-than-honorable". "honorable-absence-of-negative-report" represents an unreported character of service that the Department of Defense classifies as honorable.'
-          example: HONORABLE
-          enum:
-          - honorable
-          - general
-          - bad-conduct
-          - other-than-honorable
-          - dishonorable
-          - honorable-absence-of-negative-report
-          - honorable-for-va-purposes
-          - dishonorable-for-va-purposes
-          - uncharacterized
-          - unknown
-        separation_reason:
-          type: string
-          description: Additional text description for separation reason beyond discharge_status value
-          example: SUFFICIENT SERVICE FOR RETIREMENT
-        service_episode_combat_pay:
-          type:
-          - boolean
-          - 'null'
-          description: If there is any record of combat pay for a Veteran's service period, return "true."
-          example: false
-      description: Attributes for service_history endpoint
-    InaccessibleServiceDefintionErrorApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
     VeteranAttributes:
       required:
       - birth_date
@@ -672,7 +537,60 @@ components:
         are not found.
 
         '
-    InternalServerApiError:
+    Deployment:
+      required:
+      - end_date
+      - location
+      - start_date
+      type: object
+      properties:
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: beginning of deployment (YYYY-mm-dd)
+          format: date
+          example: '1948-10-10'
+        end_date:
+          type:
+          - string
+          - 'null'
+          description: end of deployment (YYYY-mm-dd)
+          format: date
+          example: '1949-10-09'
+        location:
+          type:
+          - string
+          - 'null'
+          description: Three letter ISO country code of deployment location
+          example: KOR
+      description: Deployment during a service history episode
+      deprecated: true
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    AuthorizationError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '401'
+        error:
+          type: string
+          example: Invalid token.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
+    MissingIcn:
       type: object
       properties:
         errors:
@@ -681,10 +599,38 @@ components:
             $ref: '#/components/schemas/ApiErrorDetails'
       example:
         errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
     ServiceHistoryMilitarySummary:
       required:
       - active_duty_status
@@ -764,44 +710,19 @@ components:
           format: int32
           example: 100
       description: Military Summary for Veteran
-    ServiceHistoryResponse:
+    InternalServerApiError:
       type: object
       properties:
-        data:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceHistoryEpisode'
-        military_summary:
-          $ref: '#/components/schemas/ServiceHistoryMilitarySummary'
-      description: verification service_history endpoint
-      deprecated: true
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
     BadRequest:
       type: object
       properties:
@@ -815,32 +736,6 @@ components:
           detail: Bad Request
           code: '400'
           status: '400'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    MissingIcn:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Veteran not identifiable.
-          detail: No data found for ID or demographics.
-          code: '404'
-          status: '404'
     ServiceHistoryEpisode:
       required:
       - attributes
@@ -858,6 +753,111 @@ components:
         attributes:
           $ref: '#/components/schemas/ServiceHistoryAttributes'
       description: Service history for authorized Veteran
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
+    ServiceHistoryAttributes:
+      required:
+      - branch_of_service
+      - component_of_service
+      - discharge_status
+      - end_date
+      - first_name
+      - last_name
+      - pay_grade
+      - separation_reason
+      - service_episode_combat_pay
+      - service_type
+      - start_date
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: Veteran first name
+          example: Abraham
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Veteran last name
+          example: Lincoln
+        branch_of_service:
+          type: string
+          description: The branch of service such as National Guard, Coast Guard, Reserves, Army, Navy, Air Force, Marines
+          example: Army
+        component_of_service:
+          type: string
+          description: A component of service such as Reserves, National Guard
+          example: Reserves
+        service_type:
+          type: string
+          description: If veteran is on active duty or not
+          example: Active Duty
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: start date of a service history episode (YYYY-mm-dd)
+          format: date
+          example: '1948-04-08'
+        end_date:
+          type:
+          - string
+          - 'null'
+          description: end date of a service history episode (YYYY-mm-dd)
+          format: date
+          example: '1950-05-10'
+        pay_grade:
+          type: string
+          description: "Defines the level of compensation for a position, normalized across military branches.\n\nPossible values include the concatenation of Pay Plan Code and Pay Grade Code.\nPay Plan Code is represented as a two-character code, and can be one of five values:\n  - CC (Commissioned Corps)\n  - MC (Cadet)\n  - ME (Enlisted)\n  - MO (Officer)\n  - MW (Warrant Officer)\n\nPay Grade Code is a value between 01 and 10.\n\nPay Plan Code is concatenated with Pay Grade Code to determine the full Pay Grade value, with the leading character (M or C) stripped from Pay Plan Code."
+          example: W01
+        discharge_status:
+          type:
+          - string
+          - 'null'
+          description: 'Character of discharge from service episode. Possible values are:
+
+
+            Both "honorable-for-va-purposes" and "dishonorable-for-va-purposes" represent a change in character of discharge based on an administrative decision, for purposes of VA benefits administration. The original character of discharge for other purposes was either "bad-conduct" or "other-than-honorable". "honorable-absence-of-negative-report" represents an unreported character of service that the Department of Defense classifies as honorable.'
+          example: HONORABLE
+          enum:
+          - honorable
+          - general
+          - bad-conduct
+          - other-than-honorable
+          - dishonorable
+          - honorable-absence-of-negative-report
+          - honorable-for-va-purposes
+          - dishonorable-for-va-purposes
+          - uncharacterized
+          - unknown
+        separation_reason:
+          type: string
+          description: Additional text description for separation reason beyond discharge_status value
+          example: SUFFICIENT SERVICE FOR RETIREMENT
+        service_episode_combat_pay:
+          type:
+          - boolean
+          - 'null'
+          description: If there is any record of combat pay for a Veteran's service period, return "true."
+          example: false
+      description: Attributes for service_history endpoint
   securitySchemes:
     productionOauth2:
       type: oauth2

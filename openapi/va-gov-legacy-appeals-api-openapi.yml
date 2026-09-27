@@ -222,55 +222,6 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    legacyAppeals:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/legacyAppeal'
-    legacyAppeal:
-      properties:
-        id:
-          type: string
-          description: ID from VACOLS (Veteran Appeals Control and Locator Service)
-          example: '3085659'
-        type:
-          type: string
-          description: Appeal type
-          example: legacyAppeal
-        attributes:
-          type: object
-          description: Appeal attributes
-          properties:
-            issues:
-              type: array
-              description: Issues in the appeal
-              items:
-                type: object
-                properties:
-                  summary:
-                    type: string
-                    description: Summary of a single issue
-                    example: Service connection, hearing loss
-            veteranFullName:
-              type: string
-              description: Claimant's full name
-              example: Elda Z Quigley
-            decisionDate:
-              type:
-              - string
-              - 'null'
-              format: date
-              description: Date of the appeal's original decision
-              example: '2021-05-04'
-            latestSocSsocDate:
-              type:
-              - string
-              - 'null'
-              format: date
-              description: Date of the appeal's most recent SOC/SSOC (Statement of Case/Supplemental Statement of Case)
-              example: '2021-06-12'
     errorModel:
       required:
       - errors
@@ -317,6 +268,55 @@ components:
                     items:
                       type: string
                     description: List of missing fields
+    legacyAppeal:
+      properties:
+        id:
+          type: string
+          description: ID from VACOLS (Veteran Appeals Control and Locator Service)
+          example: '3085659'
+        type:
+          type: string
+          description: Appeal type
+          example: legacyAppeal
+        attributes:
+          type: object
+          description: Appeal attributes
+          properties:
+            issues:
+              type: array
+              description: Issues in the appeal
+              items:
+                type: object
+                properties:
+                  summary:
+                    type: string
+                    description: Summary of a single issue
+                    example: Service connection, hearing loss
+            veteranFullName:
+              type: string
+              description: Claimant's full name
+              example: Elda Z Quigley
+            decisionDate:
+              type:
+              - string
+              - 'null'
+              format: date
+              description: Date of the appeal's original decision
+              example: '2021-05-04'
+            latestSocSsocDate:
+              type:
+              - string
+              - 'null'
+              format: date
+              description: Date of the appeal's most recent SOC/SSOC (Statement of Case/Supplemental Statement of Case)
+              example: '2021-06-12'
+    legacyAppeals:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/legacyAppeal'
   securitySchemes:
     productionOauth:
       type: oauth2

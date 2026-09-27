@@ -982,7 +982,7 @@ paths:
       - apikeyAuth: []
 components:
   schemas:
-    ContentionTypesResponse:
+    StatesResponse:
       required:
       - items
       type: object
@@ -1000,50 +1000,26 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ContentionType'
-    MilitaryPayType:
+            maxLength: 2
+            minLength: 2
+            type: string
+            example: MN
+    TreatmentCenter:
       type: object
       properties:
-        code:
+        city:
           type: string
-          example: RTRMT
-        description:
-          type: string
-          example: Longevity
-    Disability:
-      type: object
-      properties:
+          example: MINNEAPOLIS
         id:
           type: integer
           format: int64
-          example: 30
+          example: 12965800
         name:
           type: string
-          example: abnormal weight loss
-        endDateTime:
+          example: MINNEAPOLIS VA MEDICAL CENTER
+        state:
           type: string
-          description: The expiration date for a code that is no longer used for new cases. Codes with expiration dates may still be referenced in older cases. If null, the code has not expired.
-          format: date-time
-          example: '2016-02-04T17:51:56Z'
-    SpecialCircumstancesResponse:
-      required:
-      - items
-      type: object
-      properties:
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageLink'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpecialCircumstance'
+          example: MN
     ServiceUnavailable:
       type: object
       properties:
@@ -1074,22 +1050,25 @@ components:
         status: 503
         detail: 'Cannot access service definition: standardDataService.wsdl'
         instance: e6d1119e-dc91-4b4d-b583-0f309de0807b
-    TreatmentCenter:
+    ContentionTypesResponse:
+      required:
+      - items
       type: object
       properties:
-        city:
-          type: string
-          example: MINNEAPOLIS
-        id:
+        totalItems:
           type: integer
-          format: int64
-          example: 12965800
-        name:
-          type: string
-          example: MINNEAPOLIS VA MEDICAL CENTER
-        state:
-          type: string
-          example: MN
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLink'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentionType'
     IntakeSitesResponse:
       required:
       - items
@@ -1109,66 +1088,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IntakeSite'
-    IntakeSite:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 5674661
-        description:
-          type: string
-          example: AF Academy
-    TreatmentCentersResponse:
-      required:
-      - items
-      type: object
-      properties:
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageLink'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TreatmentCenter'
-    CountriesResponse:
-      required:
-      - items
-      type: object
-      properties:
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageLink'
-        items:
-          type: array
-          items:
-            maxLength: 50
-            minLength: 1
-            type: string
-            example: Canada
-    SpecialCircumstance:
-      type: object
-      properties:
-        code:
-          type: string
-          example: AA
-        description:
-          type: string
-          example: Automobile Allowance
     InternalServerError:
       type: object
       properties:
@@ -1208,28 +1127,6 @@ components:
         description:
           type: string
           example: Increase
-    StatesResponse:
-      required:
-      - items
-      type: object
-      properties:
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageLink'
-        items:
-          type: array
-          items:
-            maxLength: 2
-            minLength: 2
-            type: string
-            example: MN
     BadRequest:
       type: object
       properties:
@@ -1267,16 +1164,50 @@ components:
           type: string
         rel:
           type: string
-    ServiceBranch:
+    IntakeSite:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5674661
+        description:
+          type: string
+          example: AF Academy
+    SpecialCircumstance:
       type: object
       properties:
         code:
           type: string
-          example: USMA
+          example: AA
         description:
           type: string
-          example: US Military Academy
-    MilitaryPayTypesResponse:
+          example: Automobile Allowance
+    MilitaryPayType:
+      type: object
+      properties:
+        code:
+          type: string
+          example: RTRMT
+        description:
+          type: string
+          example: Longevity
+    Disability:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 30
+        name:
+          type: string
+          example: abnormal weight loss
+        endDateTime:
+          type: string
+          description: The expiration date for a code that is no longer used for new cases. Codes with expiration dates may still be referenced in older cases. If null, the code has not expired.
+          format: date-time
+          example: '2016-02-04T17:51:56Z'
+    CountriesResponse:
       required:
       - items
       type: object
@@ -1294,26 +1225,10 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/MilitaryPayType'
-    ServiceBranchesResponse:
-      required:
-      - items
-      type: object
-      properties:
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageLink'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceBranch'
+            maxLength: 50
+            minLength: 1
+            type: string
+            example: Canada
     DisabilitiesResponse:
       required:
       - items
@@ -1333,6 +1248,91 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Disability'
+    TreatmentCentersResponse:
+      required:
+      - items
+      type: object
+      properties:
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLink'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TreatmentCenter'
+    ServiceBranch:
+      type: object
+      properties:
+        code:
+          type: string
+          example: USMA
+        description:
+          type: string
+          example: US Military Academy
+    ServiceBranchesResponse:
+      required:
+      - items
+      type: object
+      properties:
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLink'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceBranch'
+    SpecialCircumstancesResponse:
+      required:
+      - items
+      type: object
+      properties:
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLink'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialCircumstance'
+    MilitaryPayTypesResponse:
+      required:
+      - items
+      type: object
+      properties:
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLink'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MilitaryPayType'
   securitySchemes:
     apikeyAuth:
       type: apiKey
