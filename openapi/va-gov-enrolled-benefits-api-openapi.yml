@@ -360,6 +360,56 @@ paths:
         - enrolled_benefits.read
 components:
   schemas:
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    VeteranEnrolledBenefitsConfirmation:
+      type: object
+      properties:
+        veteran_benefits:
+          type: array
+          description: Array of Veteran enrolled benefits for an individual
+          items:
+            $ref: '#/components/schemas/VeteranEnrolledBenefit'
+      description: Veteran enrolled benefits for an individual
     VeteranAttributes:
       required:
       - birth_date
@@ -493,6 +543,34 @@ components:
         are not found.
 
         '
+    VeteranEnrolledBenefit:
+      required:
+      - program_code
+      type: object
+      properties:
+        program_code:
+          type: string
+          description: The program identifier
+        program_name:
+          type: string
+          description: The human readable program name
+        award_effective_date:
+          type: string
+          format: date-time
+      description: Individual Veteran enrolled benefit
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
     AuthorizationError:
       type: object
       properties:
@@ -502,18 +580,6 @@ components:
         error:
           type: string
           example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
@@ -530,58 +596,6 @@ components:
           detail: No data found for ID or demographics.
           code: '404'
           status: '404'
-    VeteranEnrolledBenefitsConfirmation:
-      type: object
-      properties:
-        veteran_benefits:
-          type: array
-          description: Array of Veteran enrolled benefits for an individual
-          items:
-            $ref: '#/components/schemas/VeteranEnrolledBenefit'
-      description: Veteran enrolled benefits for an individual
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
-    VeteranEnrolledBenefit:
-      required:
-      - program_code
-      type: object
-      properties:
-        program_code:
-          type: string
-          description: The program identifier
-        program_name:
-          type: string
-          description: The human readable program name
-        award_effective_date:
-          type: string
-          format: date-time
-      description: Individual Veteran enrolled benefit
     InternalServerApiError:
       type: object
       properties:
@@ -595,32 +609,18 @@ components:
           detail: Internal server error
           code: '500'
           status: '500'
-    BadRequest:
+    ForbiddenServerError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    InaccessibleServiceDefintionErrorApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
   securitySchemes:
     productionOauth2:
       type: oauth2

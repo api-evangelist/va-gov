@@ -1029,43 +1029,92 @@ components:
           example: document_upload
         attributes:
           $ref: '#/components/schemas/DocumentUploadAttributes'
-    DocumentValidationErrorModel:
-      type: object
-      description: Error returned from the document validation endpoint.
+    UploadsReportBadRequestErrorModel:
+      description: Validation error for uploads/report request payload
       required:
       - title
       - detail
+      - code
       - status
       properties:
         title:
           type: string
-          example: Document failed validation
-          description: Error title
+          example: Too many items submitted
         detail:
           type: string
-          description: 'Error detail
-
-
-            Possible values:
-
-            * Document was not provided
-
-            * Document is not a PDF
-
-            * Document exceeds the file size limit of 100 MB
-
-            * Document exceeds the page size limit of 78 in. x 101 in.
-
-            * Document is locked with a user password
-
-            * Document is not a valid PDF
-
-            '
-          example: Document is locked with a user password
+          example: '"ids" cannot exceed 1000 items (submitted 1001)'
+        code:
+          type: string
+          example: '111'
         status:
           type: string
-          example: '422'
-          description: HTTP error code
+          example: '400'
+    DocumentUploadStatusAttributes:
+      required:
+      - guid
+      - status
+      properties:
+        guid:
+          description: The document upload identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        status:
+          description: 'Document upload status.
+
+            '
+          type: string
+          enum:
+          - pending
+          - uploaded
+          - received
+          - processing
+          - success
+          - vbms
+          - error
+          example: error
+        code:
+          description: 'Unambiguous status code. Only present if status = "error"
+
+
+            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
+
+            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
+
+            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
+
+            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
+
+            * `DOC105` - Invalid or unknown id
+
+            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
+
+            * `DOC107` - Empty payload.
+
+            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
+
+            * `DOC201` - Upload server error.
+
+            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
+
+            '
+          type: string
+          example: DOC108
+        detail:
+          description: Human readable error detail. Only present if status = "error"
+          type: string
+          example: Maximum page size exceeded. Limit is 78 in x 101 in.
+        final_status:
+          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
+          type: boolean
+          example: true
+        updated_at:
+          description: The last time the submission was updated
+          type: string
+          format: date-time
+          example: '2018-07-30T17:31:15.958Z'
+        uploaded_pdf:
+          $ref: '#/components/schemas/PdfUploadAttributes'
     DocumentUploadAttributes:
       required:
       - guid
@@ -1156,30 +1205,6 @@ components:
           description: Indicates if this is an oversized PDF (greater than 78x101)
           type: boolean
           example: 'false'
-    DocumentUploadStatusReport:
-      type: array
-      items:
-        $ref: '#/components/schemas/DocumentUploadStatus'
-    UploadsReportBadRequestErrorModel:
-      description: Validation error for uploads/report request payload
-      required:
-      - title
-      - detail
-      - code
-      - status
-      properties:
-        title:
-          type: string
-          example: Too many items submitted
-        detail:
-          type: string
-          example: '"ids" cannot exceed 1000 items (submitted 1001)'
-        code:
-          type: string
-          example: '111'
-        status:
-          type: string
-          example: '400'
     ErrorModel:
       description: Errors with some details for the given request
       required:
@@ -1195,104 +1220,43 @@ components:
           type: string
           example: DOC104 - Upload rejected by upstream system. Processing failed and upload must be resubmitted
           description: A more detailed message about why an error occurred
-    DocumentUploadStatusAttributes:
+    DocumentValidationErrorModel:
+      type: object
+      description: Error returned from the document validation endpoint.
       required:
-      - guid
+      - title
+      - detail
       - status
       properties:
-        guid:
-          description: The document upload identifier
+        title:
           type: string
-          format: uuid
-          example: 6d8433c1-cd55-4c24-affd-f592287a7572
-        status:
-          description: 'Document upload status.
-
-            '
-          type: string
-          enum:
-          - pending
-          - uploaded
-          - received
-          - processing
-          - success
-          - vbms
-          - error
-          example: error
-        code:
-          description: 'Unambiguous status code. Only present if status = "error"
-
-
-            * `DOC101` - Invalid multipart payload provided - not a multipart, or missing one or more required parts.
-
-            * `DOC102` - Invalid metadata - not parseable as JSON, incorrect fields, etc.
-
-            * `DOC103` - Invalid content - not parseable as PDF. Detail field will indicate which document or attachment part was affected.
-
-            * `DOC104` - Upload rejected by upstream system. Processing failed and upload must be resubmitted. Detail field will indicate nature of rejection.
-
-            * `DOC105` - Invalid or unknown id
-
-            * `DOC106` - File size limit exceeded. Each document may be a maximum of 100MB.
-
-            * `DOC107` - Empty payload.
-
-            * `DOC108` - Maximum dimensions exceeded. Height and width must be less than 78 in x 101 in.
-
-            * `DOC201` - Upload server error.
-
-            * `DOC202` - Error during processing by upstream system. Processing failed and upload must be resubmitted. Detail field will provide additional details where available.
-
-            '
-          type: string
-          example: DOC108
+          example: Document failed validation
+          description: Error title
         detail:
-          description: Human readable error detail. Only present if status = "error"
           type: string
-          example: Maximum page size exceeded. Limit is 78 in x 101 in.
-        final_status:
-          description: Indicates whether the status of the submission is final. Submissions with a final_status of true will no longer update to a new status.
-          type: boolean
-          example: true
-        updated_at:
-          description: The last time the submission was updated
+          description: 'Error detail
+
+
+            Possible values:
+
+            * Document was not provided
+
+            * Document is not a PDF
+
+            * Document exceeds the file size limit of 100 MB
+
+            * Document exceeds the page size limit of 78 in. x 101 in.
+
+            * Document is locked with a user password
+
+            * Document is not a valid PDF
+
+            '
+          example: Document is locked with a user password
+        status:
           type: string
-          format: date-time
-          example: '2018-07-30T17:31:15.958Z'
-        uploaded_pdf:
-          $ref: '#/components/schemas/PdfUploadAttributes'
-    DocumentUploadStatusGuidList:
-      type: object
-      required:
-      - ids
-      properties:
-        ids:
-          description: List of IDs for previous document upload submissions (max 1000)
-          type: array
-          items:
-            type: string
-            format: uuid
-            example: 6d8433c1-cd55-4c24-affd-f592287a7572
-          minItems: 1
-          maxItems: 1000
-    DocumentUploadStatus:
-      description: Status record for a previously initiated document submission.
-      required:
-      - id
-      - type
-      - attributes
-      properties:
-        id:
-          description: JSON API identifier
-          type: string
-          format: uuid
-          example: 6d8433c1-cd55-4c24-affd-f592287a7572
-        type:
-          description: JSON API type specification
-          type: string
-          example: document_upload
-        attributes:
-          $ref: '#/components/schemas/DocumentUploadStatusAttributes'
+          example: '422'
+          description: HTTP error code
     PdfUploadAttributes:
       required:
       - total_documents
@@ -1327,6 +1291,42 @@ components:
                     example: '2'
                   dimensions:
                     $ref: '#/components/schemas/PdfDimensionAttributes'
+    DocumentUploadStatusReport:
+      type: array
+      items:
+        $ref: '#/components/schemas/DocumentUploadStatus'
+    DocumentUploadStatus:
+      description: Status record for a previously initiated document submission.
+      required:
+      - id
+      - type
+      - attributes
+      properties:
+        id:
+          description: JSON API identifier
+          type: string
+          format: uuid
+          example: 6d8433c1-cd55-4c24-affd-f592287a7572
+        type:
+          description: JSON API type specification
+          type: string
+          example: document_upload
+        attributes:
+          $ref: '#/components/schemas/DocumentUploadStatusAttributes'
+    DocumentUploadStatusGuidList:
+      type: object
+      required:
+      - ids
+      properties:
+        ids:
+          description: List of IDs for previous document upload submissions (max 1000)
+          type: array
+          items:
+            type: string
+            format: uuid
+            example: 6d8433c1-cd55-4c24-affd-f592287a7572
+          minItems: 1
+          maxItems: 1000
   securitySchemes:
     apikey:
       type: apiKey

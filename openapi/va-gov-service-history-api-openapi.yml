@@ -393,6 +393,76 @@ paths:
         - service_history.read
 components:
   schemas:
+    ApiErrorDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Error title
+        detail:
+          type: string
+          example: Detailed error message
+        code:
+          type: string
+          example: Error Code
+        status:
+          type: string
+          example: Error Code
+    InaccessibleServiceDefintionErrorApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    Deployment:
+      required:
+      - end_date
+      - location
+      - start_date
+      type: object
+      properties:
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: beginning of deployment (YYYY-mm-dd)
+          format: date
+          example: '1948-10-10'
+        end_date:
+          type:
+          - string
+          - 'null'
+          description: end of deployment (YYYY-mm-dd)
+          format: date
+          example: '1949-10-09'
+        location:
+          type:
+          - string
+          - 'null'
+          description: Three letter ISO country code of deployment location
+          example: KOR
+      description: Deployment during a service history episode
+      deprecated: true
     ServiceHistoryResponse:
       type: object
       properties:
@@ -537,47 +607,19 @@ components:
         are not found.
 
         '
-    Deployment:
-      required:
-      - end_date
-      - location
-      - start_date
+    BackendServiceApiError:
       type: object
       properties:
-        start_date:
-          type:
-          - string
-          - 'null'
-          description: beginning of deployment (YYYY-mm-dd)
-          format: date
-          example: '1948-10-10'
-        end_date:
-          type:
-          - string
-          - 'null'
-          description: end of deployment (YYYY-mm-dd)
-          format: date
-          example: '1949-10-09'
-        location:
-          type:
-          - string
-          - 'null'
-          description: Three letter ISO country code of deployment location
-          example: KOR
-      description: Deployment during a service history episode
-      deprecated: true
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
     AuthorizationError:
       type: object
       properties:
@@ -603,34 +645,6 @@ components:
           detail: No data found for ID or demographics.
           code: '404'
           status: '404'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    ApiErrorDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: Error title
-        detail:
-          type: string
-          example: Detailed error message
-        code:
-          type: string
-          example: Error Code
-        status:
-          type: string
-          example: Error Code
     ServiceHistoryMilitarySummary:
       required:
       - active_duty_status
@@ -723,49 +737,6 @@ components:
           detail: Internal server error
           code: '500'
           status: '500'
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    ServiceHistoryEpisode:
-      required:
-      - attributes
-      - id
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          description: Service History Episode ID
-          example: 12312AASDf
-        type:
-          type: string
-          example: service-history-episodes
-        attributes:
-          $ref: '#/components/schemas/ServiceHistoryAttributes'
-      description: Service history for authorized Veteran
-    InaccessibleServiceDefintionErrorApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
     ServiceHistoryAttributes:
       required:
       - branch_of_service
@@ -858,6 +829,35 @@ components:
           description: If there is any record of combat pay for a Veteran's service period, return "true."
           example: false
       description: Attributes for service_history endpoint
+    ServiceHistoryEpisode:
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Service History Episode ID
+          example: 12312AASDf
+        type:
+          type: string
+          example: service-history-episodes
+        attributes:
+          $ref: '#/components/schemas/ServiceHistoryAttributes'
+      description: Service history for authorized Veteran
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
   securitySchemes:
     productionOauth2:
       type: oauth2

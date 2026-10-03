@@ -1011,59 +1011,6 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    errorModel:
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            additionalProperties: false
-            required:
-            - title
-            properties:
-              title:
-                type: string
-                description: HTTP error title
-              detail:
-                type: string
-                description: HTTP error detail
-              code:
-                type: string
-                description: HTTP error code
-              source:
-                type: object
-                additionalProperties: false
-                description: Source of error
-                properties:
-                  pointer:
-                    type: string
-                    description: Pointer to source of error
-                  parameter:
-                    type: string
-                    description: Invalid request parameter
-                  header:
-                    type: string
-                    description: Invalid header
-              status:
-                type: string
-                description: HTTP error code
-              meta:
-                type: object
-                description: Meta information
-                properties:
-                  missingFields:
-                    type: array
-                    items:
-                      type: string
-                    description: List of missing fields
-    appealableIssues:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/appealableIssue'
     appealableIssue:
       type: object
       description: An appealable issue. To appeal this issue, include it when creating a Higher-Level Review, Notice of Disagreement, or Supplemental Claim.
@@ -1187,6 +1134,59 @@ components:
               type: boolean
               description: Indicates whether this issue is already part of an active Decision Review that is being processed by VA. Submitting a Decision Review that includes a listed issue with an activeReview of true may result in VA rejecting the submission.
               example: false
+    errorModel:
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            additionalProperties: false
+            required:
+            - title
+            properties:
+              title:
+                type: string
+                description: HTTP error title
+              detail:
+                type: string
+                description: HTTP error detail
+              code:
+                type: string
+                description: HTTP error code
+              source:
+                type: object
+                additionalProperties: false
+                description: Source of error
+                properties:
+                  pointer:
+                    type: string
+                    description: Pointer to source of error
+                  parameter:
+                    type: string
+                    description: Invalid request parameter
+                  header:
+                    type: string
+                    description: Invalid header
+              status:
+                type: string
+                description: HTTP error code
+              meta:
+                type: object
+                description: Meta information
+                properties:
+                  missingFields:
+                    type: array
+                    items:
+                      type: string
+                    description: List of missing fields
+    appealableIssues:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/appealableIssue'
   securitySchemes:
     productionOauth:
       type: oauth2

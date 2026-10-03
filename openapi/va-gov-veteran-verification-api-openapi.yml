@@ -171,64 +171,6 @@ paths:
                   message: API rate limit exceeded
 components:
   schemas:
-    ServiceHistoryToken:
-      description: 'A token containing signed claims about a Veteran''s service history
-
-        '
-      type: string
-      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoiMTIzMTJBQVNEZiIsInR5cGUiOiJzZXJ2aWNlLWhpc3RvcnktZXBpc29kZXMiLCJhdHRyaWJ1dGVzIjp7InN0YXJ0X2RhdGUiOiIxOTQ4LTA0LTA4IiwiZW5kX2RhdGUiOiIxOTUwLTA1LTEwIiwiYnJhbmNoIjoiQWlyIEZvcmNlIiwiZGlzY2hhcmdlX3N0YXR1cyI6Imhvbm9yYWJsZSIsImRlcGxveW1lbnRzIjpbeyJzdGFydF9kYXRlIjoiMTk0OC0xMC0xMCIsImVuZF9kYXRlIjoiMTk0OS0xMC0wOSIsImxvY2F0aW9uIjoiS09SIn1dfX19.S39hmL-5nxvdJnJ_PSHdfiP744dTcGzrUKsqcVQa1FomUU15Dr2A2gQMF7XWO2DCLrdM0bCtIS8mCSwI00nqQFqXGjZVGQTIyzQJDPHxV6jnYwwaXD1vzbxlsycWF2ZQ_5Wx6TIhnXiEkbn_rzW_VleVnHjLCRQwzmpwGGDsL_I
-    DisabilityRatingAttributes:
-      description: 'Body of the disability rating response
-
-        '
-      required:
-      - combined_disability_rating
-      - combined_effective_date
-      - legal_effective_date
-      - individual_ratings
-      properties:
-        combined_disability_rating:
-          description: Overall severity rating determined by VA calculation of each service related conditions. Used to help determine disability compensation (pay) and related benefits.
-          type:
-          - integer
-          - 'null'
-          example: 100
-        combined_effective_date:
-          description: The effective date of the latest combined disability rating for the Veteran
-          type:
-          - datetime
-          - 'null'
-          example: 2018-03-27T21:00:41.000+0000
-        legal_effective_date:
-          description: When the Veteran could begin claiming benefits for combined disability rating
-          type:
-          - datetime
-          - 'null'
-          example: 2018-03-27T21:00:41.000+0000
-        individual_ratings:
-          description: list of individual service connected disabilty ratings
-          type: array
-          items:
-            $ref: '#/components/schemas/individual_ratings'
-    DisabilityRating:
-      description: 'The disability rating percentage applied to the Veteran.
-
-        '
-      required:
-      - id
-      - type
-      - atttributes
-      properties:
-        id:
-          description: JSON API identifier
-          type: string
-          example: 12303
-        type:
-          description: JSON API type specification
-          type: string
-          example: disability-rating
-        attributes:
-          $ref: '#/components/schemas/DisabilityRatingAttributes'
     Deployment:
       description: 'Deployment during a service history episode
 
@@ -285,6 +227,12 @@ components:
           - number
           - 'null'
           example: 50
+    DisabilityRatingToken:
+      description: 'A token containing signed claims about a Veteran''s disability rating percentage
+
+        '
+      type: string
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
     VeteranStatusConfirmation:
       description: 'Veteran status confirmation for an individual
 
@@ -309,12 +257,31 @@ components:
               enum:
               - confirmed
               - not confirmed
-    DisabilityRatingToken:
-      description: 'A token containing signed claims about a Veteran''s disability rating percentage
+    DisabilityRating:
+      description: 'The disability rating percentage applied to the Veteran.
+
+        '
+      required:
+      - id
+      - type
+      - atttributes
+      properties:
+        id:
+          description: JSON API identifier
+          type: string
+          example: 12303
+        type:
+          description: JSON API type specification
+          type: string
+          example: disability-rating
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes'
+    ServiceHistoryToken:
+      description: 'A token containing signed claims about a Veteran''s service history
 
         '
       type: string
-      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoiMTIzMTJBQVNEZiIsInR5cGUiOiJzZXJ2aWNlLWhpc3RvcnktZXBpc29kZXMiLCJhdHRyaWJ1dGVzIjp7InN0YXJ0X2RhdGUiOiIxOTQ4LTA0LTA4IiwiZW5kX2RhdGUiOiIxOTUwLTA1LTEwIiwiYnJhbmNoIjoiQWlyIEZvcmNlIiwiZGlzY2hhcmdlX3N0YXR1cyI6Imhvbm9yYWJsZSIsImRlcGxveW1lbnRzIjpbeyJzdGFydF9kYXRlIjoiMTk0OC0xMC0xMCIsImVuZF9kYXRlIjoiMTk0OS0xMC0wOSIsImxvY2F0aW9uIjoiS09SIn1dfX19.S39hmL-5nxvdJnJ_PSHdfiP744dTcGzrUKsqcVQa1FomUU15Dr2A2gQMF7XWO2DCLrdM0bCtIS8mCSwI00nqQFqXGjZVGQTIyzQJDPHxV6jnYwwaXD1vzbxlsycWF2ZQ_5Wx6TIhnXiEkbn_rzW_VleVnHjLCRQwzmpwGGDsL_I
     ServiceHistoryEpisode:
       description: 'Service History for authorized Veteran
 
@@ -404,6 +371,39 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Deployment'
+    DisabilityRatingAttributes:
+      description: 'Body of the disability rating response
+
+        '
+      required:
+      - combined_disability_rating
+      - combined_effective_date
+      - legal_effective_date
+      - individual_ratings
+      properties:
+        combined_disability_rating:
+          description: Overall severity rating determined by VA calculation of each service related conditions. Used to help determine disability compensation (pay) and related benefits.
+          type:
+          - integer
+          - 'null'
+          example: 100
+        combined_effective_date:
+          description: The effective date of the latest combined disability rating for the Veteran
+          type:
+          - datetime
+          - 'null'
+          example: 2018-03-27T21:00:41.000+0000
+        legal_effective_date:
+          description: When the Veteran could begin claiming benefits for combined disability rating
+          type:
+          - datetime
+          - 'null'
+          example: 2018-03-27T21:00:41.000+0000
+        individual_ratings:
+          description: list of individual service connected disabilty ratings
+          type: array
+          items:
+            $ref: '#/components/schemas/individual_ratings'
   securitySchemes:
     bearer_token:
       type: http

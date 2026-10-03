@@ -120,6 +120,103 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+    BadRequest:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownServiceTypeException
+        message: 'Unknown service type: dentistry'
+    PatientRequest:
+      type: object
+      properties:
+        patientIcn:
+          type: string
+        serviceType:
+          type: string
+        extendedDriveMin:
+          type: integer
+          format: int32
+        timestamp:
+          type: string
+    DriveMinutes:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+    NotFound:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        timestamp: 1557407878250
+        type: UnknownPatientIcnException
+        message: 'Unknown patient ICN: 011235813V213455'
+    Address:
+      type: object
+      properties:
+        country:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+    Facility:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        physicalAddress:
+          $ref: '#/components/schemas/Address'
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        driveMinutes:
+          $ref: '#/components/schemas/DriveMinutes'
+        phoneNumber:
+          type: string
+        website:
+          type: string
+        mobile:
+          type: boolean
+        active:
+          type: boolean
+    EligibilityCode:
+      type: object
+      properties:
+        description:
+          type: string
+        code:
+          type: string
     CommunityCareEligibilityResponse:
       type: object
       properties:
@@ -214,103 +311,6 @@ components:
         eligible: false
         processingStatus: successful
         pactStatus: Active
-    Address:
-      type: object
-      properties:
-        country:
-          type: string
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-    Coordinates:
-      type: object
-      properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
-    PatientRequest:
-      type: object
-      properties:
-        patientIcn:
-          type: string
-        serviceType:
-          type: string
-        extendedDriveMin:
-          type: integer
-          format: int32
-        timestamp:
-          type: string
-    Facility:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        physicalAddress:
-          $ref: '#/components/schemas/Address'
-        coordinates:
-          $ref: '#/components/schemas/Coordinates'
-        driveMinutes:
-          $ref: '#/components/schemas/DriveMinutes'
-        phoneNumber:
-          type: string
-        website:
-          type: string
-        mobile:
-          type: boolean
-        active:
-          type: boolean
-    BadRequest:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        type:
-          type: string
-        message:
-          type: string
-      example:
-        timestamp: 1557407878250
-        type: UnknownServiceTypeException
-        message: 'Unknown service type: dentistry'
-    NotFound:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        type:
-          type: string
-        message:
-          type: string
-      example:
-        timestamp: 1557407878250
-        type: UnknownPatientIcnException
-        message: 'Unknown patient ICN: 011235813V213455'
-    EligibilityCode:
-      type: object
-      properties:
-        description:
-          type: string
-        code:
-          type: string
-    DriveMinutes:
-      type: object
-      properties:
-        min:
-          type: integer
-          format: int32
-        max:
-          type: integer
-          format: int32
   securitySchemes:
     OauthFlow:
       type: oauth2

@@ -134,37 +134,6 @@ components:
           format: date
           description: Date the evidence was added to the case
           example: '2017-09-30'
-    Issue:
-      type: object
-      description: Issues on appeal
-      properties:
-        active:
-          type: boolean
-          example: true
-          description: Whether the issue is presently under contention.
-        description:
-          type: string
-          example: Service connection, tinnitus
-          description: Description of the Issue
-        diagnosticCode:
-          type: string
-          example: '6260'
-          description: The CFR (Code of Federal Regulations) diagnostic code for the issue, if applicable
-        lastAction:
-          type: string
-          description: Most recent decision made on this issue
-          enum:
-          - field_grant
-          - withdrawn
-          - allowed
-          - denied
-          - remand
-          - cavc_remand
-        date:
-          type: string
-          format: date
-          description: The date of the most recent decision on the issue
-          example: '2016-05-30'
     Appeal:
       type: object
       properties:
@@ -419,6 +388,41 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Evidence'
+    Appeals:
+      type: array
+      items:
+        $ref: '#/components/schemas/Appeal'
+    Issue:
+      type: object
+      description: Issues on appeal
+      properties:
+        active:
+          type: boolean
+          example: true
+          description: Whether the issue is presently under contention.
+        description:
+          type: string
+          example: Service connection, tinnitus
+          description: Description of the Issue
+        diagnosticCode:
+          type: string
+          example: '6260'
+          description: The CFR (Code of Federal Regulations) diagnostic code for the issue, if applicable
+        lastAction:
+          type: string
+          description: Most recent decision made on this issue
+          enum:
+          - field_grant
+          - withdrawn
+          - allowed
+          - denied
+          - remand
+          - cavc_remand
+        date:
+          type: string
+          format: date
+          description: The date of the most recent decision on the issue
+          example: '2016-05-30'
     Eta:
       type: object
       description: Estimated decision dates for each docket.
@@ -432,10 +436,31 @@ components:
         hearing:
           format: date
           example: '2024-06-01'
-    Appeals:
-      type: array
-      items:
-        $ref: '#/components/schemas/Appeal'
+    Alert:
+      type: object
+      description: Notification of a request for more information or of a change in the appeal status that requires action.
+      properties:
+        type:
+          type: string
+          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
+          example: form9_needed
+          enum:
+          - form9_needed
+          - scheduled_hearing
+          - hearing_no_show
+          - held_for_evidence
+          - cavc_option
+          - ramp_eligible
+          - ramp_ineligible
+          - decision_soon
+          - blocked_by_vso
+          - scheduled_dro_hearing
+          - dro_hearing_no_show
+          - evidentiary_period
+          - ama_post_decision
+        details:
+          description: Further information about the alert
+          type: object
     Event:
       type: object
       description: Event during the appeals process
@@ -488,31 +513,6 @@ components:
           example: '2016-05-30'
         details:
           description: Further information about the event
-          type: object
-    Alert:
-      type: object
-      description: Notification of a request for more information or of a change in the appeal status that requires action.
-      properties:
-        type:
-          type: string
-          description: Enum of notifications for an appeal. Acronyms used include cavc (Court of Appeals for Veteran Claims), vso (Veteran Service Organization), and dro (Decision Review Officer).
-          example: form9_needed
-          enum:
-          - form9_needed
-          - scheduled_hearing
-          - hearing_no_show
-          - held_for_evidence
-          - cavc_option
-          - ramp_eligible
-          - ramp_ineligible
-          - decision_soon
-          - blocked_by_vso
-          - scheduled_dro_hearing
-          - dro_hearing_no_show
-          - evidentiary_period
-          - ama_post_decision
-        details:
-          description: Further information about the alert
           type: object
   securitySchemes:
     apikey:
