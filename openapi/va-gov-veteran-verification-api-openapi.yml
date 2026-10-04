@@ -171,111 +171,6 @@ paths:
                   message: API rate limit exceeded
 components:
   schemas:
-    Deployment:
-      description: 'Deployment during a service history episode
-
-        '
-      type: object
-      required:
-      - start_date
-      - end_date
-      - location
-      properties:
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: beginning of deployment (YYYY-mm-dd)
-          example: '1948-10-10'
-        end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: end of deployment (YYYY-mm-dd)
-          example: '1949-10-09'
-        location:
-          type:
-          - string
-          - 'null'
-          description: Three letter ISO country code of deployment location
-          example: KOR
-    individual_ratings:
-      description: list of service connected disability ratings
-      required:
-      - decision
-      - effective_date
-      - rating_percentage
-      properties:
-        decision:
-          description: Whether the disability is service connected or not.
-          type:
-          - string
-          - 'null'
-          example: Service Connected
-        effective_date:
-          description: When the Veteran could begin claiming benefits related to this disability
-          type:
-          - string
-          - 'null'
-          format: datetime
-          example: 2018-03-27T21:00:41.000+0000
-        rating_percentage:
-          description: Severity rating determined by VA that indicates how disabling an illness or injury is for the Veteran. Used to help determine disability compensation (pay) and related benefits.
-          type:
-          - number
-          - 'null'
-          example: 50
-    DisabilityRatingToken:
-      description: 'A token containing signed claims about a Veteran''s disability rating percentage
-
-        '
-      type: string
-      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
-    VeteranStatusConfirmation:
-      description: 'Veteran status confirmation for an individual
-
-        '
-      type: object
-      properties:
-        id:
-          type: string
-          description: Confirmation UUID
-          example: 833c6ffc-efef-4775-9355-f836b4f57501
-        type:
-          type: string
-          example: veteran_status_confirmations
-        attributes:
-          type: object
-          properties:
-            veteran_status:
-              type: string
-              description: 'Whether the system could confirm the Veteran status of the authorized individual
-
-                '
-              enum:
-              - confirmed
-              - not confirmed
-    DisabilityRating:
-      description: 'The disability rating percentage applied to the Veteran.
-
-        '
-      required:
-      - id
-      - type
-      - atttributes
-      properties:
-        id:
-          description: JSON API identifier
-          type: string
-          example: 12303
-        type:
-          description: JSON API type specification
-          type: string
-          example: disability-rating
-        attributes:
-          $ref: '#/components/schemas/DisabilityRatingAttributes'
     ServiceHistoryToken:
       description: 'A token containing signed claims about a Veteran''s service history
 
@@ -371,6 +266,111 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Deployment'
+    VeteranStatusConfirmation:
+      description: 'Veteran status confirmation for an individual
+
+        '
+      type: object
+      properties:
+        id:
+          type: string
+          description: Confirmation UUID
+          example: 833c6ffc-efef-4775-9355-f836b4f57501
+        type:
+          type: string
+          example: veteran_status_confirmations
+        attributes:
+          type: object
+          properties:
+            veteran_status:
+              type: string
+              description: 'Whether the system could confirm the Veteran status of the authorized individual
+
+                '
+              enum:
+              - confirmed
+              - not confirmed
+    individual_ratings:
+      description: list of service connected disability ratings
+      required:
+      - decision
+      - effective_date
+      - rating_percentage
+      properties:
+        decision:
+          description: Whether the disability is service connected or not.
+          type:
+          - string
+          - 'null'
+          example: Service Connected
+        effective_date:
+          description: When the Veteran could begin claiming benefits related to this disability
+          type:
+          - string
+          - 'null'
+          format: datetime
+          example: 2018-03-27T21:00:41.000+0000
+        rating_percentage:
+          description: Severity rating determined by VA that indicates how disabling an illness or injury is for the Veteran. Used to help determine disability compensation (pay) and related benefits.
+          type:
+          - number
+          - 'null'
+          example: 50
+    Deployment:
+      description: 'Deployment during a service history episode
+
+        '
+      type: object
+      required:
+      - start_date
+      - end_date
+      - location
+      properties:
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: beginning of deployment (YYYY-mm-dd)
+          example: '1948-10-10'
+        end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: end of deployment (YYYY-mm-dd)
+          example: '1949-10-09'
+        location:
+          type:
+          - string
+          - 'null'
+          description: Three letter ISO country code of deployment location
+          example: KOR
+    DisabilityRating:
+      description: 'The disability rating percentage applied to the Veteran.
+
+        '
+      required:
+      - id
+      - type
+      - atttributes
+      properties:
+        id:
+          description: JSON API identifier
+          type: string
+          example: 12303
+        type:
+          description: JSON API type specification
+          type: string
+          example: disability-rating
+        attributes:
+          $ref: '#/components/schemas/DisabilityRatingAttributes'
+    DisabilityRatingToken:
+      description: 'A token containing signed claims about a Veteran''s disability rating percentage
+
+        '
+      type: string
+      example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4OGQyNDIzMmZmNmZhYTRjZDRjZmVjMTI2YWQwNDMxZGZmMWVhMDI4YWZkYjFjODZiMzcxOGQ3MDE3MWFlZDYifQ.eyJkYXRhIjp7ImlkIjoxMjMwMywidHlwZSI6ImRvY3VtZW50X3VwbG9hZCIsImF0dHJpYnV0ZXMiOnsiZGVjaXNpb24iOiJTZXJ2aWNlIENvbm5lY3RlZCIsImVmZmVjdGl2ZV9kYXRlIjoiMjAxOC0wMy0yN1QyMTowMDo0MS4wMDArMDAwMCIsInJhdGluZ19wZXJjZW50YWdlIjo1MH19fQ.z3EeYFixwdmG_4_LFdzy6fdF2Y7nj3y9uOPRTwLqsXVcLNUDIN72atn0SSI-hkF-rRkbFdyzLDaY2AWtQ-LmBPdeWqyv4U2ZnjynAwlCnG0VNG3x4Wz2qSW7BW1cQVBx0yvWag_NmQ74AfOBNz7K2qz8aEOvYIJaicRr2hSAu7A
     DisabilityRatingAttributes:
       description: 'Body of the disability rating response
 

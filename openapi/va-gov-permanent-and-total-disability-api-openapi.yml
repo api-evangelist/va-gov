@@ -560,6 +560,17 @@ paths:
         - permanent_and_total_disability_restricted.read
 components:
   schemas:
+    PermanentAndTotalAttributes:
+      type: object
+      properties:
+        service_connected_status:
+          type: boolean
+          description: The PT status for service-connected disabilities.
+          example: true
+        pension_award_status:
+          type: boolean
+          description: PT status specifically for pension awards.
+          example: true
     ApiErrorDetails:
       type: object
       properties:
@@ -575,31 +586,18 @@ components:
         status:
           type: string
           example: Error Code
-    InaccessibleServiceDefintionErrorApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Gateway
-          detail: Upstream Request Error.
-          code: '502'
-          status: '502'
-    TotalDisabilityAttributes:
+    ForbiddenServerError:
       type: object
       properties:
         status:
-          type: boolean
-          description: Total disability status
-          example: true
-        effective_date:
           type: string
-          description: The date the service decision goes into effect (YYYY-MM-DD)
-          format: date
-          example: '2008-07-18'
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
     BadRequest:
       type: object
       properties:
@@ -613,13 +611,38 @@ components:
           detail: Bad Request
           code: '400'
           status: '400'
-    PermanentAndTotalDisabilityData:
+    InternalServerApiError:
       type: object
       properties:
-        permanent_and_total:
-          $ref: '#/components/schemas/PermanentAndTotalAttributes'
-        total_disability:
-          $ref: '#/components/schemas/TotalDisabilityAttributes'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    PermanentAndTotalDisabilityResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PermanentAndTotalDisabilityData'
+    AuthorizationError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '401'
+        error:
+          type: string
+          example: Invalid token.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
     VeteranAttributes:
       required:
       - birth_date
@@ -753,6 +776,25 @@ components:
         are not found.
 
         '
+    PermanentAndTotalDisabilityData:
+      type: object
+      properties:
+        permanent_and_total:
+          $ref: '#/components/schemas/PermanentAndTotalAttributes'
+        total_disability:
+          $ref: '#/components/schemas/TotalDisabilityAttributes'
+    TotalDisabilityAttributes:
+      type: object
+      properties:
+        status:
+          type: boolean
+          description: Total disability status
+          example: true
+        effective_date:
+          type: string
+          description: The date the service decision goes into effect (YYYY-MM-DD)
+          format: date
+          example: '2008-07-18'
     BackendServiceApiError:
       type: object
       properties:
@@ -766,36 +808,6 @@ components:
           detail: Backend Service Unavailable.
           code: '503'
           status: '503'
-    PermanentAndTotalDisabilityResponseV2:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/PermanentAndTotalDisabilityData'
-    AuthorizationError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '401'
-        error:
-          type: string
-          example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    PermanentAndTotalAttributes:
-      type: object
-      properties:
-        service_connected_status:
-          type: boolean
-          description: The PT status for service-connected disabilities.
-          example: true
-        pension_award_status:
-          type: boolean
-          description: PT status specifically for pension awards.
-          example: true
     MissingIcn:
       type: object
       properties:
@@ -809,7 +821,7 @@ components:
           detail: No data found for ID or demographics.
           code: '404'
           status: '404'
-    InternalServerApiError:
+    InaccessibleServiceDefintionErrorApiError:
       type: object
       properties:
         errors:
@@ -818,22 +830,10 @@ components:
             $ref: '#/components/schemas/ApiErrorDetails'
       example:
         errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
+        - title: Bad Gateway
+          detail: Upstream Request Error.
+          code: '502'
+          status: '502'
   securitySchemes:
     productionOauth2:
       type: oauth2

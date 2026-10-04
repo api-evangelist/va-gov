@@ -222,13 +222,6 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    legacyAppeals:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/legacyAppeal'
     legacyAppeal:
       properties:
         id:
@@ -271,6 +264,13 @@ components:
               format: date
               description: Date of the appeal's most recent SOC/SSOC (Statement of Case/Supplemental Statement of Case)
               example: '2021-06-12'
+    legacyAppeals:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/legacyAppeal'
     errorModel:
       required:
       - errors

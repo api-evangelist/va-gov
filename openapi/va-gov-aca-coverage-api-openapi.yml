@@ -208,22 +208,6 @@ paths:
         - aca_coverage_restricted.read
 components:
   schemas:
-    AcaCoverageData:
-      type: object
-      properties:
-        response_code:
-          type: string
-          description: Returns a response code
-          example: V0000
-        description:
-          type: string
-          description: Defines reason for response code
-          example: APPLICANT_ENROLLED
-        aca_coverage_periods:
-          type: array
-          description: Returns a list of enrollment coverage periods
-          items:
-            $ref: '#/components/schemas/AcaCoveragePeriods'
     ApiErrorDetails:
       type: object
       properties:
@@ -239,6 +223,18 @@ components:
         status:
           type: string
           example: Error Code
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
     VhaSystemError:
       type: object
       properties:
@@ -298,6 +294,19 @@ components:
           detail: Bad Request
           code: '400'
           status: '400'
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
     AcaCoveragePeriods:
       type: object
       properties:
@@ -323,14 +332,22 @@ components:
           detail: Unable to respond, system unavailable.
           code: '503'
           status: '503'
-    AcaCoverageResponse:
-      required:
-      - data
+    AcaCoverageData:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/AcaCoverageData'
-      description: Response codes and descriptions from source system if successful Veteran match is found:<br>V0000 - APPLICANT_ENROLLED<br>V0001 - APPLICANT_NOT_ENROLLED<br>V0002 - APPLICANT_NOT_FOUND<br>V0003 - APPLICANT_DECEASED<br>V0004 - APPLICANT_DECEASED_ENROLLED<br>V0005 - APPLICANT_DECEASED_NOT_ENROLLED<br>
+        response_code:
+          type: string
+          description: Returns a response code
+          example: V0000
+        description:
+          type: string
+          description: Defines reason for response code
+          example: APPLICANT_ENROLLED
+        aca_coverage_periods:
+          type: array
+          description: Returns a list of enrollment coverage periods
+          items:
+            $ref: '#/components/schemas/AcaCoveragePeriods'
     AuthorizationError:
       type: object
       properties:
@@ -343,31 +360,14 @@ components:
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
-    InternalServerApiError:
+    AcaCoverageResponse:
+      required:
+      - data
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
+        data:
+          $ref: '#/components/schemas/AcaCoverageData'
+      description: Response codes and descriptions from source system if successful Veteran match is found:<br>V0000 - APPLICANT_ENROLLED<br>V0001 - APPLICANT_NOT_ENROLLED<br>V0002 - APPLICANT_NOT_FOUND<br>V0003 - APPLICANT_DECEASED<br>V0004 - APPLICANT_DECEASED_ENROLLED<br>V0005 - APPLICANT_DECEASED_NOT_ENROLLED<br>
   securitySchemes:
     productionOauth2:
       type: oauth2

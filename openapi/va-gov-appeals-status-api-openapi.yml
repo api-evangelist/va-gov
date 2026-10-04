@@ -121,19 +121,19 @@ paths:
                   message: The server took too long to respond
 components:
   schemas:
-    Evidence:
+    Eta:
       type: object
-      description: Documentation and other evidence that has been submitted in support of the appeal
+      description: Estimated decision dates for each docket.
       properties:
-        description:
-          type: string
-          example: Service treatment records
-          description: Short text describing what the evidence is
-        date:
-          type: string
+        directReview:
           format: date
-          description: Date the evidence was added to the case
-          example: '2017-09-30'
+          example: '2020-02-01'
+        evidenceSubmission:
+          format: date
+          example: '2024-06-01'
+        hearing:
+          format: date
+          example: '2024-06-01'
     Appeal:
       type: object
       properties:
@@ -388,10 +388,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Evidence'
-    Appeals:
-      type: array
-      items:
-        $ref: '#/components/schemas/Appeal'
     Issue:
       type: object
       description: Issues on appeal
@@ -423,19 +419,10 @@ components:
           format: date
           description: The date of the most recent decision on the issue
           example: '2016-05-30'
-    Eta:
-      type: object
-      description: Estimated decision dates for each docket.
-      properties:
-        directReview:
-          format: date
-          example: '2020-02-01'
-        evidenceSubmission:
-          format: date
-          example: '2024-06-01'
-        hearing:
-          format: date
-          example: '2024-06-01'
+    Appeals:
+      type: array
+      items:
+        $ref: '#/components/schemas/Appeal'
     Alert:
       type: object
       description: Notification of a request for more information or of a change in the appeal status that requires action.
@@ -461,6 +448,19 @@ components:
         details:
           description: Further information about the alert
           type: object
+    Evidence:
+      type: object
+      description: Documentation and other evidence that has been submitted in support of the appeal
+      properties:
+        description:
+          type: string
+          example: Service treatment records
+          description: Short text describing what the evidence is
+        date:
+          type: string
+          format: date
+          description: Date the evidence was added to the case
+          example: '2017-09-30'
     Event:
       type: object
       description: Event during the appeals process

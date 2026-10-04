@@ -474,112 +474,20 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse'
 components:
   schemas:
-    CandidateAddressResponse:
+    Province:
       type: object
       properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-        candidateAddresses:
-          maxItems: 100
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseAddress'
-        overrideValidationKey:
-          type: integer
-          description: Hash code for current request to be validated during overrides
-          format: int32
-    Geocode:
-      type: object
-      properties:
-        calcDate:
-          type: string
-          description: Date when geocode precision calculation value occurred. Can be used to determine if more accurate mapping functionality is now available and therefore geocode precision could be recalculated.<br><br>Date/Time format; yyyy-mm-ddThh:mm:ss.fffZ
-          format: date-time
-        locationPrecision:
-          type: number
-          description: Indicates how precisely an address can be placed from a geocoding perspective.
-          format: double
-          example: 10
-        latitude:
-          type: number
-          description: Calculated value of Latitude coordinates for address
-          format: double
-          example: 38.0293
-        longitude:
-          type: number
-          description: Calculated value of Longitude coordinates for address.
-          format: double
-          example: -78.4767
-    Message:
-      required:
-      - code
-      - key
-      - severity
-      type: object
-      properties:
-        code:
-          type: string
-        key:
-          type: string
-        text:
-          type: string
-        severity:
-          type: string
-          enum:
-          - INFO
-          - WARN
-          - ERROR
-          - FATAL
-        potentiallySelfCorrectingOnRetry:
-          type: boolean
-    AddressValidationResponse:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-        address:
-          $ref: '#/components/schemas/ResponseAddress'
-        overrideValidationKey:
-          type: integer
-          description: Hash code for current request to be validated during overrides
-          format: int32
-    Locality:
-      required:
-      - cityName
-      - cityType
-      - country
-      - province
-      - state
-      type: object
-      properties:
-        country:
-          $ref: '#/components/schemas/Country'
-        state:
-          $ref: '#/components/schemas/State'
-        province:
-          $ref: '#/components/schemas/Province'
-        cityName:
-          maxLength: 100
+        provinceName:
+          maxLength: 255
           minLength: 0
           type: string
-          description: Name of city or town of postal address.
-          example: Charlottesville
-        cityType:
+          description: The name for the province of the requested address
+          example: Ontario
+        provinceCode:
           type: string
-          description: The USPS standardized city name type (United States localities only).<br><br><br>V - Vanity (non-mailing) city name. <br>P - Primary. The city name is the primary mailing city name. <br>S - Secondary. The city name is an alternate city name but is acceptable. A city can have multiple secondary city names.
-          example: P
-    ServiceResponse:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
+          description: The 2-digit code for the province of an address
+          example: 'ON'
+      description: Name of political subdivision used by country other than United States in its postal addresses, such as name of province, territory, state, county, etc.
     ResponseAddress:
       required:
       - county
@@ -666,20 +574,28 @@ components:
           description: A value from 0 to 100. A calculation of how closely the given address matches the address found in the databases. The closer the match the higher the score. No match is 0, a perfect match is 100. For addresses to pass, a threshold of 80 for domestic addresses and 70 for international addresses is required.
           format: double
           example: 90
-    Province:
+    Message:
+      required:
+      - code
+      - key
+      - severity
       type: object
       properties:
-        provinceName:
-          maxLength: 255
-          minLength: 0
+        code:
           type: string
-          description: The name for the province of the requested address
-          example: Ontario
-        provinceCode:
+        key:
           type: string
-          description: The 2-digit code for the province of an address
-          example: 'ON'
-      description: Name of political subdivision used by country other than United States in its postal addresses, such as name of province, territory, state, county, etc.
+        text:
+          type: string
+        severity:
+          type: string
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+          - FATAL
+        potentiallySelfCorrectingOnRetry:
+          type: boolean
     CityStateAddressV3Response:
       required:
       - intPostalCode
@@ -708,6 +624,115 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Locality'
+    CandidateAddressRequest:
+      required:
+      - address
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/RequestAddress'
+      description: Request format to describe the address to correct and validate.
+    AddressValidationRequest:
+      required:
+      - address
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/RequestAddress'
+      description: Request format to describe the address to correct and validate.
+    Locality:
+      required:
+      - cityName
+      - cityType
+      - country
+      - province
+      - state
+      type: object
+      properties:
+        country:
+          $ref: '#/components/schemas/Country'
+        state:
+          $ref: '#/components/schemas/State'
+        province:
+          $ref: '#/components/schemas/Province'
+        cityName:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Name of city or town of postal address.
+          example: Charlottesville
+        cityType:
+          type: string
+          description: The USPS standardized city name type (United States localities only).<br><br><br>V - Vanity (non-mailing) city name. <br>P - Primary. The city name is the primary mailing city name. <br>S - Secondary. The city name is an alternate city name but is acceptable. A city can have multiple secondary city names.
+          example: P
+    Geocode:
+      type: object
+      properties:
+        calcDate:
+          type: string
+          description: Date when geocode precision calculation value occurred. Can be used to determine if more accurate mapping functionality is now available and therefore geocode precision could be recalculated.<br><br>Date/Time format; yyyy-mm-ddThh:mm:ss.fffZ
+          format: date-time
+        locationPrecision:
+          type: number
+          description: Indicates how precisely an address can be placed from a geocoding perspective.
+          format: double
+          example: 10
+        latitude:
+          type: number
+          description: Calculated value of Latitude coordinates for address
+          format: double
+          example: 38.0293
+        longitude:
+          type: number
+          description: Calculated value of Longitude coordinates for address.
+          format: double
+          example: -78.4767
+    County:
+      type: object
+      properties:
+        countyName:
+          maxLength: 35
+          minLength: 0
+          type: string
+          example: Albemarle Count
+        countyCode:
+          maxLength: 5
+          minLength: 0
+          pattern: '[0-9]+'
+          type: string
+          example: '51003'
+      description: US addresses only. The name of the county in the address
+    State:
+      type: object
+      properties:
+        stateName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: The name for the state of the requested address
+          example: Virginia
+        stateCode:
+          type: string
+          description: The 2-digit code for the state of an address
+          example: VA
+      description: Provide either state name or code, but not both
+    CandidateAddressResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        candidateAddresses:
+          maxItems: 100
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseAddress'
+        overrideValidationKey:
+          type: integer
+          description: Hash code for current request to be validated during overrides
+          format: int32
     RequestAddress:
       type: object
       properties:
@@ -766,37 +791,19 @@ components:
           enum:
           - RESIDENCE
           - CORRESPONDENCE
-    County:
+    AddressValidationResponse:
       type: object
       properties:
-        countyName:
-          maxLength: 35
-          minLength: 0
-          type: string
-          example: Albemarle Count
-        countyCode:
-          maxLength: 5
-          minLength: 0
-          pattern: '[0-9]+'
-          type: string
-          example: '51003'
-      description: US addresses only. The name of the county in the address
-    CandidateAddressRequest:
-      required:
-      - address
-      type: object
-      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
         address:
-          $ref: '#/components/schemas/RequestAddress'
-      description: Request format to describe the address to correct and validate.
-    AddressValidationRequest:
-      required:
-      - address
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/RequestAddress'
-      description: Request format to describe the address to correct and validate.
+          $ref: '#/components/schemas/ResponseAddress'
+        overrideValidationKey:
+          type: integer
+          description: Hash code for current request to be validated during overrides
+          format: int32
     Country:
       type: object
       properties:
@@ -828,20 +835,13 @@ components:
           description: Three-letter country codes defined in ISO 3166-1, part of ISO 3166 standard.
           example: USA
       description: Provide either country name or code, but not both
-    State:
+    ServiceResponse:
       type: object
       properties:
-        stateName:
-          maxLength: 50
-          minLength: 0
-          type: string
-          description: The name for the state of the requested address
-          example: Virginia
-        stateCode:
-          type: string
-          description: The 2-digit code for the state of an address
-          example: VA
-      description: Provide either state name or code, but not both
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
   securitySchemes:
     apikey:
       type: apiKey
