@@ -1,0 +1,12 @@
+{
+ "url": "https://api.va.gov/services/va_forms/docs/v0/api",
+ "requested_url": "https://api.va.gov/services/va_forms/docs/v0/api",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 12814,
+ "sha256": "eacfd5073af94263d1fb134c103052e079007ee5d3f7d82418b9384685653d23",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
