@@ -208,6 +208,27 @@ paths:
         - aca_coverage_restricted.read
 components:
   schemas:
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    VhaDataError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example: "    {\n     \"errors\": [\n                 {\n                  \"title\": \"V1000 - Data Error/Invalid Request\",\n                  \"detail\": \"Required element invalid or missing in\n                  request.\",\n                  \"code\": \"422\",\n                  \"status\": \"422\"\n                 }\n               ]\n     }\n"
     ApiErrorDetails:
       type: object
       properties:
@@ -223,18 +244,31 @@ components:
         status:
           type: string
           example: Error Code
-    ForbiddenServerError:
+    AuthorizationError:
       type: object
       properties:
         status:
           type: string
-          example: '403'
+          example: '401'
         error:
           type: string
-          example: Token not granted requested scope.
+          example: Invalid token.
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
     VhaSystemError:
       type: object
       properties:
@@ -248,14 +282,6 @@ components:
           detail: System error.
           code: '502'
           status: '502'
-    VhaDataError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example: "    {\n     \"errors\": [\n                 {\n                  \"title\": \"V1000 - Data Error/Invalid Request\",\n                  \"detail\": \"Required element invalid or missing in\n                  request.\",\n                  \"code\": \"422\",\n                  \"status\": \"422\"\n                 }\n               ]\n     }\n"
     VeteranSsnAttributes:
       required:
       - aca_coverage_end_date
@@ -281,44 +307,6 @@ components:
         aca_coverage_end_date:
           type: string
           format: date
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    AcaCoveragePeriods:
-      type: object
-      properties:
-        aca_coverage_start_date:
-          type: string
-          description: Indicates Enrollment Status Coverage Period start date
-          example: '2019-10-09'
-        aca_coverage_end_date:
-          type: string
-          description: Indicates Enrollment Status Coverage Period end date
-          example: '2019-10-09'
-      description: Returns a list of enrollment coverage periods
     VhaSystemUnavailable:
       type: object
       properties:
@@ -332,6 +320,18 @@ components:
           detail: Unable to respond, system unavailable.
           code: '503'
           status: '503'
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
     AcaCoverageData:
       type: object
       properties:
@@ -348,18 +348,18 @@ components:
           description: Returns a list of enrollment coverage periods
           items:
             $ref: '#/components/schemas/AcaCoveragePeriods'
-    AuthorizationError:
+    AcaCoveragePeriods:
       type: object
       properties:
-        status:
+        aca_coverage_start_date:
           type: string
-          example: '401'
-        error:
+          description: Indicates Enrollment Status Coverage Period start date
+          example: '2019-10-09'
+        aca_coverage_end_date:
           type: string
-          example: Invalid token.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
+          description: Indicates Enrollment Status Coverage Period end date
+          example: '2019-10-09'
+      description: Returns a list of enrollment coverage periods
     AcaCoverageResponse:
       required:
       - data

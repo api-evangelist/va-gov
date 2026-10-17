@@ -59,6 +59,14 @@ paths:
                   message: API rate limit exceeded
 components:
   schemas:
+    JWKKeyset:
+      description: A JWK Keyset compliant with RFC 7517
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/JWK'
     JWK:
       description: JSON Web Key compliant with RFC 7517
       type: object
@@ -87,14 +95,6 @@ components:
           type: string
           description: ' The "n" (modulus) parameter contains the modulus value for the RSA public key.  It is represented as a Base64urlUInt-encoded value.'
           example: 3wtLybygT4UvigPmndR5KV6yPCaGsLas1cGIAhq5SIGIJ0cyg70RTG7JGBU3zwe2vJE9IAJMhRr45caeBEOpqVRoQAzVVgVQK0JXJzDGzbCkZm9o0i0s41-PQtup2uplIvV_sXuokvey9MsiVgQPdWKt3AtJCfCfJcD6CvU716s=
-    JWKKeyset:
-      description: A JWK Keyset compliant with RFC 7517
-      type: object
-      properties:
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/JWK'
   securitySchemes:
     bearer_token:
       type: http

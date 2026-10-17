@@ -353,6 +353,46 @@ paths:
         - flashes.read
 components:
   schemas:
+    InternalServerApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    EligibilityFlashesData:
+      type: object
+      properties:
+        flash_name:
+          type: string
+    EligibilityFlashesResponse:
+      required:
+      - flashes
+      type: object
+      properties:
+        flashes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityFlashesData'
     ApiErrorDetails:
       type: object
       properties:
@@ -368,49 +408,6 @@ components:
         status:
           type: string
           example: Error Code
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    EligibilityFlashesData:
-      type: object
-      properties:
-        flash_name:
-          type: string
     AuthorizationError:
       type: object
       properties:
@@ -556,28 +553,6 @@ components:
         are not found.
 
         '
-    EligibilityFlashesResponse:
-      required:
-      - flashes
-      type: object
-      properties:
-        flashes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EligibilityFlashesData'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
     InaccessibleServiceDefintionErrorApiError:
       type: object
       properties:
@@ -591,6 +566,31 @@ components:
           detail: Upstream Request Error.
           code: '502'
           status: '502'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
   securitySchemes:
     productionOauth2:
       type: oauth2

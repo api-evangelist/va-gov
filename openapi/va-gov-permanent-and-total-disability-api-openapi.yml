@@ -560,17 +560,64 @@ paths:
         - permanent_and_total_disability_restricted.read
 components:
   schemas:
-    PermanentAndTotalAttributes:
+    InternalServerApiError:
       type: object
       properties:
-        service_connected_status:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Internal server error
+          detail: Internal server error
+          code: '500'
+          status: '500'
+    BackendServiceApiError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Service Unavailable
+          detail: Backend Service Unavailable.
+          code: '503'
+          status: '503'
+    MissingIcn:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Veteran not identifiable.
+          detail: No data found for ID or demographics.
+          code: '404'
+          status: '404'
+    TotalDisabilityAttributes:
+      type: object
+      properties:
+        status:
           type: boolean
-          description: The PT status for service-connected disabilities.
+          description: Total disability status
           example: true
-        pension_award_status:
-          type: boolean
-          description: PT status specifically for pension awards.
-          example: true
+        effective_date:
+          type: string
+          description: The date the service decision goes into effect (YYYY-MM-DD)
+          format: date
+          example: '2008-07-18'
+    PermanentAndTotalDisabilityResponseV2:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PermanentAndTotalDisabilityData'
     ApiErrorDetails:
       type: object
       properties:
@@ -586,51 +633,6 @@ components:
         status:
           type: string
           example: Error Code
-    ForbiddenServerError:
-      type: object
-      properties:
-        status:
-          type: string
-          example: '403'
-        error:
-          type: string
-          example: Token not granted requested scope.
-        path:
-          type: string
-          example: /veteran_verification/v2/{endpoint}
-    BadRequest:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Bad Request
-          detail: Bad Request
-          code: '400'
-          status: '400'
-    InternalServerApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Internal server error
-          detail: Internal server error
-          code: '500'
-          status: '500'
-    PermanentAndTotalDisabilityResponseV2:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/PermanentAndTotalDisabilityData'
     AuthorizationError:
       type: object
       properties:
@@ -643,6 +645,13 @@ components:
         path:
           type: string
           example: /veteran_verification/v2/{endpoint}
+    PermanentAndTotalDisabilityData:
+      type: object
+      properties:
+        permanent_and_total:
+          $ref: '#/components/schemas/PermanentAndTotalAttributes'
+        total_disability:
+          $ref: '#/components/schemas/TotalDisabilityAttributes'
     VeteranAttributes:
       required:
       - birth_date
@@ -776,51 +785,6 @@ components:
         are not found.
 
         '
-    PermanentAndTotalDisabilityData:
-      type: object
-      properties:
-        permanent_and_total:
-          $ref: '#/components/schemas/PermanentAndTotalAttributes'
-        total_disability:
-          $ref: '#/components/schemas/TotalDisabilityAttributes'
-    TotalDisabilityAttributes:
-      type: object
-      properties:
-        status:
-          type: boolean
-          description: Total disability status
-          example: true
-        effective_date:
-          type: string
-          description: The date the service decision goes into effect (YYYY-MM-DD)
-          format: date
-          example: '2008-07-18'
-    BackendServiceApiError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Service Unavailable
-          detail: Backend Service Unavailable.
-          code: '503'
-          status: '503'
-    MissingIcn:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiErrorDetails'
-      example:
-        errors:
-        - title: Veteran not identifiable.
-          detail: No data found for ID or demographics.
-          code: '404'
-          status: '404'
     InaccessibleServiceDefintionErrorApiError:
       type: object
       properties:
@@ -834,6 +798,42 @@ components:
           detail: Upstream Request Error.
           code: '502'
           status: '502'
+    BadRequest:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiErrorDetails'
+      example:
+        errors:
+        - title: Bad Request
+          detail: Bad Request
+          code: '400'
+          status: '400'
+    PermanentAndTotalAttributes:
+      type: object
+      properties:
+        service_connected_status:
+          type: boolean
+          description: The PT status for service-connected disabilities.
+          example: true
+        pension_award_status:
+          type: boolean
+          description: PT status specifically for pension awards.
+          example: true
+    ForbiddenServerError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: '403'
+        error:
+          type: string
+          example: Token not granted requested scope.
+        path:
+          type: string
+          example: /veteran_verification/v2/{endpoint}
   securitySchemes:
     productionOauth2:
       type: oauth2
