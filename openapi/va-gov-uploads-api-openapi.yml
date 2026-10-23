@@ -1332,3 +1332,9 @@ components:
       type: apiKey
       name: apikey
       in: header
+x-provenance:
+  method: harvested
+  publisher: Department of Veterans Affairs (VA Lighthouse)
+  source: https://api.va.gov/services/vba_documents/docs/v1/api
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
